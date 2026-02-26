@@ -1,0 +1,14 @@
+{
+  "company": "Easy.ai",
+  "active_vertical": "ONE_WORLD_MULTI_DOMAIN",
+  "mission_goal": "Optimize Health (Drug) and ROI (Sony TV)",
+  "user_toggles": {
+    "priority": "PREVENTION",
+    "budget_mode": "STRICT"
+  },
+  "policy_invariants": [
+    "Landed cost < $0.25",
+    "Health Integrity > 0.98",
+    "Gov Compliance = TRUE"
+  ]
+}

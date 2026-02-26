@@ -1,0 +1,1 @@
+SYSTEM: Reserved for temporary multimodal inputs (Selfies/Voice/Video).

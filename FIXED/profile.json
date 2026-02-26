@@ -1,0 +1,16 @@
+{
+  "identity": {
+    "name": "Simon",
+    "role": "Lead Architect",
+    "company": "Easy.ai"
+  },
+  "health_baseline": {
+    "allergies": [],
+    "budget": 250,
+    "currency": "AUD"
+  },
+  "governance": {
+    "risk_threshold": 0.20,
+    "integrity_threshold": 0.95
+  }
+}
