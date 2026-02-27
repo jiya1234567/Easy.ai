@@ -1,14 +1,6 @@
 {
-  "company": "Easy.ai",
-  "active_vertical": "ONE_WORLD_MULTI_DOMAIN",
-  "mission_goal": "Optimize Health (Drug) and ROI (Sony TV)",
-  "user_toggles": {
-    "priority": "PREVENTION",
-    "budget_mode": "STRICT"
-  },
-  "policy_invariants": [
-    "Landed cost < $0.25",
-    "Health Integrity > 0.98",
-    "Gov Compliance = TRUE"
-  ]
+  "active_vertical": "BEAUTY_HEALTH_SYNERGY",
+  "mission_goal": "Match makeup to Blue Dress + Audit Soup for Sodium",
+  "entities": ["Wholesale Path", "Retail Path"],
+  "invariants": ["Landed cost < $0.25", "Integrity > 0.99"]
 }

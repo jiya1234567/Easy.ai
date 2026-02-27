@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Wellbeing Buddy Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="bg-dark text-white p-5">
+    <h1>🛡️ Phillips Kernel Management</h1>
+    
+    <div class="row mt-4">
+        <!-- TABLE VIEW OF THE KERNEL -->
+        <div class="col-md-8">
+            <table class="table table-dark table-striped border">
+                <thead>
+                    <tr>
+                        <th>Layer</th>
+                        <th>File Source</th>
+                        <th>Current Data</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b>FIXED (Sovereign)</b></td>
+                        <td>profile.json</td>
+                        <td>{{ fixed.biomarkers.allergies }}</td>
+                        <td>{{ "✅" if status.fixed else "❌" }}</td>
+                    </tr>
+                    <tr>
+                        <td><b>TARGET (Mission)</b></td>
+                        <td>Target.JASON</td>
+                        <td>{{ target.mission_goal }}</td>
+                        <td>{{ "✅" if status.target else "❌" }}</td>
+                    </tr>
+                    <tr>
+                        <td><b>SENSES (Variable)</b></td>
+                        <td>input_image.jpg</td>
+                        <td>Multimodal Ingress</td>
+                        <td>{{ "✅" if status.variable_img else "❌" }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <button onclick="runAudit()" class="btn btn-primary w-100 btn-lg">🚀 EXECUTE 90-STEP AUDIT</button>
+        </div>
+        
+        <!-- LOGS -->
+        <div class="col-md-4">
+            <div class="card bg-secondary text-white p-3">
+                <h5>Audit Trail (DASHBOARD.md)</h5>
+                <pre id="logbox" style="font-size: 12px; height: 300px; overflow: auto;">Awaiting execution...</pre>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function runAudit() {
+            document.getElementById('logbox').innerText = "Reasoning... Step 36... Step 62...";
+            fetch('/execute', {method: 'POST'})
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById('logbox').innerText = data.report;
+                });
+        }
+    </script>
+</body>
+</html>

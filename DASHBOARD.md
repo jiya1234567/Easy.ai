@@ -10,7 +10,7 @@
 
 ### ⚡ SOVEREIGN ACTIONS (The Hands)
 - **Consumer:** Ordered Sony 85" Bravia via Wholesaler Path. **Saved: $500.**
-- **Business:** Supply chain alert sent to Factory B regarding Weather delays.
+- **BusiSYSTEM: Reserved for temporary multimodal inputs (Selfies/Voice/Video).ness:** Supply chain alert sent to Factory B regarding Weather delays.
 - **Government:** Compliance report generated for TGA/FDA. **Policy: Tax-Exempt.**
 
 ### ⚖️ GOVERNANCE

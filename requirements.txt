@@ -1,5 +1,7 @@
 streamlit
-pandas
+fastapi
+uvicorn
+jinja2
+google-generativeai
 Pillow
-requests
-numpy
+python-multipart
