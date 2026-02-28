@@ -1,10 +1,12 @@
-from fastapi import FastAPI
-import kernel # Your 90-step logic
+from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse
+import kernel  # Connects to your logic
 import os
+import json
 
-app = FastAPI()
+app = FastAPI(title="Phillips Institutional Kernel")
 
-# Strict Paths for the Kernel
+# Exact Paths from your Tree
 PATHS = {
     "fixed": "./FIXED/profile.json",
     "target": "Target.JASON",
@@ -19,14 +21,17 @@ async def get_status():
 
 @app.post("/execute")
 async def execute_audit():
-    # Calling your kernel.py logic
+    """
+    Step 21-90: The Institutional Execution.
+    """
     try:
+        # Run the 90-step reasoning in kernel.py
         report = await kernel.run_audit(PATHS)
+        # We return a clear dictionary so app.py doesn't get a KeyError
         return {"status": "Success", "data": report}
     except Exception as e:
         return {"status": "Error", "message": str(e)}
 
 if __name__ == "__main__":
     import uvicorn
-    # Port 8000 for the Backend
     uvicorn.run(app, host="0.0.0.0", port=8000)
