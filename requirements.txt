@@ -1,4 +1,8 @@
-﻿streamlit
-requests
+streamlit
+google-genai
 pandas
-pillow
+plotly
+scikit-learn
+umap-learn
+networkx
+scipy

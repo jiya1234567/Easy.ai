@@ -1,0 +1,8 @@
+{
+  "name": "Buddy's Toolset by A&P Phillips",
+  "description": "A unified decision intelligence system that learns, simulates, predicts, and optimizes across domains.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
