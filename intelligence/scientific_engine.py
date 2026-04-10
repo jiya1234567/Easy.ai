@@ -26,7 +26,8 @@ class ScientificEngine:
     def load_data(self):
         if not os.path.exists(self.data_path):
             return False, "Data file missing."
-        self.data = pd.read_csv(self.data_path, index_col=0, parse_dates=True)
+        # Load data with dayfirst=True to avoid dateutil warnings on Windows
+        self.data = pd.read_csv(self.data_path, index_col=0, parse_dates=True, dayfirst=True)
         if os.path.exists(self.metadata_path):
             with open(self.metadata_path, 'r') as f:
                 self.metadata = json.load(f)
@@ -94,117 +95,192 @@ class ScientificEngine:
         
         return regimes, time_projection
 
-    # --- DiscoveryAgent (NEW) ---
-    def compute_stability(self, method='PCA', window_size=50):
+    # --- Universal Ontology (NEW) ---
+    def get_ontology_map(self):
         """
-        Manifold Stability Test: Track drift between temporal slices.
-        Returns a stability score [0, 1].
+        Maps domain-specific columns to Universal Scientific Roles.
         """
         if self.data is None: self.load_data()
-        returns = self.data.pct_change().dropna()
+        cols = self.data.columns.tolist()
         
-        if len(returns) < window_size * 2:
-            return 1.0 # Not enough data to measure drift
+        # Universal Role Definitions
+        ontology = {
+            "DRIVER": ["Atomic_Structure", "Grain_Size", "Nano_Coating", "Pressure_Processing", "Interest_Rate", "Market_Sentiment", "Mutation_Level", "Magnetic_Bias", "Pulse_Duration", "Vacuum_Pressure", "Atomic_Spin"],
+            "PROPERTY": ["Conductivity", "Strength", "Elasticity", "Thermal_Stability", "Defect_Score", "RSI", "Price", "Expression_Level", "Coherence_Time", "Fidelity", "Qubit_Stability", "Phase_Shift", "Energy_State"],
+            "INTERVENTION": ["Treatment_Temperature", "Treatment_Time", "Doping_Level", "Asset_Allocation", "Dosage", "Laser_Intensity", "Cryo_Temperature", "Microwave_Frequency"],
+            "DYNAMICS": ["Time_Cycle", "Degradation_Rate", "Performance_After_Stress", "Volatility", "Half_Life", "Decoherence_Rate", "Relaxation_Time", "Measurement_Count"],
+            "NETWORK": ["Composite_Mix_Ratio", "Interface_Bond_Strength", "Layer_Depth", "Centrality", "Connectivity", "Entanglement_Entropy", "Coupler_Strength", "Qubit_Connectivity"],
+            "UNCERTAINTY": ["Measurement_Error", "Confidence_Score", "Standard_Deviation", "P_Value", "Readout_Error", "Quantum_Noise", "Gate_Fidelity_Error"]
+        }
+        
+        mapping = {k: [c for c in v if c in cols] for k, v in ontology.items()}
+        return mapping
+
+    def discover_causality(self, threshold=0.4):
+        """
+        Probabilistic Causal Discovery.
+        Adjusts weights based on Uncertainty (Measurement Error / Confidence).
+        """
+        if self.data is None: self.load_data()
+        numeric_df = self.data.select_dtypes(include=[np.number])
+        corr_matrix = numeric_df.corr()
+        ontology = self.get_ontology_map()
+        
+        # Extract uncertainty weights if available
+        u_cols = ontology.get("UNCERTAINTY", [])
+        u_weight = 1.0
+        if u_cols:
+            # Average confidence score as a global multiplier for weights
+            if "Confidence_Score" in u_cols:
+                u_weight = self.data["Confidence_Score"].mean()
+            elif "Measurement_Error" in u_cols:
+                u_weight = 1.0 - self.data["Measurement_Error"].mean()
+
+        causal_graph = nx.DiGraph()
+        cols = corr_matrix.columns
+        for i in range(len(cols)):
+            for j in range(len(cols)):
+                if i != j:
+                    u, v = cols[i], cols[j]
+                    c = corr_matrix.iloc[i, j]
+                    
+                    # Apply Probabilistic Weighting
+                    prob_weight = c * u_weight
+                    
+                    if abs(prob_weight) > threshold:
+                        # Ontology-based Directionality
+                        is_causal = False
+                        if u in ontology["DRIVER"] and v in ontology["PROPERTY"]: is_causal = True
+                        elif u in ontology["INTERVENTION"] and (v in ontology["PROPERTY"] or v in ontology["DYNAMICS"]): is_causal = True
+                        elif u in ontology["NETWORK"] and v in ontology["PROPERTY"]: is_causal = True
+                        elif abs(prob_weight) > threshold + 0.3: is_causal = True
+                        
+                        if is_causal:
+                            # Store both the weight and the uncertainty (1 - u_weight)
+                            causal_graph.add_edge(u, v, weight=prob_weight, uncertainty=1.0 - u_weight)
+                            
+        return causal_graph
+
+    # --- Probabilistic Causal Engine (NEW) ---
+    def simulate_intervention(self, target_node, intervention_value, graph=None):
+        """
+        Simulates an intervention with PROBABILISTIC UNCERTAINTY PROPAGATION.
+        Returns: {node: {"old": X, "new": Y, "delta": Z, "uncertainty": U}}
+        """
+        if self.data is None: self.load_data()
+        if graph is None:
+            graph = self.discover_causality()
             
-        # Slice windows
+        if target_node not in graph.nodes:
+            return None, f"Node {target_node} not in causal graph."
+            
+        baseline = self.data.select_dtypes(include=[np.number]).iloc[-1].to_dict()
+        if target_node not in baseline:
+            return None, f"Node {target_node} not found in dataset."
+            
+        projected_state = baseline.copy()
+        delta = intervention_value - baseline[target_node]
+        projected_state[target_node] = intervention_value
+        
+        # Propagation with Uncertainty
+        impacted_nodes = list(graph.successors(target_node))
+        results = {"intervention": {"node": target_node, "value": intervention_value, "delta": delta}, "projections": {}}
+        
+        for node in impacted_nodes:
+            edge_data = graph[target_node][node]
+            weight = edge_data['weight']
+            # Causal Uncertainty = Base Edge Uncertainty + Variable Variance
+            edge_uncertainty = edge_data.get('uncertainty', 0.1)
+            
+            projected_state[node] += delta * weight
+            
+            results["projections"][node] = {
+                "old": baseline[node],
+                "new": projected_state[node],
+                "delta": projected_state[node] - baseline[node],
+                "uncertainty_level": f"±{abs(delta * edge_uncertainty):.4f}"
+            }
+            
+        return results, "Probabilistic intervention simulated successfully."
+
+    def compute_silhouette(self, n_clusters=2):
+        from sklearn.metrics import silhouette_score
+        if self.data is None: self.load_data()
+        numeric_df = self.data.select_dtypes(include=[np.number])
+        ontology = self.get_ontology_map()
+        cluster_df = numeric_df.drop(columns=ontology.get("UNCERTAINTY", []), errors='ignore')
+
+        kmeans = KMeans(n_clusters=n_clusters, random_state=42, n_init=10)
+        labels = kmeans.fit_predict(cluster_df)
+        score = silhouette_score(cluster_df, labels)
+        return score
+
+    def compute_stability(self, method='PCA', window_size=50):
+        if self.data is None: self.load_data()
+        numeric_df = self.data.select_dtypes(include=[np.number])
+        returns = numeric_df.diff().dropna()
+        if len(returns) < window_size * 2: return 1.0
         w1 = returns.iloc[:window_size].T.values
         w2 = returns.iloc[-window_size:].T.values
-        
-        # Projections
-        model = PCA(n_components=3) if method == 'PCA' else None
-        if not model: return 1.0
-        
+        model = PCA(n_components=min(3, w1.shape[1], w2.shape[1]))
         try:
             p1 = model.fit_transform(w1)
             p2 = model.fit_transform(w2)
-            # Procrustes Analysis: align p2 to p1 and return disparity
             _, _, disparity = procrustes(p1, p2)
-            # Convert disparity to stability (0 to 1)
-            stability = max(0, 1 - (disparity * 5)) # Scale for sensitivity
-            return stability
-        except:
-            return 1.0
+            return max(0, 1 - (disparity * 5))
+        except: return 1.0
 
     def compute_sensitivity(self, epsilon=0.01):
-        """
-        Lyapunov-like Sensitivity Test: Measure manifold divergence under perturbation.
-        """
         if self.data is None: self.load_data()
-        returns = self.data.pct_change().dropna()
-        X = returns.T.values
-        
-        model = PCA(n_components=3)
-        p_orig = model.fit_transform(X)
-        
-        # Perturb
-        X_perturbed = X + np.random.normal(0, epsilon, X.shape)
-        p_perturbed = model.fit_transform(X_perturbed)
-        
-        # Measure divergence (Euclidean distance mean)
+        numeric_df = self.data.select_dtypes(include=[np.number])
+        X = numeric_df.T.values
+        model = PCA(n_components=min(3, X.shape[1]))
         try:
+            p_orig = model.fit_transform(X)
+            X_perturbed = X + np.random.normal(0, epsilon, X.shape)
+            p_perturbed = model.fit_transform(X_perturbed)
             _, _, disparity = procrustes(p_orig, p_perturbed)
-            return disparity # Lower is more REducible (stable)
-        except:
-            return 0.0
+            return disparity
+        except: return 0.0
 
     def compute_reducibility(self):
-        """
-        Compression Ratio Test: PCA explained variance ratio.
-        """
         if self.data is None: self.load_data()
-        returns = self.data.pct_change().dropna()
-        X = returns.T.values
-        
+        numeric_df = self.data.select_dtypes(include=[np.number])
+        X = numeric_df.T.values
         model = PCA(n_components=min(3, X.shape[1]))
-        model.fit(X)
-        
-        reducibility = np.sum(model.explained_variance_ratio_)
-        return reducibility
+        try:
+            model.fit(X)
+            return np.sum(model.explained_variance_ratio_)
+        except: return 1.0
 
     def simulate_shock(self, asset, target_value):
-        """
-        Selective Shock Simulation: Forcing a 'tear' in the manifold.
-        Returns a distorted manifold projection.
-        """
         if self.data is None: self.load_data()
         df_perturbed = self.data.copy()
-        
-        if asset in df_perturbed.columns:
-            # Apply target value to the last few datapoints to simulate a sudden break
+        numeric_cols = df_perturbed.select_dtypes(include=[np.number]).columns
+        if asset in numeric_cols:
             df_perturbed.iloc[-5:, df_perturbed.columns.get_loc(asset)] = target_value
-            
-        # Re-calc returns and manifold
-        returns = df_perturbed.pct_change().dropna()
+        returns = df_perturbed[numeric_cols].diff().dropna()
         X = returns.T.values
-        
-        model = PCA(n_components=3)
+        model = PCA(n_components=min(3, X.shape[1]))
         projection = model.fit_transform(X)
-        
         df_proj = pd.DataFrame(projection, columns=['Dim_1', 'Dim_2', 'Dim_3'])
         df_proj['Asset'] = returns.columns
         if self.metadata:
             df_proj['Type'] = [self.metadata.get(a, 'Unknown') for a in returns.columns]
-            
         return df_proj
 
-    # --- SignalAgent ---
-    def detect_anomalies(self):
-        # Enhanced detection: High correlation + High sensitivity
-        if self.data is None: self.load_data()
-        returns = self.data.pct_change().dropna()
-        avg_corr = returns.corr().mean().mean()
-        sensitivity = self.compute_sensitivity()
-        
-        return avg_corr > 0.7 or sensitivity > 0.2
-
 if __name__ == "__main__":
-    engine = ScientificEngine()
+    engine = ScientificEngine(data_path="reports/materials_test.csv")
     loaded, msg = engine.load_data()
     print(msg)
     if loaded:
-        proj = engine.compute_manifold()
-        print("Manifold Computed")
-        print(proj.head())
+        print("Universal Ontology Map:", engine.get_ontology_map())
+        G = engine.discover_causality()
+        print(f"Probabilistic Discovery: {len(G.edges())} paths found.")
         
-        G = engine.compute_network()
-        print(f"Network Nodes: {len(G.nodes)}, Edges: {len(G.edges)}")
+        # Test Probabilistic Intervention
+        if "Treatment_Temperature" in G.nodes:
+            res, m = engine.simulate_intervention("Treatment_Temperature", 1000.0, graph=G)
+            print("Intervention Result (with Uncertainty):")
+            for node, data in res["projections"].items():
+                print(f"  {node}: Delta={data['delta']:.2f} | Uncertainty={data['uncertainty_level']}")
