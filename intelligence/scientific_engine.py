@@ -105,15 +105,15 @@ class ScientificEngine:
         
         # Universal Role Definitions
         ontology = {
-            "DRIVER": ["Atomic_Structure", "Grain_Size", "Nano_Coating", "Pressure_Processing", "Interest_Rate", "Market_Sentiment", "Mutation_Level", "Magnetic_Bias", "Pulse_Duration", "Vacuum_Pressure", "Atomic_Spin"],
-            "PROPERTY": ["Conductivity", "Strength", "Elasticity", "Thermal_Stability", "Defect_Score", "RSI", "Price", "Expression_Level", "Coherence_Time", "Fidelity", "Qubit_Stability", "Phase_Shift", "Energy_State"],
-            "INTERVENTION": ["Treatment_Temperature", "Treatment_Time", "Doping_Level", "Asset_Allocation", "Dosage", "Laser_Intensity", "Cryo_Temperature", "Microwave_Frequency"],
-            "DYNAMICS": ["Time_Cycle", "Degradation_Rate", "Performance_After_Stress", "Volatility", "Half_Life", "Decoherence_Rate", "Relaxation_Time", "Measurement_Count"],
-            "NETWORK": ["Composite_Mix_Ratio", "Interface_Bond_Strength", "Layer_Depth", "Centrality", "Connectivity", "Entanglement_Entropy", "Coupler_Strength", "Qubit_Connectivity"],
-            "UNCERTAINTY": ["Measurement_Error", "Confidence_Score", "Standard_Deviation", "P_Value", "Readout_Error", "Quantum_Noise", "Gate_Fidelity_Error"]
+            "DRIVER": ["Atomic_Structure", "Grain_Size", "Nano_Coating", "Pressure_Processing", "Interest_Rate", "Market_Sentiment", "Mutation_Level", "Magnetic_Bias", "Pulse_Duration", "Vacuum_Pressure", "Atomic_Spin", "Patch_Level", "Open_Ports", "User_Privilege_Level", "External_Connections", "Energy_Demand", "Traffic_Load", "Water_Consumption", "Packet_Rate"],
+            "PROPERTY": ["Conductivity", "Strength", "Elasticity", "Thermal_Stability", "Defect_Score", "RSI", "Price", "Expression_Level", "Coherence_Time", "Fidelity", "Qubit_Stability", "Phase_Shift", "Energy_State", "Traffic_Volume", "Packet_Entropy", "Failed_Logins", "CPU_Usage", "Anomaly_Score", "Grid_Frequency", "Voltage_Level", "Traffic_Flow_Rate", "Water_Pressure", "Comms_Latency"],
+            "INTERVENTION": ["Treatment_Temperature", "Treatment_Time", "Doping_Level", "Asset_Allocation", "Dosage", "Laser_Intensity", "Cryo_Temperature", "Microwave_Frequency", "Attack_Type", "Payload_Intensity", "Mitigation_Action", "Load_Shedding", "Signal_Timing", "Valve_Control", "Route_Reoptimization", "Throttle_Bandwidth"],
+            "DYNAMICS": ["Time_Cycle", "Degradation_Rate", "Performance_After_Stress", "Volatility", "Half_Life", "Decoherence_Rate", "Relaxation_Time", "Measurement_Count", "Anomaly_Growth", "System_Degradation", "Failure_Spread_Rate", "Recovery_Metric", "System_Inertia"],
+            "NETWORK": ["Composite_Mix_Ratio", "Interface_Bond_Strength", "Layer_Depth", "Centrality", "Connectivity", "Entanglement_Entropy", "Coupler_Strength", "Qubit_Connectivity", "Lateral_Movement_Risk", "Connected_Nodes", "Influence_Score", "Grid_Topology", "Backhaul_Connectivity", "Pipeline_Adjacency"],
+            "UNCERTAINTY": ["Measurement_Error", "Confidence_Score", "Standard_Deviation", "P_Value", "Readout_Error", "Quantum_Noise", "Gate_Fidelity_Error", "False_Positive_Rate", "Sensor_Noise", "Detection_Confidence", "Sensor_Bias", "Telemetry_Noise"]
         }
         
-        mapping = {k: [c for c in v if c in cols] for k, v in ontology.items()}
+        mapping = {k: [c for c in cols if any(keyword in c for keyword in v)] for k, v in ontology.items()}
         return mapping
 
     def discover_causality(self, threshold=0.4):

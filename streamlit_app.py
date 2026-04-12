@@ -110,12 +110,18 @@ st.title("🚀 Singularity Dashboard")
 st.caption(f"Omega Clearance: aejphillips@outlook.com | {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
 
 st.markdown("### Domain Configuration")
-domain = st.selectbox("DOMAIN SELECTION", ["Health", "Finance", "Agriculture", "General"], label_visibility="collapsed")
+domain = st.selectbox("DOMAIN SELECTION", ["Health", "Finance", "Cybersecurity", "Smart City", "Agriculture", "General"], label_visibility="collapsed")
 
 # --- DOMAIN ENGINE INITIALIZATION ---
 if domain == "Health":
     # Use Simplified Bio Test Data
     sci_engine = ScientificEngine(data_path="reports/bio_test.csv", metadata_path="reports/bio_test_metadata.json")
+elif domain == "Cybersecurity":
+    # Use Advanced Cyber Test Data
+    sci_engine = ScientificEngine(data_path="reports/cyber_test_advanced.csv", metadata_path="reports/cyber_test_metadata.json")
+elif domain == "Smart City":
+    # Use Infrastructure Test Data
+    sci_engine = ScientificEngine(data_path="reports/city_test_data.csv", metadata_path="reports/city_metadata.json")
 else:
     # Use Simplified Finance Test Data
     sci_engine = ScientificEngine(data_path="reports/finance_test.csv", metadata_path="reports/finance_test_metadata.json")
@@ -149,30 +155,28 @@ tabs_list = [
     "📖 HOW TO USE", "🎛️ COMMAND CENTER", "⚙️ FACTORY", "📊 ASSET RADAR", "📈 BACKTEST", 
     "🌍 WORLD MODEL", "🏛️ HIERARCHY", "🧬 DNA EDITOR", "🧪 MOLECULAR DOCKING", "👥 DIGITAL TWIN",
     "🔬 RESEARCH DEVICE", "🔄 EVOLUTION", "🌌 VISUAL MANIFOLD", "🤖 COSMO-HUMANOID", "👨‍🔬 SCIENTIFIC DISCOVERY",
-    "🌌 DISCOVERY DASHBOARD"
+    "🌌 DISCOVERY DASHBOARD", "🔐 ADVERSARIAL LAB", "🏙️ SMART CITY TWIN"
 ]
 
-cols1 = st.columns(5)
-cols2 = st.columns(5)
+cols1 = st.columns(6)
+cols2 = st.columns(6)
 cols3 = st.columns(5)
 
-for i, tab_name in enumerate(tabs_list[:5]):
+for i, tab_name in enumerate(tabs_list[:6]):
     if cols1[i].button(tab_name):
         st.session_state.active_tab = tab_name
         st.rerun()
-for i, tab_name in enumerate(tabs_list[5:10]):
+for i, tab_name in enumerate(tabs_list[6:12]):
     if cols2[i].button(tab_name):
         st.session_state.active_tab = tab_name
         st.rerun()
-for i, tab_name in enumerate(tabs_list[10:15]):
-    if cols3[i].button(tab_name):
+for i, tab_name in enumerate(tabs_list[12:18]):
+    col_idx = i % 6
+    if st.columns(6)[col_idx].button(tab_name):
         st.session_state.active_tab = tab_name
         st.rerun()
 
-cols4 = st.columns(5)
-if cols4[0].button(tabs_list[15]):
-    st.session_state.active_tab = tabs_list[15]
-    st.rerun()
+# The code block for cols4 is no longer needed as we adjusted cols1-3
 
 st.divider()
 
@@ -525,7 +529,7 @@ if st.session_state.active_tab == "🔬 RESEARCH DEVICE":
             {"Device": "Robot-Unit-01", "Type": "Bot", "Status": "Standby"},
             {"Device": "Lab-Geneva", "Type": "Microscope", "Status": "Syncing"}
         ])
-        st.dataframe(devices, use_container_width=True)
+        st.dataframe(devices, width='stretch')
     with col_dev2:
         st.markdown("### Spectral Analysis (Node-04)")
         chart_data = pd.DataFrame([10, 20, 15, 40, 30, 50, 45, 60, 55, 70], columns=['Intensity'])
@@ -571,7 +575,7 @@ if st.session_state.active_tab == "🌌 VISUAL MANIFOLD":
                              title=f"Latent Asset Projection ({method})")
         
         fig.update_traces(textposition='top center')
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width='stretch')
         
         st.divider()
         st.subheader("🔗 Correlation Network Graph")
@@ -608,7 +612,7 @@ if st.session_state.active_tab == "🌌 VISUAL MANIFOLD":
                              marker=dict(size=5, color='#2563EB'), textposition="top center")
             ])
             fig_net.update_layout(title="Asset Contagion Network", showlegend=False)
-            st.plotly_chart(fig_net, use_container_width=True)
+            st.plotly_chart(fig_net, width='stretch')
     else:
         st.info("Initiate analysis to view the economic map.")
 
@@ -751,11 +755,159 @@ if st.session_state.active_tab == "🌌 DISCOVERY DASHBOARD":
                 return fig
 
             with col_comp1:
-                st.plotly_chart(draw_min_manifold(st.session_state.shock_original, "Original Manifold"), use_container_width=True)
+                st.plotly_chart(draw_min_manifold(st.session_state.shock_original, "Original Manifold"), width='stretch')
             with col_comp2:
-                st.plotly_chart(draw_min_manifold(st.session_state.shock_manifold, "Post-Shock Manifold"), use_container_width=True)
-        else:
-            st.info("Initiate Shock Simulation to observe systemic geometry shifts.")
+                st.plotly_chart(draw_min_manifold(st.session_state.shock_manifold, "Post-Shock Manifold"), width='stretch')
+# 17. ADVERSARIAL LAB
+if st.session_state.active_tab == "🔐 ADVERSARIAL LAB":
+    st.header("🔐 Adversarial Lab: Cyber Stress Testing")
+    st.write("Simulating adversarial agents and system-wide vulnerabilities.")
+    
+    if domain != "Cybersecurity":
+        st.warning("Please select 'Cybersecurity' domain in Domain Configuration to enable the Adversarial Lab.")
+    else:
+        col_adv1, col_adv2 = st.columns([1, 2])
+        
+        with col_adv1:
+            st.markdown("### 🧪 Attack Simulator")
+            target_node = st.selectbox("Target Node", ["N1", "N2", "N3", "N4", "N5"])
+            attack_type = st.radio("Attack Type", ["DDoS", "BruteForce", "Privilege Escalation"])
+            intensity = st.slider("Payload Intensity", 0.0, 1.0, 0.8)
+            
+            if st.button("🚀 EXECUTE ATTACK"):
+                from simulation.cyber_simulator import CyberSimulator
+                from simulation.adversarial_engine import AdversarialEngine
+                from intelligence.mitre_mapper import MitreMapper
+                
+                sim = CyberSimulator()
+                engine = AdversarialEngine(sim)
+                
+                # Run Round
+                res = engine.run_round(target_node, attack_type)
+                
+                st.session_state.cyber_results = res
+                st.session_state.mitre_context = MitreMapper.get_mitre_context(attack_type)
+                st.session_state.cyber_active = True
+                st.success(f"Attack on {target_node} executed. Blue Team responded.")
+
+        with col_adv2:
+            if 'cyber_active' in st.session_state and st.session_state.cyber_active:
+                res = st.session_state.cyber_results
+                mitre = st.session_state.mitre_context
+                
+                st.markdown(f"### 🛡️ MITRE Context: {mitre['name']} ({mitre['id']})")
+                st.caption(mitre['description'])
+                st.info(f"**Detection Guidance**: {mitre['detection']}")
+
+                st.divider()
+                st.subheader("📊 Bayesian Propagation Impact")
+                
+                # Show results in a table
+                impact_df = pd.DataFrame([
+                    {"Node": n, "Status": s} for n, s in res["system_state"].items()
+                ])
+                st.table(impact_df)
+                
+                st.divider()
+                st.subheader("🤖 Autonomous Action Log")
+                if res["blue_responses"]:
+                    for action in res["blue_responses"]:
+                        st.success(f"**{action['action']}** applied to **{action['node']}** | Result: {action.get('result', {}).get('status', 'SUCCESS')}")
+                else:
+                    st.warning("No autonomous actions triggered. Risk below threshold.")
+            else:
+                st.info("Execute an attack simulation to view reasoning and systemic impact.")
+
+        st.divider()
+        st.subheader("🔄 Multi-Round Adversarial Simulation")
+        if st.button("🏃 START CONTINUOUS Red vs Blue LOOP"):
+            from simulation.cyber_simulator import CyberSimulator
+            from simulation.adversarial_engine import AdversarialEngine
+            
+            sim_loop = CyberSimulator()
+            engine_loop = AdversarialEngine(sim_loop)
+            
+            progress_bar = st.progress(0)
+            status_text = st.empty()
+            
+            rounds_to_run = 3
+            for r in range(rounds_to_run):
+                status_text.text(f"Running Round {r+1} of {rounds_to_run}...")
+                round_res = engine_loop.run_round()
+                
+                with st.expander(f"Round {r+1} Details"):
+                    st.write(f"**Red Team**: {round_res['red_action']['type']} on {round_res['red_action']['target']}")
+                    st.write(f"**Blue Team Actions**: {len(round_res['blue_responses'])} mitigations applied.")
+                    st.json(round_res['system_state'])
+                
+                progress_bar.progress((r + 1) / rounds_to_run)
+                import time; time.sleep(1)
+            
+            st.success("Simulation Complete. System co-evolution stabilized.")
+
+# 18. SMART CITY TWIN
+if st.session_state.active_tab == "🏙️ SMART CITY TWIN":
+    st.header("🏙️ Smart City Digital Twin")
+    st.write("Infrastructure Resilience & Cascading Failure Simulation.")
+    
+    if domain != "Smart City":
+        st.warning("Please select 'Smart City' domain in Domain Configuration to enable this Digital Twin.")
+    else:
+        col_city1, col_city2 = st.columns([1, 2])
+        
+        with col_city1:
+            st.markdown("### 🌋 Inject System Shock")
+            target_node = st.selectbox("Infrastructure Node", ["P", "C", "T", "W", "E"])
+            shock_type = st.radio("Shock Type", ["Power Failure", "Comms Blackout", "Flood", "Cyber Override"])
+            intensity = st.slider("Shock Intensity", 0.0, 1.0, 0.9)
+            
+            if st.button("⚡ INITIATE SHOCK"):
+                from simulation.smart_city_simulator import SmartCitySimulator
+                from intelligence.reasoning_agent import ReasoningAgent
+                
+                sim = SmartCitySimulator()
+                res = sim.inject_shock(target_node, shock_type, intensity)
+                
+                # Run Resilience Reasoning
+                reasoner = ReasoningAgent()
+                reasoning = reasoner.execute_reasoning({
+                    "domain": "Smart City",
+                    "shock_target": target_node,
+                    "impact": res
+                })
+                
+                st.session_state.city_results = res
+                st.session_state.city_reasoning = reasoning
+                st.session_state.city_active = True
+                st.success("System shock injected. Cascades analyzed.")
+
+        with col_city2:
+            if 'city_active' in st.session_state and st.session_state.city_active:
+                res = st.session_state.city_results
+                reasoning = st.session_state.city_reasoning
+                
+                st.markdown(f"#### 🧠 Resilience Strategy: {reasoning.get('risk_prioritization', 'N/A')}")
+                st.write(reasoning.get("domain_assessment", ""))
+                st.info(f"**Strategy:** {', '.join(reasoning.get('strategy', []))}")
+                
+                st.divider()
+                st.subheader("📊 Sector Propagation Impact")
+                
+                impact_data = []
+                for node, data in res.items():
+                    impact_data.append({
+                        "Infrastructure": data["name"],
+                        "Status": data["status"],
+                        "Integrity": data["integrity"],
+                        "Cascade Risk": data["cascade_risk"]
+                    })
+                st.table(pd.DataFrame(impact_data))
+                
+                st.divider()
+                st.subheader("🕸️ Mechanistic Root Cause")
+                st.write(reasoning.get("analysis", ""))
+            else:
+                st.info("Execute a system shock to view infrastructure cascades and resilience reasoning.")
 
 # --- FOOTER ---
 st.divider()
