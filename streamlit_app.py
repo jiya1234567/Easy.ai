@@ -83,6 +83,7 @@ with st.sidebar:
     st.markdown("### 📷 Visual Ingress")
     optical_ingress = st.camera_input("Take Selfie", label_visibility="collapsed")
     if optical_ingress is not None:
+        st.session_state.selfie_bytes = optical_ingress.getvalue()
         st.success("Optical Ingress Acquired. Ready.")
         
     st.divider()
@@ -506,14 +507,49 @@ if st.session_state.active_tab == "👥 DIGITAL TWIN":
         col_scan1, col_scan2 = st.columns([2, 1])
         with col_scan1:
             if st.button("⚡ INITIATE TOTAL OMEGA SCAN"):
-                with st.spinner("Processing Bio-Metric Hypergraph..."):
+                with st.spinner("Processing Bio-Metric Hypergraph — 90 steps..."):
                     import subprocess
                     # Trigger the 90-step generator
                     subprocess.run(["py", "generate_eye_watch.py"], capture_output=True)
                     # Update local state
                     st.session_state.eye_scan_fidelity = "99.8%"
+                    
+                    if 'selfie_bytes' in st.session_state:
+                        st.info("Initiating Vision Model Optometric Analysis...")
+                        from intelligence.retinal_analyzer import RetinalAnalyzer
+                        analyzer = RetinalAnalyzer()
+                        vision_result = analyzer.analyze_image_bytes(st.session_state.selfie_bytes)
+                        if "error" in vision_result:
+                            st.error(vision_result["error"])
+                        else:
+                            st.session_state.vision_result = vision_result
+                            st.success("Genuine Vision Optometric Analysis Complete.")
+                    
                     st.success("Total Eye Scan Verified. Protocol generated in Target.JASON.")
                     st.rerun()
+                    
+            if 'vision_result' in st.session_state:
+                res = st.session_state.vision_result
+                st.markdown("#### 👁️ AI Optometric Analysis Results")
+                
+                col_va, col_vb, col_vc = st.columns(3)
+                with col_va:
+                    st.metric("Overall Risk", res.get("overall_risk", "N/A"))
+                with col_vb:
+                    st.metric("Diabetic Risk", f"{res.get('diabetic_risk_score', 0):.2f}")
+                with col_vc:
+                    st.metric("Macular Risk", f"{res.get('macular_risk_score', 0):.2f}")
+                    
+                st.write("**Clinical Summary:**")
+                st.caption(res.get("optometric_summary", "N/A"))
+                
+                if res.get("findings"):
+                    st.write("**Findings:**")
+                    for finding in res.get("findings", []):
+                        st.markdown(f"- {finding}")
+                
+                with st.expander("View Full Diagnostic Schema"):
+                    st.json(res)
         with col_scan2:
             st.info("Status: READY")
 
