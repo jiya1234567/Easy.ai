@@ -16,8 +16,12 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-# Load API Key
-API_KEY = os.environ.get("GEMINI_API_KEY")
+# Load API Key securely via session state
+if "gemini_api_key" not in st.session_state:
+    st.session_state.gemini_api_key = os.environ.get("GEMINI_API_KEY", "")
+
+os.environ["GEMINI_API_KEY"] = st.session_state.gemini_api_key
+API_KEY = st.session_state.gemini_api_key
 
 # --- STYLING ---
 st.markdown("""
@@ -75,13 +79,24 @@ with st.sidebar:
     st.title("🔬 OMEGA-CORE")
     st.subheader("Buddy's Toolset by A&P Phillips")
     
-    if not API_KEY:
-        API_KEY = st.text_input("🔑 Gemini API Key", type="password", help="Required for Factory Mission Execution. Get one at https://aistudio.google.com/")
+    api_key_input = st.text_input("🔑 Gemini API Key", type="password", value=st.session_state.gemini_api_key, help="Required for Factory Mission Execution. Get one at https://aistudio.google.com/")
+    if api_key_input:
+        st.session_state.gemini_api_key = api_key_input
+        os.environ["GEMINI_API_KEY"] = api_key_input
+        API_KEY = api_key_input
     
     st.divider()
     
     st.markdown("### 📷 Visual Ingress")
-    optical_ingress = st.camera_input("Take Selfie", label_visibility="collapsed")
+    
+    ingress_method = st.radio("Capture Method", ["Live Camera", "Upload Scan"], horizontal=True, label_visibility="collapsed")
+    optical_ingress = None
+    
+    if ingress_method == "Live Camera":
+        optical_ingress = st.camera_input("Take Selfie", label_visibility="collapsed")
+    else:
+        optical_ingress = st.file_uploader("Upload Retinal Scan (.jpg, .png)", type=["jpg", "jpeg", "png"])
+        
     if optical_ingress is not None:
         st.session_state.selfie_bytes = optical_ingress.getvalue()
         st.success("Optical Ingress Acquired. Ready.")
@@ -517,7 +532,7 @@ if st.session_state.active_tab == "👥 DIGITAL TWIN":
                     if 'selfie_bytes' in st.session_state:
                         st.info("Initiating Vision Model Optometric Analysis...")
                         from intelligence.retinal_analyzer import RetinalAnalyzer
-                        analyzer = RetinalAnalyzer()
+                        analyzer = RetinalAnalyzer(api_key=st.session_state.gemini_api_key)
                         vision_result = analyzer.analyze_image_bytes(st.session_state.selfie_bytes)
                         if "error" in vision_result:
                             st.error(vision_result["error"])
@@ -526,7 +541,6 @@ if st.session_state.active_tab == "👥 DIGITAL TWIN":
                             st.success("Genuine Vision Optometric Analysis Complete.")
                     
                     st.success("Total Eye Scan Verified. Protocol generated in Target.JASON.")
-                    st.rerun()
                     
             if 'vision_result' in st.session_state:
                 res = st.session_state.vision_result
@@ -536,12 +550,25 @@ if st.session_state.active_tab == "👥 DIGITAL TWIN":
                 with col_va:
                     st.metric("Overall Risk", res.get("overall_risk", "N/A"))
                 with col_vb:
-                    st.metric("Diabetic Risk", f"{res.get('diabetic_risk_score', 0):.2f}")
+                    diab = res.get('diabetic_risk_score', {})
+                    if isinstance(diab, dict):
+                        st.metric("Diabetic Risk", f"{diab.get('band', 'N/A')} ({diab.get('probability', 0):.0%})")
+                    else:
+                        st.metric("Diabetic Risk", f"{diab:.2f}")
                 with col_vc:
-                    st.metric("Macular Risk", f"{res.get('macular_risk_score', 0):.2f}")
+                    mac = res.get('macular_risk_score', {})
+                    if isinstance(mac, dict):
+                        st.metric("Macular Risk", f"{mac.get('band', 'N/A')} ({mac.get('probability', 0):.0%})")
+                    else:
+                        st.metric("Macular Risk", f"{mac:.2f}")
                     
                 st.write("**Clinical Summary:**")
                 st.caption(res.get("optometric_summary", "N/A"))
+                
+                if res.get("diagnostic_heatmap"):
+                    import base64
+                    heatmap_bytes = base64.b64decode(res["diagnostic_heatmap"])
+                    st.image(heatmap_bytes, caption="Diagnostic Bounding Box Mask", use_column_width=True)
                 
                 if res.get("findings"):
                     st.write("**Findings:**")

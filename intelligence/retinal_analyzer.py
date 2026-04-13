@@ -35,17 +35,18 @@ RISK_COLORS = {
 
 RETINAL_SCHEMA = {
     "overall_risk":          "NORMAL|LOW|MODERATE|HIGH|CRITICAL",
-    "confidence":            0.0,
-    "pupil_dilation_mm":     0.0,
+    "confidence":            {"mean": 0.0, "uncertainty": 0.0},
+    "pupil_dilation_mm":     {"mean": 0.0, "uncertainty": 0.0},
     "pupil_symmetry":        "NORMAL|ASYMMETRIC",
     "scleral_health":        "CLEAR|MILD_REDNESS|SEVERE_REDNESS|YELLOWING",
     "vascular_density":      "NORMAL|REDUCED|ELEVATED",
-    "cup_disc_ratio":        0.0,
-    "retinal_depth_score":   0.0,
-    "diabetic_risk_score":   0.0,
-    "glaucoma_risk_score":   0.0,
-    "macular_risk_score":    0.0,
+    "cup_disc_ratio":        {"mean": 0.0, "uncertainty": 0.0},
+    "retinal_depth_score":   {"mean": 0.0, "uncertainty": 0.0},
+    "diabetic_risk_score":   {"band": "LOW|MODERATE|HIGH|CRITICAL", "probability": 0.0},
+    "glaucoma_risk_score":   {"band": "LOW|MODERATE|HIGH|CRITICAL", "probability": 0.0},
+    "macular_risk_score":    {"band": "LOW|MODERATE|HIGH|CRITICAL", "probability": 0.0},
     "findings":              ["finding 1", "finding 2"],
+    "bounding_boxes":        [{"label": "exudate", "ymin": 0, "xmin": 0, "ymax": 0, "xmax": 0}],
     "recommendations":       ["action 1", "action 2"],
     "optometric_summary":    "Clinical summary text",
     "alert_required":        False,
@@ -66,8 +67,8 @@ class RetinalAnalyzer:
         (microaneurysms, haemorrhages, exudates pattern recognition)
     """
 
-    def __init__(self):
-        self.api_key = os.environ.get("GEMINI_API_KEY", "")
+    def __init__(self, api_key=None):
+        self.api_key = api_key or os.environ.get("GEMINI_API_KEY", "")
         self.model   = "gemini-2.0-flash"
 
     def analyze_image_bytes(self, image_bytes: bytes, mime_type: str = "image/jpeg") -> dict:
@@ -94,13 +95,12 @@ STRICT SCHEMA REQUIREMENT — return ONLY valid JSON matching this exact structu
 {json.dumps(RETINAL_SCHEMA, indent=2)}
 
 Clinical grading scales to apply:
-- cup_disc_ratio: 0.0–1.0 (normal <0.5, glaucoma risk >0.6)
-- retinal_depth_score: 0.0–1.0 (OCT-proxy, 1.0 = perfect depth/clarity)
-- diabetic_risk_score: 0.0–1.0 (ETDRS proxy)
-- glaucoma_risk_score: 0.0–1.0
-- macular_risk_score:  0.0–1.0
-- confidence: 0.0–1.0 (how legible the eye is in this image)
-- alert_required: true if ANY score > 0.6 OR scleral_health != CLEAR OR overall_risk in [HIGH, CRITICAL]
+- cup_disc_ratio: {"mean": 0.0-1.0, "uncertainty": 0.0-1.0}
+- retinal_depth_score: {"mean": 0.0-1.0, "uncertainty": 0.0-1.0}
+- diabetic_risk_score, glaucoma_risk_score, macular_risk_score: map to {"band": "LOW|MODERATE|HIGH|CRITICAL", "probability": 0.0-1.0}
+- bounding_boxes: strictly extract any observable lesions (e.g. exudates, hemorrhages). Provide coordinates mapped to 0-1000 scale [ymin, xmin, ymax, xmax].
+- confidence: {"mean": 0.0-1.0, "uncertainty": 0.0-1.0} (probabilistic certainty)
+- alert_required: true if ANY band is CRITICAL or HIGH.
 
 Be thorough. If the image is a selfie (not direct fundoscopy), note image limitations in findings but still
 extract all observable features. Treat this as a triage screening tool.
@@ -122,6 +122,38 @@ extract all observable features. Treat this as a triage screening tool.
             result["timestamp"] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             result["image_type"] = "mobile_selfie"
             result["model"]      = self.model
+
+            # -- HEATMAP / DIAGNOSTIC MASK RENDERING --
+            try:
+                import io
+                from PIL import Image, ImageDraw, ImageFont
+                
+                img = Image.open(io.BytesIO(image_bytes)).convert("RGBA")
+                overlay = Image.new("RGBA", img.size, (255, 255, 255, 0))
+                draw = ImageDraw.Draw(overlay)
+                
+                width, height = img.size
+                
+                for box in result.get("bounding_boxes", []):
+                    label = box.get("label", "lesion")
+                    
+                    # Normalize from Gemini 0-1000 scale
+                    y_min = (box["ymin"] / 1000.0) * height if box["ymin"] > 1 else box["ymin"] * height
+                    x_min = (box["xmin"] / 1000.0) * width if box["xmin"] > 1 else box["xmin"] * width
+                    y_max = (box["ymax"] / 1000.0) * height if box["ymax"] > 1 else box["ymax"] * height
+                    x_max = (box["xmax"] / 1000.0) * width if box["xmax"] > 1 else box["xmax"] * width
+                    
+                    color = (255, 0, 0, 160) if "hemorrhage" in label.lower() else (255, 200, 0, 160)
+                    draw.rectangle([x_min, y_min, x_max, y_max], outline=color, width=4)
+                    draw.text((x_min, max(0, y_min - 15)), label, fill=color)
+                
+                out_img = Image.alpha_composite(img, overlay).convert("RGB")
+                buf = io.BytesIO()
+                out_img.save(buf, format="JPEG")
+                result["diagnostic_heatmap"] = base64.b64encode(buf.getvalue()).decode("utf-8")
+            except Exception as mask_error:
+                result["heatmap_error"] = str(mask_error)
+
             self._save_scan(result)
             return result
 
