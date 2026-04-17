@@ -197,6 +197,8 @@ elif domain == "Materials":
 elif domain == "Quantum":
     # Use Universal Quantum Computing Data
     sci_engine = ScientificEngine(data_path="reports/quantum_test.csv", metadata_path="reports/quantum_metadata.json")
+elif domain == "Agriculture":
+    sci_engine = ScientificEngine(data_path="reports/agri_test_suite.csv", metadata_path="reports/omega_test_metadata.json")
 else:
     # Use Simplified Finance Test Data
     sci_engine = ScientificEngine(data_path="reports/finance_test.csv", metadata_path="reports/finance_test_metadata.json")
@@ -230,7 +232,7 @@ tabs_list = [
     "📖 HOW TO USE", "🎛️ COMMAND CENTER", "⚙️ FACTORY", "📊 ASSET RADAR", "📈 BACKTEST", 
     "🌍 WORLD MODEL", "🏛️ HIERARCHY", "🧬 DNA EDITOR", "🧪 MOLECULAR DOCKING", "👥 DIGITAL TWIN",
     "🔬 RESEARCH DEVICE", "🔄 EVOLUTION", "🌌 VISUAL MANIFOLD", "🚀 SINGULARITY FEED", "👨‍🔬 SCIENTIFIC DISCOVERY",
-    "🌌 DISCOVERY DASHBOARD", "🔐 ADVERSARIAL LAB", "🏙️ SMART CITY TWIN"
+    "🌌 DISCOVERY DASHBOARD", "🔐 ADVERSARIAL LAB", "🏙️ SMART CITY TWIN", "🧬 QUANTUM FEEDBACK", "🚜 AGRICULTURE ASI", "🌌 GLOBAL MONITORING"
 ]
 
 cols1 = st.columns(5)
@@ -251,9 +253,16 @@ for i, tab_name in enumerate(tabs_list[10:15]):
         st.rerun()
 
 cols4 = st.columns(5)
-for i, tab_name in enumerate(tabs_list[15:18]):
+for i, tab_name in enumerate(tabs_list[15:20]):
     col_idx = i % 5
     if cols4[col_idx].button(tab_name):
+        st.session_state.active_tab = tab_name
+        st.rerun()
+
+cols5 = st.columns(5)
+for i, tab_name in enumerate(tabs_list[20:21]):
+    col_idx = i % 5
+    if cols5[col_idx].button(tab_name):
         st.session_state.active_tab = tab_name
         st.rerun()
 
@@ -1509,6 +1518,209 @@ if st.session_state.active_tab == "🏙️ SMART CITY TWIN":
                     "Cascade Risk": f"{data['cascade_risk']:.0%}"
                 })
             st.dataframe(pd.DataFrame(impact_rows), width='stretch', hide_index=True)
+
+# 19. QUANTUM FEEDBACK
+if st.session_state.active_tab == "🧬 QUANTUM FEEDBACK":
+    st.header("🧬 Quantum Patient Bio-Feedback")
+    st.caption("Step-22: Real-time High-Fidelity Biological Simulation")
+
+    def simulate_quantum_feedback(therapy, profile):
+        try:
+            client = genai.Client(api_key=API_KEY)
+            prompt = f"""
+            STEP-22: QUANTUM PATIENT (REAL-TIME BIO-FEEDBACK)
+            Therapy: {json.dumps(therapy)}
+            Patient Profile: {json.dumps(profile)}
+            
+            TASK:
+            1. Simulate a real-time bio-feedback response for a "Digital Twin" patient receiving this therapy.
+            2. Provide vital signs, cellular response, and real-time adjustments.
+            3. Return JSON:
+            {{
+              "vitalSigns": {{
+                "heartRate": number,
+                "bloodPressure": "string (e.g., 120/80)",
+                "oxygenSaturation": number
+              }},
+              "cellularResponse": "string (e.g., 'T-cell activation detected')",
+              "toxicityAlert": boolean,
+              "realTimeAdjustment": "string",
+              "feedbackVisualData": [array of 10 numbers representing bio-rhythm stability]
+            }}
+            """
+            response = client.models.generate_content(
+                model="gemini-3-flash-preview",
+                contents=prompt,
+                config=types.GenerateContentConfig(response_mime_type="application/json")
+            )
+            return json.loads(response.text)
+        except Exception as e:
+            st.error(f"Quantum Simulation Error: {e}")
+            return None
+
+    col_q1, col_q2 = st.columns([1, 2])
+    with col_q1:
+        with st.container(border=True):
+            st.markdown("### 🧪 Therapy Ingress")
+            therapy_input = st.text_area("Therapy Recommendation", value="Nivolumab 240mg + CRISPR PD-L1 Suppression (Step-4)")
+            patient_age = st.number_input("Patient Age", value=45)
+            patient_genetics = st.text_input("Genetic Markers", value="HLA-A*02:01, PD-L1 High")
+            
+            if st.button("🚀 RUN QUANTUM SIMULATION"):
+                with st.spinner("Traversing Quantum Latent Bio-Space..."):
+                    result = simulate_quantum_feedback(
+                        {"name": therapy_input}, 
+                        {"age": patient_age, "bioMarkers": {"genetics": patient_genetics}}
+                    )
+                    if result:
+                        st.session_state.quantum_result = result
+                        st.success("Simulation Complete.")
+
+    with col_q2:
+        if 'quantum_result' in st.session_state:
+            res = st.session_state.quantum_result
+            
+            # --- Vitals Monitor ---
+            st.markdown("### 💓 Real-Time Vitals")
+            vcol1, vcol2, vcol3 = st.columns(3)
+            vcol1.metric("Heart Rate", f"{res['vitalSigns']['heartRate']} bpm")
+            vcol2.metric("Blood Pressure", res['vitalSigns']['bloodPressure'])
+            vcol3.metric("SpO2", f"{res['vitalSigns']['oxygenSaturation']}%")
+            
+            if res['toxicityAlert']:
+                st.error("🚨 CRITICAL TOXICITY ALERT DETECTED")
+                from intelligence.biometric_alert_engine import BiometricAlertEngine
+                alert_engine = BiometricAlertEngine("AJ Phillips")
+                alert_engine.send_email({"level": "CRITICAL", "timestamp": str(datetime.datetime.now()), "breaches": [{"metric": "Quantum Toxicity", "value": "HIGH", "severity": "CRITICAL"}], "vitals": {"bp": res['vitalSigns']['bloodPressure'], "glucose": 0, "pulse": res['vitalSigns']['heartRate'], "spo2": res['vitalSigns']['oxygenSaturation']}})
+            
+            st.divider()
+            
+            # --- Cellular Response ---
+            st.markdown("### 🧬 Cellular Dynamics")
+            st.info(f"**Current State:** {res['cellularResponse']}")
+            st.warning(f"**Therapeutic Adjustment:** {res['realTimeAdjustment']}")
+            
+            # --- Bio-Rhythm Chart ---
+            st.markdown("### 🌌 Bio-Rhythm Stability")
+            chart_df = pd.DataFrame(res['feedbackVisualData'], columns=['Stability Index'])
+            st.area_chart(chart_df)
+        else:
+            st.info("Awaiting therapy ingress for quantum simulation...")
+
+# 20. AGRICULTURE ASI
+if st.session_state.active_tab == "🚜 AGRICULTURE ASI":
+    st.header("🚜 Agriculture ASI: Autonomous Farming Assistant")
+    st.caption("OMEGA-CORE Scientific Discovery for Global Food Security")
+
+    from intelligence.agri_intelligence import AgriIntelligence
+    agri_intel = AgriIntelligence()
+
+    col_a1, col_a2 = st.columns([1, 2])
+    
+    with col_a1:
+        st.markdown("### 📸 Field Ingress")
+        # Simulate Image Upload (referencing the corn leaf image provided by user)
+        with st.container(border=True):
+            st.image("https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Gray_leaf_spot_of_maize.jpg/800px-Gray_leaf_spot_of_maize.jpg", caption="Live Field Stream (Uplink: Drone-04/Geneva)")
+            st.warning("Gray leaf spot detected in 14% of canopy.")
+            if st.button("🔍 RUN ASI DIAGNOSTIC"):
+                with st.spinner("Processing High-Fidelity Crop Vision..."):
+                    st.session_state.agri_report = agri_intel.generate_farmer_report()
+                    st.success("Report Generated.")
+
+    with col_a2:
+        if 'agri_report' in st.session_state:
+            report = st.session_state.agri_report
+            
+            # --- Header Metrics ---
+            m1, m2, m3 = st.columns(3)
+            m1.metric("Predicted Yield", report["Intelligence_Forecast"]["Predicted_Yield"], delta="-4% (Heat Stress)")
+            m2.metric("Soil Moisture", "12%", delta="-2%")
+            m3.metric("Disease Severity", report["Health_Audit"]["Severity"])
+            
+            st.divider()
+            
+            # --- Farmer Report Card ---
+            with st.expander("📄 CONSOLIDATED FARMER REPORT", expanded=True):
+                st.subheader(report["Title"])
+                st.write(f"**STATUS:** {report['Status']}")
+                st.info(f"**Health Audit:** {report['Health_Audit']['Alert']}")
+                
+                st.markdown("#### 💊 Prescriptive Actions")
+                st.success(f"**Primary:** {report['Prescription']['Primary_Action']}")
+                st.warning(f"**Economic ROI:** {report['Prescription']['Economic_Alternative']} (ROI: {report['Prescription']['Expected_ROI']})")
+                
+                st.markdown("#### ⚡ Resource Optimization")
+                st.write(f"Nitrogen: `{report['Resource_Optimization']['nitrogen_adjustment']}`")
+                st.write(f"Irrigation: `{report['Resource_Optimization']['irrigation_increase']}`")
+                st.caption(report['Resource_Optimization']['cost_saving_tip'])
+                
+            # --- Forecast Manifold ---
+            st.markdown("### 📈 Yield Manifold (Probabilistic)")
+            forecast_data = pd.DataFrame({
+                "Scenario": ["Best Case", "Most Likely", "Worst Case"],
+                "Yield": [182.5, float(report["Intelligence_Forecast"]["Predicted_Yield"].split()[0]), 168.0]
+            })
+            st.bar_chart(forecast_data.set_index("Scenario"))
+            st.caption(f"Risk Driver: {report['Intelligence_Forecast']['Weather_Alert']}")
+        else:
+            st.info("Initiate ASI Diagnostic to generate field-ready report.")
+
+# 21. GLOBAL MONITORING
+if st.session_state.active_tab == "🌌 GLOBAL MONITORING":
+    st.header("🌌 Global Environmental Monitoring & Learning Loop")
+    st.caption("Satellite Uplink: Sentinel-2 | Autonomous Causal Refinement Active")
+
+    from intelligence.sensor_uplink import SensorUplink
+    uplink = SensorUplink()
+    
+    col_g1, col_g2 = st.columns([1, 1])
+    
+    with col_g1:
+        st.markdown("### 🛰️ Satellite Hotspot Feed")
+        sat_data = uplink.get_satellite_hotspots()
+        
+        if sat_data["system_status"] == "CRITICAL_ALERT":
+            st.error("🚨 CRITICAL THERMAL ANOMALIES DETECTED")
+        else:
+            st.success("✅ System Status: Stable")
+            
+        st.dataframe(pd.DataFrame(sat_data["telemetry"]), hide_index=True)
+        
+        st.markdown("### 🌪️ Fire Propagation Vectors")
+        regions = ["Perth", "Adelaide", "Sydney", "Brisbane"]
+        for r in regions:
+            vec = uplink.calculate_fire_propagation_vector(r)
+            with st.expander(f"Vector Analysis: {r}", expanded=(r == "Perth")):
+                st.write(f"**Wind Direction:** {vec['vector_direction']}°")
+                st.write(f"**Impact Zone:** {vec['impact_zone']}")
+                st.progress(min(1.0, vec['magnitude_index']/50.0), text=f"Magnitude: {vec['magnitude_index']}")
+
+    with col_g2:
+        st.markdown("### 🧠 Autonomous Learning Loop")
+        st.info("Ingesting Ground Truth: `agri_test_suite.csv` -> `Actual_Yield`")
+        
+        if st.button("🔄 TRIGGER CAUSAL REFINEMENT"):
+            with st.spinner("Back-propagating yield errors..."):
+                # Use current sci_engine (initialized for Agri in domain logic)
+                success, audit = sci_engine.learn_from_ground_truth()
+                if success:
+                    st.session_state.learning_audit = audit
+                    st.success("Causal Weights Refined.")
+
+        if 'learning_audit' in st.session_state:
+            st.markdown("#### 🕵️ Accuracy Audit Report")
+            audit_df = pd.DataFrame(st.session_state.learning_audit)
+            st.table(audit_df)
+            
+            st.markdown("#### 📊 Convergence Manifold")
+            # Simulate convergence visualization
+            learning_data = pd.DataFrame({
+                "Iteration": range(1, 6),
+                "Error_Delta": [0.12, 0.08, 0.05, 0.02, 0.01]
+            })
+            st.line_chart(learning_data.set_index("Iteration"))
+            st.caption("System converging towards 'Physical Truth' via Bayesian update.")
 
 # --- FOOTER ---
 st.divider()

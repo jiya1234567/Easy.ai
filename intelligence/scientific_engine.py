@@ -21,6 +21,7 @@ class ScientificEngine:
         self.metadata_path = metadata_path
         self.data = None
         self.metadata = None
+        self.causal_graph = None # Persistent intelligence state
         
     # --- DataAgent ---
     def load_data(self):
@@ -105,9 +106,9 @@ class ScientificEngine:
         
         # Universal Role Definitions
         ontology = {
-            "DRIVER": ["Atomic_Structure", "Grain_Size", "Nano_Coating", "Pressure_Processing", "Interest_Rate", "Market_Sentiment", "Mutation_Level", "Magnetic_Bias", "Pulse_Duration", "Vacuum_Pressure", "Atomic_Spin", "Patch_Level", "Open_Ports", "User_Privilege_Level", "External_Connections", "Energy_Demand", "Traffic_Load", "Water_Consumption", "Packet_Rate"],
-            "PROPERTY": ["Conductivity", "Strength", "Elasticity", "Thermal_Stability", "Defect_Score", "RSI", "Price", "Expression_Level", "Coherence_Time", "Fidelity", "Qubit_Stability", "Phase_Shift", "Energy_State", "Traffic_Volume", "Packet_Entropy", "Failed_Logins", "CPU_Usage", "Anomaly_Score", "Grid_Frequency", "Voltage_Level", "Traffic_Flow_Rate", "Water_Pressure", "Comms_Latency"],
-            "INTERVENTION": ["Treatment_Temperature", "Treatment_Time", "Doping_Level", "Asset_Allocation", "Dosage", "Laser_Intensity", "Cryo_Temperature", "Microwave_Frequency", "Attack_Type", "Payload_Intensity", "Mitigation_Action", "Load_Shedding", "Signal_Timing", "Valve_Control", "Route_Reoptimization", "Throttle_Bandwidth"],
+            "DRIVER": ["Atomic_Structure", "Grain_Size", "Nano_Coating", "Pressure_Processing", "Interest_Rate", "Market_Sentiment", "Mutation_Level", "Magnetic_Bias", "Pulse_Duration", "Vacuum_Pressure", "Atomic_Spin", "Patch_Level", "Open_Ports", "User_Privilege_Level", "External_Connections", "Energy_Demand", "Traffic_Load", "Water_Consumption", "Packet_Rate", "Temperature_C", "Humidity", "Wind_kmh", "Rain_mm", "Pressure_hPa", "Drought_Index", "Soil_Nitrogen", "Soil_Moisture", "Irrigation_Volume", "Fertilizer_Type"],
+            "PROPERTY": ["Conductivity", "Strength", "Elasticity", "Thermal_Stability", "Defect_Score", "RSI", "Price", "Expression_Level", "Coherence_Time", "Fidelity", "Qubit_Stability", "Phase_Shift", "Energy_State", "Traffic_Volume", "Packet_Entropy", "Failed_Logins", "CPU_Usage", "Anomaly_Score", "Grid_Frequency", "Voltage_Level", "Traffic_Flow_Rate", "Water_Pressure", "Comms_Latency", "Fire_Risk", "Storm_Risk", "Flood_Risk", "Ignition_Risk", "Population_Exposure", "Fire_Size_ha", "Electricity_Demand", "Grid_Stress", "Power_Outage_Risk", "Economic_Loss_Million", "Projected_Yield", "Crop_Health_Score", "Disease_Severity", "Smoke_Index", "PM25", "Hospital_Load", "Respiratory_Risk", "Evacuation_Risk"],
+            "INTERVENTION": ["Treatment_Temperature", "Treatment_Time", "Doping_Level", "Asset_Allocation", "Dosage", "Laser_Intensity", "Cryo_Temperature", "Microwave_Frequency", "Attack_Type", "Payload_Intensity", "Mitigation_Action", "Load_Shedding", "Signal_Timing", "Valve_Control", "Route_Reoptimization", "Throttle_Bandwidth", "Containment"],
             "DYNAMICS": ["Time_Cycle", "Degradation_Rate", "Performance_After_Stress", "Volatility", "Half_Life", "Decoherence_Rate", "Relaxation_Time", "Measurement_Count", "Anomaly_Growth", "System_Degradation", "Failure_Spread_Rate", "Recovery_Metric", "System_Inertia"],
             "NETWORK": ["Composite_Mix_Ratio", "Interface_Bond_Strength", "Layer_Depth", "Centrality", "Connectivity", "Entanglement_Entropy", "Coupler_Strength", "Qubit_Connectivity", "Lateral_Movement_Risk", "Connected_Nodes", "Influence_Score", "Grid_Topology", "Backhaul_Connectivity", "Pipeline_Adjacency"],
             "UNCERTAINTY": ["Measurement_Error", "Confidence_Score", "Standard_Deviation", "P_Value", "Readout_Error", "Quantum_Noise", "Gate_Fidelity_Error", "False_Positive_Rate", "Sensor_Noise", "Detection_Confidence", "Sensor_Bias", "Telemetry_Noise"]
@@ -159,7 +160,45 @@ class ScientificEngine:
                             # Store both the weight and the uncertainty (1 - u_weight)
                             causal_graph.add_edge(u, v, weight=prob_weight, uncertainty=1.0 - u_weight)
                             
+        self.causal_graph = causal_graph
         return causal_graph
+
+    # --- Learning Loop Agent (NEW) ---
+    def learn_from_ground_truth(self, target_node="Projected_Yield", ground_truth_node="Actual_Yield"):
+        """
+        Adjusts causal weights based on the delta between predicted and ground truth.
+        Implements a simple Bayesian update style for weight refinement.
+        """
+        if self.data is None: self.load_data()
+        if self.causal_graph is None: self.discover_causality()
+        
+        if ground_truth_node not in self.data.columns:
+            return False, f"Ground truth node {ground_truth_node} missing from dataset."
+            
+        # Calculate global prediction error
+        error = (self.data[target_node] - self.data[ground_truth_node]).mean()
+        error_norm = error / self.data[target_node].mean()
+        
+        # Back-propagate adjustment to all drivers of the target node
+        drivers = [u for u, v in self.causal_graph.edges() if v == target_node]
+        
+        audit_trail = []
+        for u in drivers:
+            old_weight = self.causal_graph[u][target_node]['weight']
+            # Adjust weight: if predicted > actual, we over-estimated the driver's positive impact
+            # Learning rate 0.1
+            adjustment = -0.1 * error_norm * old_weight
+            new_weight = old_weight + adjustment
+            self.causal_graph[u][target_node]['weight'] = new_weight
+            
+            audit_trail.append({
+                "driver": u,
+                "old_weight": round(old_weight, 4),
+                "new_weight": round(new_weight, 4),
+                "delta": round(adjustment, 4)
+            })
+            
+        return True, audit_trail
 
     # --- Probabilistic Causal Engine (NEW) ---
     def simulate_intervention(self, target_node, intervention_value, graph=None):
