@@ -6,7 +6,16 @@ import plotly.express as px
 from google import genai
 from google.genai import types
 import datetime
+from dotenv import load_dotenv
+
+# Ensure the local directory is in the path for module resolution
+import sys
+sys.path.append(os.getcwd())
+
 from intelligence.scientific_engine import ScientificEngine
+
+# Load environment variables
+load_dotenv()
 
 # --- CONFIGURATION ---
 st.set_page_config(
@@ -179,6 +188,8 @@ st.title("🚀 Singularity Dashboard")
 st.caption(f"Omega Clearance: aejphillips@outlook.com | {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
 
 st.markdown("### Domain Configuration")
+
+
 domain = st.selectbox("DOMAIN SELECTION", ["Health", "Finance", "Cybersecurity", "Smart City", "Materials", "Quantum", "Agriculture", "General"], label_visibility="collapsed")
 
 # --- DOMAIN ENGINE INITIALIZATION ---
