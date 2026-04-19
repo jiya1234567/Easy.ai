@@ -170,27 +170,19 @@ if 'active_tab' not in st.session_state:
 tabs_list = [
     "📖 HOW TO USE", "🎛️ COMMAND CENTER", "⚙️ FACTORY", "📊 ASSET RADAR", "📈 BACKTEST", 
     "🌍 WORLD MODEL", "🏛️ HIERARCHY", "🧬 DNA EDITOR", "🧪 MOLECULAR DOCKING", "👥 DIGITAL TWIN",
-    "🔬 RESEARCH DEVICE", "🔄 EVOLUTION", "🌌 VISUAL MANIFOLD", "🤖 COSMO-HUMANOID", "👨‍🔬 SCIENTIFIC DISCOVERY",
-    "🌌 DISCOVERY DASHBOARD", "🔐 ADVERSARIAL LAB", "🏙️ SMART CITY TWIN"
+    "🔬 RESEARCH DEVICE", "🔄 EVOLUTION", "🌌 VISUAL MANIFOLD", "🚀 SINGULARITY FEED", "👨‍🔬 SCIENTIFIC DISCOVERY",
+    "🌌 DISCOVERY DASHBOARD", "🔐 ADVERSARIAL LAB", "🏙️ SMART CITY TWIN", "🧬 QUANTUM FEEDBACK", "🚜 AGRICULTURE ASI", 
+    "🌌 GLOBAL MONITORING", "🦾 ROBOTICS COMMAND", "📊 REPORTS ENGINE"
 ]
 
-cols1 = st.columns(6)
-cols2 = st.columns(6)
-cols3 = st.columns(5)
-
-for i, tab_name in enumerate(tabs_list[:6]):
-    if cols1[i].button(tab_name):
-        st.session_state.active_tab = tab_name
-        st.rerun()
-for i, tab_name in enumerate(tabs_list[6:12]):
-    if cols2[i].button(tab_name):
-        st.session_state.active_tab = tab_name
-        st.rerun()
-for i, tab_name in enumerate(tabs_list[12:18]):
-    col_idx = i % 6
-    if st.columns(6)[col_idx].button(tab_name):
-        st.session_state.active_tab = tab_name
-        st.rerun()
+# Grid Rendering (5 columns)
+for chunk_idx in range(0, len(tabs_list), 5):
+    chunk = tabs_list[chunk_idx:chunk_idx + 5]
+    cols = st.columns(5)
+    for i, tab_name in enumerate(chunk):
+        if cols[i].button(tab_name):
+            st.session_state.active_tab = tab_name
+            st.rerun()
 
 # The code block for cols4 is no longer needed as we adjusted cols1-3
 
