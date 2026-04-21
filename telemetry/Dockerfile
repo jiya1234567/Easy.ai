@@ -18,4 +18,4 @@ EXPOSE 8080
 
 # Run the application
 # We use --server.port=8080 and --server.address=0.0.0.0 for Cloud Run compatibility
-CMD ["streamlit", "run", "app.py", "--server.port=8080", "--server.address=0.0.0.0"]
+CMD ["streamlit", "run", "streamlit_app.py", "--server.port=8080", "--server.address=0.0.0.0"]

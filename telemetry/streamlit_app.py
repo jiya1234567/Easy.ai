@@ -524,70 +524,70 @@ if st.session_state.active_tab == "👥 DIGITAL TWIN":
         st.caption("TOTAL RETINAL BIOMETRIC & VASCULAR MAPPING")
         col_scan1, col_scan2 = st.columns([2, 1])
         with col_scan1:
-            if st.button("⚡ INITIATE TOTAL OMEGA SCAN"):
-                with st.spinner("Processing Bio-Metric Hypergraph — 90 steps..."):
-                    import subprocess
-                    # Trigger the 90-step generator
-                    subprocess.run(["py", "generate_eye_watch.py"], capture_output=True)
-                    # Update local state
-                    st.session_state.eye_scan_fidelity = "99.8%"
+            try:
+                if st.button("⚡ INITIATE TOTAL OMEGA SCAN"):
+                    with st.spinner("Processing Bio-Metric Hypergraph — 90 steps..."):
+                        import subprocess
+                        # Trigger the 90-step generator
+                        subprocess.run(["py", "generate_eye_watch.py"], capture_output=True)
+                        # Update local state
+                        st.session_state.eye_scan_fidelity = "99.8%"
+                        
+                        if 'selfie_bytes' in st.session_state:
+                            st.info("Initiating Vision Model Optometric Analysis...")
+                            from intelligence.retinal_analyzer import RetinalAnalyzer
+                            analyzer = RetinalAnalyzer(api_key=st.session_state.gemini_api_key)
+                            vision_result = analyzer.analyze_image_bytes(st.session_state.selfie_bytes)
+                            if "error" in vision_result:
+                                st.error(vision_result["error"])
+                            else:
+                                st.session_state.vision_result = vision_result
+                                st.success("Genuine Vision Optometric Analysis Complete.")
+                        
+                        st.success("Total Eye Scan Verified. Protocol generated in Target.JASON.")
+                        
+                if 'vision_result' in st.session_state:
+                    res = st.session_state.vision_result
+                    st.markdown("#### 👁️ AI Optometric Analysis Results")
                     
-                    if 'selfie_bytes' in st.session_state:
-                        st.info("Initiating Vision Model Optometric Analysis...")
-                        from intelligence.retinal_analyzer import RetinalAnalyzer
-                        analyzer = RetinalAnalyzer(api_key=st.session_state.gemini_api_key)
-                        vision_result = analyzer.analyze_image_bytes(st.session_state.selfie_bytes)
-                        if "error" in vision_result:
-                            st.error(vision_result["error"])
+                    col_va, col_vb, col_vc = st.columns(3)
+                    with col_va:
+                        st.metric("Overall Risk", res.get("overall_risk", "N/A"))
+                    with col_vb:
+                        diab = res.get('diabetic_risk_score', {})
+                        if isinstance(diab, dict):
+                            st.metric("Diabetic Risk", f"{diab.get('band', 'N/A')} ({diab.get('probability', 0):.0%})")
                         else:
-                            st.session_state.vision_result = vision_result
-                            st.success("Genuine Vision Optometric Analysis Complete.")
+                            st.metric("Diabetic Risk", f"{diab:.2f}")
+                    with col_vc:
+                        mac = res.get('macular_risk_score', {})
+                        if isinstance(mac, dict):
+                            st.metric("Macular Risk", f"{mac.get('band', 'N/A')} ({mac.get('probability', 0):.0%})")
+                        else:
+                            st.metric("Macular Risk", f"{mac:.2f}")
+                        
+                    st.write("**Clinical Summary:**")
+                    st.caption(res.get("optometric_summary", "N/A"))
                     
-                    st.success("Total Eye Scan Verified. Protocol generated in Target.JASON.")
+                    if res.get("diagnostic_heatmap"):
+                        import base64
+                        heatmap_bytes = base64.b64decode(res["diagnostic_heatmap"])
+                        st.image(heatmap_bytes, caption="Diagnostic Bounding Box Mask", use_column_width=True)
                     
-            if 'vision_result' in st.session_state:
-                res = st.session_state.vision_result
-                st.markdown("#### 👁️ AI Optometric Analysis Results")
-                
-                col_va, col_vb, col_vc = st.columns(3)
-                with col_va:
-                    st.metric("Overall Risk", res.get("overall_risk", "N/A"))
-                with col_vb:
-                    diab = res.get('diabetic_risk_score', {})
-                    if isinstance(diab, dict):
-                        st.metric("Diabetic Risk", f"{diab.get('band', 'N/A')} ({diab.get('probability', 0):.0%})")
-                    else:
-                        st.metric("Diabetic Risk", f"{diab:.2f}")
-                with col_vc:
-                    mac = res.get('macular_risk_score', {})
-                    if isinstance(mac, dict):
-                        st.metric("Macular Risk", f"{mac.get('band', 'N/A')} ({mac.get('probability', 0):.0%})")
-                    else:
-                        st.metric("Macular Risk", f"{mac:.2f}")
+                    if res.get("findings"):
+                        st.write("**Findings:**")
+                        for finding in res.get("findings", []):
+                            st.markdown(f"- {finding}")
                     
-                st.write("**Clinical Summary:**")
-                st.caption(res.get("optometric_summary", "N/A"))
-                
-                if res.get("diagnostic_heatmap"):
-                    import base64
-                    heatmap_bytes = base64.b64decode(res["diagnostic_heatmap"])
-                    st.image(heatmap_bytes, caption="Diagnostic Bounding Box Mask", use_column_width=True)
-                
-                if res.get("findings"):
-                    st.write("**Findings:**")
-                    for finding in res.get("findings", []):
-                        st.markdown(f"- {finding}")
-                
-                with st.expander("View Full Diagnostic Schema"):
-                    st.json(res)
+                    with st.expander("View Full Diagnostic Schema"):
+                        st.json(res)
+            except Exception as e:
+                st.error(f"⚠️ OMEGA-CORE STARTUP CRITICAL ERROR: {e}")
+                st.info("Debugging context: Check module imports and data file paths.")
+                import traceback
+                st.code(traceback.format_exc())
         with col_scan2:
             st.info("Status: READY")
-
-except Exception as e:
-    st.error(f"⚠️ OMEGA-CORE STARTUP CRITICAL ERROR: {e}")
-    st.info("Debugging context: Check module imports and data file paths.")
-    import traceback
-    st.code(traceback.format_exc())
 
 # 11. RESEARCH DEVICE
 if st.session_state.active_tab == "🔬 RESEARCH DEVICE":
