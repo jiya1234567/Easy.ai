@@ -1,0 +1,6 @@
+UserID,HbA1c,eGFR,BP,Cholesterol,Smartwatch_Stress,Sleep_Score,Insurance_Recommendation
+U1,5.2,95,120,180,0.3,0.8,Reduce_Extras
+U2,6.4,70,135,220,0.6,0.6,Maintain_Cover
+U3,5.0,100,115,170,0.2,0.9,Switch_Basic
+U4,7.2,55,145,240,0.8,0.4,Full_Cover
+U5,6.8,50,150,260,0.9,0.5,Full_Cover

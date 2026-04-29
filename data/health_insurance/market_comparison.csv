@@ -1,0 +1,6 @@
+Age_Group,State,Recommended_Plan,Avg_Market_Premium,Cheapest_Option,Potential_Savings
+30-40,NSW,Silver_No_Pregnancy,190,160,85
+40-50,VIC,Silver_Optimized,250,210,120
+20-30,QLD,Basic_Minimal,100,85,35
+50-60,NSW,Gold_No_IVF,320,280,140
+60-70,SA,Basic_Optimized,150,120,60

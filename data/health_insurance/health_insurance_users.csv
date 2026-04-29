@@ -1,0 +1,6 @@
+UserID,Age,State,Income,Family_Size,Current_Insurer,Hospital_Cover,Extras_Cover,Monthly_Premium,Annual_Premium,Years_With_Provider,Uses_Extras_Frequency,Chronic_Conditions,Retinal_Risk,Heart_Risk,Switching_Behavior,Financial_Stress
+U1,34,NSW,85000,2,Bupa,Gold,Yes,245,2940,6,Low,None,0.12,0.18,Loyal,0.6
+U2,45,VIC,92000,4,Medibank,Silver,Yes,310,3720,8,Medium,Hypertension,0.35,0.62,Loyal,0.7
+U3,29,QLD,68000,1,NIB,Basic,No,120,1440,2,Low,None,0.08,0.15,Switcher,0.4
+U4,52,NSW,105000,3,HCF,Gold,Yes,420,5040,10,High,Diabetes,0.72,0.68,Loyal,0.8
+U5,65,SA,55000,1,Other,Basic,Yes,180,2160,12,Low,Cardiac,0.55,0.81,Loyal,0.9

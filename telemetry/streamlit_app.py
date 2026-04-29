@@ -183,7 +183,7 @@ tabs_list = [
     "🌍 WORLD MODEL", "🏛️ HIERARCHY", "🧬 DNA EDITOR", "🧪 MOLECULAR DOCKING", "👥 DIGITAL TWIN",
     "🔬 RESEARCH DEVICE", "🔄 EVOLUTION", "🌌 VISUAL MANIFOLD", "🚀 SINGULARITY FEED", "👨‍🔬 SCIENTIFIC DISCOVERY",
     "🌌 DISCOVERY DASHBOARD", "🔐 ADVERSARIAL LAB", "🏙️ SMART CITY TWIN", "🧬 QUANTUM FEEDBACK", "🚜 AGRICULTURE ASI", 
-    "🌌 GLOBAL MONITORING", "🦾 ROBOTICS COMMAND", "📊 REPORTS ENGINE"
+    "🌌 GLOBAL MONITORING", "🦾 ROBOTICS COMMAND", "📊 REPORTS ENGINE", "🏥 HEALTH INSURANCE"
 ]
 
 # Grid Rendering (5 columns)
@@ -980,6 +980,101 @@ if st.session_state.active_tab == "🏙️ SMART CITY TWIN":
                 st.write(reasoning.get("analysis", ""))
             else:
                 st.info("Execute a system shock to view infrastructure cascades and resilience reasoning.")
+
+# 24. HEALTH INSURANCE
+if st.session_state.active_tab == "🏥 HEALTH INSURANCE":
+    st.header("🏥 OMEGA-CORE Health Insurance Risk Assessor")
+    st.write("Estimating health risk, probability of treatment, and optimal insurance levels using multi-modal telemetry.")
+    
+    # Lazy load the engine
+    from intelligence.health_insurance_engine import HealthInsuranceEngine
+    health_engine = HealthInsuranceEngine()
+
+    st.markdown("### 📊 Test Datasets")
+    test_type = st.radio("Select Test Type", ["Family Risk Assessment", "Accident-Only Viability", "Blood Biomarkers", "Financial Summary"], horizontal=True)
+
+    if test_type == "Family Risk Assessment":
+        df = health_engine.load_family_data()
+        if not df.empty:
+            family_id = st.selectbox("Select Family ID", df['Family_ID'].tolist())
+            row = df[df['Family_ID'] == family_id].iloc[0]
+            
+            st.markdown(f"#### 🔎 Assessment for {family_id}")
+            col1, col2, col3, col4 = st.columns(4)
+            col1.metric("Retinal Diabetic Risk", f"{row['Retinal_Diabetic_Risk']:.2f}")
+            col2.metric("Heart Risk", f"{row['Heart_Risk']:.2f}")
+            col3.metric("Hospital Visits", int(row['Hospital_Visits']))
+            col4.metric("Financial Stress", f"{row['Financial_Stress']:.2f}")
+            
+            st.divider()
+            recommendation = health_engine.evaluate_family_risk(row.to_dict())
+            st.success(f"**OMEGA-CORE Recommendation:** {recommendation}")
+            st.dataframe(df)
+        else:
+            st.info("Family test data not found.")
+
+    elif test_type == "Blood Biomarkers":
+        df = health_engine.load_biomarker_data()
+        if not df.empty:
+            person_id = st.selectbox("Select Person", df['Person'].tolist())
+            row = df[df['Person'] == person_id].iloc[0]
+            
+            st.markdown(f"#### 🩸 Biomarker Assessment for {person_id}")
+            col1, col2, col3, col4 = st.columns(4)
+            col1.metric("HbA1c (%)", f"{row['HbA1c']:.1f}")
+            col2.metric("eGFR", int(row['eGFR']))
+            col3.metric("Systolic BP", int(row['Systolic_BP']))
+            col4.metric("CRP", int(row['CRP']))
+            
+            st.divider()
+            recommendation = health_engine.evaluate_biomarker_risk(row.to_dict())
+            
+            if "HIGH" in recommendation:
+                st.error(f"**OMEGA-CORE Recommendation:** {recommendation}")
+            elif "MEDIUM" in recommendation:
+                st.warning(f"**OMEGA-CORE Recommendation:** {recommendation}")
+            else:
+                st.success(f"**OMEGA-CORE Recommendation:** {recommendation}")
+                
+            st.dataframe(df)
+        else:
+            st.info("Biomarker test data not found.")
+            
+    elif test_type == "Accident-Only Viability":
+        df = health_engine.load_accident_data()
+        if not df.empty:
+            person_id = st.selectbox("Select Person_ID", df['Person_ID'].tolist())
+            row = df[df['Person_ID'] == person_id].iloc[0]
+            
+            st.markdown(f"#### ⚠️ Accident-Only Viability for {person_id}")
+            col1, col2, col3 = st.columns(3)
+            col1.metric("Age", int(row['Age']))
+            col2.metric("Accident Premium", f"${row['Accident_Only_Premium_USD_Yr']}")
+            col3.metric("OMEGA Status", row['OMEGA_Status'])
+            
+            st.divider()
+            recommendation = health_engine.evaluate_accident_cover(row.to_dict())
+            
+            if "CRITICAL" in recommendation:
+                st.error(f"**OMEGA-CORE Action:** {recommendation}")
+            elif "WARNING" in recommendation:
+                st.warning(f"**OMEGA-CORE Action:** {recommendation}")
+            elif "WATCH" in recommendation:
+                st.info(f"**OMEGA-CORE Action:** {recommendation}")
+            else:
+                st.success(f"**OMEGA-CORE Action:** {recommendation}")
+            
+            st.dataframe(df)
+        else:
+            st.info("Accident-only data not found.")
+            
+    elif test_type == "Financial Summary":
+        df = health_engine.load_family_cost_data()
+        if not df.empty:
+            st.markdown("#### 💰 Family Financial Stress & Savings Analysis")
+            st.dataframe(df)
+        else:
+            st.info("Family cost data not found.")
 
 # --- FOOTER ---
 st.divider()

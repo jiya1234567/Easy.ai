@@ -1,0 +1,6 @@
+UserID,Loyalty_Bias,Awareness_Level,Switch_Resistance,Trust_Current_Provider,Overpay_Risk
+U1,High,Low,High,0.9,0.75
+U2,High,Medium,High,0.85,0.8
+U3,Low,High,Low,0.4,0.2
+U4,Very_High,Low,Very_High,0.95,0.9
+U5,Very_High,Low,Very_High,0.92,0.88

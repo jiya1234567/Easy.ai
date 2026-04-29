@@ -1,23 +1,23 @@
 # Deployment Script for Universal Lab to Google Cloud Run
 # Project: thinking-avenue-475805-v1
 
-$PROJECT_ID = "thinking-avenue-475805-v1"
+$PROJECT_ID = "project-b189cc95-d807-4fa2-976"
 $REGION = "us-central1"
-$SERVICE_NAME = "universal-lab-dashboard"
+$SERVICE_NAME = "universal"
 
 Write-Host "--- Starting Deployment to Google Cloud Run ---" -ForegroundColor Cyan
 
 # 1. Set the project
 Write-Host "Setting project to $PROJECT_ID..."
-gcloud config set project $PROJECT_ID
+gcloud.cmd config set project $PROJECT_ID
 
 # 2. Enable necessary APIs
 Write-Host "Ensuring necessary APIs are enabled..."
-gcloud services enable run.googleapis.com containerregistry.googleapis.com cloudbuild.googleapis.com
+gcloud.cmd services enable run.googleapis.com containerregistry.googleapis.com cloudbuild.googleapis.com
 
 # 3. Build and push the image using Cloud Build
 Write-Host "Building and pushing container image..."
-gcloud builds submit --tag gcr.io/$PROJECT_ID/$SERVICE_NAME
+gcloud.cmd builds submit --tag gcr.io/$PROJECT_ID/$SERVICE_NAME
 
 # 4. Deploy to Cloud Run
 Write-Host "Deploying to Cloud Run..."
@@ -27,7 +27,7 @@ if (-not $API_KEY) {
 }
 
 if ($API_KEY) {
-    gcloud run deploy $SERVICE_NAME `
+    gcloud.cmd run deploy $SERVICE_NAME `
         --image gcr.io/$PROJECT_ID/$SERVICE_NAME `
         --platform managed `
         --region $REGION `
@@ -37,7 +37,7 @@ if ($API_KEY) {
         --timeout 300 `
         --set-env-vars "GEMINI_API_KEY=$API_KEY"
 } else {
-    gcloud run deploy $SERVICE_NAME `
+    gcloud.cmd run deploy $SERVICE_NAME `
         --image gcr.io/$PROJECT_ID/$SERVICE_NAME `
         --platform managed `
         --region $REGION `

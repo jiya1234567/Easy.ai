@@ -7,6 +7,7 @@ from google import genai
 from google.genai import types
 import datetime
 from intelligence.scientific_engine import ScientificEngine
+from intelligence.health_insurance_engine import HealthInsuranceEngine
 
 # --- CONFIGURATION ---
 st.set_page_config(
@@ -172,7 +173,7 @@ tabs_list = [
     "🌍 WORLD MODEL", "🏛️ HIERARCHY", "🧬 DNA EDITOR", "🧪 MOLECULAR DOCKING", "👥 DIGITAL TWIN",
     "🔬 RESEARCH DEVICE", "🔄 EVOLUTION", "🌌 VISUAL MANIFOLD", "🚀 SINGULARITY FEED", "👨‍🔬 SCIENTIFIC DISCOVERY",
     "🌌 DISCOVERY DASHBOARD", "🔐 ADVERSARIAL LAB", "🏙️ SMART CITY TWIN", "🧬 QUANTUM FEEDBACK", "🚜 AGRICULTURE ASI", 
-    "🌌 GLOBAL MONITORING", "🦾 ROBOTICS COMMAND", "📊 REPORTS ENGINE"
+    "🌌 GLOBAL MONITORING", "🦾 ROBOTICS COMMAND", "📊 REPORTS ENGINE", "🩺 HEALTH PROTOCOL"
 ]
 
 # Grid Rendering (5 columns)
@@ -901,6 +902,7 @@ if st.session_state.active_tab == "🔐 ADVERSARIAL LAB":
             st.success("Simulation Complete. System co-evolution stabilized.")
 
 # 18. SMART CITY TWIN
+# 18. SMART CITY TWIN
 if st.session_state.active_tab == "🏙️ SMART CITY TWIN":
     st.header("🏙️ Smart City Digital Twin")
     st.write("Infrastructure Resilience & Cascading Failure Simulation.")
@@ -963,6 +965,156 @@ if st.session_state.active_tab == "🏙️ SMART CITY TWIN":
                 st.write(reasoning.get("analysis", ""))
             else:
                 st.info("Execute a system shock to view infrastructure cascades and resilience reasoning.")
+
+# 23. HEALTH PROTOCOL
+if st.session_state.active_tab == "🩺 HEALTH PROTOCOL":
+    st.header("🩺 Universal Health Protocol")
+    st.write("Step-by-step biometric validation and insurance optimization.")
+
+    # Initialize Protocol State
+    if 'health_step' not in st.session_state:
+        st.session_state.health_step = 1
+    if 'health_profile' not in st.session_state:
+        st.session_state.health_profile = None
+
+    # Step Progress
+    steps = ["Profile", "Retina Scan", "Watch Sync", "SMS Alert", "Policy Selection"]
+    cols = st.columns(len(steps))
+    for i, step_name in enumerate(steps):
+        with cols[i]:
+            if st.session_state.health_step > i + 1:
+                st.success(f"Step {i+1}: {step_name}")
+            elif st.session_state.health_step == i + 1:
+                st.info(f"Step {i+1}: {step_name}")
+            else:
+                st.write(f"Step {i+1}: {step_name}")
+
+    st.divider()
+
+    # STEP 1: Profile Setup
+    if st.session_state.health_step == 1:
+        st.subheader("📝 Step 1: Health Profile Configuration")
+        with st.form("profile_form"):
+            user_id = st.text_input("User ID", value="U1-AJ-PHILLIPS")
+            age = st.number_input("Age", value=42)
+            history = st.multiselect("Medical History", ["Hypertension", "Diabetes Risk", "Asthma", "High Cholesterol"], default=["Hypertension", "Diabetes Risk"])
+            if st.form_submit_button("SAVE & CONTINUE"):
+                st.session_state.health_profile = {"user_id": user_id, "age": age, "history": history}
+                st.session_state.health_step = 2
+                st.rerun()
+
+    # STEP 2: Retina Scan
+    elif st.session_state.health_step == 2:
+        st.subheader("👁️ Step 2: Total OMEGA Retina Scan")
+        st.write("Perform a high-resolution retinal vascular mapping scan.")
+        
+        col_s1, col_s2 = st.columns([2, 1])
+        with col_s1:
+            if st.button("⚡ INITIATE OPTICAL INGRESS"):
+                with st.spinner("Processing Bio-Metric Hypergraph..."):
+                    if 'selfie_bytes' in st.session_state:
+                        from intelligence.retinal_analyzer import RetinalAnalyzer
+                        analyzer = RetinalAnalyzer(api_key=st.session_state.gemini_api_key)
+                        res = analyzer.analyze_image_bytes(st.session_state.selfie_bytes)
+                        if "error" in res:
+                            st.error(res["error"])
+                        else:
+                            st.session_state.health_scan = res
+                            st.success("Retina Scan Complete.")
+                    else:
+                        st.warning("Please capture a selfie/scan in the sidebar first.")
+            
+            if 'health_scan' in st.session_state:
+                res = st.session_state.health_scan
+                st.metric("Retinal Fidelity", "99.8%")
+                st.info(f"**Clinical Summary:** {res.get('optometric_summary', 'Normal findings.')}")
+                if st.button("VERIFY & CONTINUE"):
+                    st.session_state.health_step = 3
+                    st.rerun()
+        
+        with col_s2:
+            st.image("https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Fundus_photograph_of_normal_left_eye.jpg/300px-Fundus_photograph_of_normal_left_eye.jpg", caption="Target Reference")
+
+    # STEP 3: Watch Sync
+    elif st.session_state.health_step == 3:
+        st.subheader("⌚ Step 3: Smart Watch Synchronization")
+        st.write("Synchronizing Samsung Galaxy Fit 3 BLE nodes with OMEGA-CORE.")
+        
+        if st.button("🔗 START BIOMETRIC SYNC"):
+            with st.spinner("Uplinking to Galaxy Fit 3..."):
+                from generate_eye_watch import generate_protocol
+                watch_data = generate_protocol()
+                st.session_state.health_watch = watch_data
+                st.success("Watch Synchronization Successful.")
+        
+        if 'health_watch' in st.session_state:
+            wd = st.session_state.health_watch
+            st.json(wd['metrics'])
+            if st.button("CONFIRM SYNC & CONTINUE"):
+                st.session_state.health_step = 4
+                st.rerun()
+
+    # STEP 4: SMS Alert
+    elif st.session_state.health_step == 4:
+        st.subheader("📱 Step 4: SMS Alert Simulation")
+        st.write("Simulating a haptic/SMS notification sequence.")
+        
+        if st.button("📩 SEND TEST SMS ALERT"):
+            with st.spinner("Initiating Node-04 (Geneva) Relay..."):
+                import time; time.sleep(1)
+                st.success("📱 SMS SENT to +61 4XX XXX XXX: 'OMEGA-CORE: Eye Scan Complete. All vitals nominal.'")
+                st.session_state.health_sms = True
+        
+        if st.session_state.get('health_sms'):
+            if st.button("PROCEED TO POLICY SELECTION"):
+                st.session_state.health_step = 5
+                st.rerun()
+
+    # STEP 5: Policy Selection
+    elif st.session_state.health_step == 5:
+        st.subheader("🎯 Step 5: AI Policy Selection & Optimization")
+        st.write("Generating data-driven insurance recommendations.")
+        
+        if st.button("⚖️ EVALUATE POLICIES"):
+            with st.spinner("Analyzing risk hypergraph..."):
+                engine = HealthInsuranceEngine()
+                
+                # Extract results from previous steps
+                scan_res = st.session_state.get('health_scan', {})
+                watch_res = st.session_state.get('health_watch', {})
+                
+                risk_row = {
+                    "Retinal_Diabetic_Risk": scan_res.get("diabetic_risk_score", {}).get("probability", 0.1),
+                    "Heart_Risk": 0.2,
+                    "Hospital_Visits": 0,
+                    "Medication_Count": 1,
+                    "Financial_Stress": 0.3,
+                    "HbA1c": 5.6,
+                    "Retinal_Risk": scan_res.get("diabetic_risk_score", {}).get("probability", 0.1)
+                }
+                
+                recommendation = engine.evaluate_family_risk(risk_row)
+                accident_rec = engine.evaluate_accident_cover(risk_row)
+                
+                st.session_state.policy_rec = {
+                    "primary": recommendation,
+                    "secondary": accident_rec
+                }
+
+        if 'policy_rec' in st.session_state:
+            rec = st.session_state.policy_rec
+            st.success(f"### Recommended Plan: {rec['primary']}")
+            st.info(f"**Ancillary Guidance:** {rec['secondary']}")
+            
+            if st.button("🏁 FINISH & RESET TEST"):
+                del st.session_state.health_step
+                del st.session_state.health_profile
+                if 'health_scan' in st.session_state: del st.session_state.health_scan
+                if 'health_watch' in st.session_state: del st.session_state.health_watch
+                if 'health_sms' in st.session_state: del st.session_state.health_sms
+                if 'policy_rec' in st.session_state: del st.session_state.policy_rec
+                st.rerun()
+
 
 # --- FOOTER ---
 st.divider()

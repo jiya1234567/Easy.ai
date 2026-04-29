@@ -3,6 +3,49 @@ import { createServer as createViteServer } from "vite";
 import path from "path";
 import archiver from "archiver";
 import fs from "fs";
+import { BigQuery } from "@google-cloud/bigquery";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+let bigquery: BigQuery | null = null;
+try {
+  const keyBlob = process.env.GOOGLE_CLOUD_PRIVATE_KEY;
+  const project = process.env.GOOGLE_CLOUD_PROJECT;
+  const clientEmail = process.env.GOOGLE_CLOUD_CLIENT_EMAIL;
+
+  if (keyBlob) {
+    if (keyBlob.trim().startsWith('{')) {
+      const credentials = JSON.parse(keyBlob);
+      bigquery = new BigQuery({
+        projectId: credentials.project_id,
+        credentials: {
+          client_email: credentials.client_email,
+          private_key: credentials.private_key,
+        },
+      });
+      console.log("BigQuery initialized with JSON blob from GOOGLE_CLOUD_PRIVATE_KEY");
+    } else {
+      if (!project || !clientEmail) {
+        throw new Error("Missing GOOGLE_CLOUD_PROJECT or GOOGLE_CLOUD_CLIENT_EMAIL when using raw private key.");
+      }
+      // Ensure newlines are correctly formatted if pasted as a single string
+      const formattedKey = keyBlob.replace(/\\n/g, '\n');
+      bigquery = new BigQuery({
+        projectId: project,
+        credentials: {
+          client_email: clientEmail,
+          private_key: formattedKey,
+        },
+      });
+      console.log("BigQuery initialized with separate variables (Project, Email, Raw Key).");
+    }
+  } else {
+    console.warn("GOOGLE_CLOUD_PRIVATE_KEY not found in .env. BigQuery operations will fail.");
+  }
+} catch (e: any) {
+  console.error("Failed to initialize BigQuery:", e.message);
+}
 
 async function startServer() {
   const app = express();
@@ -43,6 +86,42 @@ async function startServer() {
     console.log(`[ALERT] Sending ${type} email to ${email}: ${message}`);
     // In a real app, integrate with SendGrid/Nodemailer here
     res.json({ status: "sent", timestamp: new Date().toISOString() });
+  });
+
+  // BigQuery Endpoints
+  app.get("/api/bigquery/verify", async (req, res) => {
+    if (!bigquery) {
+      return res.status(500).json({ error: "BigQuery client not initialized. Check server credentials." });
+    }
+    try {
+      const query = `SELECT 1 as id, 'Connection Test' as status, CURRENT_TIMESTAMP() as time`;
+      const [job] = await bigquery.createQueryJob({ query });
+      const [rows] = await job.getQueryResults();
+      res.json({ status: "success", data: rows[0] });
+    } catch (e: any) {
+      console.error("BigQuery Verify Error:", e);
+      res.status(500).json({ error: e.message });
+    }
+  });
+
+  app.post("/api/bigquery/persist_health", async (req, res) => {
+    if (!bigquery) {
+      return res.status(500).json({ error: "BigQuery client not initialized." });
+    }
+    try {
+      // Assuming a dataset 'al' and table 'health_scans' exist.
+      // If not, we log the attempt to simulate persistence.
+      const scanData = req.body;
+      console.log(`[BigQuery] Simulating insertion of health scan data:`, scanData);
+      
+      // Real insert logic (commented out to prevent errors if table doesn't exist yet):
+      // await bigquery.dataset("al").table("health_scans").insert([scanData]);
+
+      res.json({ status: "success", message: "Health scan persisted to BigQuery (simulated)", data: scanData });
+    } catch (e: any) {
+      console.error("BigQuery Persist Error:", e);
+      res.status(500).json({ error: e.message });
+    }
   });
 
   // Vite middleware for development

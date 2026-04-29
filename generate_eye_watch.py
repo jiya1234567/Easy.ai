@@ -57,37 +57,44 @@ def generate_biometric_steps():
 
     return steps
 
-data = {
-    "protocol": "BIO-METRIC-OMEGA",
-    "device": "Samsung Galaxy Fit 3",
-    "platform": "Samsung Health / Android",
-    "status": "EXECUTING",
-    "rsi": 32,
-    "confidence": 0.99,
-    "metrics": {
-        "bp": "120/80 (Normal)",
-        "glucose": "98 mg/dL",
-        "pulse": "72 bpm",
-        "spo2": "98%",
-        "stress_index": "24 (Low)",
-        "skin_temp": "36.6 °C",
-        "eye_scan_fidelity": "99.8%",
-        "retinal_diagnostics": "Optimal",
-        "depth_analysis_score": 0.99
-    },
-    "watch_alert": {
+def generate_protocol():
+    steps = generate_biometric_steps()
+    data = {
+        "protocol": "BIO-METRIC-OMEGA",
         "device": "Samsung Galaxy Fit 3",
-        "channel": "Samsung Health BLE 5.0",
-        "alert_type": "BIOMETRIC_SYNC_COMPLETE",
-        "haptic": True,
-        "message": "OMEGA-CORE: Eye Scan Complete. All vitals nominal. Passive monitoring ACTIVE."
-    },
-    "strategy": "Total Eye Scan & Samsung Galaxy Fit 3 Multi-Node Integration",
-    "steps": generate_biometric_steps()
-}
+        "platform": "Samsung Health / Android",
+        "status": "EXECUTING",
+        "rsi": 32,
+        "confidence": 0.99,
+        "metrics": {
+            "bp": "120/80 (Normal)",
+            "glucose": "98 mg/dL",
+            "pulse": "72 bpm",
+            "spo2": "98%",
+            "stress_index": "24 (Low)",
+            "skin_temp": "36.6 °C",
+            "eye_scan_fidelity": "99.8%",
+            "retinal_diagnostics": "Optimal",
+            "depth_analysis_score": 0.99
+        },
+        "watch_alert": {
+            "device": "Samsung Galaxy Fit 3",
+            "channel": "Samsung Health BLE 5.0",
+            "alert_type": "BIOMETRIC_SYNC_COMPLETE",
+            "haptic": True,
+            "message": "OMEGA-CORE: Eye Scan Complete. All vitals nominal. Passive monitoring ACTIVE."
+        },
+        "strategy": "Total Eye Scan & Samsung Galaxy Fit 3 Multi-Node Integration",
+        "steps": steps
+    }
+    
+    with open("c:/Universal_Lab_AP_Phillips/Target.JASON", "w") as f:
+        json.dump(data, f, indent=2)
+    
+    return data
 
-with open("c:/Universal_Lab_AP_Phillips/Target.JASON", "w") as f:
-    json.dump(data, f, indent=2)
+if __name__ == "__main__":
+    result_data = generate_protocol()
+    print("Protocol Generated: Target.JASON updated — Samsung Galaxy Fit 3 Bio-Metric Omega Protocol.")
+    print(f"Watch Alert: {result_data['watch_alert']['message']}")
 
-print("Protocol Generated: Target.JASON updated — Samsung Galaxy Fit 3 Bio-Metric Omega Protocol.")
-print(f"Watch Alert: {data['watch_alert']['message']}")

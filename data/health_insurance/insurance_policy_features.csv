@@ -1,0 +1,5 @@
+PolicyID,Hospital_Level,Includes_Pregnancy,Includes_IVF,Includes_Dental,Includes_Physio,Annual_Limit_Extras,Rebate_Percentage
+P1,Gold,Yes,Yes,Yes,Yes,1200,25
+P2,Silver,No,No,Yes,Yes,800,20
+P3,Basic,No,No,No,No,0,15
+P4,Gold,No,No,Yes,Yes,1500,30
