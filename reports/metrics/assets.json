@@ -1,0 +1,6 @@
+[
+  {"Stock": "DIS", "Risk Regime": "RISK-OFF", "Price Action": "Cold (-15% YTD)", "Investor Stance": "Buy the Dip"},
+  {"Stock": "NFLX", "Risk Regime": "RISK-ON", "Price Action": "Hot (Momentum)", "Investor Stance": "Hold / Watch"},
+  {"Stock": "CMCSA", "Risk Regime": "NEUTRAL", "Price Action": "Warm (Range)", "Investor Stance": "Wait for Ingress"},
+  {"Stock": "SBUX", "Risk Regime": "RISK-OFF", "Price Action": "Stable / Consolidation", "Investor Stance": "DCA Accumulation"}
+]

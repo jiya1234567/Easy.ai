@@ -1,0 +1,6 @@
+Location,Vegetation,Dryness,Fuel_Load,Wind_kmh,Ignition_Risk,Population_Exposure,Fire_Size_ha,Containment
+Blue_Mountains,Forest,0.85,0.9,28,0.78,0.65,1200,0.45
+Perth_Hills,Scrub,0.95,0.88,42,0.95,0.55,3500,0.2
+Adelaide_Hills,Forest,0.9,0.86,38,0.88,0.7,2200,0.3
+Brisbane_West,Grassland,0.72,0.68,24,0.55,0.4,600,0.65
+Canberra_Bushland,Forest,0.82,0.8,30,0.72,0.5,900,0.5

@@ -1,0 +1,36 @@
+{
+  "asset": "SBUX",
+  "status": "Consolidating Value Play",
+  "recent_price": "$92.45",
+  "regime": "RISK-OFF",
+  "regime_summary": "Defensive consumer staple with stable cash flows during macro uncertainty.",
+  "analysis": [
+    {
+      "Category": "Risk Regime",
+      "Status": "RISK-OFF",
+      "Meaning": "Safe-haven consumer stock. Thrives in defensive rotations."
+    },
+    {
+      "Category": "Tailwinds",
+      "Status": "✅ China Recovery",
+      "Meaning": "Improved comparable store sales in the APAC region."
+    },
+    {
+      "Category": "Headwinds",
+      "Status": "❌ Wage Inflation",
+      "Meaning": "Operating margin pressure due to rising labor costs."
+    },
+    {
+      "Category": "Price Range",
+      "Status": "$88 - $110",
+      "Meaning": "BUY ZONE - Accumulate at $90, Resistance at $105+."
+    },
+    {
+      "Category": "Investor Action",
+      "Status": "Accumulate on weakness",
+      "Meaning": "DCA below $92, avoid chasing above $100."
+    }
+  ],
+  "prediction": "STABLE. Expect yield-driven support at current levels.",
+  "report_date": "2026-04-08"
+}

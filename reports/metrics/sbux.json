@@ -1,0 +1,36 @@
+{
+  "asset": "SBUX",
+  "status": "CAUTIOUS ACCUMULATION TARGET",
+  "recent_price": "$92.48",
+  "regime": "RISK-OFF",
+  "regime_summary": "SBUX showing defensive resilience but facing technical pullback from resistance.",
+  "analysis": [
+    {
+      "Category": "Risk Regime",
+      "Status": "Neutral-Bearish",
+      "Meaning": "Wait for $90 support validation before heavy commitment."
+    },
+    {
+      "Category": "Tailwinds",
+      "Status": "Strong",
+      "Meaning": "International APAC expansion and digital loyalty growth (MOP) remain robust."
+    },
+    {
+      "Category": "Headwinds",
+      "Status": "Moderate",
+      "Meaning": "Margin pressure from labor costs and supply chain volatility in coffee bean sourcing."
+    },
+    {
+      "Category": "Price Range",
+      "Status": "$90.00 - $95.50",
+      "Meaning": "Current consolidation range; break above $96 triggers bullish continuation."
+    },
+    {
+      "Category": "Investor Action",
+      "Status": "DCA / HOLD",
+      "Meaning": "Dollar-cost average at current levels; hold for dividend yield support."
+    }
+  ],
+  "prediction": "The SBUX ASI Kernel indicates a CAUTION / PULLBACK phase. Technical oscillators (RSI 44.5) suggest the stock is in a mid-range equilibrium. Expect short-term volatility as the market digests recent APAC earnings data. Support at $92.50 is holding, but a secondary test of $90.00 is probable before the next 'Omega-Level' breakout.",
+  "report_date": "2026-04-30"
+}

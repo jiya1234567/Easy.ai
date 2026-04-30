@@ -1,0 +1,191 @@
+[
+  {
+    "ts": "Fri Apr 10 15:33:49 2026",
+    "domain": "Materials",
+    "hypothesis": "Variance in Measurement_Error mechanistically drives Confidence_Score (Weight: -0.81)",
+    "driver": "Measurement_Error",
+    "target": "Confidence_Score",
+    "projected_delta": -0.013000000000000012,
+    "uncertainty": "\u00b10.0030",
+    "status": "Verified"
+  },
+  {
+    "ts": "Fri Apr 10 15:33:50 2026",
+    "domain": "Materials",
+    "hypothesis": "Variance in Measurement_Error mechanistically drives Confidence_Score (Weight: -0.81)",
+    "driver": "Measurement_Error",
+    "target": "Confidence_Score",
+    "projected_delta": -0.013000000000000012,
+    "uncertainty": "\u00b10.0030",
+    "status": "Verified"
+  },
+  {
+    "ts": "Fri Apr 10 15:33:51 2026",
+    "domain": "Materials",
+    "hypothesis": "Variance in Measurement_Error mechanistically drives Confidence_Score (Weight: -0.81)",
+    "driver": "Measurement_Error",
+    "target": "Confidence_Score",
+    "projected_delta": -0.013000000000000012,
+    "uncertainty": "\u00b10.0030",
+    "status": "Verified"
+  },
+  {
+    "ts": "Fri Apr 10 15:38:35 2026",
+    "domain": "Materials",
+    "hypothesis": "Variance in Measurement_Error mechanistically drives Confidence_Score (Weight: -0.81)",
+    "driver": "Measurement_Error",
+    "target": "Confidence_Score",
+    "projected_delta": -0.013000000000000012,
+    "uncertainty": "\u00b10.0030",
+    "status": "Verified"
+  },
+  {
+    "ts": "Fri Apr 10 15:38:36 2026",
+    "domain": "Materials",
+    "hypothesis": "Variance in Measurement_Error mechanistically drives Confidence_Score (Weight: -0.81)",
+    "driver": "Measurement_Error",
+    "target": "Confidence_Score",
+    "projected_delta": -0.013000000000000012,
+    "uncertainty": "\u00b10.0030",
+    "status": "Verified"
+  },
+  {
+    "ts": "Fri Apr 10 15:38:37 2026",
+    "domain": "Materials",
+    "hypothesis": "Variance in Measurement_Error mechanistically drives Confidence_Score (Weight: -0.81)",
+    "driver": "Measurement_Error",
+    "target": "Confidence_Score",
+    "projected_delta": -0.013000000000000012,
+    "uncertainty": "\u00b10.0030",
+    "status": "Verified"
+  },
+  {
+    "ts": "Fri Apr 10 15:38:54 2026",
+    "domain": "Quantum",
+    "hypothesis": "Variance in Decoherence_Rate mechanistically drives Readout_Error (Weight: 0.90)",
+    "driver": "Decoherence_Rate",
+    "target": "Readout_Error",
+    "projected_delta": 0.026907000000000014,
+    "uncertainty": "\u00b10.0031",
+    "status": "Verified"
+  },
+  {
+    "ts": "Fri Apr 10 15:38:55 2026",
+    "domain": "Quantum",
+    "hypothesis": "Variance in Decoherence_Rate mechanistically drives Readout_Error (Weight: 0.90)",
+    "driver": "Decoherence_Rate",
+    "target": "Readout_Error",
+    "projected_delta": 0.026907000000000014,
+    "uncertainty": "\u00b10.0031",
+    "status": "Verified"
+  },
+  {
+    "ts": "Fri Apr 10 15:38:56 2026",
+    "domain": "Quantum",
+    "hypothesis": "Variance in Decoherence_Rate mechanistically drives Readout_Error (Weight: 0.90)",
+    "driver": "Decoherence_Rate",
+    "target": "Readout_Error",
+    "projected_delta": 0.026907000000000014,
+    "uncertainty": "\u00b10.0031",
+    "status": "Verified"
+  },
+  {
+    "ts": "Fri Apr 10 15:46:56 2026",
+    "domain": "Materials",
+    "hypothesis": "Surprise Target: Measurement_Error -> Confidence_Score (Active Learning Score: 0.96)",
+    "driver": "Measurement_Error",
+    "target": "Confidence_Score",
+    "delta": -0.013000000000000012,
+    "uncertainty": "\u00b10.0030",
+    "info_gain": 0.9648437500000001,
+    "status": "Verified"
+  },
+  {
+    "ts": "Fri Apr 10 15:46:57 2026",
+    "domain": "Materials",
+    "hypothesis": "Surprise Target: Measurement_Error -> Confidence_Score (Active Learning Score: 0.96)",
+    "driver": "Measurement_Error",
+    "target": "Confidence_Score",
+    "delta": -0.013000000000000012,
+    "uncertainty": "\u00b10.0030",
+    "info_gain": 0.9648437500000001,
+    "status": "Verified"
+  },
+  {
+    "ts": "Fri Apr 10 15:46:58 2026",
+    "domain": "Materials",
+    "hypothesis": "Surprise Target: Measurement_Error -> Confidence_Score (Active Learning Score: 0.96)",
+    "driver": "Measurement_Error",
+    "target": "Confidence_Score",
+    "delta": -0.013000000000000012,
+    "uncertainty": "\u00b10.0030",
+    "info_gain": 0.9648437500000001,
+    "status": "Verified"
+  },
+  {
+    "ts": "Fri Apr 10 15:47:12 2026",
+    "domain": "Quantum",
+    "hypothesis": "Surprise Target: Decoherence_Rate -> Readout_Error (Active Learning Score: 0.99)",
+    "driver": "Decoherence_Rate",
+    "target": "Readout_Error",
+    "delta": 0.026907000000000014,
+    "uncertainty": "\u00b10.0031",
+    "info_gain": 0.9893703900000004,
+    "status": "Verified"
+  },
+  {
+    "ts": "Fri Apr 10 15:47:13 2026",
+    "domain": "Quantum",
+    "hypothesis": "Surprise Target: Decoherence_Rate -> Readout_Error (Active Learning Score: 0.99)",
+    "driver": "Decoherence_Rate",
+    "target": "Readout_Error",
+    "delta": 0.026907000000000014,
+    "uncertainty": "\u00b10.0031",
+    "info_gain": 0.9893703900000004,
+    "status": "Verified"
+  },
+  {
+    "ts": "Fri Apr 10 15:47:14 2026",
+    "domain": "Quantum",
+    "hypothesis": "Surprise Target: Decoherence_Rate -> Readout_Error (Active Learning Score: 0.99)",
+    "driver": "Decoherence_Rate",
+    "target": "Readout_Error",
+    "delta": 0.026907000000000014,
+    "uncertainty": "\u00b10.0031",
+    "info_gain": 0.9893703900000004,
+    "status": "Verified"
+  },
+  {
+    "ts": "Fri Apr 10 15:47:30 2026",
+    "domain": "Finance",
+    "hypothesis": "Surprise Target: FX1 -> FX2 (Active Learning Score: 1.00)",
+    "driver": "FX1",
+    "target": "FX2",
+    "delta": -0.2300000000000002,
+    "uncertainty": "\u00b10.0000",
+    "info_gain": 1.000000000000001,
+    "status": "Verified"
+  },
+  {
+    "ts": "Fri Apr 10 15:47:31 2026",
+    "domain": "Finance",
+    "hypothesis": "Surprise Target: FX1 -> FX2 (Active Learning Score: 1.00)",
+    "driver": "FX1",
+    "target": "FX2",
+    "delta": -0.2300000000000002,
+    "uncertainty": "\u00b10.0000",
+    "info_gain": 1.000000000000001,
+    "status": "Verified"
+  },
+  {
+    "ts": "Fri Apr 10 15:47:32 2026",
+    "domain": "Finance",
+    "hypothesis": "Surprise Target: FX1 -> FX2 (Active Learning Score: 1.00)",
+    "driver": "FX1",
+    "target": "FX2",
+    "delta": -0.2300000000000002,
+    "uncertainty": "\u00b10.0000",
+    "info_gain": 1.000000000000001,
+    "status": "Verified"
+  }
+]

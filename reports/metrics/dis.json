@@ -1,0 +1,45 @@
+{
+  "asset": "DIS",
+  "status": "RISK-OFF Value",
+  "recent_price": "$96.61",
+  "trend": "Cold (-15% YTD)",
+  "regime": "RISK-OFF",
+  "regime_summary": "Defensive value play — less sensitive to growth rallies, focuses on asset quality",
+  "analysis": [
+    {
+      "Category": "Risk Regime",
+      "Status": "RISK-OFF",
+      "Meaning": "Pure value play - sensitive to interest rates, stable during market panic"
+    },
+    {
+      "Category": "Tailwinds",
+      "Status": "✅ Streaming Inflection",
+      "Meaning": "DTC (Disney+) achieving persistent profitability"
+    },
+    {
+      "Category": "Tailwinds",
+      "Status": "✅ Valuation Floor",
+      "Meaning": "P/E at 14.2x is near a 10-year historical low"
+    },
+    {
+      "Category": "Headwinds",
+      "Status": "❌ Experiences Softness",
+      "Meaning": "Macro pressure on theme park visitation/spending"
+    },
+    {
+      "Category": "Headwinds",
+      "Status": "❌ Linear Decay",
+      "Meaning": "Continued secular decline in legacy cable networks (ESPN/ABC)"
+    },
+    {
+      "Category": "Price Range",
+      "Status": "$85 - $115",
+      "Meaning": "BUY ZONE - Accumulate below $95, Resistance at $110+"
+    },
+    {
+      "Category": "Investor Action",
+      "Status": "Buy the Dip",
+      "Meaning": "Accumulate at these levels. Long-term play on DTC margins and Experience recovery."
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "Paclitaxel": "Chemo-Agent",
+  "Cisplatin": "Chemo-Agent",
+  "Doxorubicin": "Chemo-Agent",
+  "Gemcitabine": "Chemo-Agent",
+  "5-FU": "Chemo-Agent"
+}

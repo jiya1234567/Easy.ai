@@ -14,5 +14,5 @@ __pycache__/
 *.zip
 Universal_Lab_Old_Repo/
 tmp_old_repo/
-reports/
+reports/*
 !reports/metrics/

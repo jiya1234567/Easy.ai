@@ -124,5 +124,47 @@
       "score": 1.000000000000001
     },
     "out": "Success"
+  },
+  {
+    "id": "ep-1777515326",
+    "ts": "Thu Apr 30 12:15:26 2026",
+    "ctx": {
+      "rsi": 44.5,
+      "regime": "Analytical Baseline (Verified)",
+      "mode": "Omega-Core (Internal)"
+    },
+    "dec": {
+      "markov": "CAUTION / PULLBACK",
+      "cfo": "AUTHORIZED"
+    },
+    "out": "Pending"
+  },
+  {
+    "id": "ep-1777515360",
+    "ts": "Thu Apr 30 12:16:00 2026",
+    "ctx": {
+      "rsi": 44.5,
+      "regime": "Analytical Baseline (Verified)",
+      "mode": "Omega-Core (Internal)"
+    },
+    "dec": {
+      "markov": "CAUTION / PULLBACK",
+      "cfo": "AUTHORIZED"
+    },
+    "out": "Pending"
+  },
+  {
+    "id": "ep-1777517339",
+    "ts": "Thu Apr 30 12:48:59 2026",
+    "ctx": {
+      "rsi": 44.5,
+      "regime": "Analytical Baseline (Verified)",
+      "mode": "Omega-Core (Internal)"
+    },
+    "dec": {
+      "markov": "CAUTION / PULLBACK",
+      "cfo": "AUTHORIZED"
+    },
+    "out": "Pending"
   }
 ]

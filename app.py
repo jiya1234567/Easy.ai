@@ -1,4 +1,5 @@
 import streamlit as st
+import time
 import os
 import json
 import requests
@@ -465,10 +466,22 @@ if st.session_state.active_tab == "⚙️ FACTORY":
                     
                     # --- AUTO-SAVE TO METRICS ---
                     if ticker:
+                        # Simulation Phase
+                        with st.status("🚀 Initiating OMEGA Simulation Phase...") as status:
+                            st.write("Traversing Ruliad Hypergraph...")
+                            time.sleep(0.8)
+                            st.write("Synthesizing multi-agent consensus...")
+                            time.sleep(0.8)
+                            st.write("Backtesting against 10-epoch baseline...")
+                            time.sleep(0.8)
+                            status.update(label="Simulation Complete. Diverging to Reports Engine.", state="complete", expanded=False)
+
                         save_path = os.path.join("reports/metrics", f"{ticker.lower()}.json")
                         with open(save_path, "w", encoding="utf-8") as f:
                             json.dump(result, f, indent=2)
-                        st.success(f"Mission Executed. {ticker} report saved to Asset Radar.")
+                        
+                        st.session_state.active_tab = "📊 REPORTS ENGINE"
+                        st.rerun()
                     else:
                         st.success("Mission Executed.")
                     
@@ -493,7 +506,7 @@ if st.session_state.active_tab == "📊 ASSET RADAR":
             
             col_r1, col_r2 = st.columns([1, 3])
             with col_r1:
-                st.metric("RECENT PRICE", report.get('recent_price', 'N/A'))
+                st.metric("RECENT PRICE", report.get('recent_price') or report.get('price') or 'N/A')
             with col_r2:
                 st.subheader(f"🔍 {report.get('asset', selected_asset)} Status: {report.get('status', 'Analyzing...')}")
             

@@ -1,0 +1,6 @@
+Drug,Target_Protein,Binding_Score,Toxicity_Index,Selectivity
+D1,P1,0.9,0.1,0.85
+D2,P2,0.88,0.12,0.8
+D3,P3,0.4,0.7,0.3
+D4,P4,0.35,0.75,0.25
+D5,P1,0.92,0.08,0.9
