@@ -10,6 +10,8 @@ from google.genai import types
 import datetime
 from intelligence.scientific_engine import ScientificEngine
 from intelligence.health_insurance_engine import HealthInsuranceEngine
+import vertexai
+from vertexai.generative_models import GenerativeModel, GenerationConfig
 
 # --- CONFIGURATION ---
 st.set_page_config(
@@ -80,9 +82,18 @@ st.markdown("""
 # --- SIDEBAR ---
 with st.sidebar:
     st.title("🔬 OMEGA-CORE")
+    st.caption("SYSTEM VERSION: 2.1 (Mistral-Ready)")
     st.subheader("Buddy's Toolset by A&P Phillips")
     
-    api_key_input = st.text_input("🔑 Gemini API Key", type="password", value=st.session_state.gemini_api_key, help="Required for Factory Mission Execution. Get one at https://aistudio.google.com/")
+    st.divider()
+    st.markdown("### 🤖 Engine Selection")
+    model_choice = st.radio("INTELLIGENCE CORE", 
+                            ["Gemini 1.5 Flash", "Mistral Large (Vertex AI)", "Codestral (Vertex AI)"], 
+                            index=0, 
+                            help="Select the core for mission execution.")
+    st.divider()
+
+    api_key_input = st.text_input("🔑 Gemini API Key", type="password", value=st.session_state.gemini_api_key, help="Required for Gemini Factory missions. Vertex models use Cloud IAM.")
     if api_key_input:
         st.session_state.gemini_api_key = api_key_input
         os.environ["GEMINI_API_KEY"] = api_key_input
@@ -432,15 +443,14 @@ if st.session_state.active_tab == "⚙️ FACTORY":
     if st.button("EXECUTE MISSION"):
         if not intent and not ticker:
             st.warning("Please enter mission intent or ticker.")
-        elif not API_KEY:
+        elif "Gemini" in model_choice and not API_KEY:
             st.error("Uplink Error: No API key was provided. Please enter a valid API key in the sidebar.")
         else:
             with st.spinner("Traversing Hypergraph..."):
                 try:
-                    client = genai.Client(api_key=API_KEY)
                     system_instruction = f"""
                     You are the MULTI-AGENT ORCHESTRATOR. Domain: {domain}. Intent: {intent}. Ticker: {ticker}.
-                    DATE: 2026-04-08 (Today)
+                    DATE: {datetime.datetime.now().strftime('%Y-%m-%d')}
                     STRICT SCHEMA REQUIREMENT: You must return a JSON object with these EXACT keys:
                     - "asset": "{ticker}"
                     - "status": A 3-word summary of the outlook
@@ -449,20 +459,38 @@ if st.session_state.active_tab == "⚙️ FACTORY":
                     - "regime_summary": A one-sentence macro summary
                     - "analysis": A list of dicts with EXACT columns: "Category", "Status", and "Meaning"
                     - "prediction": A technical forecast summary
-                    - "report_date": "2026-04-08"
+                    - "report_date": "{datetime.datetime.now().strftime('%Y-%m-%d')}"
 
                     REQUIRED ANALYSIS ROWS: You MUST include rows for: 
                     "Risk Regime", "Tailwinds", "Headwinds", "Price Range", and "Investor Action".
                     """
-                    response = client.models.generate_content(
-                        model="gemini-3-flash-preview",
-                        contents=f"Execute analysis for: {intent} {ticker}",
-                        config=types.GenerateContentConfig(
-                            system_instruction=system_instruction,
-                            response_mime_type="application/json"
+                    
+                    if "Gemini" in model_choice:
+                        client = genai.Client(api_key=API_KEY)
+                        response = client.models.generate_content(
+                            model="gemini-1.5-flash",
+                            contents=f"Execute analysis for: {intent} {ticker}",
+                            config=types.GenerateContentConfig(
+                                system_instruction=system_instruction,
+                                response_mime_type="application/json"
+                            )
                         )
-                    )
-                    result = json.loads(response.text)
+                        result = json.loads(response.text)
+                    else:
+                        # Vertex AI Initialization
+                        project = os.environ.get("GOOGLE_CLOUD_PROJECT", "asi-resh")
+                        location = os.environ.get("GOOGLE_CLOUD_LOCATION", "us-central1")
+                        vertexai.init(project=project, location=location)
+                        
+                        model_id = "mistral-large@2407" if "Mistral" in model_choice else "codestral@2406"
+                        model = GenerativeModel(model_id)
+                        
+                        full_prompt = f"{system_instruction}\n\nExecute analysis for: {intent} {ticker}"
+                        response = model.generate_content(
+                            full_prompt,
+                            generation_config=GenerationConfig(response_mime_type="application/json")
+                        )
+                        result = json.loads(response.text)
                     
                     # --- AUTO-SAVE TO METRICS ---
                     if ticker:

@@ -1,0 +1,41 @@
+{
+  "asset": "TOTAL EYE SCAN",
+  "status": "Vitals Nominal | Scleral Clouding",
+  "recent_price": "N/A (Health)",
+  "regime": "MONITOR",
+  "regime_summary": "Overall vitals are optimal, but retinal ingress suggests mild scleral yellowing and lens cloudiness requiring passive monitoring.",
+  "analysis": [
+    {
+      "Category": "Retinal Vascularity",
+      "Status": "STABLE",
+      "Meaning": "Normal vascular density; no acute hemorrhages detected in current scan resolution."
+    },
+    {
+      "Category": "Pupillary Symmetry",
+      "Status": "OPTIMAL",
+      "Meaning": "Pupillary response and symmetry are within expected biometric bounds."
+    },
+    {
+      "Category": "Blood Pressure Sync",
+      "Status": "NOMINAL",
+      "Meaning": "Sync with Galaxy Fit 3 confirms 120/80 mmHg; no hypertensive stress detected."
+    },
+    {
+      "Category": "Metabolic Alignment",
+      "Status": "ALIGNED",
+      "Meaning": "Glucose levels (98 mg/dL) and SpO2 (98%) indicate stable metabolic state."
+    },
+    {
+      "Category": "Systemic Risk",
+      "Status": "LOW-MODERATE",
+      "Meaning": "Low cardiac risk, but recommendation for full ophthalmologist check-up due to scleral markers."
+    }
+  ],
+  "prediction": "Technical Forecast: 48h stability high (98%). Circadian alignment is optimal. Recommendation: Maintain current metabolic protocol and repeat eye scan in 7 days.",
+  "report_date": "2026-05-01",
+  "sma_analysis": {
+    "manifold_depth": "14.2k Nodes",
+    "ruliad_traversal": "0.99 Fidelity",
+    "quantum_feedback": "Stable"
+  }
+}
