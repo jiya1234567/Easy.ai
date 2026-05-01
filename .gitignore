@@ -16,3 +16,4 @@ Universal_Lab_Old_Repo/
 tmp_old_repo/
 reports/*
 !reports/metrics/
+scratch/credentials.json
