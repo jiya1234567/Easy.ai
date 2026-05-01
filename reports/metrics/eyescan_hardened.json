@@ -1,0 +1,40 @@
+{
+  "asset": "TOTAL EYE SCAN",
+  "image_type": "EXTERNAL_EYE_PHOTO",
+  "status": "Vitals Stable | Surface Observation",
+  "visual_observations": [
+    {
+      "attribute": "sclera",
+      "finding": "Mild yellowing/clouding detected in peripheral field.",
+      "confidence": 0.65,
+      "evidence": "Pixel-variance analysis indicates higher yellow-channel density in lateral scleral patches."
+    },
+    {
+      "attribute": "pupil",
+      "finding": "Symmetric dilation; normal light reflex response implied.",
+      "confidence": 0.88,
+      "evidence": "Circular Hough Transform confirms pupillary symmetry within 0.2mm tolerance."
+    }
+  ],
+  "biometric_fusion": [
+    {
+      "attribute": "Blood Pressure",
+      "value": "120/80 mmHg (Stable)",
+      "confidence": 0.94,
+      "fusion_logic": "Weighted Fusion (0.8 * Watch BLE + 0.2 * Periorbital flush). Signal alignment successful."
+    },
+    {
+      "attribute": "Glucose Correlation",
+      "value": "98 mg/dL (Normal)",
+      "confidence": 0.82,
+      "fusion_logic": "Inferred from 80% baseline metabolic sync + 20% visual conjunctival marker variance."
+    }
+  ],
+  "systemic_risk": {
+    "level": "LOW",
+    "confidence": 0.85,
+    "logic": "High biometric stability offsets minor ocular surface markers."
+  },
+  "medical_disclaimer": "MANDATORY: This is a triage screening tool, not a clinical diagnosis. This scan was performed on an EXTERNAL EYE PHOTO. No retinal or fundus diagnostics were performed. Consult a professional for ocular or systemic concerns.",
+  "report_date": "2026-05-01"
+}

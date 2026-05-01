@@ -56,54 +56,88 @@ RETINAL_SCHEMA = {
 
 class RetinalAnalyzer:
     """
-    Optometric retinal analysis via Gemini Vision multimodal API.
-
-    Diffusion model stack used:
-      - Gemini Vision (primary): Multimodal transformer with diffusion-style
-        feature decomposition across retinal image patches
-      - Proxy OCT depth: Estimated from vascular shadow patterns &
-        reflectance gradient in the fundus image
-      - Diabetic retinopathy grading: Based on ETDRS severity scale proxy
-        (microaneurysms, haemorrhages, exudates pattern recognition)
+    OMEGA-CORE Vision Module.
+    Hardened to separate surface-level external observations from 
+    deep-tissue retinal diagnostics with strict confidence gating.
     """
 
     def __init__(self, api_key=None):
         self.api_key = api_key or os.environ.get("GEMINI_API_KEY", "")
         self.model   = "gemini-2.0-flash"
 
+    def classify_image(self, image_bytes: bytes, mime_type: str) -> str:
+        """Classifies image type using the multimodal model."""
+        prompt = """
+        Analyze this image and return a JSON object with a single key 'image_type'.
+        Values: 'EXTERNAL_EYE_PHOTO' or 'RETINAL_FUNDUS_SCAN'.
+        """
+        client = genai.Client(api_key=self.api_key)
+        response = client.models.generate_content(
+            model=self.model,
+            contents=[types.Part.from_bytes(data=image_bytes, mime_type=mime_type), prompt],
+            config=types.GenerateContentConfig(response_mime_type="application/json")
+        )
+        return json.loads(response.text).get("image_type", "EXTERNAL_EYE_PHOTO")
+
     def analyze_image_bytes(self, image_bytes: bytes, mime_type: str = "image/jpeg") -> dict:
         """
-        Main entry: takes raw image bytes from Streamlit camera_input,
-        returns structured optometric assessment dict.
+        Hardened entry: Classifies image type and applies branched diagnostic logic.
         """
         if not self.api_key:
             return {"error": "No GEMINI_API_KEY. Enter it in the sidebar."}
 
         b64 = base64.b64encode(image_bytes).decode("utf-8")
+        
+        # ── Step 1: Classification ──
+        classification_prompt = """
+        Analyze this image and return a single JSON object with key 'image_type'.
+        Values: 'EXTERNAL_EYE_PHOTO' (selfie, face, outer eye) or 'RETINAL_FUNDUS_SCAN' (microscopic view of retina).
+        """
+        
+        try:
+            client = genai.Client(api_key=self.api_key)
+            class_res = client.models.generate_content(
+                model=self.model,
+                contents=[types.Part.from_bytes(data=image_bytes, mime_type=mime_type), classification_prompt],
+                config=types.GenerateContentConfig(response_mime_type="application/json")
+            )
+            image_type = json.loads(class_res.text).get("image_type", "EXTERNAL_EYE_PHOTO")
+        except:
+            image_type = "EXTERNAL_EYE_PHOTO"
+
+        # ── Step 2: Branched Prompting ──
+        if image_type == "RETINAL_FUNDUS_SCAN":
+            system_role = "expert AI ophthalmologist performing a clinical fundus analysis."
+            focus_areas = "Vascular density, Cup-to-disc ratio, Hemorrhages, and Exudates."
+        else:
+            system_role = "AI triage engine performing an external ocular surface assessment."
+            focus_areas = "Scleral health (redness/yellowing), Pupil symmetry, and Periorbital markers."
 
         prompt = f"""
-You are OMEGA-CORE OPTOMETRIC ENGINE — an expert AI ophthalmologist performing a clinical retinal scan analysis.
+You are OMEGA-CORE {system_role}. 
 
-Analyze this eye/facial image with maximum clinical precision. Even from a standard mobile camera selfie,
-extract all observable optometric biomarkers. Apply diffusion-model-style patch analysis across:
-  1. Pupil zone (central 15% of eye area)
-  2. Iris ring (annular region, 15-40%)
-  3. Scleral field (white region, 40-100%)
-  4. Periorbital tissue (surrounding skin)
+IMAGE TYPE DETECTED: {image_type}.
+FOCUS AREAS: {focus_areas}.
 
-STRICT SCHEMA REQUIREMENT — return ONLY valid JSON matching this exact structure:
-{json.dumps(RETINAL_SCHEMA, indent=2)}
+STRICT REQUIREMENT: Separate what is OBSERVED (directly seen) from what is INFERRED (suggested).
+If image_type is EXTERNAL_EYE_PHOTO, strictly suppress claims about 'retinal vascularity' or 'fundus hemorrhages'.
 
-Clinical grading scales to apply:
-- cup_disc_ratio: {"mean": 0.0-1.0, "uncertainty": 0.0-1.0}
-- retinal_depth_score: {"mean": 0.0-1.0, "uncertainty": 0.0-1.0}
-- diabetic_risk_score, glaucoma_risk_score, macular_risk_score: map to {"band": "LOW|MODERATE|HIGH|CRITICAL", "probability": 0.0-1.0}
-- bounding_boxes: strictly extract any observable lesions (e.g. exudates, hemorrhages). Provide coordinates mapped to 0-1000 scale [ymin, xmin, ymax, xmax].
-- confidence: {"mean": 0.0-1.0, "uncertainty": 0.0-1.0} (probabilistic certainty)
-- alert_required: true if ANY band is CRITICAL or HIGH.
-
-Be thorough. If the image is a selfie (not direct fundoscopy), note image limitations in findings but still
-extract all observable features. Treat this as a triage screening tool.
+Return ONLY valid JSON matching this exact structure:
+{{
+  "image_type": "{image_type}",
+  "overall_risk": "NORMAL|LOW|MODERATE|HIGH|CRITICAL",
+  "confidence_score": 0.0,
+  "observations": [
+    {{ "attribute": "sclera", "finding": "...", "confidence": 0.0, "evidence": "patch_analysis_description" }}
+  ],
+  "inferences": [
+    {{ "category": "metabolic", "theory": "...", "confidence": 0.0, "source": "visual_marker" }}
+  ],
+  "pupil_data": {{ "dilation_mm": 0.0, "symmetry": "NORMAL|ASYMMETRIC" }},
+  "bounding_boxes": [{{ "label": "...", "ymin": 0, "xmin": 0, "ymax": 0, "xmax": 0 }}],
+  "recommendations": ["action 1"],
+  "medical_disclaimer": "This is a triage tool. Not for clinical diagnosis."
+}}
 """
 
         try:
@@ -120,7 +154,7 @@ extract all observable features. Treat this as a triage screening tool.
             )
             result = json.loads(response.text)
             result["timestamp"] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            result["image_type"] = "mobile_selfie"
+            result["image_type"] = image_type
             result["model"]      = self.model
 
             # -- HEATMAP / DIAGNOSTIC MASK RENDERING --
