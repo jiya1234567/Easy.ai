@@ -9,3 +9,4 @@ scipy
 python-dotenv
 twilio
 google-cloud-aiplatform
+mistralai

@@ -12,6 +12,7 @@ from intelligence.scientific_engine import ScientificEngine
 from intelligence.health_insurance_engine import HealthInsuranceEngine
 import vertexai
 from vertexai.generative_models import GenerativeModel, GenerationConfig
+from mistralai import Mistral
 
 # --- CONFIGURATION ---
 st.set_page_config(
@@ -21,12 +22,29 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-# Load API Key securely via session state
-if "gemini_api_key" not in st.session_state:
-    st.session_state.gemini_api_key = os.environ.get("GEMINI_API_KEY", "")
+# --- API KEY INITIALIZATION ---
+def get_secret(key):
+    """Safely get a secret from environment or streamlit secrets."""
+    # 1. Try Environment Variable (best for Codespaces/Docker)
+    val = os.environ.get(key)
+    if val: return val
+    
+    # 2. Try Streamlit Secrets (best for Streamlit Cloud)
+    try:
+        if key in st.secrets:
+            return st.secrets[key]
+    except:
+        pass
+    return ""
 
-os.environ["GEMINI_API_KEY"] = st.session_state.gemini_api_key
+if "gemini_api_key" not in st.session_state:
+    st.session_state.gemini_api_key = get_secret("GEMINI_API_KEY")
+
+if "mistral_api_key" not in st.session_state:
+    st.session_state.mistral_api_key = get_secret("MISTRAL_API_KEY")
+
 API_KEY = st.session_state.gemini_api_key
+MISTRAL_API_KEY = st.session_state.mistral_api_key
 
 # --- STYLING ---
 st.markdown("""
@@ -88,16 +106,24 @@ with st.sidebar:
     st.divider()
     st.markdown("### 🤖 Engine Selection")
     model_choice = st.radio("INTELLIGENCE CORE", 
-                            ["Gemini 1.5 Flash", "Mistral Large (Vertex AI)", "Codestral (Vertex AI)"], 
+                            ["Gemini 1.5 Flash", "Mistral (Native API)", "Mistral Large (Vertex AI)", "Codestral (Vertex AI)"], 
                             index=0, 
                             help="Select the core for mission execution.")
     st.divider()
 
-    api_key_input = st.text_input("🔑 Gemini API Key", type="password", value=st.session_state.gemini_api_key, help="Required for Gemini Factory missions. Vertex models use Cloud IAM.")
-    if api_key_input:
-        st.session_state.gemini_api_key = api_key_input
-        os.environ["GEMINI_API_KEY"] = api_key_input
-        API_KEY = api_key_input
+    # Gemini Key
+    gemini_key_input = st.text_input("🔑 Gemini API Key", type="password", value=st.session_state.gemini_api_key, help="Required for Gemini Factory missions.")
+    if gemini_key_input:
+        st.session_state.gemini_api_key = gemini_key_input
+        os.environ["GEMINI_API_KEY"] = gemini_key_input
+        API_KEY = gemini_key_input
+
+    # Mistral Key
+    mistral_key_input = st.text_input("🔑 Mistral API Key", type="password", value=st.session_state.mistral_api_key, help="Required for Native Mistral missions.")
+    if mistral_key_input:
+        st.session_state.mistral_api_key = mistral_key_input
+        os.environ["MISTRAL_API_KEY"] = mistral_key_input
+        MISTRAL_API_KEY = mistral_key_input
     
     st.divider()
     
@@ -476,6 +502,20 @@ if st.session_state.active_tab == "⚙️ FACTORY":
                             )
                         )
                         result = json.loads(response.text)
+                    elif "Native API" in model_choice:
+                        if not MISTRAL_API_KEY:
+                            st.error("Mistral API Key missing.")
+                            st.stop()
+                        client = Mistral(api_key=MISTRAL_API_KEY)
+                        response = client.chat.complete(
+                            model="mistral-large-latest",
+                            messages=[
+                                {"role": "system", "content": system_instruction},
+                                {"role": "user", "content": f"Execute analysis for: {intent} {ticker}"}
+                            ],
+                            response_format={"type": "json_object"}
+                        )
+                        result = json.loads(response.choices[0].message.content)
                     else:
                         # Vertex AI Initialization
                         project = os.environ.get("GOOGLE_CLOUD_PROJECT", "asi-resh")
