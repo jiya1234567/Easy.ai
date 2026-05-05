@@ -23,6 +23,7 @@ except ImportError:
 
 from google import genai
 from google.genai import types
+from mistralai.client import Mistral
 
 # ── Risk colour map ────────────────────────────────────────────────────────────
 RISK_COLORS = {
@@ -67,9 +68,14 @@ class RetinalAnalyzer:
         (microaneurysms, haemorrhages, exudates pattern recognition)
     """
 
-    def __init__(self, api_key=None):
-        self.api_key = api_key or os.environ.get("GEMINI_API_KEY", "")
-        self.model   = "gemini-2.0-flash"
+    def __init__(self, api_key=None, provider="gemini"):
+        self.provider = provider.lower()
+        if self.provider == "gemini":
+            self.api_key = api_key or os.environ.get("GEMINI_API_KEY", "")
+            self.model   = "gemini-2.0-flash"
+        else:
+            self.api_key = api_key or os.environ.get("MISTRAL_API_KEY", "")
+            self.model   = "mistral-large-latest" # or pixtral-12b-2409
 
     def analyze_image_bytes(self, image_bytes: bytes, mime_type: str = "image/jpeg") -> dict:
         """
@@ -77,8 +83,14 @@ class RetinalAnalyzer:
         returns structured optometric assessment dict.
         """
         if not self.api_key:
-            return {"error": "No GEMINI_API_KEY. Enter it in the sidebar."}
+            return {"error": f"No {self.provider.upper()} API_KEY. Enter it in the sidebar."}
 
+        if self.provider == "gemini":
+            return self._analyze_with_gemini(image_bytes, mime_type)
+        else:
+            return self._analyze_with_mistral(image_bytes, mime_type)
+
+    def _analyze_with_gemini(self, image_bytes: bytes, mime_type: str) -> dict:
         b64 = base64.b64encode(image_bytes).decode("utf-8")
 
         prompt = f"""
@@ -158,7 +170,98 @@ extract all observable features. Treat this as a triage screening tool.
             return result
 
         except Exception as e:
-            return {"error": f"Retinal analysis failed: {e}"}
+            return {"error": f"Gemini analysis failed: {e}"}
+
+    def _analyze_with_mistral(self, image_bytes: bytes, mime_type: str) -> dict:
+        b64 = base64.b64encode(image_bytes).decode("utf-8")
+        prompt = self._get_prompt()
+
+        try:
+            client = Mistral(api_key=self.api_key)
+            response = client.chat.complete(
+                model=self.model,
+                messages=[
+                    {
+                        "role": "user",
+                        "content": [
+                            {"type": "text", "text": prompt},
+                            {"type": "image_url", "image_url": f"data:{mime_type};base64,{b64}"}
+                        ]
+                    }
+                ],
+                response_format={"type": "json_object"}
+            )
+            result = json.loads(response.choices[0].message.content)
+            result["timestamp"] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            result["image_type"] = "mobile_selfie"
+            result["model"]      = self.model
+            result["provider"]   = "mistral"
+
+            # Render heatmap if bounding boxes exist
+            result = self._render_heatmap(image_bytes, result)
+
+            self._save_scan(result)
+            return result
+        except Exception as e:
+            return {"error": f"Mistral analysis failed: {e}"}
+
+    def _get_prompt(self) -> str:
+        return f"""
+You are OMEGA-CORE OPTOMETRIC ENGINE — an expert AI ophthalmologist performing a clinical retinal scan analysis.
+
+Analyze this eye/facial image with maximum clinical precision. Even from a standard mobile camera selfie,
+extract all observable optometric biomarkers. Apply diffusion-model-style patch analysis across:
+  1. Pupil zone (central 15% of eye area)
+  2. Iris ring (annular region, 15-40%)
+  3. Scleral field (white region, 40-100%)
+  4. Periorbital tissue (surrounding skin)
+
+STRICT SCHEMA REQUIREMENT — return ONLY valid JSON matching this exact structure:
+{json.dumps(RETINAL_SCHEMA, indent=2)}
+
+Clinical grading scales to apply:
+- cup_disc_ratio: {{"mean": 0.0-1.0, "uncertainty": 0.0-1.0}}
+- retinal_depth_score: {{"mean": 0.0-1.0, "uncertainty": 0.0-1.0}}
+- diabetic_risk_score, glaucoma_risk_score, macular_risk_score: map to {{"band": "LOW|MODERATE|HIGH|CRITICAL", "probability": 0.0-1.0}}
+- bounding_boxes: strictly extract any observable lesions (e.g. exudates, hemorrhages). Provide coordinates mapped to 0-100 scale [ymin, xmin, ymax, xmax].
+- confidence: {{"mean": 0.0-1.0, "uncertainty": 0.0-1.0}} (probabilistic certainty)
+- alert_required: true if ANY band is CRITICAL or HIGH.
+
+Be thorough. If the image is a selfie (not direct fundoscopy), note image limitations in findings but still
+extract all observable features. Treat this as a triage screening tool.
+"""
+
+    def _render_heatmap(self, image_bytes: bytes, result: dict) -> dict:
+        try:
+            import io
+            from PIL import Image, ImageDraw
+            
+            img = Image.open(io.BytesIO(image_bytes)).convert("RGBA")
+            overlay = Image.new("RGBA", img.size, (255, 255, 255, 0))
+            draw = ImageDraw.Draw(overlay)
+            
+            width, height = img.size
+            
+            for box in result.get("bounding_boxes", []):
+                label = box.get("label", "lesion")
+                
+                # Normalize from 0-1000 scale
+                y_min = (box["ymin"] / 1000.0) * height if box["ymin"] > 1 else box["ymin"] * height
+                x_min = (box["xmin"] / 1000.0) * width if box["xmin"] > 1 else box["xmin"] * width
+                y_max = (box["ymax"] / 1000.0) * height if box["ymax"] > 1 else box["ymax"] * height
+                x_max = (box["xmax"] / 1000.0) * width if box["xmax"] > 1 else box["xmax"] * width
+                
+                color = (255, 0, 0, 160) if "hemorrhage" in label.lower() else (255, 200, 0, 160)
+                draw.rectangle([x_min, y_min, x_max, y_max], outline=color, width=4)
+                draw.text((x_min, max(0, y_min - 15)), label, fill=color)
+            
+            out_img = Image.alpha_composite(img, overlay).convert("RGB")
+            buf = io.BytesIO()
+            out_img.save(buf, format="JPEG")
+            result["diagnostic_heatmap"] = base64.b64encode(buf.getvalue()).decode("utf-8")
+        except Exception as mask_error:
+            result["heatmap_error"] = str(mask_error)
+        return result
 
     def _save_scan(self, result: dict):
         """Persist scan to reports/retinal_scans.json"""

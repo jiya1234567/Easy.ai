@@ -167,7 +167,7 @@ class BiometricAlertEngine:
             return f"❌ Email failed: {e}"
 
     # ── SMS via Twilio ────────────────────────────────────────────────────────
-    def send_sms(self, result: dict) -> str:
+    def send_sms(self, result: dict, smart_summary: str = None) -> str:
         twilio_sid   = os.environ.get("TWILIO_ACCOUNT_SID", "")
         twilio_token = os.environ.get("TWILIO_AUTH_TOKEN",  "")
         from_num     = os.environ.get("TWILIO_FROM_NUMBER", "")
@@ -179,18 +179,66 @@ class BiometricAlertEngine:
         try:
             from twilio.rest import Client
             client  = Client(twilio_sid, twilio_token)
-            sms_body = (
-                f"OMEGA-CORE ALERT [{result['level']}]\n"
-                f"{result['owner']} | {result['timestamp']}\n"
-                + "\n".join([f"• {b['metric']}: {b['value']} ({b['severity']})" for b in result["breaches"]])
-                + f"\nAction: {result['message'].split(chr(10))[0]}"
-            )
+            
+            if smart_summary:
+                sms_body = smart_summary
+            else:
+                sms_body = (
+                    f"OMEGA-CORE ALERT [{result['level']}]\n"
+                    f"{result['owner']} | {result['timestamp']}\n"
+                    + "\n".join([f"• {b['metric']}: {b['value']} ({b['severity']})" for b in result["breaches"]])
+                    + f"\nAction: {result['message'].split(chr(10))[0]}"
+                )
+                
             message = client.messages.create(body=sms_body, from_=from_num, to=to_num)
             return f"✅ SMS sent (SID: {message.sid})"
         except ImportError:
             return "⚠️ Twilio not installed. Run: pip install twilio"
         except Exception as e:
             return f"❌ SMS failed: {e}"
+
+    def generate_smart_summary(self, result: dict, provider="gemini", api_key=None) -> str:
+        """
+        Uses LLM to generate a concise, professional medical summary for SMS/Email.
+        """
+        if not api_key:
+            return None
+            
+        prompt = f"""
+        You are OMEGA-CORE MEDICAL LIAISON. Generate a concise, professional SMS alert for the following biometric breach:
+        
+        OWNER: {result['owner']}
+        STATUS: {result['level']}
+        VITALS: {json.dumps(result['vitals'])}
+        BREACHES: {json.dumps(result['breaches'])}
+        
+        REQUIREMENTS:
+        - Max 160 characters.
+        - Include current status and primary risk.
+        - Provide one clear action step.
+        - Maintain a professional, urgent but calm tone.
+        """
+        
+        try:
+            if provider == "gemini":
+                from google import genai
+                client = genai.Client(api_key=api_key)
+                response = client.models.generate_content(
+                    model="gemini-1.5-flash",
+                    contents=prompt
+                )
+                return response.text.strip()
+            elif provider == "mistral":
+                from mistralai.client import Mistral
+                client = Mistral(api_key=api_key)
+                response = client.chat.complete(
+                    model="mistral-large-latest",
+                    messages=[{"role": "user", "content": prompt}]
+                )
+                return response.choices[0].message.content.strip()
+        except Exception as e:
+            print(f"Smart Summary failed: {e}")
+            return None
 
     # ── Helpers ───────────────────────────────────────────────────────────────
     def _build_message(self, level, breaches, bp, glucose, pulse, spo2, ts) -> str:

@@ -12,7 +12,7 @@ from intelligence.scientific_engine import ScientificEngine
 from intelligence.health_insurance_engine import HealthInsuranceEngine
 import vertexai
 from vertexai.generative_models import GenerativeModel, GenerationConfig
-from mistralai import Mistral
+from mistralai.client import Mistral
 
 # --- CONFIGURATION ---
 st.set_page_config(
@@ -45,6 +45,15 @@ if "mistral_api_key" not in st.session_state:
 
 API_KEY = st.session_state.gemini_api_key
 MISTRAL_API_KEY = st.session_state.mistral_api_key
+
+# --- MISTRAL CLIENT CACHING ---
+@st.cache_resource
+def get_mistral_client(api_key):
+    if not api_key:
+        return None
+    return Mistral(api_key=api_key)
+
+mistral_client = get_mistral_client(MISTRAL_API_KEY)
 
 # --- STYLING ---
 st.markdown("""
@@ -104,10 +113,14 @@ with st.sidebar:
     st.subheader("Buddy's Toolset by A&P Phillips")
     
     st.divider()
-    st.markdown("### 🤖 Engine Selection")
+    # Default selection logic
+    default_index = 0
+    if not st.session_state.gemini_api_key and st.session_state.mistral_api_key:
+        default_index = 1 # Mistral (Native API)
+
     model_choice = st.radio("INTELLIGENCE CORE", 
                             ["Gemini 1.5 Flash", "Mistral (Native API)", "Mistral Large (Vertex AI)", "Codestral (Vertex AI)"], 
-                            index=0, 
+                            index=default_index, 
                             help="Select the core for mission execution.")
     st.divider()
 
@@ -470,7 +483,7 @@ if st.session_state.active_tab == "⚙️ FACTORY":
         if not intent and not ticker:
             st.warning("Please enter mission intent or ticker.")
         elif "Gemini" in model_choice and not API_KEY:
-            st.error("Uplink Error: No API key was provided. Please enter a valid API key in the sidebar.")
+            st.error("❌ Gemini Uplink Error: No API key provided. Please enter a valid Gemini key in the sidebar, or switch the engine to **Mistral (Native API)**.")
         else:
             with st.spinner("Traversing Hypergraph..."):
                 try:
@@ -503,10 +516,10 @@ if st.session_state.active_tab == "⚙️ FACTORY":
                         )
                         result = json.loads(response.text)
                     elif "Native API" in model_choice:
-                        if not MISTRAL_API_KEY:
-                            st.error("Mistral API Key missing.")
+                        if not mistral_client:
+                            st.error("❌ Mistral API Key missing. Please set MISTRAL_API_KEY in the sidebar or environment.")
                             st.stop()
-                        client = Mistral(api_key=MISTRAL_API_KEY)
+                        client = mistral_client
                         response = client.chat.complete(
                             model="mistral-large-latest",
                             messages=[
@@ -883,8 +896,17 @@ if st.session_state.active_tab == "👥 DIGITAL TWIN":
                 sms_to = st.text_input("Send SMS to", value=os.environ.get("TWILIO_TO_NUMBER","+61400000000"))
                 if st.button("📱 SEND SMS ALERT"):
                     os.environ["TWILIO_TO_NUMBER"] = sms_to
-                    status = alert_engine.send_sms(res)
+                    
+                    provider = "mistral" if "Mistral" in model_choice or "Codestral" in model_choice else "gemini"
+                    key = st.session_state.mistral_api_key if provider == "mistral" else st.session_state.gemini_api_key
+                    
+                    with st.spinner("Generating Smart Summary..."):
+                        smart_summary = alert_engine.generate_smart_summary(res, provider=provider, api_key=key)
+                        
+                    status = alert_engine.send_sms(res, smart_summary=smart_summary)
                     (st.success if "✅" in status else st.warning)(status)
+                    if smart_summary:
+                        st.caption(f"**Smart Summary:** {smart_summary}")
                     if voice_on and "✅" in status:
                         speak("S M S alert sent successfully.")
     else:
@@ -926,19 +948,23 @@ if st.session_state.active_tab == "👥 DIGITAL TWIN":
                     st.session_state.eye_scan_fidelity = "99.8%"
                     
                     if 'selfie_bytes' in st.session_state:
-                        st.info("Initiating Vision Model Optometric Analysis...")
+                        st.info(f"Initiating {model_choice} Optometric Analysis...")
                         from intelligence.retinal_analyzer import RetinalAnalyzer
-                        analyzer = RetinalAnalyzer(api_key=st.session_state.gemini_api_key)
+                        
+                        provider = "mistral" if "Mistral" in model_choice or "Codestral" in model_choice else "gemini"
+                        key = st.session_state.mistral_api_key if provider == "mistral" else st.session_state.gemini_api_key
+                        
+                        analyzer = RetinalAnalyzer(api_key=key, provider=provider)
                         vision_result = analyzer.analyze_image_bytes(st.session_state.selfie_bytes)
                         if "error" in vision_result:
                             st.error(vision_result["error"])
                         else:
                             st.session_state.vision_result = vision_result
-                            st.success("Genuine Vision Optometric Analysis Complete.")
+                            st.success(f"Genuine {provider.capitalize()} Optometric Analysis Complete.")
                     
                     st.success("Eye Scan protocol generated. Galaxy Fit 3 alert queued.")
                     if voice_on:
-                        speak("Total Eye Scan complete. Retinal fidelity 99.8 percent. Samsung Galaxy Fit 3 biometric sync active. Passive monitoring enabled.")
+                        speak(f"Total Eye Scan complete. Retinal fidelity 99.8 percent. Samsung Galaxy Fit 3 biometric sync active. Passive monitoring enabled.")
             st.metric("Retinal Pattern Fidelity", st.session_state.eye_scan_fidelity)
             
             if 'vision_result' in st.session_state:
