@@ -308,6 +308,50 @@ class ScientificEngine:
             df_proj['Type'] = [self.metadata.get(a, 'Unknown') for a in returns.columns]
         return df_proj
 
+    def interpret_findings(self, hypothesis, res, api_key=None, engine="Gemini"):
+        """
+        Uses LLM to interpret scientific findings.
+        """
+        from google import genai
+        from google.genai import types
+        from mistralai.client import Mistral
+
+        key = api_key or os.environ.get("GEMINI_API_KEY" if engine == "Gemini" else "MISTRAL_API_KEY", "")
+        if not key:
+            return "Uplink Error: No API key found for the selected engine."
+
+        prompt = f"""
+        You are the OMEGA-CORE SCIENTIFIC INTERPRETER.
+        HYPOTHESIS: {hypothesis}
+        FINDINGS:
+        - Anomaly State: {res.get('anomaly')}
+        - Current Regime: {res.get('current_regime')}
+        - Discovery Probability: {res.get('prob'):.2%}
+        - Silhouette Fidelity: {res.get('silhouette'):.4f}
+        - Causal Paths: {len(res.get('causal_g').edges())}
+
+        Provide a 2-sentence 'Scientific Rationale' explaining these results in the context of the hypothesis.
+        Be objective and mathematically grounded.
+        """
+
+        try:
+            if engine == "Gemini":
+                client = genai.Client(api_key=key)
+                response = client.models.generate_content(
+                    model="gemini-1.5-flash",
+                    contents=prompt
+                )
+                return response.text.strip()
+            else:
+                client = Mistral(api_key=key)
+                response = client.chat.complete(
+                    model="mistral-large-latest",
+                    messages=[{"role": "user", "content": prompt}]
+                )
+                return response.choices[0].message.content.strip()
+        except Exception as e:
+            return f"Interpretation failed: {e}"
+
 if __name__ == "__main__":
     engine = ScientificEngine(data_path="reports/materials_test.csv")
     loaded, msg = engine.load_data()

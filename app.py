@@ -138,6 +138,10 @@ with st.sidebar:
         os.environ["MISTRAL_API_KEY"] = mistral_key_input
         MISTRAL_API_KEY = mistral_key_input
     
+    # Ensure environment is synced for background modules
+    os.environ["GEMINI_API_KEY"] = st.session_state.gemini_api_key
+    os.environ["MISTRAL_API_KEY"] = st.session_state.mistral_api_key
+    
     st.divider()
     
     st.markdown("### 📷 Visual Ingress")
@@ -1199,6 +1203,15 @@ if st.session_state.active_tab == "👨‍🔬 SCIENTIFIC DISCOVERY":
         if st.button("RUN SCIENTIFIC VALIDATION"):
             if 'discovery_result' in st.session_state:
                 res = st.session_state.discovery_result
+                
+                # Dynamic AI Interpretation
+                engine_type = "Mistral" if "Mistral" in model_choice else "Gemini"
+                key = st.session_state.mistral_api_key if engine_type == "Mistral" else st.session_state.gemini_api_key
+                
+                with st.spinner(f"Generating Scientific Rationale via {engine_type}..."):
+                    rationale = sci_engine.interpret_findings(hypo, res, api_key=key, engine=engine_type)
+                    st.session_state.discovery_rationale = rationale
+
                 st.success(f"Hypothesis Parsed. Success Probability: {res['prob']*100:.1f}%")
                 
                 col_res1, col_res2 = st.columns(2)
@@ -1234,10 +1247,8 @@ if st.session_state.active_tab == "👨‍🔬 SCIENTIFIC DISCOVERY":
                     st.info("No significant causal paths detected at current threshold.")
 
                 st.markdown(f"""
-                > **Scientific Rationale:**
-                > System detected a **{res['anomaly']}** state within **{res['current_regime']}**. 
-                > Manifold geometry indicates increased curvature in the feature subspace.
-                > Silhouette score of **{res['silhouette']:.3f}** confirms the mathematical validity of these findings.
+                > **Scientific Rationale ({engine_type}):**
+                > {st.session_state.get('discovery_rationale', 'Rationale pending...')}
                 """)
             else:
                 st.warning("Run Discovery Loop first to sync systemic state.")
@@ -2119,7 +2130,11 @@ if st.session_state.active_tab == "🩺 HEALTH PROTOCOL":
                 with st.spinner("Processing Bio-Metric Hypergraph..."):
                     if 'selfie_bytes' in st.session_state:
                         from intelligence.retinal_analyzer import RetinalAnalyzer
-                        analyzer = RetinalAnalyzer(api_key=st.session_state.gemini_api_key)
+                        
+                        engine_type = "Mistral" if "Mistral" in model_choice else "Gemini"
+                        key = st.session_state.mistral_api_key if engine_type == "Mistral" else st.session_state.gemini_api_key
+                        
+                        analyzer = RetinalAnalyzer(api_key=key, engine=engine_type)
                         res = analyzer.analyze_image_bytes(st.session_state.selfie_bytes)
                         if "error" in res:
                             st.error(res["error"])

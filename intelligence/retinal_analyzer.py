@@ -23,6 +23,7 @@ except ImportError:
 
 from google import genai
 from google.genai import types
+from mistralai.client import Mistral
 
 # ── Risk colour map ────────────────────────────────────────────────────────────
 RISK_COLORS = {
@@ -61,9 +62,10 @@ class RetinalAnalyzer:
     deep-tissue retinal diagnostics with strict confidence gating.
     """
 
-    def __init__(self, api_key=None):
+    def __init__(self, api_key=None, engine="Gemini"):
         self.api_key = api_key or os.environ.get("GEMINI_API_KEY", "")
-        self.model   = "gemini-2.0-flash"
+        self.engine  = engine # "Gemini" or "Mistral"
+        self.model   = "gemini-2.0-flash" if engine == "Gemini" else "pixtral-12b-2409"
 
     def classify_image(self, image_bytes: bytes, mime_type: str) -> str:
         """Classifies image type using the multimodal model."""
@@ -71,39 +73,44 @@ class RetinalAnalyzer:
         Analyze this image and return a JSON object with a single key 'image_type'.
         Values: 'EXTERNAL_EYE_PHOTO' or 'RETINAL_FUNDUS_SCAN'.
         """
-        client = genai.Client(api_key=self.api_key)
-        response = client.models.generate_content(
-            model=self.model,
-            contents=[types.Part.from_bytes(data=image_bytes, mime_type=mime_type), prompt],
-            config=types.GenerateContentConfig(response_mime_type="application/json")
-        )
-        return json.loads(response.text).get("image_type", "EXTERNAL_EYE_PHOTO")
+        if self.engine == "Gemini":
+            client = genai.Client(api_key=self.api_key)
+            response = client.models.generate_content(
+                model=self.model,
+                contents=[types.Part.from_bytes(data=image_bytes, mime_type=mime_type), prompt],
+                config=types.GenerateContentConfig(response_mime_type="application/json")
+            )
+            return json.loads(response.text).get("image_type", "EXTERNAL_EYE_PHOTO")
+        else:
+            # Mistral Pixtral Classification
+            client = Mistral(api_key=self.api_key)
+            b64 = base64.b64encode(image_bytes).decode("utf-8")
+            response = client.chat.complete(
+                model=self.model,
+                messages=[
+                    {
+                        "role": "user",
+                        "content": [
+                            {"type": "text", "text": prompt},
+                            {"type": "image_url", "image_url": f"data:{mime_type};base64,{b64}"}
+                        ]
+                    }
+                ],
+                response_format={"type": "json_object"}
+            )
+            return json.loads(response.choices[0].message.content).get("image_type", "EXTERNAL_EYE_PHOTO")
 
     def analyze_image_bytes(self, image_bytes: bytes, mime_type: str = "image/jpeg") -> dict:
         """
         Hardened entry: Classifies image type and applies branched diagnostic logic.
         """
         if not self.api_key:
-            return {"error": "No GEMINI_API_KEY. Enter it in the sidebar."}
+            return {"error": f"No {self.engine.upper()} API_KEY provided."}
 
         b64 = base64.b64encode(image_bytes).decode("utf-8")
         
         # ── Step 1: Classification ──
-        classification_prompt = """
-        Analyze this image and return a single JSON object with key 'image_type'.
-        Values: 'EXTERNAL_EYE_PHOTO' (selfie, face, outer eye) or 'RETINAL_FUNDUS_SCAN' (microscopic view of retina).
-        """
-        
-        try:
-            client = genai.Client(api_key=self.api_key)
-            class_res = client.models.generate_content(
-                model=self.model,
-                contents=[types.Part.from_bytes(data=image_bytes, mime_type=mime_type), classification_prompt],
-                config=types.GenerateContentConfig(response_mime_type="application/json")
-            )
-            image_type = json.loads(class_res.text).get("image_type", "EXTERNAL_EYE_PHOTO")
-        except:
-            image_type = "EXTERNAL_EYE_PHOTO"
+        image_type = self.classify_image(image_bytes, mime_type)
 
         # ── Step 2: Branched Prompting ──
         if image_type == "RETINAL_FUNDUS_SCAN":
@@ -141,21 +148,41 @@ Return ONLY valid JSON matching this exact structure:
 """
 
         try:
-            client   = genai.Client(api_key=self.api_key)
-            response = client.models.generate_content(
-                model=self.model,
-                contents=[
-                    types.Part.from_bytes(data=base64.b64decode(b64), mime_type=mime_type),
-                    prompt
-                ],
-                config=types.GenerateContentConfig(
-                    response_mime_type="application/json"
+            if self.engine == "Gemini":
+                client   = genai.Client(api_key=self.api_key)
+                response = client.models.generate_content(
+                    model=self.model,
+                    contents=[
+                        types.Part.from_bytes(data=image_bytes, mime_type=mime_type),
+                        prompt
+                    ],
+                    config=types.GenerateContentConfig(
+                        response_mime_type="application/json"
+                    )
                 )
-            )
-            result = json.loads(response.text)
+                result = json.loads(response.text)
+            else:
+                # Mistral Pixtral Analysis
+                client = Mistral(api_key=self.api_key)
+                response = client.chat.complete(
+                    model=self.model,
+                    messages=[
+                        {
+                            "role": "user",
+                            "content": [
+                                {"type": "text", "text": prompt},
+                                {"type": "image_url", "image_url": f"data:{mime_type};base64,{b64}"}
+                            ]
+                        }
+                    ],
+                    response_format={"type": "json_object"}
+                )
+                result = json.loads(response.choices[0].message.content)
+
             result["timestamp"] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             result["image_type"] = image_type
             result["model"]      = self.model
+            result["engine"]     = self.engine
 
             # -- HEATMAP / DIAGNOSTIC MASK RENDERING --
             try:
@@ -193,7 +220,6 @@ Return ONLY valid JSON matching this exact structure:
 
         except Exception as e:
             return {"error": f"Retinal analysis failed: {e}"}
-
     def _save_scan(self, result: dict):
         """Persist scan to reports/retinal_scans.json"""
         log_path = "reports/retinal_scans.json"

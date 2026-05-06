@@ -1,0 +1,36 @@
+{
+  "asset": "AAPL",
+  "status": "Cautiously Bullish Outlook",
+  "recent_price": "A$215.30",
+  "regime": "RISK-ON",
+  "regime_summary": "Global markets show resilience amid stabilizing interest rates and strong corporate earnings, favoring growth-oriented assets like AAPL.",
+  "analysis": [
+    {
+      "Category": "Risk Regime",
+      "Status": "RISK-ON",
+      "Meaning": "Investors are favoring equities and growth assets due to improved macroeconomic sentiment and liquidity conditions."
+    },
+    {
+      "Category": "Tailwinds",
+      "Status": "Strong Earnings, Innovation, Services Growth",
+      "Meaning": "AAPL benefits from robust iPhone demand, expansion in services (e.g., Apple TV+, Apple Pay), and AI-driven product enhancements."
+    },
+    {
+      "Category": "Headwinds",
+      "Status": "Regulatory Pressures, Supply Chain Risks",
+      "Meaning": "Ongoing antitrust scrutiny and potential disruptions in semiconductor supply chains pose challenges."
+    },
+    {
+      "Price Range": "A$205.00 - A$225.00",
+      "Status": "Near-Term Resistance at A$220.00",
+      "Meaning": "AAPL is trading near its 52-week high, with technical resistance at A$220.00 and support at A$205.00."
+    },
+    {
+      "Category": "Investor Action",
+      "Status": "Hold/Accumulate on Dips",
+      "Meaning": "Investors may consider accumulating shares on pullbacks, targeting entry points near A$205.00."
+    }
+  ],
+  "prediction": "AAPL is expected to test resistance at A$220.00 in the near term, with potential upside to A$230.00 if macro conditions remain favorable. Downside risk is limited to A$200.00 unless broader market sentiment shifts to RISK-OFF.",
+  "report_date": "2026-05-06"
+}
