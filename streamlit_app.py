@@ -12,6 +12,7 @@ from intelligence.scientific_engine import ScientificEngine
 from intelligence.health_insurance_engine import HealthInsuranceEngine
 import vertexai
 from vertexai.generative_models import GenerativeModel, GenerationConfig
+from mistralai.client import Mistral
 
 # --- CONFIGURATION ---
 st.set_page_config(
@@ -21,12 +22,38 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-# Load API Key securely via session state
-if "gemini_api_key" not in st.session_state:
-    st.session_state.gemini_api_key = os.environ.get("GEMINI_API_KEY", "")
+# --- API KEY INITIALIZATION ---
+def get_secret(key):
+    """Safely get a secret from environment or streamlit secrets."""
+    # 1. Try Environment Variable (best for Codespaces/Docker)
+    val = os.environ.get(key)
+    if val: return val
+    
+    # 2. Try Streamlit Secrets (best for Streamlit Cloud)
+    try:
+        if key in st.secrets:
+            return st.secrets[key]
+    except:
+        pass
+    return ""
 
-os.environ["GEMINI_API_KEY"] = st.session_state.gemini_api_key
+if "gemini_api_key" not in st.session_state:
+    st.session_state.gemini_api_key = get_secret("GEMINI_API_KEY")
+
+if "mistral_api_key" not in st.session_state:
+    st.session_state.mistral_api_key = get_secret("MISTRAL_API_KEY")
+
 API_KEY = st.session_state.gemini_api_key
+MISTRAL_API_KEY = st.session_state.mistral_api_key
+
+# --- MISTRAL CLIENT CACHING ---
+@st.cache_resource
+def get_mistral_client(api_key):
+    if not api_key:
+        return None
+    return Mistral(api_key=api_key)
+
+mistral_client = get_mistral_client(MISTRAL_API_KEY)
 
 # --- STYLING ---
 st.markdown("""
@@ -82,23 +109,38 @@ st.markdown("""
 # --- SIDEBAR ---
 with st.sidebar:
     st.title("🔬 OMEGA-CORE")
-    st.caption("SYSTEM VERSION: 2.1 (Mistral-Ready)")
+    st.caption("SYSTEM VERSION: 2.5 (Mistral-Native)")
     st.subheader("Buddy's Toolset by A&P Phillips")
     
     st.divider()
-    st.markdown("### 🤖 Engine Selection")
+    # Default selection logic
+    default_index = 0
+    if not st.session_state.gemini_api_key and st.session_state.mistral_api_key:
+        default_index = 1 # Mistral (Native API)
+
     model_choice = st.radio("INTELLIGENCE CORE", 
-                            ["Gemini 1.5 Flash", "Mistral Large (Vertex AI)", "Codestral (Vertex AI)"], 
-                            index=0, 
+                            ["Gemini 1.5 Flash", "Mistral (Native API)", "Mistral Large (Vertex AI)", "Codestral (Vertex AI)"], 
+                            index=default_index, 
                             help="Select the core for mission execution.")
     st.divider()
 
+    # Gemini Key
+    gemini_key_input = st.text_input("🔑 Gemini API Key", type="password", value=st.session_state.gemini_api_key, help="Required for Gemini Factory missions.")
+    if gemini_key_input:
+        st.session_state.gemini_api_key = gemini_key_input
+        os.environ["GEMINI_API_KEY"] = gemini_key_input
+        API_KEY = gemini_key_input
 
-    api_key_input = st.text_input("🔑 Gemini API Key", type="password", value=st.session_state.gemini_api_key, help="Required for Gemini Factory missions. Vertex models use Cloud IAM.")
-    if api_key_input:
-        st.session_state.gemini_api_key = api_key_input
-        os.environ["GEMINI_API_KEY"] = api_key_input
-        API_KEY = api_key_input
+    # Mistral Key
+    mistral_key_input = st.text_input("🔑 Mistral API Key", type="password", value=st.session_state.mistral_api_key, help="Required for Native Mistral missions.")
+    if mistral_key_input:
+        st.session_state.mistral_api_key = mistral_key_input
+        os.environ["MISTRAL_API_KEY"] = mistral_key_input
+        MISTRAL_API_KEY = mistral_key_input
+    
+    # Ensure environment is synced for background modules
+    os.environ["GEMINI_API_KEY"] = st.session_state.gemini_api_key
+    os.environ["MISTRAL_API_KEY"] = st.session_state.mistral_api_key
     
     st.divider()
     
@@ -115,7 +157,7 @@ with st.sidebar:
     if optical_ingress is not None:
         st.session_state.selfie_bytes = optical_ingress.getvalue()
         st.success("Optical Ingress Acquired. Ready.")
-        
+    
     st.divider()
     
     st.info("AGENTIC AUTONOMY ACTIVE")
@@ -249,7 +291,7 @@ tabs_list = [
     "🩺 HEALTH PROTOCOL", "🔬 RESEARCH DEVICE", "🔄 EVOLUTION", "🌌 VISUAL MANIFOLD", "🚀 SINGULARITY FEED", 
     "👨‍🔬 SCIENTIFIC DISCOVERY", "🌌 DISCOVERY DASHBOARD", "🔐 ADVERSARIAL LAB", "🏙️ SMART CITY TWIN", 
     "🧬 QUANTUM FEEDBACK", "🚜 AGRICULTURE ASI", "🌌 GLOBAL MONITORING", "🦾 ROBOTICS COMMAND", 
-    "📊 REPORTS ENGINE", "🏥 HEALTH INSURANCE", "☁️ CLOUD HUB", "🔮 ASI PREDICTION KERNEL"
+    "📊 REPORTS ENGINE", "🏥 HEALTH INSURANCE", "☁️ COMMUNITY HUB", "🔮 ASI PREDICTION KERNEL"
 ]
 
 # Grid Rendering (5 columns)
@@ -444,14 +486,14 @@ if st.session_state.active_tab == "⚙️ FACTORY":
     if st.button("EXECUTE MISSION"):
         if not intent and not ticker:
             st.warning("Please enter mission intent or ticker.")
-        elif not API_KEY:
-            st.error("Uplink Error: No API key was provided. Please enter a valid API key in the sidebar.")
+        elif "Gemini" in model_choice and not API_KEY:
+            st.error("❌ Gemini Uplink Error: No API key provided. Please enter a valid Gemini key in the sidebar, or switch the engine to **Mistral (Native API)**.")
         else:
             with st.spinner("Traversing Hypergraph..."):
                 try:
                     system_instruction = f"""
                     You are the MULTI-AGENT ORCHESTRATOR. Domain: {domain}. Intent: {intent}. Ticker: {ticker}.
-                    DATE: 2026-04-08 (Today)
+                    DATE: {datetime.datetime.now().strftime('%Y-%m-%d')}
                     STRICT SCHEMA REQUIREMENT: You must return a JSON object with these EXACT keys:
                     - "asset": "{ticker}"
                     - "status": A 3-word summary of the outlook
@@ -460,7 +502,7 @@ if st.session_state.active_tab == "⚙️ FACTORY":
                     - "regime_summary": A one-sentence macro summary
                     - "analysis": A list of dicts with EXACT columns: "Category", "Status", and "Meaning"
                     - "prediction": A technical forecast summary
-                    - "report_date": "2026-04-08"
+                    - "report_date": "{datetime.datetime.now().strftime('%Y-%m-%d')}"
 
                     REQUIRED ANALYSIS ROWS: You MUST include rows for: 
                     "Risk Regime", "Tailwinds", "Headwinds", "Price Range", and "Investor Action".
@@ -477,8 +519,22 @@ if st.session_state.active_tab == "⚙️ FACTORY":
                             )
                         )
                         result = json.loads(response.text)
+                    elif "Native API" in model_choice:
+                        if not mistral_client:
+                            st.error("❌ Mistral API Key missing. Please set MISTRAL_API_KEY in the sidebar or environment.")
+                            st.stop()
+                        client = mistral_client
+                        response = client.chat.complete(
+                            model="mistral-large-latest",
+                            messages=[
+                                {"role": "system", "content": system_instruction},
+                                {"role": "user", "content": f"Execute analysis for: {intent} {ticker}"}
+                            ],
+                            response_format={"type": "json_object"}
+                        )
+                        result = json.loads(response.choices[0].message.content)
                     else:
-                        # Vertex AI Integration (Mistral/Codestral)
+                        # Vertex AI Initialization
                         project = os.environ.get("GOOGLE_CLOUD_PROJECT", "asi-resh")
                         location = os.environ.get("GOOGLE_CLOUD_LOCATION", "us-central1")
                         vertexai.init(project=project, location=location)
@@ -504,7 +560,7 @@ if st.session_state.active_tab == "⚙️ FACTORY":
                             st.write("Backtesting against 10-epoch baseline...")
                             time.sleep(0.8)
                             status.update(label="Simulation Complete. Diverging to Reports Engine.", state="complete", expanded=False)
-                        
+
                         save_path = os.path.join("reports/metrics", f"{ticker.lower()}.json")
                         with open(save_path, "w", encoding="utf-8") as f:
                             json.dump(result, f, indent=2)
@@ -1147,6 +1203,15 @@ if st.session_state.active_tab == "👨‍🔬 SCIENTIFIC DISCOVERY":
         if st.button("RUN SCIENTIFIC VALIDATION"):
             if 'discovery_result' in st.session_state:
                 res = st.session_state.discovery_result
+                
+                # Dynamic AI Interpretation
+                engine_type = "Mistral" if "Mistral" in model_choice else "Gemini"
+                key = st.session_state.mistral_api_key if engine_type == "Mistral" else st.session_state.gemini_api_key
+                
+                with st.spinner(f"Generating Scientific Rationale via {engine_type}..."):
+                    rationale = sci_engine.interpret_findings(hypo, res, api_key=key, engine=engine_type)
+                    st.session_state.discovery_rationale = rationale
+
                 st.success(f"Hypothesis Parsed. Success Probability: {res['prob']*100:.1f}%")
                 
                 col_res1, col_res2 = st.columns(2)
@@ -1182,10 +1247,8 @@ if st.session_state.active_tab == "👨‍🔬 SCIENTIFIC DISCOVERY":
                     st.info("No significant causal paths detected at current threshold.")
 
                 st.markdown(f"""
-                > **Scientific Rationale:**
-                > System detected a **{res['anomaly']}** state within **{res['current_regime']}**. 
-                > Manifold geometry indicates increased curvature in the feature subspace.
-                > Silhouette score of **{res['silhouette']:.3f}** confirms the mathematical validity of these findings.
+                > **Scientific Rationale ({engine_type}):**
+                > {st.session_state.get('discovery_rationale', 'Rationale pending...')}
                 """)
             else:
                 st.warning("Run Discovery Loop first to sync systemic state.")
@@ -2020,7 +2083,7 @@ if st.session_state.active_tab == "🩺 HEALTH PROTOCOL":
                 if res.status_code == 200:
                     st.success("Successfully persisted to BigQuery.")
                 else:
-                    st.error("Error persisting to BigQuery. Verify uplink in Cloud Hub.")
+                    st.error("Error persisting to BigQuery. Verify uplink in Community Hub.")
             except Exception as e:
                 st.error(f"Connection failed: {e}")
 
@@ -2067,7 +2130,11 @@ if st.session_state.active_tab == "🩺 HEALTH PROTOCOL":
                 with st.spinner("Processing Bio-Metric Hypergraph..."):
                     if 'selfie_bytes' in st.session_state:
                         from intelligence.retinal_analyzer import RetinalAnalyzer
-                        analyzer = RetinalAnalyzer(api_key=st.session_state.gemini_api_key)
+                        
+                        engine_type = "Mistral" if "Mistral" in model_choice else "Gemini"
+                        key = st.session_state.mistral_api_key if engine_type == "Mistral" else st.session_state.gemini_api_key
+                        
+                        analyzer = RetinalAnalyzer(api_key=key, engine=engine_type)
                         res = analyzer.analyze_image_bytes(st.session_state.selfie_bytes)
                         if "error" in res:
                             st.error(res["error"])
@@ -2168,9 +2235,9 @@ if st.session_state.active_tab == "🩺 HEALTH PROTOCOL":
                 if 'policy_rec' in st.session_state: del st.session_state.policy_rec
                 st.rerun()
 
-# ☁️ CLOUD HUB
-if st.session_state.active_tab == "☁️ CLOUD HUB":
-    st.header("☁️ DIRECT CLOUD HUB")
+# ☁️ COMMUNITY HUB
+if st.session_state.active_tab == "☁️ COMMUNITY HUB":
+    st.header("☁️ DIRECT COMMUNITY HUB")
     st.write("Verify BigQuery Uplink")
     
     if 'cloud_uplink' not in st.session_state:
