@@ -1,8 +1,0 @@
-{
-  "science": {
-    "budget": 10000000
-  },
-  "finance": {
-    "max_rsi": 70
-  }
-}

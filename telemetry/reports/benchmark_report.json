@@ -1,8 +1,0 @@
-{
-  "Data Loading (ms)": 53.41696739196777,
-  "PCA Projection 3D (ms)": 26.14450454711914,
-  "Stability Test (ms)": 6.231546401977539,
-  "Reducibility Test (ms)": 3.6652088165283203,
-  "Causal Discovery (ms)": 8.034944534301758,
-  "Memory Occupation (MB)": 0.064849853515625
-}

@@ -1,5 +1,0 @@
-Region,Temperature_C,Electricity_Demand,Grid_Stress,Power_Outage_Risk,Economic_Loss_Million
-Sydney,40,0.82,0.7,0.2,15
-Perth,46,0.95,0.92,0.55,65
-Adelaide,45,0.91,0.88,0.48,48
-Brisbane,39,0.8,0.72,0.18,12

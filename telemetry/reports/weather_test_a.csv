@@ -1,9 +1,0 @@
-Region,Temperature_C,Humidity,Wind_kmh,Rain_mm,Pressure_hPa,Drought_Index,Satellite_Hotspot_Count,Wind_Direction,Storm_Risk,Flood_Risk,Fire_Risk
-Sydney,31,42,18,0,1008,0.55,2,45,0.2,0.05,0.35
-Melbourne,24,60,12,4,1015,0.3,0,180,0.1,0.08,0.12
-Brisbane,34,48,22,1,1005,0.62,1,220,0.25,0.1,0.45
-Perth,39,22,35,0,1002,0.88,15,315,0.15,0.02,0.85
-Adelaide,37,28,32,0,1004,0.82,12,290,0.18,0.03,0.78
-Canberra,29,35,20,0,1009,0.6,4,10,0.12,0.04,0.5
-Darwin,33,80,18,22,1006,0.1,0,90,0.65,0.7,0.08
-Hobart,19,72,14,6,1018,0.18,0,180,0.08,0.05,0.05
