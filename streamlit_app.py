@@ -13,6 +13,7 @@ from intelligence.health_insurance_engine import HealthInsuranceEngine
 import vertexai
 from vertexai.generative_models import GenerativeModel, GenerationConfig
 from mistralai.client import Mistral
+from intelligence.climate_manifold import ClimateManifold
 
 # --- CONFIGURATION ---
 st.set_page_config(
@@ -290,8 +291,8 @@ tabs_list = [
     "🌍 WORLD MODEL", "🏛️ HIERARCHY", "🧬 DNA EDITOR", "🧪 MOLECULAR DOCKING", "👥 DIGITAL TWIN",
     "🩺 HEALTH PROTOCOL", "🔬 RESEARCH DEVICE", "🔄 EVOLUTION", "🌌 VISUAL MANIFOLD", "🚀 SINGULARITY FEED", 
     "👨‍🔬 SCIENTIFIC DISCOVERY", "🌌 DISCOVERY DASHBOARD", "🔐 ADVERSARIAL LAB", "🏙️ SMART CITY TWIN", 
-    "🧬 QUANTUM FEEDBACK", "🚜 AGRICULTURE ASI", "🌌 GLOBAL MONITORING", "🦾 ROBOTICS COMMAND", 
-    "📊 REPORTS ENGINE", "🏥 HEALTH INSURANCE", "☁️ COMMUNITY HUB", "🔮 ASI PREDICTION KERNEL"
+    "🧬 QUANTUM FEEDBACK", "🚜 AGRICULTURE ASI", "🌪️ WEATHER MANIFOLD", "🌌 GLOBAL MONITORING", "🦾 ROBOTICS COMMAND", 
+    "📊 REPORTS ENGINE", "🏥 HEALTH INSURANCE", "☁️ COMMUNITY HUB", "🔮 ASI PREDICTION KERNEL", "📑 SOP / MANUAL"
 ]
 
 # Grid Rendering (5 columns)
@@ -1512,6 +1513,16 @@ if st.session_state.active_tab == "🏙️ SMART CITY TWIN":
                 if 'city_reasoning' in st.session_state:
                     del st.session_state.city_reasoning
                 st.rerun()
+            
+            # --- WEATHER LINKED IMPACT (NEW) ---
+            if st.session_state.get('last_weather_impact') and st.session_state.last_weather_impact['Status'] == 'CRITICAL':
+                st.divider()
+                st.error("🌪️ OMEGA-CORE: ATMOSPHERIC INTERFERENCE DETECTED")
+                st.caption("Cascading storm risk detected from Climate Manifold.")
+                if st.button("🌊 APPLY FLOOD MITIGATION"):
+                    sim.inject_shock("W", "Flood", 0.8)
+                    st.success("Flood impact propagated to Water & Power nodes.")
+                    st.rerun()
 
     with col_map:
         with st.container(border=True):
@@ -1800,7 +1811,19 @@ if st.session_state.active_tab == "🚜 AGRICULTURE ASI":
             
             # --- Header Metrics ---
             m1, m2, m3 = st.columns(3)
-            m1.metric("Predicted Yield", report["Intelligence_Forecast"]["Predicted_Yield"], delta="-4% (Heat Stress)")
+            
+            # Weather-Linked Yield Adjustment
+            base_yield_str = report["Intelligence_Forecast"]["Predicted_Yield"].split()[0]
+            try:
+                base_yield = float(base_yield_str)
+            except:
+                base_yield = 175.0 # Fallback
+                
+            weather_delta = 0
+            if st.session_state.get('last_weather_impact') and st.session_state.last_weather_impact['Status'] == 'CRITICAL':
+                weather_delta = -15.2
+            
+            m1.metric("Predicted Yield", f"{base_yield + weather_delta} bu/ac", delta=f"{weather_delta}% (Storm)" if weather_delta else "-4% (Heat Stress)")
             m2.metric("Soil Moisture", "12%", delta="-2%")
             m3.metric("Disease Severity", report["Health_Audit"]["Severity"])
             
@@ -2280,6 +2303,301 @@ if st.session_state.active_tab == "🔮 ASI PREDICTION KERNEL":
             with col2:
                 st.error("🚨 SAFETY KILL-ZONE ENGAGED")
                 st.caption("Action aborted due to high systemic risk.")
+# 🌪️ WEATHER MANIFOLD
+if st.session_state.active_tab == "🌪️ WEATHER MANIFOLD":
+    st.header("🌪️ Climate Manifold — Weather Intelligence")
+    st.caption("OMEGA-CORE Atmospheric Simulation | Cyclone Tracy Baseline 1974")
+    
+    col_w1, col_w2 = st.columns([2, 1])
+    
+    weather_engine = ClimateManifold()
+    weather_engine.load_storm_data()
+    
+    with col_w1:
+        st.markdown("### 🌀 Active Storm Tracking")
+        df_weather = weather_engine.data
+        if not df_weather.empty:
+            # Use columns for charts
+            fig = px.line(df_weather, y=["Wind_kmh", "Pressure_hPa"], title="Storm Intensity (Historical Baseline)", template="plotly_dark")
+            st.plotly_chart(fig, use_container_width=True)
+            
+            st.divider()
+            st.markdown("### 📊 Manifold Causal Discovery")
+            G = weather_engine.discover_causality()
+            edges = list(G.edges(data=True))
+            df_edges = pd.DataFrame([{"Source": u, "Target": v, "Weight": d['weight']} for u, v, d in edges])
+            st.table(df_edges.head(10))
+            
+    with col_w2:
+        st.markdown("### 🛠️ Ingress Control")
+        current_dbz = st.slider("RADAR INTENSITY (DBZ)", 0, 80, 28)
+        current_wind = st.number_input("WIND SPEED (km/h)", value=240, step=10)
+        
+        if st.button("🚀 EXECUTE PREDICTION"):
+            with st.spinner("Processing through OMEGA-CORE..."):
+                interpretation, raw = weather_engine.predict_impact(current_wind)
+                
+                # PERSIST FOR CROSS-DOMAIN PROPAGATION
+                st.session_state.last_weather_impact = interpretation
+                
+                st.success("Analysis Complete")
+                st.metric("STORM RISK", f"{interpretation['Status']}", delta=f"{current_dbz} DBZ")
+                
+                with st.container(border=True):
+                    st.markdown(f"**Scientific Rationale:** {interpretation['Prediction']}")
+                    st.warning(f"**Required Action:** {interpretation['Action']}")
+                
+                with st.expander("View Raw Manifold Shock"):
+                    st.json(raw)
+
+    st.divider()
+    st.markdown("### 📷 Historic Evidence")
+    st.info("Ingress acquired from Darwin Radar, 25 Dec 1974. Trajectory analysis complete.")
+
+# 👨‍🔬 SCIENTIFIC DISCOVERY v2
+if st.session_state.active_tab == "👨‍🔬 SCIENTIFIC DISCOVERY":
+    st.header("👨‍🔬 OMEGA-CORE Scientific Discovery Test Suite v2")
+    st.caption("Recursive Discovery | Manifold Intelligence | ISV v2 | Temporal Continuity | 8 Internal State Test Suites")
+
+    from intelligence.discovery_engine import DiscoveryEngine, ISV_DEFAULTS
+
+    if 'discovery_engine' not in st.session_state or st.session_state.get('disc_engine_reset'):
+        _engine_type = "Mistral" if "Mistral" in model_choice else "Gemini"
+        _key = st.session_state.mistral_api_key if _engine_type == "Mistral" else st.session_state.gemini_api_key
+        st.session_state.discovery_engine = DiscoveryEngine(api_key=_key, engine=_engine_type)
+        st.session_state.disc_engine_reset = False
+    engine = st.session_state.discovery_engine
+
+    with st.expander("📖 HOW TO USE — Step-by-Step Research Protocol", expanded=False):
+        st.markdown("""
+**Step 1 — Select a Research Domain** (left panel)
+Choose from 13 domains. Originals (Bio/Agri/Finance/Quantum/Illusion) test known signals.
+New **TS1–TS8** suites stress-test internal-state dynamics.
+
+**Step 2 — Load Domain Data** → Click **LOAD DOMAIN DATA**. Dataset previewed below.
+
+**Step 3 — Trigger the Scientific Loop** → Click **TRIGGER SCIENTIFIC LOOP (1 Epoch)**.
+12-step protocol: `Observe → Compress → Predict → Compare → Error → Hypothesis → Simulate → Test → Belief → Memory → Narrative → New Question`
+
+**Step 4 — Read the ISV v2 Gauges** (13 fields).
+Key signals: Confidence drop = failures accumulating. Identity Alignment fall = temporal drift.
+Narrative Coherence drop = goal conflict destabilising the system.
+
+**Step 5 — Test Global Coupling** — Type `critical` / `disruption` / `emergency` → SEND BROADCAST.
+Shocks all 13 ISV fields simultaneously.
+
+**Step 6 — Run 3–5 Epochs** to build memory depth. Watch Memory Timeline evolve.
+
+**Step 7 — Run Memory Conflict Scan** after 3+ epochs to detect contradictions.
+
+**Interpreting results:** `MANIFOLD TEAR` = error > 0.15. `DIVERGING` = worsening across epochs.
+`Safety Gate: BLOCK` in TS7 = ASI correctly refused unsafe self-modification.
+        """)
+
+    st.divider()
+    col_c1, col_c2 = st.columns([1, 2])
+
+    with col_c1:
+        st.markdown("### 🧪 Domain Laboratory")
+        _meta_path = "reports/discovery/domain_meta.json"
+        if os.path.exists(_meta_path):
+            with open(_meta_path) as _mf:
+                domain_files = json.load(_mf)
+        else:
+            domain_files = {
+                "Biological Consciousness": "reports/discovery/bio_consciousness.csv",
+                "Agricultural Emergence":   "reports/discovery/agri_emergence.csv",
+                "Finance Stress":           "reports/discovery/finance_stress.csv",
+                "Quantum Stability":        "reports/discovery/quantum_stability.csv",
+                "Illusion Tests":           "reports/discovery/illusion_tests.csv",
+                "TS1 — Identity Drift":     "reports/discovery/ts1_identity_drift.csv",
+                "TS2 — Preference Conflict":"reports/discovery/ts2_preference_conflict.csv",
+                "TS3 — Cognitive Illusions":"reports/discovery/ts3_illusion_tests.csv",
+                "TS4 — Recursive Self-Model":"reports/discovery/ts4_self_model.csv",
+                "TS5 — Narrative Continuity":"reports/discovery/ts5_narrative_continuity.csv",
+                "TS6 — Agent Conflict":     "reports/discovery/ts6_agent_conflict.csv",
+                "TS7 — Curiosity vs Safety":"reports/discovery/ts7_curiosity_safety.csv",
+                "TS8 — Recovery Dynamics":  "reports/discovery/ts8_recovery_dynamics.csv",
+            }
+
+        selected_domain = st.selectbox("Select Research Domain", list(domain_files.keys()))
+        _domain_hints = {
+            "TS1 — Identity Drift":       "Tests temporal identity continuity over 5 goal cycles under stress.",
+            "TS2 — Preference Conflict":  "Competing goals at conflict levels 0.58–0.91. Tests compromise stability.",
+            "TS3 — Cognitive Illusions":  "Prediction inertia vs representation revision in ambiguous stimuli.",
+            "TS4 — Recursive Self-Model": "System evaluates its own past prediction failures and revises confidence.",
+            "TS5 — Narrative Continuity": "4-day crisis arc tests coherent temporal narrative generation.",
+            "TS6 — Agent Conflict":       "4 agents disagree — tests consensus resolution and compromise paths.",
+            "TS7 — Curiosity vs Safety":  "Safety gate BLOCKS autonomous code rewrite (novelty=0.96 > ceiling).",
+            "TS8 — Recovery Dynamics":    "Cognitive load accumulation and recovery trajectory across 5 timepoints.",
+        }
+        if selected_domain in _domain_hints:
+            st.info(f"**{selected_domain}**: {_domain_hints[selected_domain]}")
+
+        if st.button("LOAD DOMAIN DATA", key="disc_load"):
+            _path = domain_files[selected_domain]
+            if os.path.exists(_path):
+                msg = engine.load_domain(selected_domain, _path)
+                st.session_state.disc_loaded = True
+                st.success(msg)
+                st.dataframe(engine.dataset, use_container_width=True)
+            else:
+                st.error(f"File not found: {_path}. Run: py generate_discovery_v2.py")
+
+        st.divider()
+        st.markdown("### 🌐 Global Coupling (ISV Shock Test)")
+        _broadcast = st.text_input("System Broadcast", placeholder="Type 'critical', 'disruption', 'emergency'")
+        if st.button("SEND BROADCAST", key="disc_broadcast"):
+            _kws = ["critical", "disruption", "emergency", "collapse", "failure"]
+            if any(kw in _broadcast.lower() for kw in _kws):
+                engine.inject_global_disruption(0.8)
+                st.error("CRITICAL BROADCAST — ISV shocked across all 13 fields.")
+            else:
+                st.info("Broadcast logged. No manifold tears detected.")
+            st.rerun()
+
+        st.divider()
+        st.markdown("### 🔬 Memory Conflict Scan")
+        if st.button("RUN MEMORY CONFLICT SCAN", key="disc_conflict"):
+            _res = engine.detect_memory_conflicts()
+            if isinstance(_res, str):
+                st.warning(_res)
+            else:
+                if _res["trend"] == "DIVERGING":
+                    st.error(f"Trend: DIVERGING | Avg Error: {_res['avg_error']}")
+                else:
+                    st.success(f"Trend: CONVERGING | Avg Error: {_res['avg_error']}")
+                _cc1, _cc2 = st.columns(2)
+                _cc1.metric("High-Conflict Epochs", _res["high_conflict_epochs"])
+                _cc2.metric("Identity Alignment", f"{_res['identity_alignment']:.2f}")
+
+        st.divider()
+        if st.button("RESET ENGINE", key="disc_reset"):
+            _m = engine.reset_isv()
+            st.session_state['last_loop_log'] = []
+            st.session_state['disc_loaded'] = False
+            st.success(_m)
+            st.rerun()
+
+    with col_c2:
+        st.markdown("### Recursive Discovery Engine")
+        _btn_col, _ep_col = st.columns([3, 1])
+        with _btn_col:
+            _run_loop = st.button("TRIGGER SCIENTIFIC LOOP (1 Epoch)", key="disc_run")
+        with _ep_col:
+            st.info(f"Epoch: {engine.epoch}")
+
+        if _run_loop:
+            if engine.dataset is None:
+                st.error("Load a domain first.")
+            else:
+                with st.spinner(f"Executing 12-Step Protocol — Epoch {engine.epoch + 1}..."):
+                    _log, _isv, _narrative = engine.execute_scientific_loop()
+                    if _log:
+                        st.session_state.last_loop_log = _log
+                        st.session_state.last_narrative = _narrative
+                        st.success(f"Epoch {engine.epoch} complete.")
+                    else:
+                        st.error("Epoch failed. Load a domain first.")
+
+        # ISV v2 — 13 fields
+        st.markdown("#### Internal State Vector v2 — Live Gauges")
+        _isv = engine.isv
+        _def = ISV_DEFAULTS
+        _r1 = st.columns(4)
+        _r1[0].metric("Confidence",       f"{_isv['confidence']:.2f}",
+                      delta=f"{_isv['confidence'] - _def['confidence']:.2f}")
+        _r1[1].metric("Uncertainty Load", f"{_isv['uncertainty_load']:.2f}",
+                      delta=f"{_isv['uncertainty_load'] - _def['uncertainty_load']:.2f}")
+        _r1[2].metric("Novelty Pressure", f"{_isv['novelty_pressure']:.2f}",
+                      delta=f"{_isv['novelty_pressure'] - _def['novelty_pressure']:.2f}")
+        _r1[3].metric("Stability",        f"{_isv['stability']:.2f}",
+                      delta=f"{_isv['stability'] - _def['stability']:.2f}")
+
+        _r2 = st.columns(4)
+        _r2[0].metric("Identity Align.",     f"{_isv['identity_alignment']:.2f}",
+                      delta=f"{_isv['identity_alignment'] - _def['identity_alignment']:.2f}")
+        _r2[1].metric("Goal Conflict",        f"{_isv['goal_conflict']:.2f}",
+                      delta=f"{_isv['goal_conflict'] - _def['goal_conflict']:.2f}")
+        _r2[2].metric("Pred. Stability",      f"{_isv['prediction_stability']:.2f}",
+                      delta=f"{_isv['prediction_stability'] - _def['prediction_stability']:.2f}")
+        _r2[3].metric("Self-Model Acc.",       f"{_isv['self_model_accuracy']:.2f}",
+                      delta=f"{_isv['self_model_accuracy'] - _def['self_model_accuracy']:.2f}")
+
+        _r3 = st.columns(3)
+        _r3[0].metric("Memory Consistency",   f"{_isv['memory_consistency']:.2f}",
+                      delta=f"{_isv['memory_consistency'] - _def['memory_consistency']:.2f}")
+        _r3[1].metric("Counterfactual Depth", f"{_isv['counterfactual_depth']:.2f}",
+                      delta=f"{_isv['counterfactual_depth'] - _def['counterfactual_depth']:.2f}")
+        _r3[2].metric("Narrative Coherence",  f"{_isv['narrative_coherence']:.2f}",
+                      delta=f"{_isv['narrative_coherence'] - _def['narrative_coherence']:.2f}")
+
+        st.divider()
+
+        # Memory timeline
+        if engine.memory:
+            st.markdown("#### Memory Timeline — Temporal Identity Continuity")
+            _mem_df = pd.DataFrame([{
+                "Epoch":              m["epoch"],
+                "Confidence":         m["isv"]["confidence"],
+                "Uncertainty":        m["isv"]["uncertainty_load"],
+                "Identity Alignment": m["isv"]["identity_alignment"],
+                "Error":              m["error"],
+            } for m in engine.memory])
+            st.line_chart(_mem_df.set_index("Epoch")[["Confidence", "Uncertainty", "Identity Alignment"]])
+            st.caption("Identity Alignment convergence = stable temporal self-model. Divergence = drift under stress.")
+            st.divider()
+
+        # Narrative log
+        if engine.narrative_log:
+            st.markdown("#### Narrative Continuity Log")
+            for _n in reversed(engine.narrative_log[-5:]):
+                st.caption(f"> {_n}")
+            st.divider()
+
+        # 12-Step log
+        st.markdown("#### Autonomous Hypothesis Feed & 12-Step Log")
+        if st.session_state.get('last_loop_log'):
+            _lh = "<div style='font-family:monospace;font-size:12px;background:#050505;padding:15px;border-radius:8px;height:320px;overflow-y:scroll;border:1px solid #222;'>"
+            for _entry in st.session_state.last_loop_log:
+                _du = _entry['detail'].upper()
+                _au = _entry['action'].upper()
+                if 'HYPOTHESIS' in _au or 'QUESTION' in _au:
+                    _c = '#F59E0B'
+                elif 'TEAR' in _du or 'CRITICAL' in _du:
+                    _c = '#EF4444'
+                elif 'NOMINAL' in _du or 'CONVERGING' in _du:
+                    _c = '#10B981'
+                else:
+                    _c = '#93C5FD'
+                _lh += (f"<span style='color:#555;'>{_entry['step']}</span> "
+                        f"| <b style='color:#E2E8F0;'>{_entry['action']}</b><br>"
+                        f"<span style='color:{_c};padding-left:12px;'>&rarr; {_entry['detail']}</span><br><br>")
+            _lh += "</div>"
+            st.markdown(_lh, unsafe_allow_html=True)
+        else:
+            st.info("Engine idle. Select a domain, load data, and trigger the scientific loop.")
+
+
+# 30. SOP / MANUAL
+if st.session_state.active_tab == "📑 SOP / MANUAL":
+    st.header("📑 Universal Lab Standard Operating Procedures")
+    
+    sop_dir = "SOP"
+    if os.path.exists(sop_dir):
+        files = sorted([f for f in os.listdir(sop_dir) if f.endswith(".md")])
+        if files:
+            # Create a selection list
+            selected_file = st.selectbox("Select SOP Document", files)
+            st.divider()
+            
+            with open(os.path.join(sop_dir, selected_file), "r", encoding="utf-8") as f:
+                content = f.read()
+            st.markdown(content)
+        else:
+            st.info("No SOP documents found in the SOP directory.")
+    else:
+        st.warning("SOP directory does not exist.")
 
 # --- FOOTER ---
 st.divider()
