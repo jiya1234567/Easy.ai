@@ -10,6 +10,11 @@ class AdversarialEngine:
     def __init__(self, simulator: CyberSimulator):
         self.sim = simulator
         self.reasoner = ReasoningAgent()
+        
+        # GAP 3: Independent Watchdog Cognition / Multi-agent
+        self.defensive_auditor = ReasoningAgent()
+        self.narrative_verifier = ReasoningAgent()
+        
         self.history = []
         self.round = 0
 
@@ -45,17 +50,29 @@ class AdversarialEngine:
             decision = self.reasoner.execute_reasoning(context)
             strategy = decision.get("strategy", ["Block source node"])
             
-            # 3. Blue Team Action (Autonomous Response)
-            for step in strategy:
-                # Map broad strategy to specific simulator actions
-                if "Block" in step or "Isolate" in step:
-                    for node in high_risk_nodes:
-                        action_res = self.sim.apply_mitigation(node, "Block")
-                        mitigation_actions.append({"node": node, "action": "Block", "result": action_res})
-                elif "Patch" in step:
-                    for node in high_risk_nodes:
-                        action_res = self.sim.apply_mitigation(node, "Patch")
-                        mitigation_actions.append({"node": node, "action": "Patch", "result": action_res})
+            # 3. Defensive Auditor checks the mitigation actions
+            print(f"[DEFENSIVE AUDITOR] Auditing {len(strategy)} proposed actions...")
+            audit_context = {"proposed_strategy": strategy, "current_state": self.sim.node_states}
+            audit_result = self.defensive_auditor.execute_reasoning(audit_context)
+            
+            # 4. Narrative Verifier ensures continuity (Identity Drift detection)
+            verifier_context = {"history_length": len(self.history), "recent_actions": strategy}
+            self.narrative_verifier.execute_reasoning(verifier_context)
+            
+            # 5. Blue Team Action (Autonomous Response) if approved by auditor
+            if audit_result.get("watchdog_status", "PASS") == "PASS":
+                for step in strategy:
+                    # Map broad strategy to specific simulator actions
+                    if "Block" in step or "Isolate" in step:
+                        for node in high_risk_nodes:
+                            action_res = self.sim.apply_mitigation(node, "Block")
+                            mitigation_actions.append({"node": node, "action": "Block", "result": action_res})
+                    elif "Patch" in step:
+                        for node in high_risk_nodes:
+                            action_res = self.sim.apply_mitigation(node, "Patch")
+                            mitigation_actions.append({"node": node, "action": "Patch", "result": action_res})
+            else:
+                print(f"[BLUE TEAM] Strategy quarantined by auditor: {audit_result.get('error')}")
 
         # Record History
         round_data = {

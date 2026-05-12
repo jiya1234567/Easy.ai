@@ -3,6 +3,7 @@ import { createServer as createViteServer } from "vite";
 import path from "path";
 import archiver from "archiver";
 import fs from "fs";
+import { exec } from "child_process";
 import { BigQuery } from "@google-cloud/bigquery";
 import dotenv from "dotenv";
 
@@ -122,6 +123,32 @@ async function startServer() {
       console.error("BigQuery Persist Error:", e);
       res.status(500).json({ error: e.message });
     }
+  });
+
+  app.post("/api/orchestrate", (req, res) => {
+    const { domain, ingress_data } = req.body;
+    console.log(`[ORCHESTRATOR] Initiating 9-step loop for domain: ${domain}`);
+
+    const pythonScript = path.join(process.cwd(), "intelligence", "orchestrator_engine.py");
+    const command = `py "${pythonScript}" "${domain}"`;
+
+    exec(command, (error, stdout, stderr) => {
+      if (error) {
+        console.error(`[ORCHESTRATOR ERROR]: ${error.message}`);
+        return res.status(500).json({ error: error.message });
+      }
+      if (stderr) {
+        console.warn(`[ORCHESTRATOR STDERR]: ${stderr}`);
+      }
+
+      try {
+        const result = JSON.parse(stdout);
+        res.json(result);
+      } catch (parseError) {
+        console.error(`[ORCHESTRATOR PARSE ERROR]: ${stdout}`);
+        res.status(500).json({ error: "Failed to parse orchestrator output" });
+      }
+    });
   });
 
   // Vite middleware for development

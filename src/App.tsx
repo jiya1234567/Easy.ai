@@ -320,6 +320,9 @@ export default function App() {
   const [cloudUplinkStatus, setCloudUplinkStatus] = useState<'IDLE' | 'VERIFYING' | 'LINK VERIFIED' | 'AUTH FAILURE'>('IDLE');
   const [healthScanStatus, setHealthScanStatus] = useState<'IDLE' | 'SCANNING' | 'SCANNED' | 'PERSISTING' | 'PERSISTED' | 'ERROR'>('IDLE');
   const [predictionKernelState, setPredictionKernelState] = useState<{trajectory: string, disagreement: number, killZone: boolean} | null>(null);
+  const [orchestrationLoop, setOrchestrationLoop] = useState<any>(null);
+  const [isOrchestrating, setIsOrchestrating] = useState(false);
+  const [orchestrationStep, setOrchestrationStep] = useState(0);
 
   const verifyCloudUplink = async () => {
     setCloudUplinkStatus('VERIFYING');
@@ -829,6 +832,43 @@ export default function App() {
       setError("Melanoma analysis failed. Check logs.");
     } finally {
       setIsAnalyzingMelanoma(false);
+    }
+  const handleOrchestrate = async (domain: string) => {
+    setIsOrchestrating(true);
+    setOrchestrationStep(0);
+    setExecutionLogs(prev => [...prev, `[ORCHESTRATOR] Initiating 9-step loop for ${domain}...`]);
+    
+    try {
+      const response = await fetch('/api/orchestrate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ domain })
+      });
+      
+      const result = await response.json();
+      
+      if (result.error) {
+        throw new Error(result.error);
+      }
+
+      // Simulate stepping through the 9 steps for the HUD
+      const steps = [
+        'observe', 'compress', 'predict', 'simulate', 'optimize', 
+        'execute', 'measure', 'learn', 'rebuild_world_model'
+      ];
+      
+      for (let i = 0; i < steps.length; i++) {
+        setOrchestrationStep(i + 1);
+        await new Promise(r => setTimeout(r, 600)); // Visual delay
+      }
+      
+      setOrchestrationLoop(result);
+      setExecutionLogs(prev => [...prev, `[SUCCESS] Orchestration complete for ${domain}.`]);
+    } catch (err: any) {
+      console.error("Orchestration error:", err);
+      setError(err.message || "Failed to execute scientific orchestration.");
+    } finally {
+      setIsOrchestrating(false);
     }
   };
 
@@ -5166,193 +5206,161 @@ export default function App() {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <div className="p-3 bg-amber-100 rounded-2xl">
-                      <Lightbulb className="w-8 h-8 text-amber-600" />
+                      <Cpu className="w-8 h-8 text-amber-600" />
                     </div>
                     <div>
-                      <h3 className="text-2xl font-black tracking-tight">Hypothesis & Experimentation Engine</h3>
-                      <p className="text-[10px] text-gray-400 uppercase font-bold tracking-widest">Phase Alpha: Autonomous Discovery</p>
+                      <h3 className="text-2xl font-black tracking-tight">Recursive Scientific Orchestrator</h3>
+                      <p className="text-[10px] text-gray-400 uppercase font-bold tracking-widest">9-Step Autonomous Intelligence Loop</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-2 px-4 py-2 bg-amber-50 text-amber-700 rounded-full text-xs font-bold border border-amber-100">
                     <Brain className="w-4 h-4" />
-                    SCIENTIFIC METHOD ACTIVE
+                    OMEGA-CORE ACTIVE
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                  {/* Hypothesis Generation */}
-                  <div className="p-8 bg-white border border-[#E5E7EB] rounded-3xl shadow-sm space-y-6 relative overflow-hidden">
-                    <div className="absolute top-0 right-0 p-6 opacity-10">
-                      <Brain className="w-24 h-24 text-amber-500" />
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                  {/* Domain Selector & Trigger */}
+                  <div className="p-8 bg-white border border-[#E5E7EB] rounded-3xl shadow-sm space-y-6 relative overflow-hidden h-fit">
+                    <div className="flex items-center gap-2">
+                      <Target className="w-5 h-5 text-amber-600" />
+                      <h4 className="text-sm font-bold uppercase tracking-widest">Research Domain</h4>
                     </div>
                     
-                    <div className="flex items-center justify-between relative z-10">
-                      <div className="flex items-center gap-2">
-                        <Target className="w-5 h-5 text-amber-600" />
-                        <h4 className="text-sm font-bold uppercase tracking-widest">Hypothesis Agent</h4>
-                      </div>
-                      <button 
-                        onClick={handleGenerateHypothesis}
-                        disabled={isGeneratingHypothesis}
-                        className="px-4 py-2 bg-amber-600 text-white rounded-xl text-xs font-bold hover:bg-amber-700 disabled:opacity-50 transition-all flex items-center gap-2 shadow-lg shadow-amber-200"
-                      >
-                        {isGeneratingHypothesis ? <Loader2 className="w-4 h-4 animate-spin" /> : <Plus className="w-4 h-4" />}
-                        GENERATE HYPOTHESIS
-                      </button>
-                    </div>
-
-                    {hypothesis ? (
-                      <motion.div 
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="space-y-6 relative z-10"
-                      >
-                        <div className="p-6 bg-amber-50 border border-amber-100 rounded-2xl">
-                          <p className="text-[10px] text-amber-600 font-bold uppercase mb-2">Current Hypothesis</p>
-                          <p className="text-lg font-bold text-amber-900 leading-tight italic">"{hypothesis.hypothesis}"</p>
-                        </div>
-
-                        <div className="grid grid-cols-2 gap-4">
-                          <div className="p-4 bg-gray-50 rounded-xl border border-gray-100">
-                            <p className="text-[8px] text-gray-500 font-bold uppercase mb-1">Confidence Level</p>
-                            <div className="flex items-center gap-2">
-                              <div className="flex-1 h-1.5 bg-gray-200 rounded-full overflow-hidden">
-                                <div 
-                                  className="h-full bg-amber-500 transition-all duration-1000"
-                                  style={{ width: `${hypothesis.confidence}%` }}
-                                />
-                              </div>
-                              <span className="text-xs font-bold text-amber-600">{hypothesis.confidence}%</span>
-                            </div>
-                          </div>
-                          <div className="p-4 bg-gray-50 rounded-xl border border-gray-100">
-                            <p className="text-[8px] text-gray-500 font-bold uppercase mb-1">Variables</p>
-                            <div className="flex flex-wrap gap-1">
-                              {hypothesis?.variables?.map((v, i) => (
-                                <span key={i} className="px-1.5 py-0.5 bg-white border border-gray-200 rounded text-[8px] font-bold text-gray-600 uppercase">{v}</span>
-                              ))}
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="p-4 bg-white border border-amber-100 rounded-xl">
-                          <p className="text-[8px] text-amber-600 font-bold uppercase mb-1">Scientific Rationale</p>
-                          <p className="text-[10px] text-gray-600 leading-relaxed">{hypothesis.rationale}</p>
-                        </div>
-                      </motion.div>
-                    ) : (
-                      <div className="py-12 text-center space-y-3 border-2 border-dashed border-gray-100 rounded-2xl">
-                        <Lightbulb className="w-12 h-12 text-gray-200 mx-auto" />
-                        <p className="text-xs text-gray-400 font-medium">Awaiting Hypothesis Trigger...</p>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Experimentation Loop */}
-                  <div className="p-8 bg-[#1A1A1A] text-white rounded-3xl shadow-xl space-y-6 relative overflow-hidden border border-white/10">
-                    <div className="absolute top-0 right-0 p-6 opacity-10">
-                      <RefreshCw className="w-24 h-24 text-blue-500" />
-                    </div>
-
-                    <div className="flex items-center justify-between relative z-10">
-                      <div className="flex items-center gap-2">
-                        <Microscope className="w-5 h-5 text-blue-400" />
-                        <h4 className="text-sm font-bold uppercase tracking-widest">Experimentation Loop</h4>
-                      </div>
-                      <button 
-                        onClick={handleRunExperiment}
-                        disabled={isRunningExperiment || !hypothesis}
-                        className="px-4 py-2 bg-blue-600 text-white rounded-xl text-xs font-bold hover:bg-blue-700 disabled:opacity-50 transition-all flex items-center gap-2 shadow-lg shadow-blue-900/50"
-                      >
-                        {isRunningExperiment ? <Loader2 className="w-4 h-4 animate-spin" /> : <Play className="w-4 h-4" />}
-                        RUN EXPERIMENT
-                      </button>
-                    </div>
-
-                    {experimentResult ? (
-                      <motion.div 
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="space-y-6 relative z-10"
-                      >
-                        <div className="flex items-center gap-4">
-                          <div className={cn(
-                            "px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest border",
-                            experimentResult.result === 'PASSED' ? "bg-emerald-500/20 text-emerald-400 border-emerald-500/30" :
-                            experimentResult.result === 'FAILED' ? "bg-red-500/20 text-red-400 border-red-500/30" : "bg-blue-500/20 text-blue-400 border-blue-500/30"
-                          )}>
-                            RESULT: {experimentResult.result}
-                          </div>
-                          <div className="flex-1 h-[1px] bg-white/10" />
-                        </div>
-
-                        <div className="p-4 bg-white/5 border border-white/10 rounded-2xl space-y-3">
-                          <div className="flex items-center gap-2">
-                            <Eye className="w-3 h-3 text-blue-400" />
-                            <p className="text-[8px] text-gray-500 font-bold uppercase">Observation</p>
-                          </div>
-                          <p className="text-[10px] text-gray-300 leading-relaxed italic">"{experimentResult.observation}"</p>
-                        </div>
-
-                        <div className="p-4 bg-blue-500/10 border border-blue-500/20 rounded-2xl space-y-3">
-                          <div className="flex items-center gap-2">
-                            <RefreshCw className="w-3 h-3 text-blue-400" />
-                            <p className="text-[8px] text-blue-400 font-bold uppercase">Bayesian Belief Update</p>
-                          </div>
-                          <p className="text-[10px] text-blue-100 font-mono leading-relaxed">{experimentResult.beliefUpdate}</p>
-                        </div>
-
-                        <div className="pt-4 border-t border-white/10">
-                          <div className="flex items-center justify-between mb-2">
-                            <span className="text-[8px] font-bold text-gray-500 uppercase tracking-widest">Scientific Memory Sync</span>
-                            <span className="text-[8px] font-mono text-emerald-400">SUCCESS</span>
-                          </div>
-                          <div className="w-full h-1 bg-white/5 rounded-full overflow-hidden">
-                            <motion.div 
-                              initial={{ width: 0 }}
-                              animate={{ width: '100%' }}
-                              className="h-full bg-emerald-500"
-                            />
-                          </div>
-                        </div>
-                      </motion.div>
-                    ) : (
-                      <div className="py-12 text-center space-y-3 border-2 border-dashed border-white/5 rounded-2xl">
-                        <RefreshCw className="w-12 h-12 text-white/5 mx-auto" />
-                        <p className="text-xs text-gray-600 font-medium uppercase tracking-widest">Awaiting Experiment Trigger...</p>
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                {/* Discovery Timeline */}
-                <div className="p-8 bg-white border border-[#E5E7EB] rounded-3xl shadow-sm space-y-6">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <Clock className="w-5 h-5 text-gray-400" />
-                      <h4 className="text-sm font-bold uppercase tracking-widest">Discovery Timeline</h4>
-                    </div>
-                    <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Recursive Learning Active</span>
-                  </div>
-
-                  <div className="relative">
-                    <div className="absolute left-4 top-0 bottom-0 w-[1px] bg-gray-100" />
-                    <div className="space-y-6 relative">
+                    <select 
+                      onChange={(e) => setActiveDomain(e.target.value as any)}
+                      className="w-full p-4 bg-gray-50 border border-gray-200 rounded-2xl text-sm font-bold focus:outline-none focus:ring-2 focus:ring-amber-500 transition-all"
+                    >
                       {[
-                        { time: 'T-Minus 0s', event: 'Hypothesis Engine Initialized', status: 'Active', color: 'bg-blue-500' },
-                        { time: 'T-Minus 120s', event: 'Experimentation Loop Secured', status: 'Ready', color: 'bg-emerald-500' },
-                        { time: 'T-Minus 300s', event: 'Bayesian Belief Network Online', status: 'Syncing', color: 'bg-amber-500' }
-                      ].map((item, i) => (
-                        <div key={i} className="flex gap-6 items-start">
-                          <div className={cn("w-8 h-8 rounded-full border-4 border-white shadow-sm shrink-0 z-10", item.color)} />
-                          <div className="pt-1">
-                            <p className="text-[10px] font-mono text-gray-400">{item.time}</p>
-                            <p className="text-sm font-bold text-gray-900">{item.event}</p>
-                            <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">{item.status}</p>
+                        "Personalized Cancer Digital Twin",
+                        "CRISPR Off-Target Prediction System",
+                        "Satellite Climate-Agriculture Twin",
+                        "Autonomous Drug Discovery Loop",
+                        "Driverless Medical Logistics Network",
+                        "Immunotherapy Response Prediction",
+                        "Aging & Longevity Digital Twin",
+                        "Quantum Materials Discovery",
+                        "Pandemic Propagation Manifold",
+                        "Recursive Cyber Defense Twin",
+                        "Brain-Computer Interface Stability Research",
+                        "Autonomous Wet-Lab Robotics",
+                        "Fusion Reactor Stability Prediction",
+                        "Human-AI Internal State Research",
+                        "Global Household Optimization Twin"
+                      ].map(d => (
+                        <option key={d} value={d}>{d}</option>
+                      ))}
+                    </select>
+
+                    <button 
+                      onClick={() => handleOrchestrate(activeDomain)}
+                      disabled={isOrchestrating}
+                      className="w-full py-4 bg-amber-600 text-white rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-amber-700 transition-all shadow-lg shadow-amber-200 flex items-center justify-center gap-2 disabled:opacity-50"
+                    >
+                      {isOrchestrating ? <Loader2 className="w-5 h-5 animate-spin" /> : <Zap className="w-5 h-5" />}
+                      ACTIVATE RECURSIVE LOOP
+                    </button>
+                  </div>
+
+                  {/* 9-Step HUD Visualizer */}
+                  <div className="lg:col-span-2 p-8 bg-[#1A1A1A] text-white rounded-3xl shadow-xl space-y-8 relative overflow-hidden border border-white/10">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <Activity className="w-5 h-5 text-blue-400" />
+                        <h4 className="text-sm font-bold uppercase tracking-widest">Orchestration HUD</h4>
+                      </div>
+                      <div className="flex gap-2">
+                        {orchestrationLoop && (
+                          <span className="px-2 py-0.5 bg-blue-500/20 text-blue-400 rounded text-[8px] font-bold border border-blue-500/30">
+                            STABILITY: 98.4%
+                          </span>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-3 md:grid-cols-9 gap-4 relative">
+                      {/* Connecting Line */}
+                      <div className="absolute top-6 left-0 right-0 h-[1px] bg-white/5 z-0 hidden md:block" />
+                      
+                      {[
+                        { step: 1, label: 'Observe', icon: Eye, key: 'observe' },
+                        { step: 2, label: 'Compress', icon: Layers, key: 'compress' },
+                        { step: 3, label: 'Predict', icon: TrendingUp, key: 'predict' },
+                        { step: 4, label: 'Simulate', icon: Play, key: 'simulate' },
+                        { step: 5, label: 'Optimize', icon: Zap, key: 'optimize' },
+                        { step: 6, label: 'Execute', icon: Send, key: 'execute' },
+                        { step: 7, label: 'Measure', icon: Activity, key: 'measure' },
+                        { step: 8, label: 'Learn', icon: Brain, key: 'learn' },
+                        { step: 9, label: 'Rebuild', icon: RefreshCw, key: 'rebuild_world_model' }
+                      ].map((s, i) => (
+                        <div key={s.key} className="flex flex-col items-center gap-3 relative z-10">
+                          <div className={cn(
+                            "w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-500 border-2",
+                            orchestrationStep >= s.step 
+                              ? "bg-blue-600 border-blue-400 shadow-[0_0_20px_rgba(37,99,235,0.4)]" 
+                              : "bg-white/5 border-white/10 text-white/20"
+                          )}>
+                            <s.icon className={cn("w-6 h-6", orchestrationStep === s.step ? "animate-pulse" : "")} />
                           </div>
+                          <p className={cn(
+                            "text-[8px] font-black uppercase tracking-widest text-center",
+                            orchestrationStep >= s.step ? "text-blue-400" : "text-white/20"
+                          )}>
+                            {s.label}
+                          </p>
                         </div>
                       ))}
                     </div>
+
+                    {orchestrationLoop && (
+                      <motion.div 
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-8 border-t border-white/10"
+                      >
+                        <div className="space-y-4">
+                          <div className="p-4 bg-white/5 rounded-2xl border border-white/10">
+                            <p className="text-[10px] text-blue-400 font-bold uppercase mb-2">Latent Space Compression</p>
+                            <p className="text-sm font-bold italic">"{orchestrationLoop.compress.latent_space_desc}"</p>
+                          </div>
+                          <div className="p-4 bg-white/5 rounded-2xl border border-white/10">
+                            <p className="text-[10px] text-amber-400 font-bold uppercase mb-2">Causal Prediction</p>
+                            <p className="text-sm font-bold italic">"{orchestrationLoop.predict.forecast}"</p>
+                          </div>
+                        </div>
+                        <div className="space-y-4">
+                          <div className="p-4 bg-emerald-500/10 rounded-2xl border border-emerald-500/20">
+                            <div className="flex justify-between mb-2">
+                              <p className="text-[10px] text-emerald-400 font-bold uppercase">Learning Delta</p>
+                              <span className="text-[10px] font-mono text-emerald-400">+{orchestrationLoop.measure.ground_truth_delta}</span>
+                            </div>
+                            <p className="text-xs text-emerald-200/70 italic leading-relaxed">
+                              "{orchestrationLoop.learn.causal_update}"
+                            </p>
+                          </div>
+                          <div className="p-4 bg-blue-500/10 rounded-2xl border border-blue-500/20">
+                            <p className="text-[10px] text-blue-400 font-bold uppercase mb-2">New World Paradigm</p>
+                            <p className="text-xs font-black uppercase tracking-tight text-white leading-tight">
+                              {orchestrationLoop.rebuild_world_model.new_paradigm}
+                            </p>
+                          </div>
+                        </div>
+                      </motion.div>
+                    )}
+
+                    {!orchestrationLoop && !isOrchestrating && (
+                      <div className="py-20 text-center space-y-4">
+                        <Radio className="w-16 h-16 text-white/5 mx-auto animate-pulse" />
+                        <p className="text-sm font-bold text-white/20 uppercase tracking-[0.2em]">Awaiting Uplink Initiation</p>
+                      </div>
+                    )}
+
+                    {isOrchestrating && !orchestrationLoop && (
+                      <div className="py-20 text-center space-y-4">
+                        <Loader2 className="w-16 h-16 text-blue-500 mx-auto animate-spin" />
+                        <p className="text-sm font-bold text-blue-400 uppercase tracking-[0.2em]">Traversing Recursive Manifold...</p>
+                      </div>
+                    )}
                   </div>
                 </div>
               </motion.div>

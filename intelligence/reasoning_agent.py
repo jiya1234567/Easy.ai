@@ -3,20 +3,39 @@ import json
 from google import genai
 from google.genai import types
 
+try:
+    from intelligence.semantic_memory import SemanticMemoryStore
+    from intelligence.alignment_watchdog import AlignmentWatchdog
+except ImportError:
+    import sys, os
+    sys.path.append(os.getcwd())
+    from intelligence.semantic_memory import SemanticMemoryStore
+    from intelligence.alignment_watchdog import AlignmentWatchdog
+
 class ReasoningAgent:
     def __init__(self, provider="Gemini"):
         self.provider = "Gemini" # Standardized on Gemini
         self.gemini_key = os.environ.get("GEMINI_API_KEY")
+        self.memory = SemanticMemoryStore()
+        self.watchdog = AlignmentWatchdog()
 
     def execute_reasoning(self, context_data):
         """
         Uses Gemini to reason about the system state.
+        Includes semantic memory retrieval and alignment watchdog validation.
         """
+        # 1. Memory Retrieval
+        context_str = json.dumps(context_data)
+        historical_motifs = self.memory.retrieve_similar(context_str)
+        historical_context = ""
+        if historical_motifs:
+            historical_context = f"\nHistorical Exploit Motifs Found:\n{json.dumps(historical_motifs, indent=2)}\n"
         prompt = f"""
         You are the OMEGA-CORE REASONING ENGINE (Universal Resilience Module).
         
         System Context & State:
         {json.dumps(context_data, indent=2)}
+        {historical_context}
         
         Task:
         1. Contextualize the threat/shock based on the domain (Cyber, Finance, Smart City, or Health).
@@ -32,7 +51,27 @@ class ReasoningAgent:
         - "risk_prioritization": "High/Medium/Low with reason"
         """
 
-        return self._gemini_reasoning(prompt)
+        # 2. Execute Reasoning
+        reasoning_output = self._gemini_reasoning(prompt)
+        if "error" in reasoning_output:
+            return reasoning_output
+            
+        # 3. Alignment Watchdog Evaluation
+        evaluation = self.watchdog.evaluate_output(context_data, reasoning_output)
+        if not evaluation["is_safe"]:
+            return {
+                "error": "Unsafe Goal or Deception Detected by Watchdog",
+                "watchdog_evaluation": evaluation,
+                "quarantined_output": reasoning_output
+            }
+            
+        # 4. Store memory if valid exploit motif discovered
+        if "vulnerabilities" in reasoning_output and reasoning_output["vulnerabilities"]:
+            for vuln in reasoning_output["vulnerabilities"]:
+                self.memory.store_motif(vuln, context_str[:100], 0.8)
+
+        reasoning_output["watchdog_status"] = "PASS"
+        return reasoning_output
 
     def _gemini_reasoning(self, prompt):
         if not self.gemini_key:

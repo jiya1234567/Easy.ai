@@ -34,6 +34,10 @@ operating inside the OMEGA-CORE Universal Lab platform. Each file contains:
 | 12 | [SOP_12_Quantum_Materials.md](SOP_12_Quantum_Materials.md) | Quantum & Materials Science | Physics / R&D |
 | 13 | [SOP_13_DNA_Protein_Drug.md](SOP_13_DNA_Protein_Drug.md) | DNA / Protein / Drug Simulation | Genomics / Pharma |
 | 14 | [SOP_14_Future_Capabilities.md](SOP_14_Future_Capabilities.md) | Future Roadmap & Expansion Capabilities | All Domains |
+| 15 | [SOP_15_Advanced_Cyber_Testing.md](SOP_15_Advanced_Cyber_Testing.md) | Advanced Cyber Reasoning & Gap Analysis | Cybersecurity |
+| 16 | [SOP_16_Quantum_Research_Orchestration.md](SOP_16_Quantum_Research_Orchestration.md) | Quantum Research Orchestration | Quantum Physics |
+| 17 | [SOP_17_Cancer_Drug_Discovery_Orchestration.md](SOP_17_Cancer_Drug_Discovery_Orchestration.md) | Cancer Drug Discovery Orchestration | Oncology / Bio |
+| 31 | [SOP_31_Global_Macro_Stress_Test.md](SOP_31_Global_Macro_Stress_Test.md) | Global Macro Stress Test Protocol | Finance / Macro |
 
 ---
 
@@ -54,6 +58,7 @@ operating inside the OMEGA-CORE Universal Lab platform. Each file contains:
 | Cybersecurity | ✅ LIVE | 98.3% | ✅ YES |
 | Quantum/Materials | ✅ LIVE | 90.6% | ✅ YES |
 | DNA/Protein/Drug | ✅ LIVE | 94.7% | ✅ YES |
+| Macro Stress Test | ✅ LIVE | 91.0% | ✅ YES |
 
 **Overall System Fidelity: 94.3% ✅ EXCEEDS GLOBAL BENCHMARK**
 

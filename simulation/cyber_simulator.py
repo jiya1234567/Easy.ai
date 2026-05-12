@@ -26,7 +26,7 @@ class CyberSimulator:
     def _get_adjacency_dict(self):
         adj = {}
         for node in self.G.nodes:
-            adj[node] = list(self.G.neighbors(node))
+            adj[node] = {neighbor: 0.7 for neighbor in self.G.neighbors(node)}
         return adj
 
     def simulate_attack(self, target_node, attack_type="DDoS", payload_intensity=1.0):
@@ -42,7 +42,7 @@ class CyberSimulator:
         node_prot = self.node_states[target_node]["protection"]
         compromise_prob = max(0.0, payload_intensity - (node_prot * 0.5))
         
-        impact_map = self.bayesian_net.propagate(target_node, compromise_prob)
+        impact_map = self.bayesian_net.propagate({target_node: compromise_prob})
         
         results = {}
         for node, prob in impact_map.items():
@@ -52,10 +52,27 @@ class CyberSimulator:
             elif prob > 0.2: status = "WARNING"
             
             self.node_states[node]["status"] = status
+            
+            # GAP 2: Runtime Behavioral Reasoning (Causal Tracing)
+            syscall_drift = "Normal"
+            memory_mutation = "Stable"
+            priv_escalation = "None"
+            
+            if status in ["COMPROMISED", "INCIDENT"]:
+                syscall_drift = f"Anomaly_{np.random.randint(100, 999)}"
+                memory_mutation = "Heap_Corruption_Detected" if prob > 0.7 else "Stack_Buffer_Warning"
+                priv_escalation = "Root_Access_Obtained" if prob > 0.85 else "User_Level_Pivot"
+
             results[node] = {
                 "type": attack_type if node == target_node else "Lateral Movement",
                 "anomaly_prediction": prob,
-                "status": status
+                "status": status,
+                "runtime_causality": {
+                    "syscall_drift": syscall_drift,
+                    "memory_mutation": memory_mutation,
+                    "privilege_escalation": priv_escalation,
+                    "propagation_risk": prob * 1.5
+                }
             }
 
         return results
@@ -69,9 +86,26 @@ class CyberSimulator:
             self.node_states[target_node]["protection"] = 1.0
             return {"effectiveness": 0.99, "status": "ISOLATED"}
         elif action == "Patch":
+            # GAP 4: Causal Patch Verification
+            # Simulate applying the patch to check for regressions
+            dependency_stability = np.random.uniform(0.0, 1.0)
+            
+            if dependency_stability < 0.2:
+                # Patch breaks logic
+                return {
+                    "effectiveness": 0.0, 
+                    "error": "Patch verification failed: Destabilizes downstream dependencies.",
+                    "regression_risk": 1.0 - dependency_stability
+                }
+                
             self.node_states[target_node]["patch_level"] = min(1.0, self.node_states[target_node]["patch_level"] + 0.3)
             self.node_states[target_node]["protection"] = min(1.0, self.node_states[target_node]["protection"] + 0.2)
-            return {"effectiveness": 0.70, "new_patch_level": self.node_states[target_node]["patch_level"]}
+            return {
+                "effectiveness": 0.70, 
+                "new_patch_level": self.node_states[target_node]["patch_level"],
+                "verification_status": "Passed",
+                "regression_risk": 1.0 - dependency_stability
+            }
         
         return {"effectiveness": 0.0}
 
