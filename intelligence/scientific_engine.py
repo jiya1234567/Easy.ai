@@ -16,20 +16,34 @@ class ScientificEngine:
     """
     Agent-based research system for multi-asset manifold learning.
     """
-    def __init__(self, data_path="reports/multi_asset_data.csv", metadata_path="reports/asset_metadata.json"):
+    def __init__(self, data_path=None, metadata_path=None):
         self.data_path = data_path
         self.metadata_path = metadata_path
         self.data = None
         self.metadata = None
         self.causal_graph = None # Persistent intelligence state
         
+        # Domain to File Mapping
+        self.domain_map = {
+            "health": "reports/bio_test.csv",
+            "finance": "reports/multi_asset_data.csv",
+            "cyber": "reports/cyber_test_advanced.csv",
+            "city": "reports/city_test_data.csv",
+            "materials": "reports/materials_test.csv",
+            "quantum": "reports/quantum_test.csv",
+            "agriculture": "reports/agri_test_suite.csv"
+        }
+        
     # --- DataAgent ---
-    def load_data(self):
-        if not os.path.exists(self.data_path):
-            return False, "Data file missing."
+    def load_data(self, domain=None):
+        if not self.data_path and domain:
+            self.data_path = self.domain_map.get(domain.lower(), "reports/multi_asset_data.csv")
+            
+        if not self.data_path or not os.path.exists(self.data_path):
+            return False, f"Data file missing: {self.data_path}"
         # Load data with dayfirst=True to avoid dateutil warnings on Windows
         self.data = pd.read_csv(self.data_path, index_col=0, parse_dates=True, dayfirst=True)
-        if os.path.exists(self.metadata_path):
+        if self.metadata_path and os.path.exists(self.metadata_path):
             with open(self.metadata_path, 'r') as f:
                 self.metadata = json.load(f)
         return True, "Data loaded successfully."

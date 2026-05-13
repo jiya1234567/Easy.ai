@@ -166,5 +166,19 @@
       "cfo": "AUTHORIZED"
     },
     "out": "Pending"
+  },
+  {
+    "id": "ep-1778654322",
+    "ts": "Wed May 13 16:38:42 2026",
+    "ctx": {
+      "rsi": 32.0,
+      "regime": "Analytical Baseline (Verified)",
+      "mode": "OMEGA-CORE"
+    },
+    "dec": {
+      "markov": "STABLE",
+      "cfo": "AUTHORIZED"
+    },
+    "out": "Pending"
   }
 ]

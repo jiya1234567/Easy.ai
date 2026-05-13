@@ -20,6 +20,7 @@ operating inside the OMEGA-CORE Universal Lab platform. Each file contains:
 
 | # | File | Module | Domain |
 |---|------|--------|--------|
+| 00 | [SOP_00_Grounded_Causal_Orchestration.md](SOP_00_Grounded_Causal_Orchestration.md) | Grounded Causal Orchestration Protocol | ARCHITECTURE |
 | 01 | [SOP_01_Stock_Code_Prediction.md](SOP_01_Stock_Code_Prediction.md) | Stock Code Prediction & Financial Manifold | Finance |
 | 02 | [SOP_02_Economic_Network_Test.md](SOP_02_Economic_Network_Test.md) | Economic Network Intelligence | Finance / Macro |
 | 03 | [SOP_03_Eye_Scan_Diagnostics.md](SOP_03_Eye_Scan_Diagnostics.md) | Retinal Eye Scan AI Diagnostics | Medical Vision |
