@@ -180,5 +180,199 @@
       "cfo": "AUTHORIZED"
     },
     "out": "Pending"
+  },
+  {
+    "id": "ep-1778736814",
+    "ts": "Thu May 14 15:33:34 2026",
+    "ctx": {
+      "rsi": 32.0,
+      "regime": "Analytical Baseline (Verified)",
+      "mode": "OMEGA-CORE"
+    },
+    "dec": {
+      "markov": "STABLE",
+      "cfo": "AUTHORIZED"
+    },
+    "out": "Pending"
+  },
+  {
+    "id": "ep-1778737147",
+    "ts": "Thu May 14 15:39:07 2026",
+    "ctx": {
+      "rsi": 32.0,
+      "regime": "Analytical Baseline (Verified)",
+      "mode": "OMEGA-CORE"
+    },
+    "dec": {
+      "markov": "STABLE",
+      "cfo": "AUTHORIZED"
+    },
+    "out": "Pending"
+  },
+  {
+    "id": "ep-1778737187",
+    "ts": "Thu May 14 15:39:47 2026",
+    "ctx": {
+      "rsi": 32.0,
+      "regime": "Analytical Baseline (Verified)",
+      "mode": "OMEGA-CORE"
+    },
+    "dec": {
+      "markov": "STABLE",
+      "cfo": "AUTHORIZED"
+    },
+    "out": "Pending"
+  },
+  {
+    "id": "ep-1778822253",
+    "ts": "Fri May 15 15:17:33 2026",
+    "ctx": {
+      "rsi": 32.0,
+      "regime": "BIO-METRIC-OMEGA",
+      "isv": {
+        "stability": 0.95,
+        "stress": 0.05,
+        "mode": "CALM",
+        "identity": 1.0
+      }
+    },
+    "dec": {
+      "markov": "STABLE",
+      "orchestrator": "SPARSE_ACTIVATION: Routing only salience nodes."
+    },
+    "out": "Pending"
+  },
+  {
+    "id": "ep-1778822253",
+    "ts": "Fri May 15 15:17:33 2026",
+    "ctx": {
+      "rsi": 32.0,
+      "regime": "BIO-METRIC-OMEGA",
+      "isv": {
+        "stability": 0.64,
+        "stress": 0.36,
+        "mode": "ADAPTIVE",
+        "identity": 1.0
+      }
+    },
+    "dec": {
+      "markov": "ADAPTIVE RECOVERY",
+      "orchestrator": "GLOBAL_BROADCAST: All agents active for threat mitigation."
+    },
+    "out": "Pending"
+  },
+  {
+    "id": "ep-1778822253",
+    "ts": "Fri May 15 15:17:33 2026",
+    "ctx": {
+      "rsi": 32.0,
+      "regime": "BIO-METRIC-OMEGA",
+      "isv": {
+        "stability": 0.8,
+        "stress": 0.2,
+        "mode": "CALM",
+        "identity": 1.0
+      }
+    },
+    "dec": {
+      "markov": "STABLE",
+      "orchestrator": "SPARSE_ACTIVATION: Routing only salience nodes."
+    },
+    "out": "Pending"
+  },
+  {
+    "id": "ep-1778822253",
+    "ts": "Fri May 15 15:17:33 2026",
+    "ctx": {
+      "rsi": 32.0,
+      "regime": "BIO-METRIC-OMEGA",
+      "isv": {
+        "stability": 1.0,
+        "stress": 0.0,
+        "mode": "CALM",
+        "identity": 1.0
+      }
+    },
+    "dec": {
+      "markov": "STABLE",
+      "orchestrator": "SPARSE_ACTIVATION: Routing only salience nodes."
+    },
+    "out": "Pending"
+  },
+  {
+    "id": "ep-1778823165",
+    "ts": "Fri May 15 15:32:45 2026",
+    "ctx": {
+      "rsi": 32.0,
+      "regime": "BIO-METRIC-OMEGA",
+      "isv": {
+        "stability": 0.95,
+        "stress": 0.05,
+        "mode": "CALM",
+        "identity": 1.0
+      }
+    },
+    "dec": {
+      "markov": "STABLE",
+      "orchestrator": "SPARSE_ACTIVATION: Routing only salience nodes."
+    },
+    "out": "Pending"
+  },
+  {
+    "id": "ep-1778823165",
+    "ts": "Fri May 15 15:32:45 2026",
+    "ctx": {
+      "rsi": 32.0,
+      "regime": "BIO-METRIC-OMEGA",
+      "isv": {
+        "stability": 0.64,
+        "stress": 0.36,
+        "mode": "ADAPTIVE",
+        "identity": 1.0
+      }
+    },
+    "dec": {
+      "markov": "ADAPTIVE RECOVERY",
+      "orchestrator": "GLOBAL_BROADCAST: All agents active for threat mitigation."
+    },
+    "out": "Pending"
+  },
+  {
+    "id": "ep-1778823165",
+    "ts": "Fri May 15 15:32:45 2026",
+    "ctx": {
+      "rsi": 32.0,
+      "regime": "BIO-METRIC-OMEGA",
+      "isv": {
+        "stability": 0.8,
+        "stress": 0.2,
+        "mode": "CALM",
+        "identity": 1.0
+      }
+    },
+    "dec": {
+      "markov": "STABLE",
+      "orchestrator": "SPARSE_ACTIVATION: Routing only salience nodes."
+    },
+    "out": "Pending"
+  },
+  {
+    "id": "ep-1778823165",
+    "ts": "Fri May 15 15:32:45 2026",
+    "ctx": {
+      "rsi": 32.0,
+      "regime": "BIO-METRIC-OMEGA",
+      "isv": {
+        "stability": 1.0,
+        "stress": 0.0,
+        "mode": "CALM",
+        "identity": 1.0
+      }
+    },
+    "dec": {
+      "markov": "STABLE",
+      "orchestrator": "SPARSE_ACTIVATION: Routing only salience nodes."
+    },
+    "out": "Pending"
   }
 ]

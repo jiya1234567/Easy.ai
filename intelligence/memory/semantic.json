@@ -1,0 +1,36 @@
+{
+  "Personalized Cancer Digital Twin": {
+    "known_anchors": {
+      "Drug_A": {
+        "count": 2,
+        "avg_influence": 2.0
+      },
+      "Drug_B": {
+        "count": 2,
+        "avg_influence": 2.0
+      },
+      "Drug_C": {
+        "count": 2,
+        "avg_influence": 2.0
+      }
+    },
+    "causal_laws": []
+  },
+  "Semiconductor Sensing & Edge-AI Manifold": {
+    "known_anchors": {
+      "System_Fidelity": {
+        "count": 1,
+        "avg_influence": 1.2
+      },
+      "SNR_Uplink": {
+        "count": 1,
+        "avg_influence": 1.2
+      },
+      "Thermal_Stability": {
+        "count": 1,
+        "avg_influence": 0.8
+      }
+    },
+    "causal_laws": []
+  }
+}

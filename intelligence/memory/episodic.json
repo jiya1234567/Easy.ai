@@ -1,0 +1,68 @@
+[
+  {
+    "ts": 1778738300.5201504,
+    "domain": "Personalized Cancer Digital Twin",
+    "state_vector": {
+      "timestamp": 1778738300.512436,
+      "workspace_coherence": 1.0,
+      "attention_entropy": 1.0,
+      "prediction_error": 0.0,
+      "identity_drift": 0.0,
+      "goal_conflict": 0.5,
+      "recursive_depth": 1,
+      "memory_fragmentation": 0.003,
+      "grounding_score": 0.98,
+      "narrative_stability": 1.0,
+      "adaptation_velocity": 0.0,
+      "compute_budget": 1.0,
+      "attention_budget": 1.0,
+      "memory_pressure": 0.003,
+      "compression_ratio": 0.5
+    },
+    "outcome": "No action"
+  },
+  {
+    "ts": 1778738316.3142893,
+    "domain": "Personalized Cancer Digital Twin",
+    "state_vector": {
+      "timestamp": 1778738316.303751,
+      "workspace_coherence": 1.0,
+      "attention_entropy": 1.0,
+      "prediction_error": 0.0,
+      "identity_drift": 0.0,
+      "goal_conflict": 0.5,
+      "recursive_depth": 1,
+      "memory_fragmentation": 0.003,
+      "grounding_score": 0.98,
+      "narrative_stability": 1.0,
+      "adaptation_velocity": 0.0,
+      "compute_budget": 1.0,
+      "attention_budget": 1.0,
+      "memory_pressure": 0.003,
+      "compression_ratio": 0.5
+    },
+    "outcome": "No action"
+  },
+  {
+    "ts": 1778739851.0035458,
+    "domain": "Semiconductor Sensing & Edge-AI Manifold",
+    "state_vector": {
+      "timestamp": 1778739850.9943216,
+      "workspace_coherence": 0.9612,
+      "attention_entropy": 0.9927,
+      "prediction_error": 0.0388,
+      "identity_drift": 0.0388,
+      "goal_conflict": 0.5,
+      "recursive_depth": 1,
+      "memory_fragmentation": 0.006,
+      "grounding_score": 0.98,
+      "narrative_stability": 0.9612,
+      "adaptation_velocity": 0.0388,
+      "compute_budget": 1.0,
+      "attention_budget": 1.0,
+      "memory_pressure": 0.006,
+      "compression_ratio": 0.5
+    },
+    "outcome": "No action"
+  }
+]

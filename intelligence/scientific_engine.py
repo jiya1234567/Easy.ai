@@ -31,7 +31,8 @@ class ScientificEngine:
             "city": "reports/city_test_data.csv",
             "materials": "reports/materials_test.csv",
             "quantum": "reports/quantum_test.csv",
-            "agriculture": "reports/agri_test_suite.csv"
+            "agriculture": "reports/agri_test_suite.csv",
+            "semiconductor": "reports/semiconductor_sensing_test.csv"
         }
         
     # --- DataAgent ---

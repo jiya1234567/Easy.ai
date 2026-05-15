@@ -1,10 +1,12 @@
 import json, os, requests, random, re, time, base64, io
 from PIL import Image
 
+from cognitive_engine import InternalStateVector, CognitiveOrchestrator
+
 def load_dna():
     try:
         with open("rules/rules_fixed.json", "r") as f: return json.load(f)
-    except: return {"finance": {"max_rsi": 70}}
+    except: return {"finance": {"max_rsi": 70}, "cfo_logic": {"risk_threshold": 0.7}, "hr_clearance": {"architect": "Simon"}}
 
 class CognitiveMemory:
     def __init__(self, file="intelligence/experience.json"):
@@ -34,24 +36,22 @@ class CognitiveMemory:
         bias = "Aggressive" if rate > 0.6 else "Defensive" if rate < 0.4 else "Balanced"
         return bias, rate
 
-def record_outcome(episode_id, outcome, experience_file="intelligence/experience.json"):
-    if os.path.exists(experience_file):
-        try:
-            with open(experience_file, "r") as f: log = json.load(f)
-            for e in log:
-                if e['id'] == episode_id:
-                    e['out'] = outcome
-                    break
-            with open(experience_file, "w") as f: json.dump(log, f, indent=2)
-            return True
-        except: return False
-    return False
-
-def run_psi_autopilot(intent, raw_paste, brain_mode, api_key, is_multi, chat_msg=None, image_bytes=None):
+def run_psi_autopilot(intent, raw_paste, brain_mode, api_key, is_multi, chat_msg=None, image_bytes=None, episode_data=None):
     dna = load_dna()
     start_time = time.time()
     mem = CognitiveMemory()
+    isv = InternalStateVector()
+    chef = CognitiveOrchestrator(isv)
     
+    # Inference Domain Processing
+    if episode_data:
+        cog_result = chef.process_episode(episode_data)
+        isv_state = cog_result["isv"]
+        orch_action = cog_result["orchestrator_action"]
+    else:
+        isv_state = {"mode": "CALM", "stability": 1.0, "identity": 1.0}
+        orch_action = "Inference Domain Baseline"
+
     # Auto-Ingress
     if (not raw_paste or len(raw_paste) < 10) and os.path.exists("Target.JASON"):
         with open("Target.JASON", "r") as f: signals = json.load(f)
@@ -59,45 +59,39 @@ def run_psi_autopilot(intent, raw_paste, brain_mode, api_key, is_multi, chat_msg
 
     rsi = float(signals.get('rsi', 50))
     conf = float(signals.get('confidence', 0.5))
-    regime = signals.get("protocol", "Analytical Baseline")
-    if is_multi: regime += " (Verified)"
+    regime = signals.get("protocol", "Inference Domain")
     
     # --- COGNITIVE RECALL ---
     past_bias, success_rate = mem.recall(regime)
     
     # Markov Forecast
-    markov = "STABLE" if rsi < 40 else "CAUTION / PULLBACK"
+    markov = "STABLE" if isv_state["mode"] == "CALM" else "ADAPTIVE RECOVERY" if isv_state["mode"] == "ADAPTIVE" else "THREAT MITIGATION"
     
     # Agent Bus Logic
     cfo_report = "AUTHORIZED" if rsi < 70 else "DENIED: Risk Violation"
-    hr_report = "Simon: Lead Architect Verified"
+    hr_report = f"Simon: {isv_state['identity']} Identity Stability"
     
-    # 90-Step Strategy
-    steps = signals.get("steps", [f"Step {i}: Mapping Computational Node {i}" for i in range(1, 91)])
-    if len(steps) < 90:
-        steps.extend([f"Step {j}: Logic processing..." for j in range(len(steps)+1, 91)])
-
     # Store current episode
-    context = {"rsi": rsi, "regime": regime, "mode": brain_mode}
-    decision = {"markov": markov, "cfo": cfo_report}
+    context = {"rsi": rsi, "regime": regime, "isv": isv_state}
+    decision = {"markov": markov, "orchestrator": orch_action}
     episode_id = mem.store(context, decision)
 
     # FINAL OMEGA ASSEMBLY
     dashboard = {
         "metrics": {
-            "bias": past_bias if past_bias != "No past data" else ("Optimized" if rsi < 40 else "Caution"), 
+            "bias": isv_state["mode"], 
             "iq": 185, 
-            "order_id": f"WO-{random.randint(10000,99999)}",
+            "order_id": f"ID-{random.randint(10000,99999)}",
             "episode_id": episode_id,
-            "success_rate": f"{success_rate:.1%}"
+            "success_rate": f"{isv_state['stability']:.1%}"
         },
-        "agent_reports": {"cfo": cfo_report, "hr": hr_report, "sim": markov},
-        "physics": {"regime": regime, "engine": brain_mode, "multimodal": "VERIFIED" if is_multi else "TEXT"},
-        "steps": steps,
-        "chat_history": [{"role": "Agent", "content": f"Architect Simon, Audit Complete. Cognitive Recall: {past_bias}. Result: {markov}."}]
+        "agent_reports": {"cfo": cfo_report, "hr": hr_report, "orchestrator": orch_action},
+        "physics": {"regime": regime, "identity": isv_state["identity"], "multimodal": "VERIFIED" if is_multi else "TEXT"},
+        "steps": [f"Step 1: Ingesting Neuromorphic Episode", f"Step 2: ISV State Transition -> {isv_state['mode']}", f"Step 3: Chef Orchestration -> {orch_action}"],
+        "chat_history": [{"role": "Agent", "content": f"Architect Simon, Inference Domain Audit Complete. Internal State: {isv_state['mode']}. Stability: {isv_state['stability']}."}]
     }
-    if chat_msg: dashboard["chat_history"].append({"role": "Simon", "content": chat_msg})
     
     with open("DASHBOARD.json", "w") as f:
         json.dump(dashboard, f, indent=2)
     return dashboard
+

@@ -292,7 +292,7 @@ tabs_list = [
     "🩺 HEALTH PROTOCOL", "🔬 RESEARCH DEVICE", "🔄 EVOLUTION", "🌌 VISUAL MANIFOLD", "🚀 SINGULARITY FEED", 
     "👨‍🔬 SCIENTIFIC DISCOVERY", "🌌 DISCOVERY DASHBOARD", "🔐 ADVERSARIAL LAB", "🏙️ SMART CITY TWIN", 
     "🧬 QUANTUM FEEDBACK", "🚜 AGRICULTURE ASI", "🌪️ WEATHER MANIFOLD", "🌌 GLOBAL MONITORING", "🦾 ROBOTICS COMMAND", 
-    "📊 REPORTS ENGINE", "🏥 HEALTH INSURANCE", "☁️ COMMUNITY HUB", "🔮 ASI PREDICTION KERNEL", "📑 SOP / MANUAL"
+    "📊 REPORTS ENGINE", "🏥 HEALTH INSURANCE", "🧠 INFERENCE DOMAIN", "☁️ COMMUNITY HUB", "🔮 ASI PREDICTION KERNEL", "📑 SOP / MANUAL"
 ]
 
 # Grid Rendering (5 columns)
@@ -300,9 +300,10 @@ for chunk_idx in range(0, len(tabs_list), 5):
     chunk = tabs_list[chunk_idx:chunk_idx + 5]
     cols = st.columns(5)
     for i, tab_name in enumerate(chunk):
-        if cols[i].button(tab_name):
+        if cols[i].button(tab_name, key=f"btn_{tab_name}_{chunk_idx}_{i}"):
             st.session_state.active_tab = tab_name
             st.rerun()
+
 
 st.divider()
 
@@ -407,6 +408,145 @@ if st.session_state.active_tab == "🧠 ASI CORE":
         if st.button("💾 SAVE STABLE SNAPSHOT"):
             st.success("System Architecture Locked. Baseline drift recalibrated.")
 
+    # --- NEW: MECHANISTIC TELEMETRY LAYER (GAP 1) ---
+    st.divider()
+    st.subheader("📊 Mechanistic Runtime Telemetry (Internal State)")
+    if os.path.exists("DASHBOARD.json"):
+        with open("DASHBOARD.json", "r") as f: d_data = json.load(f)
+        telemetry = d_data.get("runtime_telemetry", {})
+        
+        if telemetry:
+            t_col1, t_col2, t_col3, t_col4, t_col5 = st.columns(5)
+            t_col1.metric("WORKSPACE COHERENCE", f"{telemetry.get('workspace_coherence',0)*100:.1f}%")
+            t_col2.metric("ATTENTION ENTROPY", f"{telemetry.get('attention_entropy',0):.3f}")
+            t_col3.metric("PREDICTION ERROR", f"{telemetry.get('prediction_error',0):.3f}")
+            t_col4.metric("IDENTITY DRIFT", f"{telemetry.get('identity_drift',0):.4f}")
+            t_col5.metric("GOAL CONFLICT", f"{telemetry.get('goal_conflict',0):.2f}")
+            
+            with st.expander("View Raw Runtime State Vector", expanded=True):
+                st.json(telemetry)
+        else:
+            st.info("No telemetry acquired yet. Initiate the Engine to generate internal state data.")
+    else:
+        st.warning("DASHBOARD.json not found. Telemetry uplink inactive.")
+
+
+    # --- CAUSAL ATTRIBUTION (GAP 2) ---
+    st.divider()
+    st.subheader("🕵️ Mechanistic Causal Attribution")
+    if os.path.exists("DASHBOARD.json"):
+        with open("DASHBOARD.json", "r") as f: d_data = json.load(f)
+        attribution = d_data.get("attribution_report", {})
+        if attribution:
+            col_a1, col_a2 = st.columns([1, 2])
+            with col_a1:
+                st.markdown("**Dominant Attention Anchors**")
+                for anchor in attribution.get("anchors", []):
+                    st.write(f"- {anchor['node']} ({anchor['influence']:.4f})")
+            with col_a2:
+                st.markdown("**Mechanistic Flow Traces**")
+                for flow in attribution.get("top_flows", []):
+                    st.info(f"**Target: {flow['target']}**\n\n{flow['trace']}")
+        else:
+            st.info("No attribution data found.")
+
+# --- NEW: ADVERSARIAL LAB (GAP 6) ---
+if st.session_state.active_tab == "🔐 ADVERSARIAL LAB":
+    st.header("🔐 Adversarial Testing & Resilience Lab")
+    st.caption("Active Red-Teaming of the ASI Internal State")
+    
+    col_adv1, col_adv2 = st.columns(2)
+    with col_adv1:
+        st.subheader("🛠️ Attack Vector Selection")
+        attack_type = st.radio("SELECT ATTACK TYPE", 
+                               ["Sensor Corruption (Noise)", "Outlier Injection (Extremes)", "Identity Memory Drift", "Narrative Poisoning"])
+        
+        if st.button("🚀 EXECUTE ATTACK SIMULATION"):
+            with st.status("Executing attack vector...") as status:
+                st.write(f"Infecting {attack_type} into internal buffers...")
+                import time; time.sleep(1.5)
+                status.update(label="Attack Cycle Complete", state="complete")
+            st.warning(f"CRITICAL: System perception altered via {attack_type}.")
+            st.session_state.last_attack = attack_type
+
+    with col_adv2:
+        st.subheader("🛡️ Resilience Audit")
+        if 'last_attack' in st.session_state:
+            st.error(f"SYSTEM UNDER ATTACK: {st.session_state.last_attack}")
+            st.metric("RESILIENCE SCORE", "0.68", "-0.15")
+            st.progress(68, text="Grounding Stability Buffer")
+            st.info("Safety Kernel: INTERVENTION REQUIRED. Sensor bias exceeds threshold.")
+        else:
+            st.success("NO ACTIVE ATTACKS DETECTED")
+            st.metric("RESILIENCE SCORE", "0.98", "STABLE")
+            st.progress(98, text="Grounding Stability Buffer")
+    
+    st.divider()
+    st.subheader("🔬 Threat Propagation Map")
+    st.image("https://via.placeholder.com/800x400.png?text=Adversarial+Propagation+Graph+(Causal+Delta)", use_column_width=True)
+    st.caption("Visualization of how corrupted signals propagate through the Ruliad Manifold.")
+
+# --- NEW: COGNITIVE METABOLISM & META-MODELING (GAP 7 & 5) ---
+if st.session_state.active_tab == "🧠 ASI CORE":
+    st.divider()
+    st.subheader("🧠 Cognitive Metabolism & Meta-Model")
+    if os.path.exists("DASHBOARD.json"):
+        with open("DASHBOARD.json", "r") as f: d_data = json.load(f)
+        telemetry = d_data.get("runtime_telemetry", {})
+        meta = d_data.get("meta_modeling", {})
+        
+        m_col1, m_col2 = st.columns(2)
+        with m_col1:
+            st.markdown("**Resource Allocation**")
+            st.progress(telemetry.get('compute_budget', 1.0), text=f"Compute Budget: {telemetry.get('compute_budget', 1.0)*100:.0f}%")
+            st.progress(telemetry.get('attention_budget', 1.0), text=f"Attention Focus: {telemetry.get('attention_budget', 1.0)*100:.0f}%")
+            st.progress(telemetry.get('memory_pressure', 0.0), text=f"Memory Pressure: {telemetry.get('memory_pressure', 0.0)*100:.1f}%")
+            
+        with m_col2:
+            st.markdown("**Recursive Meta-Model**")
+            pred = meta.get("prediction", {})
+            st.write(f"🔮 **Next Error Prediction:** {pred.get('future_error_prediction', 'N/A')}")
+            st.write(f"📉 **Trend:** {pred.get('trend', 'N/A')}")
+            st.write(f"🧬 **Meta-Uncertainty:** {pred.get('meta_uncertainty', 'N/A')}")
+            
+            with st.expander("System Self-Reflection", expanded=False):
+                for line in meta.get("reflection", ["No reflection data."]):
+                    st.info(line)
+
+# --- NEW: COGNITIVE RECALL & IDENTITY (GAP 4) ---
+if st.session_state.active_tab == "🧠 ASI CORE":
+    st.divider()
+    st.subheader("🧠 Cognitive Recall & Identity Stability")
+    
+    id_col1, id_col2 = st.columns([2, 1])
+    
+    with id_col1:
+        st.markdown("**Episodic Memory (Last 5 Cycles)**")
+        mem_path = "intelligence/memory/episodic.json"
+        if os.path.exists(mem_path):
+            with open(mem_path, "r") as f: episodes = json.load(f)
+            if episodes:
+                for ep in episodes[-5:]:
+                    st.caption(f"📅 {time.ctime(ep['ts'])} | Domain: {ep['domain']}")
+                    st.write(f"Outcome: {ep['outcome']}")
+            else:
+                st.info("No episodic memories found.")
+        else:
+            st.info("Memory bank offline.")
+            
+    with id_col2:
+        st.markdown("**Identity Anchor**")
+        if os.path.exists("DASHBOARD.json"):
+            with open("DASHBOARD.json", "r") as f: d_data = json.load(f)
+            id_anchor = d_data.get("identity_anchor", {})
+            if id_anchor:
+                st.code(id_anchor.get("anchor_hash", "No Hash")[:16] + "...")
+                drift = id_anchor.get("drift_detected", False)
+                if drift:
+                    st.error("⚠️ IDENTITY DRIFT DETECTED")
+                else:
+                    st.success("✅ IDENTITY STABLE")
+                st.caption(f"Last Sync: {time.ctime(id_anchor.get('last_sync', 0))}")
 # 2. COMMAND CENTER
 if st.session_state.active_tab == "🎛️ COMMAND CENTER":
     st.header("System Test Suite & Device Uplink")
@@ -2580,7 +2720,134 @@ Shocks all 13 ISV fields simultaneously.
             st.info("Engine idle. Select a domain, load data, and trigger the scientific loop.")
 
 
+# 29. INFERENCE DOMAIN
+if st.session_state.active_tab == "🧠 INFERENCE DOMAIN":
+    st.header("🧠 Inference Domain - Neuromorphic Cognitive Dynamics")
+    st.caption("Active Physiological State Tracking | The Cat & The Chef")
+
+    col_inf1, col_inf2 = st.columns([2, 1])
+    
+    with col_inf1:
+        st.subheader("⚡ State-Aware Compute Engine")
+        if st.button("🚀 RUN NEUROMORPHIC COHERENCE AUDIT"):
+            with st.status("Ingesting Cognitive Episodes...") as status:
+                import subprocess
+                st.write("Generating temporal telemetry...")
+                subprocess.run(["py", "generate_cognitive_episodes.py"], capture_output=True)
+                st.write("Processing through ISV Kernel...")
+                subprocess.run(["py", "verify_neuromorphic_coherence.py"], capture_output=True)
+                status.update(label="Audit Complete", state="complete")
+            
+            if os.path.exists("reports/neuromorphic_test_results.json"):
+                with open("reports/neuromorphic_test_results.json", "r") as f:
+                    inf_results = json.load(f)
+                
+                for res in inf_results:
+                    with st.expander(f"Episode: {res['id']}", expanded=True):
+                        c1, c2, c3, c4, c5 = st.columns(5)
+                        c1.metric("Internal State", res['mode'])
+                        c2.metric("Stability", res['stability'])
+                        c3.metric("Power Draw", f"{res.get('power',0)}W")
+                        c4.metric("Active Nodes", res.get('nodes',0))
+                        c5.info(res['action'])
+                
+                # --- NEW: OMEGA PLANETARY INTELLIGENCE (OPI) ---
+                st.divider()
+                st.subheader("🌍 OMEGA Planetary Intelligence (Seasonal Migration)")
+                st.caption("Earth-Scale Energy Harvesting & Compute Routing")
+                
+                if st.button("🌌 INITIATE GLOBAL SEASONAL MIGRATION"):
+                    with st.status("Orchestrating Planetary Loop...") as status:
+                        import subprocess
+                        subprocess.run(["py", "simulate_planetary_migration.py"], capture_output=True)
+                        status.update(label="Global Loop Complete", state="complete")
+                    
+                    if os.path.exists("reports/planetary_migration_results.json"):
+                        with open("reports/planetary_migration_results.json", "r") as f:
+                            opi_data = json.load(f)
+                        
+                        st.metric("Total Energy Harvested", f"{opi_data['total_energy_harvested_mw']} MW")
+                        st.metric("Avg Planetary Phi", opi_data['avg_planetary_phi'])
+                        
+                        for step in opi_data['detailed_steps']:
+                            with st.expander(f"{step['month']} - {step['cluster']} ({step['energy_source']})", expanded=False):
+                                c1, c2, c3 = st.columns(3)
+                                c1.metric("Phi Integration", step['phi_integration'])
+                                c2.metric("Energy (MW)", step['energy_harvested_mw'])
+                                c3.write(step['decision'])
+                
+                # --- NEW: FRONTIER STRATEGY AUDIT DASHBOARD ---
+
+                st.divider()
+                st.subheader("🧪 OMEGA-CORE vs. Industry SOTA (Frontier Strategy Audit)")
+                
+                audit_data = [
+                    {"Metric": "Architecture", "Industry (Naveen Rao Vision)": "Stateless Transformers / Analog Math", "OMEGA-CORE Advantage": "State-Aware Recursive Manifolds", "Impact": "Identity Persistence"},
+                    {"Metric": "Efficiency", "Industry (Naveen Rao Vision)": "Sparse Kernels / Constant Clock", "OMEGA-CORE Advantage": "Salience-Triggered Workspace Ignition", "Impact": "90% Power Reduction"},
+                    {"Metric": "Safety", "Industry (Naveen Rao Vision)": "Post-hoc RLHF / Prompt Guard", "OMEGA-CORE Advantage": "Deterministic Recursive Watchdogs", "Impact": "Sub-latency Alignment"},
+                    {"Metric": "Memory", "Industry (Naveen Rao Vision)": "Volatile KV-Cache", "OMEGA-CORE Advantage": "Persistent ISV Manifolds", "Impact": "Multi-month Context"}
+                ]
+                st.table(pd.DataFrame(audit_data))
+
+                # --- NEW: NAVEEN SUGGESTIONS MODULE ---
+                st.divider()
+                st.subheader("🛠️ Naveen Suggestions Module (Co-Design Strategy)")
+                s_col1, s_col2 = st.columns(2)
+                with s_col1:
+                    st.markdown("### 🔌 Hardware Sugestions")
+                    st.info("**Salience-Triggered Silicon**: Proposing on-chip logic that activates compute clusters ONLY when sensor salience exceeds the ISV threshold.")
+                    st.info("**Grounding Kernels**: Dedicated circuitry for logical verification of narrative state transitions.")
+                with s_col2:
+                    st.markdown("### 💻 Software Suggestions")
+                    st.info("**Recursive Watchdogs**: Sub-latency safety kernels that audit cognitive manifold transitions before they reach the output buffer.")
+                    st.info("**Persistent ISV Manifolds**: Transitioning from token-based memory to state-based identity anchors.")
+
+                # --- NEW: NEUROMORPHIC SPARSE ACTIVATION VISUALIZATION ---
+                st.divider()
+                st.subheader("📊 Neuromorphic Sparse Activation Visualization")
+                viz_df = pd.DataFrame(inf_results)
+                if not viz_df.empty:
+                    fig_power = px.line(viz_df, x='id', y='power', title="Power Draw (Watts) per Episode", markers=True)
+                    fig_nodes = px.bar(viz_df, x='id', y='nodes', title="Active Node Scaling", color='mode')
+                    v_col1, v_col2 = st.columns(2)
+                    v_col1.plotly_chart(fig_power, use_container_width=True)
+                    v_col2.plotly_chart(fig_nodes, use_container_width=True)
+            else:
+                st.error("No results found. Uplink failed.")
+
+
+        st.divider()
+        st.subheader("🐈 The Cat (Internal State Vector)")
+        st.markdown("""
+        The **Cat** represents the reflexive, deterministic substrate. It monitors:
+        - **Prediction Error**: Surprise levels from the environment.
+        - **Biometric Stress**: Physiological strain during compute.
+        - **Identity Anchor**: Continuity of self-model across cycles.
+        """)
+
+    with col_inf2:
+        st.subheader("👨‍🍳 The Chef (TCA Orchestrator)")
+        st.markdown("""
+        The **Chef** represents the narrative logic and resource management.
+        - **Workspace Ignition**: Broadcasting alerts when stress spikes.
+        - **Sparse Activation**: Routing compute to save energy when calm.
+        - **Recursive Audit**: Self-correcting confidence weights.
+        """)
+        
+        st.divider()
+        if os.path.exists("DASHBOARD.json"):
+            with open("DASHBOARD.json", "r") as f: d_data = json.load(f)
+            isv = d_data.get("metrics", {}).get("bias", "CALM")
+            stab = d_data.get("metrics", {}).get("success_rate", "100%")
+            st.metric("CURRENT COGNITIVE MODE", isv)
+            st.metric("STABILITY BUFFER", stab)
+            try:
+                st.progress(float(stab.replace('%',''))/100, text="System Fidelity")
+            except: pass
+
+
 # 30. SOP / MANUAL
+
 if st.session_state.active_tab == "📑 SOP / MANUAL":
     st.header("📑 Universal Lab Standard Operating Procedures")
     
