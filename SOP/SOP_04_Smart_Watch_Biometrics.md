@@ -139,4 +139,4 @@ Overall Score:  93.5% ✅
 
 ---
 
-*SOP-04 | OMEGA-CORE v2.5 | AP Phillips Universal Lab*
+*SOP-04 | OMEGA-CORE v3.0 | AP Phillips Universal Lab*

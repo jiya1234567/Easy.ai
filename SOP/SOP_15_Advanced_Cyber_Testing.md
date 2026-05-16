@@ -1,5 +1,5 @@
 # 🛡️ SOP 15: Advanced Cyber Reasoning & Gap Analysis
-**AP Phillips Universal Laboratory | OMEGA-CORE ASI Framework v2.5**
+**AP Phillips Universal Laboratory | OMEGA-CORE ASI Framework v3.0**
 
 ---
 

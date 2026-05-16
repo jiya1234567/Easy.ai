@@ -121,7 +121,7 @@ async function getEmbedding(text: string) {
   const ai = new GoogleGenAI({ apiKey: API_KEY });
   const result = await withRetry(async () => {
     return await ai.models.embedContent({
-      model: 'gemini-embedding-2-preview',
+      model: 'gemini-embedding-3-preview',
       contents: [text],
     });
   });
@@ -477,7 +477,7 @@ export async function generateVoiceResponse(text: string) {
   try {
     const base64Audio = await withRetry(async () => {
       const response = await ai.models.generateContent({
-        model: "gemini-2.5-flash-preview-tts",
+        model: "gemini-3.1-flash-tts-preview",
         contents: [{ parts: [{ text: `Say with Omega Clearance authority: ${text}` }] }],
         config: {
           responseModalities: [Modality.AUDIO],

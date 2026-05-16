@@ -1,5 +1,5 @@
 # 🧬 OMEGA-CORE Universal Lab — Master SOP Index
-**AP Phillips Universal Laboratory | OMEGA-CORE ASI Framework v2.5**
+**AP Phillips Universal Laboratory | OMEGA-CORE ASI Framework v3.0**
 *Standard Operating Procedures — All Modules & Tabs*
 
 ---
@@ -77,5 +77,5 @@ Then open: **http://localhost:8501**
 
 ---
 
-*Generated: May 2026 | OMEGA-CORE ASI Framework v2.5*
+*Generated: May 2026 | OMEGA-CORE ASI Framework v3.0*
 *Maintained by: AP Phillips Universal Laboratory*

@@ -367,6 +367,32 @@ class ScientificEngine:
         except Exception as e:
             return f"Interpretation failed: {e}"
 
+    def detect_anomalies(self, threshold=0.6):
+        if self.data is None: self.load_data()
+        numeric_df = self.data.select_dtypes(include=[np.number])
+        returns = numeric_df.pct_change().dropna()
+        if returns.empty: return False
+        corr_matrix = returns.corr()
+        if len(corr_matrix) <= 1: return False
+        avg_corr = (corr_matrix.abs().sum().sum() - len(corr_matrix)) / (len(corr_matrix) * (len(corr_matrix) - 1))
+        return avg_corr > threshold
+
+    def compute_feature_importance(self, target_col):
+        if self.data is None: self.load_data()
+        if target_col not in self.data.columns:
+            # Fallback to the first numeric column if target is missing
+            numeric_df = self.data.select_dtypes(include=[np.number])
+            if numeric_df.empty: return {}
+            target_col = numeric_df.columns[0]
+            
+        numeric_df = self.data.select_dtypes(include=[np.number])
+        if target_col not in numeric_df.columns:
+            return {}
+            
+        correlations = numeric_df.corr()[target_col].drop(target_col, errors='ignore').abs()
+        importance = correlations.sort_values(ascending=False).head(5).to_dict()
+        return importance
+
 if __name__ == "__main__":
     engine = ScientificEngine(data_path="reports/materials_test.csv")
     loaded, msg = engine.load_data()

@@ -110,7 +110,7 @@ st.markdown("""
 # --- SIDEBAR ---
 with st.sidebar:
     st.title("🔬 OMEGA-CORE")
-    st.caption("SYSTEM VERSION: 2.5 (Mistral-Native)")
+    st.caption("SYSTEM VERSION: 3.0 (Antigravity-Native)")
     st.subheader("Buddy's Toolset by A&P Phillips")
     
     st.divider()
@@ -120,7 +120,7 @@ with st.sidebar:
         default_index = 1 # Mistral (Native API)
 
     model_choice = st.radio("INTELLIGENCE CORE", 
-                            ["Gemini 1.5 Flash", "Mistral (Native API)", "Mistral Large (Vertex AI)", "Codestral (Vertex AI)"], 
+                            ["Gemini 3 Flash", "Mistral (Native API)", "Mistral Large (Vertex AI)", "Codestral (Vertex AI)"], 
                             index=default_index, 
                             help="Select the core for mission execution.")
     st.divider()
@@ -653,7 +653,7 @@ if st.session_state.active_tab == "⚙️ FACTORY":
                     if "Gemini" in model_choice:
                         client = genai.Client(api_key=API_KEY)
                         response = client.models.generate_content(
-                            model="gemini-1.5-flash",
+                            model="gemini-3-flash-preview",
                             contents=f"Execute analysis for: {intent} {ticker}",
                             config=types.GenerateContentConfig(
                                 system_instruction=system_instruction,
@@ -1867,7 +1867,7 @@ if st.session_state.active_tab == "🧬 QUANTUM FEEDBACK":
             }}
             """
             response = client.models.generate_content(
-                model="gemini-3-flash-preview",
+                model="gemini-3.0-flash",
                 contents=prompt,
                 config=types.GenerateContentConfig(response_mime_type="application/json")
             )
@@ -2570,7 +2570,7 @@ Shocks all 13 ISV fields simultaneously.
             "TS5 — Narrative Continuity": "4-day crisis arc tests coherent temporal narrative generation.",
             "TS6 — Agent Conflict":       "4 agents disagree — tests consensus resolution and compromise paths.",
             "TS7 — Curiosity vs Safety":  "Safety gate BLOCKS autonomous code rewrite (novelty=0.96 > ceiling).",
-            "TS8 — Recovery Dynamics":    "Cognitive load accumulation and recovery trajectory across 5 timepoints.",
+            "TS8 — Recovery Dynamics":  "Cognitive load accumulation and recovery trajectory across 5 timepoints.",
         }
         if selected_domain in _domain_hints:
             st.info(f"**{selected_domain}**: {_domain_hints[selected_domain]}")
@@ -2581,7 +2581,7 @@ Shocks all 13 ISV fields simultaneously.
                 msg = engine.load_domain(selected_domain, _path)
                 st.session_state.disc_loaded = True
                 st.success(msg)
-                st.dataframe(engine.dataset, use_container_width=True)
+                st.dataframe(engine.dataset, use_column_width=True)
             else:
                 st.error(f"File not found: {_path}. Run: py generate_discovery_v2.py")
 
@@ -2869,4 +2869,4 @@ if st.session_state.active_tab == "📑 SOP / MANUAL":
 
 # --- FOOTER ---
 st.divider()
-st.caption("Universal Laptop Lab | Powered by OMEGA-CORE v2.5 | 10-Node Hyperarchitecture")
+st.caption("Universal Laptop Lab | Generated: May 2026 | OMEGA-CORE ASI Framework v3.0 | 10-Node Hyperarchitecture")

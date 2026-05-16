@@ -1,4 +1,4 @@
-# Buddy's Toolset by A&P Phillips: Singularity Interface v1.0
+# Buddy's Toolset by A&P Phillips: Singularity Interface v3.0 (Antigravity Version)
 
 A unified decision intelligence system that learns, simulates, predicts, and optimizes across domains (Health, Finance, Agriculture, and Research).
 
@@ -14,7 +14,7 @@ To access the dashboard on mobile, use the **Public Shared Link** generated from
 
 ## 🛠️ Tech Stack
 - **Frontend:** React 19, Vite, Tailwind CSS, Motion.
-- **Backend:** Node.js (Express), Google Gemini API (Flash 2.5/3.0).
+- **Backend:** Node.js (Express), Google Gemini API (Flash 3.0 / 3.1 TTS).
 - **Research:** Streamlit (Python version included for community GitHub).
 
 ---

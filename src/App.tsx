@@ -173,7 +173,7 @@ const ManifoldVisualization = ({ data }: { data: number[] }) => {
         className="absolute top-1/2 left-1/2 w-4 h-4 bg-blue-500 rounded-full shadow-[0_0_15px_rgba(59,130,246,0.8)]"
       />
       <div className="absolute bottom-2 left-2 text-[10px] font-mono text-white/40">
-        LATENT SPACE PROJECTION (v1.0)
+        LATENT SPACE PROJECTION (v3.0)
       </div>
     </div>
   );

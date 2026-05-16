@@ -1,5 +1,5 @@
 # 🧬 SOP_00: Grounded Causal Orchestration Protocol
-**OMEGA-CORE ASI Framework | Version 2.5**
+**OMEGA-CORE ASI Framework | Version 3.0**
 **Primary Author:** AP Phillips Universal Laboratory
 
 ---
@@ -74,4 +74,4 @@ In this framework, the LLM is treated as a **semantic compression layer** and **
 - **Arbitration Success:** % of multi-objective tradeoffs resolved without violating hard constraints.
 
 ---
-*Generated: May 2026 | OMEGA-CORE ASI Framework v2.5*
+*Generated: May 2026 | OMEGA-CORE ASI Framework v3.0*
