@@ -2559,6 +2559,10 @@ Shocks all 13 ISV fields simultaneously.
                 "TS6 — Agent Conflict":     "reports/discovery/ts6_agent_conflict.csv",
                 "TS7 — Curiosity vs Safety":"reports/discovery/ts7_curiosity_safety.csv",
                 "TS8 — Recovery Dynamics":  "reports/discovery/ts8_recovery_dynamics.csv",
+                "Relativity (Phase 1: Classical)": "reports/relativity/phase1_classical.csv",
+                "Relativity (Phase 2: Constant c)": "reports/relativity/phase2_constant_c.csv",
+                "Relativity (Phase 3: Time Dilation)": "reports/relativity/phase3_time_dilation.csv",
+                "Relativity (Phase 4: Length Contraction)": "reports/relativity/phase4_length_contraction.csv",
             }
 
         selected_domain = st.selectbox("Select Research Domain", list(domain_files.keys()))
@@ -2571,6 +2575,7 @@ Shocks all 13 ISV fields simultaneously.
             "TS6 — Agent Conflict":       "4 agents disagree — tests consensus resolution and compromise paths.",
             "TS7 — Curiosity vs Safety":  "Safety gate BLOCKS autonomous code rewrite (novelty=0.96 > ceiling).",
             "TS8 — Recovery Dynamics":  "Cognitive load accumulation and recovery trajectory across 5 timepoints.",
+            "Relativity (Phase 2: Constant c)": "Injects constant light speed anomaly to trigger classical manifold failure and force non-Euclidean search."
         }
         if selected_domain in _domain_hints:
             st.info(f"**{selected_domain}**: {_domain_hints[selected_domain]}")
@@ -2581,7 +2586,7 @@ Shocks all 13 ISV fields simultaneously.
                 msg = engine.load_domain(selected_domain, _path)
                 st.session_state.disc_loaded = True
                 st.success(msg)
-                st.dataframe(engine.dataset, use_column_width=True)
+                st.dataframe(engine.dataset, width='stretch')
             else:
                 st.error(f"File not found: {_path}. Run: py generate_discovery_v2.py")
 
@@ -2716,6 +2721,32 @@ Shocks all 13 ISV fields simultaneously.
                         f"<span style='color:{_c};padding-left:12px;'>&rarr; {_entry['detail']}</span><br><br>")
             _lh += "</div>"
             st.markdown(_lh, unsafe_allow_html=True)
+
+            # --- Theory Synthesis Phase 2 Integration ---
+            if selected_domain.startswith("Relativity"):
+                st.markdown("### ⚛️ Theory Synthesis & Symmetry Engine")
+                with st.spinner("Reconstructing Causal Manifold..."):
+                    from intelligence.scientific_engine import ScientificEngine
+                    _path = domain_files[selected_domain]
+                    se = ScientificEngine(data_path=_path)
+                    se.load_data()
+                    report = se.run_theory_synthesis()
+                    
+                    if 'prediction_failure' in report:
+                        st.markdown("#### 1. Prediction Failure Report")
+                        _c1, _c2 = st.columns(2)
+                        with _c1:
+                            st.error(f"**Ontological Stress:** {report['prediction_failure']['ontological_stress']}")
+                            st.warning(f"**Simultaneity Instability:** {report['prediction_failure']['simultaneity_instability']}")
+                        with _c2:
+                            st.success(f"**Emergent Invariant:** {report['emergent_invariant']['candidate_invariant']}")
+                            st.metric("Invariant Confidence", report['emergent_invariant']['confidence'])
+                            
+                    if 'transformation_proposal' in report:
+                        st.markdown("#### 2. Candidate Transformation Ranking")
+                        st.json(report['transformation_proposal'])
+                        st.markdown("#### 3. Manifold Transition Event")
+                        st.json(report['manifold_transition'])
         else:
             st.info("Engine idle. Select a domain, load data, and trigger the scientific loop.")
 
