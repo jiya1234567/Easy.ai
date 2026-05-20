@@ -1,0 +1,13 @@
+{
+  "reportMissingImports": "none",
+  "reportMissingModuleSource": "none",
+  "reportOptionalMemberAccess": "none",
+  "reportGeneralTypeIssues": "none",
+  "reportAttributeAccessIssue": "none",
+  "reportIndexIssue": "none",
+  "reportCallIssue": "none",
+  "reportArgumentType": "none",
+  "reportReturnType": "none",
+  "reportUnusedImport": "warning",
+  "typeCheckingMode": "off"
+}

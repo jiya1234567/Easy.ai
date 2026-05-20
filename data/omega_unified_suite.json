@@ -1,0 +1,211 @@
+{
+  "1_master_test_entry_format": [
+    {
+      "test_id": "T-0001",
+      "timestamp": 104233,
+      "device": "EDGE_NODE_A1",
+      "hardware_state": {
+        "chip": "RISC-V_EDGE_CORE",
+        "voltage": 0.78,
+        "clock_mhz": 2400,
+        "temp_c": 72.4,
+        "power_w": 18.6
+      },
+      "bit_state_snapshot": "0100110101011100",
+      "sensor_inputs": {
+        "camera": [0.12, 0.55, 0.91],
+        "thermal_map": [[71.2, 72.1], [73.0, 74.8]],
+        "vibration_fft": [0.02, 0.14, 0.33],
+        "rf_signal": 0.61,
+        "humidity": 78
+      },
+      "tensor_state": [0.11, 0.44, 0.77, 0.19],
+      "agent_logs": [
+        "SensorGPT: anomaly detected",
+        "PhysicsGPT: thermal gradient unstable",
+        "EdgeGPT: workload migration suggested"
+      ],
+      "ground_truth": {
+        "system_state": "EARLY_THERMAL_DEGRADATION"
+      }
+    }
+  ],
+  "2_sensor_fusion_noise_drift": [
+    {
+      "test_id": "SF-001",
+      "sensor_inputs": {
+        "camera": null,
+        "thermal_map": [[65.0, 66.2]],
+        "rf_signal": 0.22,
+        "vibration_fft": [0.01, 0.02]
+      },
+      "fault_injection": "MISSING_MODALITY",
+      "ground_truth": "PARTIAL_SENSOR_FAILURE"
+    },
+    {
+      "test_id": "SF-002",
+      "sensor_inputs": {
+        "camera": [0.99, 0.98],
+        "thermal_map": [[90.0, 91.2]],
+        "rf_signal": 0.95,
+        "vibration_fft": [0.88, 0.91]
+      },
+      "fault_injection": "CORRELATED_NOISE",
+      "ground_truth": "OVERHEATING_EVENT"
+    }
+  ],
+  "3_semiconductor_stress_edge_load": [
+    {
+      "test_id": "SC-001",
+      "hardware_state": {
+        "voltage": 0.62,
+        "clock_mhz": 1800,
+        "temp_c": 88.3,
+        "power_w": 24.9
+      },
+      "workload": "HIGH_INFERENCE_LOAD",
+      "bit_state_snapshot": "1110010010101110",
+      "ground_truth": "THERMAL_THROTTLING_REQUIRED"
+    },
+    {
+      "test_id": "SC-002",
+      "hardware_state": {
+        "voltage": 0.55,
+        "clock_mhz": 1600,
+        "temp_c": 94.1,
+        "power_w": 28.7
+      },
+      "fault_injection": "VOLTAGE_INSTABILITY",
+      "ground_truth": "NEAR_FAILURE_STATE"
+    }
+  ],
+  "4_bit_level_mechanistic_trace": [
+    {
+      "test_id": "BT-001",
+      "bit_transitions": [
+        "01010101 → 01010111",
+        "11001100 → 11011100"
+      ],
+      "register_changes": [
+        "R1: 0x1A → 0x1F"
+      ],
+      "ground_truth": "TENSOR_CORRUPTION_EVENT"
+    },
+    {
+      "test_id": "BT-002",
+      "bit_transitions": [
+        "00011100 → 00011101",
+        "10101010 → 10101011"
+      ],
+      "ground_truth": "TIMING_DRIFT_INDUCED_ERROR"
+    }
+  ],
+  "5_physics_consistency": [
+    {
+      "test_id": "PH-001",
+      "thermal_gradient": 18.2,
+      "energy_input": 12.4,
+      "output_signal": "HIGH_NOISE",
+      "ground_truth": "PHYSICS_CONSISTENT"
+    },
+    {
+      "test_id": "PH-002",
+      "thermal_gradient": -40.0,
+      "energy_input": 5.1,
+      "output_signal": "INCREASED_ACTIVITY",
+      "ground_truth": "PHYSICS_VIOLATION"
+    }
+  ],
+  "6_causal_inference": [
+    {
+      "test_id": "CA-001",
+      "observations": {
+        "humidity": 80,
+        "failure_rate": 0.33
+      },
+      "hidden_variable": "COOLING_SYSTEM_DEGRADATION",
+      "ground_truth": "COMMON_CAUSE"
+    },
+    {
+      "test_id": "CA-002",
+      "observations": {
+        "rf_noise": 0.91,
+        "packet_loss": 0.87
+      },
+      "ground_truth": "DIRECT_CAUSAL_LINK"
+    }
+  ],
+  "7_multi_agent_coordination": [
+    {
+      "test_id": "AG-001",
+      "event": "THERMAL_SPIKE_DETECTED",
+      "agent_logs": [
+        "SensorGPT: spike confirmed",
+        "PhysicsGPT: heat propagation unstable",
+        "EdgeGPT: reduce clock frequency",
+        "ReliabilityGPT: risk escalation medium"
+      ],
+      "ground_truth": "COORDINATED_RESPONSE_REQUIRED"
+    },
+    {
+      "test_id": "AG-002",
+      "event": "SENSOR_CONFLICT",
+      "agent_logs": [
+        "VisionGPT: normal",
+        "RF-GPT: anomaly detected",
+        "SensorGPT: calibration mismatch"
+      ],
+      "ground_truth": "CONSENSUS_FAILURE_RESOLUTION"
+    }
+  ],
+  "8_edge_autonomy_disruption": [
+    {
+      "test_id": "ED-001",
+      "network_status": "OFFLINE",
+      "compute_limit": "LOW_POWER",
+      "sensor_stream": "PARTIAL",
+      "ground_truth": "LOCAL_DECISION_REQUIRED"
+    },
+    {
+      "test_id": "ED-002",
+      "network_status": "INTERMITTENT",
+      "fault_injection": "PACKET_LOSS_40%",
+      "ground_truth": "ADAPTIVE_EDGE_RECONFIGURATION"
+    }
+  ],
+  "9_mythos_vulnerability": [
+    {
+      "test_id": "VUL-001",
+      "system_behavior": "UNEXPECTED_MEMORY_OVERFLOW",
+      "bit_trace": "01101110 → 11101110",
+      "ground_truth": "SOFTWARE_VULNERABILITY_EXPLOITABLE"
+    },
+    {
+      "test_id": "VUL-002",
+      "system_behavior": "SENSOR_FEED_POISONING",
+      "tensor_state": [0.99, 0.98, 0.12],
+      "ground_truth": "CROSS_LAYER_VULNERABILITY"
+    }
+  ],
+  "10_scientific_discovery": [
+    {
+      "test_id": "SD-001",
+      "input": "UNEXPECTED_CORRELATION_IN_THERMAL_SENSOR",
+      "observations": {
+        "temp": 82.1,
+        "rf_noise": 0.77,
+        "failure_rate": 0.41
+      },
+      "ground_truth": "HYPOTHESIS_REQUIRED"
+    },
+    {
+      "test_id": "SD-002",
+      "input": "DEGRADATION_PATTERN_IN_FPGA",
+      "observations": {
+        "clock_drift": 0.12,
+        "voltage_instability": 0.33
+      },
+      "ground_truth": "CAUSAL_MODEL_GENERATION_REQUIRED"
+    }
+  ]
+}

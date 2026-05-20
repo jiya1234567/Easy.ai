@@ -374,5 +374,175 @@
       "orchestrator": "SPARSE_ACTIVATION: Routing only salience nodes."
     },
     "out": "Pending"
+  },
+  {
+    "id": "ep-1779174493",
+    "ts": "Tue May 19 17:08:13 2026",
+    "ctx": {
+      "rsi": 32.0,
+      "regime": "BIO-METRIC-OMEGA",
+      "isv": {
+        "stability": 0.95,
+        "stress": 0.05,
+        "mode": "CALM",
+        "identity": 1.0
+      }
+    },
+    "dec": {
+      "markov": "STABLE",
+      "orchestrator": "SPARSE_ACTIVATION: Routing only salience nodes."
+    },
+    "out": "Pending"
+  },
+  {
+    "id": "ep-1779174493",
+    "ts": "Tue May 19 17:08:13 2026",
+    "ctx": {
+      "rsi": 32.0,
+      "regime": "BIO-METRIC-OMEGA",
+      "isv": {
+        "stability": 0.64,
+        "stress": 0.36,
+        "mode": "ADAPTIVE",
+        "identity": 1.0
+      }
+    },
+    "dec": {
+      "markov": "ADAPTIVE RECOVERY",
+      "orchestrator": "GLOBAL_BROADCAST: All agents active for threat mitigation."
+    },
+    "out": "Pending"
+  },
+  {
+    "id": "ep-1779174493",
+    "ts": "Tue May 19 17:08:13 2026",
+    "ctx": {
+      "rsi": 32.0,
+      "regime": "BIO-METRIC-OMEGA",
+      "isv": {
+        "stability": 0.8,
+        "stress": 0.2,
+        "mode": "CALM",
+        "identity": 1.0
+      }
+    },
+    "dec": {
+      "markov": "STABLE",
+      "orchestrator": "SPARSE_ACTIVATION: Routing only salience nodes."
+    },
+    "out": "Pending"
+  },
+  {
+    "id": "ep-1779174493",
+    "ts": "Tue May 19 17:08:13 2026",
+    "ctx": {
+      "rsi": 32.0,
+      "regime": "BIO-METRIC-OMEGA",
+      "isv": {
+        "stability": 1.0,
+        "stress": 0.0,
+        "mode": "CALM",
+        "identity": 1.0
+      }
+    },
+    "dec": {
+      "markov": "STABLE",
+      "orchestrator": "SPARSE_ACTIVATION: Routing only salience nodes."
+    },
+    "out": "Pending"
+  },
+  {
+    "id": "ep-1779174500",
+    "ts": "Tue May 19 17:08:20 2026",
+    "ctx": {
+      "rsi": 44.5,
+      "regime": "Inference Domain",
+      "isv": {
+        "mode": "CALM",
+        "stability": 1.0,
+        "identity": 1.0
+      }
+    },
+    "dec": {
+      "markov": "STABLE",
+      "orchestrator": "Inference Domain Baseline"
+    },
+    "out": "Pending"
+  },
+  {
+    "id": "ep-1779260053",
+    "ts": "Wed May 20 16:54:13 2026",
+    "ctx": {
+      "rsi": 32.0,
+      "regime": "BIO-METRIC-OMEGA",
+      "isv": {
+        "stability": 0.95,
+        "stress": 0.05,
+        "mode": "CALM",
+        "identity": 1.0
+      }
+    },
+    "dec": {
+      "markov": "STABLE",
+      "orchestrator": "SPARSE_ACTIVATION: Routing only salience nodes."
+    },
+    "out": "Pending"
+  },
+  {
+    "id": "ep-1779260053",
+    "ts": "Wed May 20 16:54:13 2026",
+    "ctx": {
+      "rsi": 32.0,
+      "regime": "BIO-METRIC-OMEGA",
+      "isv": {
+        "stability": 0.64,
+        "stress": 0.36,
+        "mode": "ADAPTIVE",
+        "identity": 1.0
+      }
+    },
+    "dec": {
+      "markov": "ADAPTIVE RECOVERY",
+      "orchestrator": "GLOBAL_BROADCAST: All agents active for threat mitigation."
+    },
+    "out": "Pending"
+  },
+  {
+    "id": "ep-1779260053",
+    "ts": "Wed May 20 16:54:13 2026",
+    "ctx": {
+      "rsi": 32.0,
+      "regime": "BIO-METRIC-OMEGA",
+      "isv": {
+        "stability": 0.8,
+        "stress": 0.2,
+        "mode": "CALM",
+        "identity": 1.0
+      }
+    },
+    "dec": {
+      "markov": "STABLE",
+      "orchestrator": "SPARSE_ACTIVATION: Routing only salience nodes."
+    },
+    "out": "Pending"
+  },
+  {
+    "id": "ep-1779260053",
+    "ts": "Wed May 20 16:54:13 2026",
+    "ctx": {
+      "rsi": 32.0,
+      "regime": "BIO-METRIC-OMEGA",
+      "isv": {
+        "stability": 1.0,
+        "stress": 0.0,
+        "mode": "CALM",
+        "identity": 1.0
+      }
+    },
+    "dec": {
+      "markov": "STABLE",
+      "orchestrator": "SPARSE_ACTIVATION: Routing only salience nodes."
+    },
+    "out": "Pending"
   }
 ]
