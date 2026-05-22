@@ -1,0 +1,180 @@
+{
+    "metadata": {
+        "generated_at": "2026-05-22T06:11:42.519314Z",
+        "framework": "OMEGA-CORE ASSI Engine",
+        "version": "1.0",
+        "total_cases": 19
+    },
+    "standard_domains": [
+        {
+            "company": "Advanced Navigation",
+            "domain": "Inertial Navigation",
+            "entropy": 0.1,
+            "predictability": 0.95,
+            "instability": 0.05,
+            "assi_classification": "Reducible"
+        },
+        {
+            "company": "Extel Technologies",
+            "domain": "Signal Processing",
+            "entropy": 0.2,
+            "predictability": 0.9,
+            "instability": 0.1,
+            "assi_classification": "Reducible"
+        },
+        {
+            "company": "Thermal Dawn",
+            "domain": "Thermal Gradients",
+            "entropy": 0.15,
+            "predictability": 0.85,
+            "instability": 0.1,
+            "assi_classification": "Reducible"
+        },
+        {
+            "company": "Unleash Live",
+            "domain": "Dynamic Scene Understanding",
+            "entropy": 0.85,
+            "predictability": 0.15,
+            "instability": 0.9,
+            "assi_classification": "Irreducible"
+        },
+        {
+            "company": "Ocius",
+            "domain": "Ocean Systems / Turbulence",
+            "entropy": 0.9,
+            "predictability": 0.1,
+            "instability": 0.95,
+            "assi_classification": "Irreducible"
+        },
+        {
+            "company": "Carbonix",
+            "domain": "Atmospheric Turbulence",
+            "entropy": 0.88,
+            "predictability": 0.2,
+            "instability": 0.85,
+            "assi_classification": "Irreducible"
+        },
+        {
+            "company": "Q-CTRL",
+            "domain": "Quantum Control vs Noise",
+            "entropy": 0.5,
+            "predictability": 0.6,
+            "instability": 0.4,
+            "assi_classification": "Hybrid (Transitioning)"
+        },
+        {
+            "company": "Samsara Eco",
+            "domain": "Chemical to Biological Adaptation",
+            "entropy": 0.6,
+            "predictability": 0.5,
+            "instability": 0.5,
+            "assi_classification": "Hybrid (Transitioning)"
+        },
+        {
+            "company": "HydGene Renewables",
+            "domain": "Thermodynamics to Grid Adaptation",
+            "entropy": 0.55,
+            "predictability": 0.65,
+            "instability": 0.45,
+            "assi_classification": "Hybrid (Transitioning)"
+        },
+        {
+            "company": "CREATE Medicines",
+            "domain": "Adaptive Biochemistry",
+            "entropy": 0.75,
+            "predictability": 0.45,
+            "instability": 0.4,
+            "assi_classification": "Emergent / Biological"
+        },
+        {
+            "company": "Skin2Neuron",
+            "domain": "Cellular Differentiation",
+            "entropy": 0.7,
+            "predictability": 0.5,
+            "instability": 0.35,
+            "assi_classification": "Emergent / Biological"
+        }
+    ],
+    "robotic_domains": [
+        {
+            "scenario": "Automated High-Throughput Pipetting",
+            "vision_entropy": 0.1,
+            "touch_entropy": 0.05,
+            "smell_entropy": 0.0,
+            "assi_classification": "Reducible",
+            "global_entropy": 0.055,
+            "computed_predictability": 0.876,
+            "computed_instability": 0.066
+        },
+        {
+            "scenario": "Rigid Crystal Sorting",
+            "vision_entropy": 0.15,
+            "touch_entropy": 0.1,
+            "smell_entropy": 0.0,
+            "assi_classification": "Reducible",
+            "global_entropy": 0.09,
+            "computed_predictability": 0.808,
+            "computed_instability": 0.117
+        },
+        {
+            "scenario": "Volcanic Gas Plume Tracking",
+            "vision_entropy": 0.95,
+            "touch_entropy": 0.5,
+            "smell_entropy": 0.9,
+            "assi_classification": "Irreducible",
+            "global_entropy": 0.8,
+            "computed_predictability": 0.1,
+            "computed_instability": 1.0
+        },
+        {
+            "scenario": "Deep Ocean Fluid Sampling",
+            "vision_entropy": 0.6,
+            "touch_entropy": 0.95,
+            "smell_entropy": 0.85,
+            "assi_classification": "Irreducible",
+            "global_entropy": 0.78,
+            "computed_predictability": 0.1,
+            "computed_instability": 1.0
+        },
+        {
+            "scenario": "Soft-Polymer Tactile Manipulation",
+            "vision_entropy": 0.3,
+            "touch_entropy": 0.65,
+            "smell_entropy": 0.4,
+            "assi_classification": "Hybrid (Transitioning)",
+            "global_entropy": 0.435,
+            "computed_predictability": 0.172,
+            "computed_instability": 0.957
+        },
+        {
+            "scenario": "Catalytic Reaction Monitoring (Bio-Reactor)",
+            "vision_entropy": 0.7,
+            "touch_entropy": 0.2,
+            "smell_entropy": 0.6,
+            "assi_classification": "Hybrid (Transitioning)",
+            "global_entropy": 0.52,
+            "computed_predictability": 0.1,
+            "computed_instability": 1.0
+        },
+        {
+            "scenario": "Live Tissue Microsurgery",
+            "vision_entropy": 0.75,
+            "touch_entropy": 0.7,
+            "smell_entropy": 0.8,
+            "assi_classification": "Emergent / Biological",
+            "global_entropy": 0.75,
+            "computed_predictability": 0.28,
+            "computed_instability": 0.975
+        },
+        {
+            "scenario": "Forest Ecosystem Canopy Navigation",
+            "vision_entropy": 0.8,
+            "touch_entropy": 0.75,
+            "smell_entropy": 0.9,
+            "assi_classification": "Emergent / Biological",
+            "global_entropy": 0.815,
+            "computed_predictability": 0.188,
+            "computed_instability": 1.0
+        }
+    ]
+}

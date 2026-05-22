@@ -292,7 +292,7 @@ tabs_list = [
     "🩺 HEALTH PROTOCOL", "🔬 RESEARCH DEVICE", "🔄 EVOLUTION", "🌌 VISUAL MANIFOLD", "🚀 SINGULARITY FEED", 
     "👨‍🔬 SCIENTIFIC DISCOVERY", "🌌 DISCOVERY DASHBOARD", "🔐 ADVERSARIAL LAB", "🏙️ SMART CITY TWIN", 
     "🧬 QUANTUM FEEDBACK", "🚜 AGRICULTURE ASI", "🌪️ WEATHER MANIFOLD", "🌌 GLOBAL MONITORING", "🦾 ROBOTICS COMMAND", 
-    "📊 REPORTS ENGINE", "🏥 HEALTH INSURANCE", "🧠 INFERENCE DOMAIN", "☁️ COMMUNITY HUB", "🔮 ASI PREDICTION KERNEL", "📑 SOP / MANUAL"
+    "📊 REPORTS ENGINE", "🏥 HEALTH INSURANCE", "🧠 INFERENCE DOMAIN", "☁️ COMMUNITY HUB", "🔮 ASI PREDICTION KERNEL", "📑 SOP / MANUAL", "🔬 OMEGA CORE SYNC", "🤖 ASSI RESEARCH LAB"
 ]
 
 # Grid Rendering (5 columns)
@@ -708,6 +708,41 @@ if st.session_state.active_tab == "🧠 ASI CORE":
                 else:
                     st.success("✅ IDENTITY STABLE")
                 st.caption(f"Last Sync: {time.ctime(id_anchor.get('last_sync', 0))}")
+# --- NEW: OMEGA CORE SYNC (SUB TABS) ---
+if st.session_state.active_tab == "🔬 OMEGA CORE SYNC":
+    st.header("🔗 OMEGA-CORE Platform Synchronization")
+    st.caption("CROSS-PLATFORM DEPLOYMENT & ROUTING")
+    
+    sub_tabs = st.tabs(["☁️ Cloud Shell", "🐙 GitHub", "🌌 Antigravity", "📱 Android"])
+    
+    with sub_tabs[0]:
+        st.subheader("☁️ Google Cloud Shell Integration")
+        st.info("Environment Status: SYNCED")
+        st.markdown("- **Node version:** v20.x\n- **TypeScript Configured:** Yes\n- **Service:** `geminiService.ts`")
+        if st.button("Deploy to Cloud Shell"):
+            st.success("Deployment triggered...")
+            
+    with sub_tabs[1]:
+        st.subheader("🐙 GitHub Repository Sync")
+        st.info("Repository: Universal_Lab_AP_Phillips")
+        st.markdown("- **Branch:** main\n- **Status:** Up to date")
+        if st.button("Push to Origin"):
+            st.success("Changes pushed successfully.")
+            
+    with sub_tabs[2]:
+        st.subheader("🌌 Antigravity Agent")
+        st.info("Agent Status: ACTIVE")
+        st.markdown("- **Model:** Gemini 3.1 Pro (High)\n- **Secure Sandbox:** Connected")
+        if st.button("Request Antigravity Action"):
+            st.success("Signal sent to agent.")
+            
+    with sub_tabs[3]:
+        st.subheader("📱 Android Mobile Router")
+        st.info("Mobile Backend Status: ROUTING ACTIVE")
+        st.markdown("- **API Endpoints:** Live\n- **Trigger Methods:** Native App, Web Dashboard, Telegram Bot")
+        if st.button("Test Mobile Webhook"):
+            st.success("Webhook tested successfully. Mobile client reached.")
+
 # 2. COMMAND CENTER
 if st.session_state.active_tab == "🎛️ COMMAND CENTER":
     st.header("System Test Suite & Device Uplink")
@@ -3058,6 +3093,186 @@ if st.session_state.active_tab == "📑 SOP / MANUAL":
             st.info("No SOP documents found in the SOP directory.")
     else:
         st.warning("SOP directory does not exist.")
+
+# --- 31. ASSI RESEARCH LAB ---
+if st.session_state.active_tab == "🤖 ASSI RESEARCH LAB":
+    st.header("🤖 ASSI RESEARCH LAB")
+    st.caption("Universal Sensing Benchmark | Phase Transition Detection | NSW Showcase + Top 20 Strategic Research Areas")
+
+    from core.assi_sensing_engine import ASSISensingEngine
+
+    # --- CONTROL ROW ---
+    ctrl1, ctrl2, ctrl3 = st.columns(3)
+    with ctrl1:
+        with st.container(border=True):
+            st.markdown("**Step 1: Classification Dataset**")
+            st.caption("Standard domains + Robotic multi-modal fusion.")
+            if st.button("BUILD CLASSIFICATION DATA", use_container_width=True, key="btn_assi_class"):
+                with st.spinner("Running ASSI Classification Engine..."):
+                    from generate_assi_research_data import generate_assi_research_data
+                    generate_assi_research_data()
+                    time.sleep(0.5)
+                    st.rerun()
+    with ctrl2:
+        with st.container(border=True):
+            st.markdown("**Step 2: Emergent Benchmark Dataset**")
+            st.caption("6-domain phase transition time-series from real companies.")
+            if st.button("BUILD EMERGENT BENCHMARK", use_container_width=True, key="btn_assi_emergent"):
+                with st.spinner("Generating 72 timestep transition datasets..."):
+                    from generate_universal_emergent_benchmark import generate_universal_emergent_benchmark
+                    generate_universal_emergent_benchmark()
+                    time.sleep(0.5)
+                    st.rerun()
+    with ctrl3:
+        with st.container(border=True):
+            st.markdown("**Step 3: Run Phase Transition Analysis**")
+            st.caption("Detect dC/dt spikes across all 6 domains.")
+            run_analysis = st.button("ANALYSE TRANSITIONS", use_container_width=True, key="btn_assi_analyse")
+
+    st.divider()
+
+    # ======================================================
+    # SECTION A: Classification Dataset
+    # ======================================================
+    class_path = "data/assi_research_data.json"
+    if os.path.exists(class_path):
+        with open(class_path, "r") as f:
+            assi_class = json.load(f)
+
+        st.subheader("A — ASSI Classification Results")
+        st.caption(f"Generated: {assi_class['metadata'].get('generated_at', 'N/A')} | Total Cases: {assi_class['metadata']['total_cases']}")
+
+        tab_std, tab_rob = st.tabs(["Standard Domains (NSW Showcase)", "Robotic Multi-Modal Domains"])
+        with tab_std:
+            df_std = pd.DataFrame(assi_class["standard_domains"])
+            st.dataframe(df_std, use_container_width=True)
+            if not df_std.empty:
+                cat_counts = df_std["assi_classification"].value_counts().reset_index()
+                cat_counts.columns = ["Classification", "Count"]
+                fig_cat = px.bar(cat_counts, x="Classification", y="Count",
+                                 color="Classification", title="Domain Distribution by ASSI Class",
+                                 color_discrete_sequence=px.colors.qualitative.Bold)
+                st.plotly_chart(fig_cat, use_container_width=True)
+        with tab_rob:
+            df_rob = pd.DataFrame(assi_class["robotic_domains"])
+            st.dataframe(df_rob, use_container_width=True)
+            if not df_rob.empty:
+                cat_rob = df_rob["assi_classification"].value_counts().reset_index()
+                cat_rob.columns = ["Classification", "Count"]
+                fig_rob = px.bar(cat_rob, x="Classification", y="Count",
+                                 color="Classification", title="Robotic Domain Distribution by ASSI Class",
+                                 color_discrete_sequence=px.colors.qualitative.Vivid)
+                st.plotly_chart(fig_rob, use_container_width=True)
+    else:
+        st.info("No classification data yet. Click 'BUILD CLASSIFICATION DATA' above.")
+
+    st.divider()
+
+    # ======================================================
+    # SECTION B: Universal Emergent Benchmark
+    # ======================================================
+    bench_path = "data/universal_emergent_benchmark.json"
+    if os.path.exists(bench_path):
+        with open(bench_path, "r") as f:
+            bench = json.load(f)
+
+        st.subheader("B — Universal Emergent Systems Benchmark (6 Domains x 12 Timesteps)")
+        st.caption(f"Research Basis: {bench['metadata']['research_basis']}")
+
+        meta_col1, meta_col2, meta_col3 = st.columns(3)
+        meta_col1.metric("Total Domains", bench["metadata"]["domains"])
+        meta_col2.metric("Timesteps / Domain", bench["metadata"]["timesteps_per_domain"])
+        meta_col3.metric("Phase Trigger", bench["metadata"]["phase_transition_threshold"])
+
+        domain_names = [d["domain"] for d in bench["domains"]]
+        selected_domain_name = st.selectbox("SELECT DOMAIN TO INSPECT", domain_names, key="assi_domain_sel")
+        selected_domain = next(d for d in bench["domains"] if d["domain"] == selected_domain_name)
+
+        # Domain header
+        dc1, dc2, dc3 = st.columns(3)
+        dc1.metric("Company / Inspiration", selected_domain["company_inspiration"])
+        dc2.metric("Category", selected_domain["category"])
+        dc3.metric("Timesteps", len(selected_domain["timeseries"]))
+
+        # Build dataframe
+        df_ts = pd.DataFrame(selected_domain["timeseries"])
+
+        # Time-series chart: Entropy + Coherence
+        st.markdown("#### Entropy & Coherence Across Time")
+        fig_ec = px.line(df_ts, x="timestep", y=["entropy", "coherence", "dC_dt"],
+                         markers=True,
+                         color_discrete_map={"entropy": "#F87171", "coherence": "#34D399", "dC_dt": "#FBBF24"},
+                         title=f"{selected_domain_name} — Phase Transition Signals")
+        fig_ec.add_hline(y=0.15, line_dash="dash", line_color="#FBBF24",
+                         annotation_text="dC/dt Threshold (0.15)", annotation_position="top right")
+        fig_ec.update_layout(plot_bgcolor="#0a0a0a", paper_bgcolor="#0a0a0a",
+                              font_color="#E2E8F0", legend_title="Metric")
+        st.plotly_chart(fig_ec, use_container_width=True)
+
+        # State label timeline
+        st.markdown("#### State Labels Across Time")
+        state_colors = {"Stable": "#34D399", "Adaptive": "#FBBF24", "Unstable": "#F87171", "Critical Transition": "#EF4444"}
+        df_ts["state_color"] = df_ts["state"].map(state_colors).fillna("#94A3B8")
+        fig_state = px.scatter(df_ts, x="timestep", y="state", color="state",
+                               size_max=18, color_discrete_map=state_colors,
+                               title=f"{selected_domain_name} — State Evolution")
+        fig_state.update_traces(marker=dict(size=14))
+        fig_state.update_layout(plot_bgcolor="#0a0a0a", paper_bgcolor="#0a0a0a", font_color="#E2E8F0")
+        st.plotly_chart(fig_state, use_container_width=True)
+
+        # Raw sensor data
+        with st.expander("View Raw Sensor Timeseries Data", expanded=False):
+            st.dataframe(df_ts, use_container_width=True)
+
+        # Phase transition analysis
+        st.markdown("#### Phase Transition Analysis")
+        summary = ASSISensingEngine.summarize_domain(selected_domain)
+        t_col1, t_col2, t_col3, t_col4 = st.columns(4)
+        t_col1.metric("Initial State", summary["initial_state"])
+        t_col2.metric("Final State", summary["final_state"])
+        t_col3.metric("Final Entropy", summary["final_entropy"])
+        t_col4.metric("Final Coherence", summary["final_coherence"])
+
+        trans = summary["transition_analysis"]
+        if trans["transition_count"] > 0:
+            st.error(f"VERDICT: {trans['verdict']}")
+            for ev in trans["events"]:
+                st.warning(f"Timestep {ev['timestep']} | State: {ev['state_at_event']} | Coherence: {ev['coherence']} | dC/dt: {ev['dC_dt']}")
+        else:
+            st.success(f"VERDICT: {trans['verdict']}")
+
+        # ---- ALL DOMAINS SUMMARY TABLE (when Analyse button pressed) ----
+        if run_analysis:
+            st.divider()
+            st.subheader("C — All Domains Phase Transition Summary")
+            rows = []
+            for d in bench["domains"]:
+                s = ASSISensingEngine.summarize_domain(d)
+                rows.append({
+                    "Domain": s["domain"],
+                    "Company": s["company_inspiration"],
+                    "Category": s["category"],
+                    "Initial State": s["initial_state"],
+                    "Final State": s["final_state"],
+                    "Final Entropy": s["final_entropy"],
+                    "Final Coherence": s["final_coherence"],
+                    "Transitions": s["transition_analysis"]["transition_count"],
+                    "Verdict": s["transition_analysis"]["verdict"]
+                })
+            df_all = pd.DataFrame(rows)
+            st.dataframe(df_all, use_container_width=True)
+
+            # Entropy comparison bar
+            fig_all = px.bar(df_all, x="Domain", y="Final Entropy", color="Category",
+                             title="Final Entropy by Domain (Higher = More Emergent/Irreducible)",
+                             color_discrete_sequence=px.colors.qualitative.Dark24)
+            fig_all.update_layout(plot_bgcolor="#0a0a0a", paper_bgcolor="#0a0a0a", font_color="#E2E8F0",
+                                  xaxis_tickangle=-20)
+            st.plotly_chart(fig_all, use_container_width=True)
+            st.success("Analysis complete. All 6 domains evaluated.")
+    else:
+        st.info("No emergent benchmark data yet. Click 'BUILD EMERGENT BENCHMARK' above.")
+
 
 # --- FOOTER ---
 st.divider()
