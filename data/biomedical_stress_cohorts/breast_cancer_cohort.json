@@ -1,0 +1,2352 @@
+[
+  {
+    "state_tensor": {
+      "patient_id": "BR_000",
+      "timepoint": "t4",
+      "entropy_H": 0.76,
+      "coherence_k": 0.22,
+      "emergence_eta": 0.85,
+      "bifurcation_B": 0.85,
+      "reducibility_R": 0.2
+    },
+    "multimodal_features": {
+      "genomics": {
+        "BRCA1": 1,
+        "TP53": 1,
+        "PIK3CA": 1,
+        "PRS_score": 0.82
+      },
+      "labs": {
+        "CRP": 3.1,
+        "CA15_3": 29.0
+      },
+      "imaging": {
+        "tumor_density": 0.89,
+        "vascularity": 0.74
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "clonal_expansion"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "BR_001",
+      "timepoint": "t4",
+      "entropy_H": 0.83,
+      "coherence_k": 0.15,
+      "emergence_eta": 0.59,
+      "bifurcation_B": 0.75,
+      "reducibility_R": 0.08
+    },
+    "multimodal_features": {
+      "genomics": {
+        "BRCA1": 1,
+        "TP53": 1,
+        "PIK3CA": 1,
+        "PRS_score": 0.98
+      },
+      "labs": {
+        "CRP": 4.9,
+        "CA15_3": 35.3
+      },
+      "imaging": {
+        "tumor_density": 0.79,
+        "vascularity": 0.68
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "clonal_expansion"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "BR_002",
+      "timepoint": "t4",
+      "entropy_H": 0.85,
+      "coherence_k": 0.21,
+      "emergence_eta": 0.71,
+      "bifurcation_B": 0.82,
+      "reducibility_R": 0.09
+    },
+    "multimodal_features": {
+      "genomics": {
+        "BRCA1": 1,
+        "TP53": 0,
+        "PIK3CA": 1,
+        "PRS_score": 0.92
+      },
+      "labs": {
+        "CRP": 4.4,
+        "CA15_3": 40.9
+      },
+      "imaging": {
+        "tumor_density": 0.66,
+        "vascularity": 0.66
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "clonal_expansion"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "BR_003",
+      "timepoint": "t4",
+      "entropy_H": 0.72,
+      "coherence_k": 0.28,
+      "emergence_eta": 0.55,
+      "bifurcation_B": 0.92,
+      "reducibility_R": 0.09
+    },
+    "multimodal_features": {
+      "genomics": {
+        "BRCA1": 1,
+        "TP53": 0,
+        "PIK3CA": 1,
+        "PRS_score": 0.9
+      },
+      "labs": {
+        "CRP": 7.2,
+        "CA15_3": 31.7
+      },
+      "imaging": {
+        "tumor_density": 0.78,
+        "vascularity": 0.67
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "clonal_expansion"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "BR_004",
+      "timepoint": "t4",
+      "entropy_H": 0.7,
+      "coherence_k": 0.24,
+      "emergence_eta": 0.71,
+      "bifurcation_B": 0.94,
+      "reducibility_R": 0.06
+    },
+    "multimodal_features": {
+      "genomics": {
+        "BRCA1": 1,
+        "TP53": 0,
+        "PIK3CA": 1,
+        "PRS_score": 0.94
+      },
+      "labs": {
+        "CRP": 5.5,
+        "CA15_3": 40.4
+      },
+      "imaging": {
+        "tumor_density": 0.68,
+        "vascularity": 0.58
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "clonal_expansion"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "BR_005",
+      "timepoint": "t4",
+      "entropy_H": 0.84,
+      "coherence_k": 0.15,
+      "emergence_eta": 0.82,
+      "bifurcation_B": 0.86,
+      "reducibility_R": 0.18
+    },
+    "multimodal_features": {
+      "genomics": {
+        "BRCA1": 1,
+        "TP53": 0,
+        "PIK3CA": 1,
+        "PRS_score": 0.96
+      },
+      "labs": {
+        "CRP": 5.0,
+        "CA15_3": 40.2
+      },
+      "imaging": {
+        "tumor_density": 0.7,
+        "vascularity": 0.7
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "clonal_expansion"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "BR_006",
+      "timepoint": "t4",
+      "entropy_H": 0.75,
+      "coherence_k": 0.28,
+      "emergence_eta": 0.69,
+      "bifurcation_B": 0.92,
+      "reducibility_R": 0.19
+    },
+    "multimodal_features": {
+      "genomics": {
+        "BRCA1": 1,
+        "TP53": 0,
+        "PIK3CA": 1,
+        "PRS_score": 0.98
+      },
+      "labs": {
+        "CRP": 5.8,
+        "CA15_3": 37.5
+      },
+      "imaging": {
+        "tumor_density": 0.63,
+        "vascularity": 0.71
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "clonal_expansion"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "BR_007",
+      "timepoint": "t4",
+      "entropy_H": 0.7,
+      "coherence_k": 0.16,
+      "emergence_eta": 0.89,
+      "bifurcation_B": 0.86,
+      "reducibility_R": 0.14
+    },
+    "multimodal_features": {
+      "genomics": {
+        "BRCA1": 1,
+        "TP53": 1,
+        "PIK3CA": 1,
+        "PRS_score": 0.96
+      },
+      "labs": {
+        "CRP": 5.2,
+        "CA15_3": 34.2
+      },
+      "imaging": {
+        "tumor_density": 0.85,
+        "vascularity": 0.65
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "clonal_expansion"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "BR_008",
+      "timepoint": "t4",
+      "entropy_H": 0.7,
+      "coherence_k": 0.19,
+      "emergence_eta": 0.66,
+      "bifurcation_B": 0.74,
+      "reducibility_R": 0.18
+    },
+    "multimodal_features": {
+      "genomics": {
+        "BRCA1": 1,
+        "TP53": 1,
+        "PIK3CA": 1,
+        "PRS_score": 0.96
+      },
+      "labs": {
+        "CRP": 5.8,
+        "CA15_3": 28.2
+      },
+      "imaging": {
+        "tumor_density": 0.64,
+        "vascularity": 0.59
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "clonal_expansion"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "BR_009",
+      "timepoint": "t4",
+      "entropy_H": 0.88,
+      "coherence_k": 0.11,
+      "emergence_eta": 0.64,
+      "bifurcation_B": 0.86,
+      "reducibility_R": 0.14
+    },
+    "multimodal_features": {
+      "genomics": {
+        "BRCA1": 1,
+        "TP53": 1,
+        "PIK3CA": 1,
+        "PRS_score": 0.93
+      },
+      "labs": {
+        "CRP": 5.8,
+        "CA15_3": 38.4
+      },
+      "imaging": {
+        "tumor_density": 0.62,
+        "vascularity": 0.59
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "clonal_expansion"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "BR_010",
+      "timepoint": "t4",
+      "entropy_H": 0.79,
+      "coherence_k": 0.26,
+      "emergence_eta": 0.5,
+      "bifurcation_B": 0.74,
+      "reducibility_R": 0.09
+    },
+    "multimodal_features": {
+      "genomics": {
+        "BRCA1": 1,
+        "TP53": 0,
+        "PIK3CA": 1,
+        "PRS_score": 0.87
+      },
+      "labs": {
+        "CRP": 4.4,
+        "CA15_3": 36.9
+      },
+      "imaging": {
+        "tumor_density": 0.62,
+        "vascularity": 0.75
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "clonal_expansion"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "BR_011",
+      "timepoint": "t4",
+      "entropy_H": 0.87,
+      "coherence_k": 0.14,
+      "emergence_eta": 0.77,
+      "bifurcation_B": 0.86,
+      "reducibility_R": 0.06
+    },
+    "multimodal_features": {
+      "genomics": {
+        "BRCA1": 1,
+        "TP53": 0,
+        "PIK3CA": 1,
+        "PRS_score": 0.89
+      },
+      "labs": {
+        "CRP": 5.7,
+        "CA15_3": 34.8
+      },
+      "imaging": {
+        "tumor_density": 0.65,
+        "vascularity": 0.74
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "clonal_expansion"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "BR_012",
+      "timepoint": "t4",
+      "entropy_H": 0.89,
+      "coherence_k": 0.19,
+      "emergence_eta": 0.63,
+      "bifurcation_B": 0.88,
+      "reducibility_R": 0.1
+    },
+    "multimodal_features": {
+      "genomics": {
+        "BRCA1": 1,
+        "TP53": 0,
+        "PIK3CA": 1,
+        "PRS_score": 0.97
+      },
+      "labs": {
+        "CRP": 4.8,
+        "CA15_3": 29.3
+      },
+      "imaging": {
+        "tumor_density": 0.86,
+        "vascularity": 0.79
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "clonal_expansion"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "BR_013",
+      "timepoint": "t4",
+      "entropy_H": 0.82,
+      "coherence_k": 0.29,
+      "emergence_eta": 0.85,
+      "bifurcation_B": 0.89,
+      "reducibility_R": 0.08
+    },
+    "multimodal_features": {
+      "genomics": {
+        "BRCA1": 1,
+        "TP53": 0,
+        "PIK3CA": 1,
+        "PRS_score": 0.92
+      },
+      "labs": {
+        "CRP": 4.2,
+        "CA15_3": 38.2
+      },
+      "imaging": {
+        "tumor_density": 0.71,
+        "vascularity": 0.76
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "clonal_expansion"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "BR_014",
+      "timepoint": "t4",
+      "entropy_H": 0.93,
+      "coherence_k": 0.29,
+      "emergence_eta": 0.68,
+      "bifurcation_B": 0.7,
+      "reducibility_R": 0.08
+    },
+    "multimodal_features": {
+      "genomics": {
+        "BRCA1": 1,
+        "TP53": 1,
+        "PIK3CA": 1,
+        "PRS_score": 0.8
+      },
+      "labs": {
+        "CRP": 5.6,
+        "CA15_3": 37.2
+      },
+      "imaging": {
+        "tumor_density": 0.84,
+        "vascularity": 0.59
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "clonal_expansion"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "BR_015",
+      "timepoint": "t4",
+      "entropy_H": 0.72,
+      "coherence_k": 0.22,
+      "emergence_eta": 0.82,
+      "bifurcation_B": 0.78,
+      "reducibility_R": 0.09
+    },
+    "multimodal_features": {
+      "genomics": {
+        "BRCA1": 1,
+        "TP53": 1,
+        "PIK3CA": 1,
+        "PRS_score": 0.88
+      },
+      "labs": {
+        "CRP": 6.6,
+        "CA15_3": 42.5
+      },
+      "imaging": {
+        "tumor_density": 0.66,
+        "vascularity": 0.65
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "clonal_expansion"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "BR_016",
+      "timepoint": "t4",
+      "entropy_H": 0.88,
+      "coherence_k": 0.23,
+      "emergence_eta": 0.88,
+      "bifurcation_B": 0.93,
+      "reducibility_R": 0.16
+    },
+    "multimodal_features": {
+      "genomics": {
+        "BRCA1": 1,
+        "TP53": 1,
+        "PIK3CA": 1,
+        "PRS_score": 0.93
+      },
+      "labs": {
+        "CRP": 4.7,
+        "CA15_3": 34.9
+      },
+      "imaging": {
+        "tumor_density": 0.72,
+        "vascularity": 0.79
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "clonal_expansion"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "BR_017",
+      "timepoint": "t4",
+      "entropy_H": 0.82,
+      "coherence_k": 0.22,
+      "emergence_eta": 0.72,
+      "bifurcation_B": 0.7,
+      "reducibility_R": 0.16
+    },
+    "multimodal_features": {
+      "genomics": {
+        "BRCA1": 1,
+        "TP53": 0,
+        "PIK3CA": 1,
+        "PRS_score": 0.85
+      },
+      "labs": {
+        "CRP": 5.9,
+        "CA15_3": 39.2
+      },
+      "imaging": {
+        "tumor_density": 0.9,
+        "vascularity": 0.54
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "clonal_expansion"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "BR_018",
+      "timepoint": "t4",
+      "entropy_H": 0.79,
+      "coherence_k": 0.16,
+      "emergence_eta": 0.58,
+      "bifurcation_B": 0.87,
+      "reducibility_R": 0.2
+    },
+    "multimodal_features": {
+      "genomics": {
+        "BRCA1": 1,
+        "TP53": 0,
+        "PIK3CA": 1,
+        "PRS_score": 0.97
+      },
+      "labs": {
+        "CRP": 5.2,
+        "CA15_3": 24.8
+      },
+      "imaging": {
+        "tumor_density": 0.62,
+        "vascularity": 0.75
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "clonal_expansion"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "BR_019",
+      "timepoint": "t4",
+      "entropy_H": 0.71,
+      "coherence_k": 0.21,
+      "emergence_eta": 0.85,
+      "bifurcation_B": 0.88,
+      "reducibility_R": 0.16
+    },
+    "multimodal_features": {
+      "genomics": {
+        "BRCA1": 1,
+        "TP53": 0,
+        "PIK3CA": 1,
+        "PRS_score": 0.93
+      },
+      "labs": {
+        "CRP": 5.4,
+        "CA15_3": 35.7
+      },
+      "imaging": {
+        "tumor_density": 0.61,
+        "vascularity": 0.78
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "clonal_expansion"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "BR_020",
+      "timepoint": "t4",
+      "entropy_H": 0.85,
+      "coherence_k": 0.26,
+      "emergence_eta": 0.52,
+      "bifurcation_B": 0.74,
+      "reducibility_R": 0.12
+    },
+    "multimodal_features": {
+      "genomics": {
+        "BRCA1": 1,
+        "TP53": 0,
+        "PIK3CA": 1,
+        "PRS_score": 0.89
+      },
+      "labs": {
+        "CRP": 4.4,
+        "CA15_3": 40.4
+      },
+      "imaging": {
+        "tumor_density": 0.8,
+        "vascularity": 0.67
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "clonal_expansion"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "BR_021",
+      "timepoint": "t4",
+      "entropy_H": 0.75,
+      "coherence_k": 0.3,
+      "emergence_eta": 0.57,
+      "bifurcation_B": 0.9,
+      "reducibility_R": 0.1
+    },
+    "multimodal_features": {
+      "genomics": {
+        "BRCA1": 1,
+        "TP53": 1,
+        "PIK3CA": 1,
+        "PRS_score": 0.85
+      },
+      "labs": {
+        "CRP": 6.7,
+        "CA15_3": 32.7
+      },
+      "imaging": {
+        "tumor_density": 0.65,
+        "vascularity": 0.76
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "clonal_expansion"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "BR_022",
+      "timepoint": "t4",
+      "entropy_H": 0.84,
+      "coherence_k": 0.2,
+      "emergence_eta": 0.66,
+      "bifurcation_B": 0.76,
+      "reducibility_R": 0.06
+    },
+    "multimodal_features": {
+      "genomics": {
+        "BRCA1": 1,
+        "TP53": 1,
+        "PIK3CA": 1,
+        "PRS_score": 0.8
+      },
+      "labs": {
+        "CRP": 5.0,
+        "CA15_3": 45.7
+      },
+      "imaging": {
+        "tumor_density": 0.8,
+        "vascularity": 0.6
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "clonal_expansion"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "BR_023",
+      "timepoint": "t4",
+      "entropy_H": 0.89,
+      "coherence_k": 0.19,
+      "emergence_eta": 0.65,
+      "bifurcation_B": 0.95,
+      "reducibility_R": 0.1
+    },
+    "multimodal_features": {
+      "genomics": {
+        "BRCA1": 1,
+        "TP53": 0,
+        "PIK3CA": 1,
+        "PRS_score": 0.89
+      },
+      "labs": {
+        "CRP": 3.7,
+        "CA15_3": 33.1
+      },
+      "imaging": {
+        "tumor_density": 0.86,
+        "vascularity": 0.72
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "clonal_expansion"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "BR_024",
+      "timepoint": "t4",
+      "entropy_H": 0.9,
+      "coherence_k": 0.23,
+      "emergence_eta": 0.61,
+      "bifurcation_B": 0.79,
+      "reducibility_R": 0.2
+    },
+    "multimodal_features": {
+      "genomics": {
+        "BRCA1": 1,
+        "TP53": 0,
+        "PIK3CA": 1,
+        "PRS_score": 0.88
+      },
+      "labs": {
+        "CRP": 3.4,
+        "CA15_3": 45.0
+      },
+      "imaging": {
+        "tumor_density": 0.78,
+        "vascularity": 0.68
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "clonal_expansion"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "BR_025",
+      "timepoint": "t4",
+      "entropy_H": 0.93,
+      "coherence_k": 0.14,
+      "emergence_eta": 0.89,
+      "bifurcation_B": 0.75,
+      "reducibility_R": 0.09
+    },
+    "multimodal_features": {
+      "genomics": {
+        "BRCA1": 1,
+        "TP53": 0,
+        "PIK3CA": 1,
+        "PRS_score": 0.94
+      },
+      "labs": {
+        "CRP": 4.3,
+        "CA15_3": 23.6
+      },
+      "imaging": {
+        "tumor_density": 0.64,
+        "vascularity": 0.71
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "clonal_expansion"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "BR_026",
+      "timepoint": "t4",
+      "entropy_H": 0.84,
+      "coherence_k": 0.23,
+      "emergence_eta": 0.76,
+      "bifurcation_B": 0.78,
+      "reducibility_R": 0.06
+    },
+    "multimodal_features": {
+      "genomics": {
+        "BRCA1": 1,
+        "TP53": 1,
+        "PIK3CA": 1,
+        "PRS_score": 0.82
+      },
+      "labs": {
+        "CRP": 5.0,
+        "CA15_3": 40.9
+      },
+      "imaging": {
+        "tumor_density": 0.72,
+        "vascularity": 0.68
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "clonal_expansion"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "BR_027",
+      "timepoint": "t4",
+      "entropy_H": 0.94,
+      "coherence_k": 0.19,
+      "emergence_eta": 0.53,
+      "bifurcation_B": 0.74,
+      "reducibility_R": 0.09
+    },
+    "multimodal_features": {
+      "genomics": {
+        "BRCA1": 1,
+        "TP53": 0,
+        "PIK3CA": 1,
+        "PRS_score": 0.86
+      },
+      "labs": {
+        "CRP": 6.0,
+        "CA15_3": 33.5
+      },
+      "imaging": {
+        "tumor_density": 0.83,
+        "vascularity": 0.54
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "clonal_expansion"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "BR_028",
+      "timepoint": "t4",
+      "entropy_H": 0.94,
+      "coherence_k": 0.15,
+      "emergence_eta": 0.65,
+      "bifurcation_B": 0.85,
+      "reducibility_R": 0.1
+    },
+    "multimodal_features": {
+      "genomics": {
+        "BRCA1": 1,
+        "TP53": 1,
+        "PIK3CA": 1,
+        "PRS_score": 0.83
+      },
+      "labs": {
+        "CRP": 2.9,
+        "CA15_3": 36.3
+      },
+      "imaging": {
+        "tumor_density": 0.73,
+        "vascularity": 0.68
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "clonal_expansion"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "BR_029",
+      "timepoint": "t4",
+      "entropy_H": 0.92,
+      "coherence_k": 0.14,
+      "emergence_eta": 0.61,
+      "bifurcation_B": 0.71,
+      "reducibility_R": 0.07
+    },
+    "multimodal_features": {
+      "genomics": {
+        "BRCA1": 1,
+        "TP53": 0,
+        "PIK3CA": 1,
+        "PRS_score": 0.96
+      },
+      "labs": {
+        "CRP": 5.5,
+        "CA15_3": 24.2
+      },
+      "imaging": {
+        "tumor_density": 0.84,
+        "vascularity": 0.68
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "clonal_expansion"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "BR_030",
+      "timepoint": "t4",
+      "entropy_H": 0.72,
+      "coherence_k": 0.12,
+      "emergence_eta": 0.78,
+      "bifurcation_B": 0.8,
+      "reducibility_R": 0.14
+    },
+    "multimodal_features": {
+      "genomics": {
+        "BRCA1": 1,
+        "TP53": 0,
+        "PIK3CA": 1,
+        "PRS_score": 0.92
+      },
+      "labs": {
+        "CRP": 5.7,
+        "CA15_3": 35.3
+      },
+      "imaging": {
+        "tumor_density": 0.67,
+        "vascularity": 0.55
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "clonal_expansion"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "BR_031",
+      "timepoint": "t4",
+      "entropy_H": 0.81,
+      "coherence_k": 0.2,
+      "emergence_eta": 0.77,
+      "bifurcation_B": 0.73,
+      "reducibility_R": 0.12
+    },
+    "multimodal_features": {
+      "genomics": {
+        "BRCA1": 1,
+        "TP53": 1,
+        "PIK3CA": 1,
+        "PRS_score": 0.98
+      },
+      "labs": {
+        "CRP": 7.0,
+        "CA15_3": 33.9
+      },
+      "imaging": {
+        "tumor_density": 0.79,
+        "vascularity": 0.76
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "clonal_expansion"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "BR_032",
+      "timepoint": "t4",
+      "entropy_H": 0.74,
+      "coherence_k": 0.15,
+      "emergence_eta": 0.6,
+      "bifurcation_B": 0.87,
+      "reducibility_R": 0.19
+    },
+    "multimodal_features": {
+      "genomics": {
+        "BRCA1": 1,
+        "TP53": 0,
+        "PIK3CA": 1,
+        "PRS_score": 0.83
+      },
+      "labs": {
+        "CRP": 4.1,
+        "CA15_3": 38.2
+      },
+      "imaging": {
+        "tumor_density": 0.66,
+        "vascularity": 0.72
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "clonal_expansion"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "BR_033",
+      "timepoint": "t4",
+      "entropy_H": 0.84,
+      "coherence_k": 0.11,
+      "emergence_eta": 0.78,
+      "bifurcation_B": 0.87,
+      "reducibility_R": 0.19
+    },
+    "multimodal_features": {
+      "genomics": {
+        "BRCA1": 1,
+        "TP53": 1,
+        "PIK3CA": 1,
+        "PRS_score": 0.89
+      },
+      "labs": {
+        "CRP": 4.9,
+        "CA15_3": 36.0
+      },
+      "imaging": {
+        "tumor_density": 0.79,
+        "vascularity": 0.76
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "clonal_expansion"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "BR_034",
+      "timepoint": "t4",
+      "entropy_H": 0.74,
+      "coherence_k": 0.22,
+      "emergence_eta": 0.85,
+      "bifurcation_B": 0.95,
+      "reducibility_R": 0.1
+    },
+    "multimodal_features": {
+      "genomics": {
+        "BRCA1": 1,
+        "TP53": 0,
+        "PIK3CA": 1,
+        "PRS_score": 0.93
+      },
+      "labs": {
+        "CRP": 5.6,
+        "CA15_3": 29.3
+      },
+      "imaging": {
+        "tumor_density": 0.77,
+        "vascularity": 0.6
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "clonal_expansion"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "BR_035",
+      "timepoint": "t4",
+      "entropy_H": 0.78,
+      "coherence_k": 0.23,
+      "emergence_eta": 0.8,
+      "bifurcation_B": 0.9,
+      "reducibility_R": 0.17
+    },
+    "multimodal_features": {
+      "genomics": {
+        "BRCA1": 1,
+        "TP53": 0,
+        "PIK3CA": 1,
+        "PRS_score": 0.94
+      },
+      "labs": {
+        "CRP": 4.7,
+        "CA15_3": 36.0
+      },
+      "imaging": {
+        "tumor_density": 0.86,
+        "vascularity": 0.62
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "clonal_expansion"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "BR_036",
+      "timepoint": "t4",
+      "entropy_H": 0.86,
+      "coherence_k": 0.22,
+      "emergence_eta": 0.65,
+      "bifurcation_B": 0.84,
+      "reducibility_R": 0.13
+    },
+    "multimodal_features": {
+      "genomics": {
+        "BRCA1": 1,
+        "TP53": 1,
+        "PIK3CA": 1,
+        "PRS_score": 0.86
+      },
+      "labs": {
+        "CRP": 6.3,
+        "CA15_3": 33.7
+      },
+      "imaging": {
+        "tumor_density": 0.79,
+        "vascularity": 0.6
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "clonal_expansion"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "BR_037",
+      "timepoint": "t4",
+      "entropy_H": 0.87,
+      "coherence_k": 0.22,
+      "emergence_eta": 0.65,
+      "bifurcation_B": 0.92,
+      "reducibility_R": 0.12
+    },
+    "multimodal_features": {
+      "genomics": {
+        "BRCA1": 1,
+        "TP53": 0,
+        "PIK3CA": 1,
+        "PRS_score": 0.84
+      },
+      "labs": {
+        "CRP": 6.1,
+        "CA15_3": 46.2
+      },
+      "imaging": {
+        "tumor_density": 0.62,
+        "vascularity": 0.68
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "clonal_expansion"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "BR_038",
+      "timepoint": "t4",
+      "entropy_H": 0.83,
+      "coherence_k": 0.15,
+      "emergence_eta": 0.66,
+      "bifurcation_B": 0.84,
+      "reducibility_R": 0.12
+    },
+    "multimodal_features": {
+      "genomics": {
+        "BRCA1": 1,
+        "TP53": 0,
+        "PIK3CA": 1,
+        "PRS_score": 0.95
+      },
+      "labs": {
+        "CRP": 2.5,
+        "CA15_3": 46.5
+      },
+      "imaging": {
+        "tumor_density": 0.63,
+        "vascularity": 0.54
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "clonal_expansion"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "BR_039",
+      "timepoint": "t4",
+      "entropy_H": 0.86,
+      "coherence_k": 0.28,
+      "emergence_eta": 0.87,
+      "bifurcation_B": 0.72,
+      "reducibility_R": 0.09
+    },
+    "multimodal_features": {
+      "genomics": {
+        "BRCA1": 1,
+        "TP53": 0,
+        "PIK3CA": 1,
+        "PRS_score": 0.8
+      },
+      "labs": {
+        "CRP": 5.9,
+        "CA15_3": 39.9
+      },
+      "imaging": {
+        "tumor_density": 0.66,
+        "vascularity": 0.5
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "clonal_expansion"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "BR_040",
+      "timepoint": "t4",
+      "entropy_H": 0.87,
+      "coherence_k": 0.29,
+      "emergence_eta": 0.73,
+      "bifurcation_B": 0.72,
+      "reducibility_R": 0.13
+    },
+    "multimodal_features": {
+      "genomics": {
+        "BRCA1": 1,
+        "TP53": 1,
+        "PIK3CA": 1,
+        "PRS_score": 0.83
+      },
+      "labs": {
+        "CRP": 4.8,
+        "CA15_3": 37.8
+      },
+      "imaging": {
+        "tumor_density": 0.79,
+        "vascularity": 0.66
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "clonal_expansion"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "BR_041",
+      "timepoint": "t4",
+      "entropy_H": 0.87,
+      "coherence_k": 0.14,
+      "emergence_eta": 0.78,
+      "bifurcation_B": 0.73,
+      "reducibility_R": 0.13
+    },
+    "multimodal_features": {
+      "genomics": {
+        "BRCA1": 1,
+        "TP53": 0,
+        "PIK3CA": 1,
+        "PRS_score": 0.88
+      },
+      "labs": {
+        "CRP": 4.3,
+        "CA15_3": 42.8
+      },
+      "imaging": {
+        "tumor_density": 0.64,
+        "vascularity": 0.55
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "clonal_expansion"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "BR_042",
+      "timepoint": "t4",
+      "entropy_H": 0.79,
+      "coherence_k": 0.21,
+      "emergence_eta": 0.5,
+      "bifurcation_B": 0.86,
+      "reducibility_R": 0.07
+    },
+    "multimodal_features": {
+      "genomics": {
+        "BRCA1": 1,
+        "TP53": 1,
+        "PIK3CA": 1,
+        "PRS_score": 0.88
+      },
+      "labs": {
+        "CRP": 3.4,
+        "CA15_3": 37.2
+      },
+      "imaging": {
+        "tumor_density": 0.63,
+        "vascularity": 0.74
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "clonal_expansion"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "BR_043",
+      "timepoint": "t4",
+      "entropy_H": 0.91,
+      "coherence_k": 0.28,
+      "emergence_eta": 0.59,
+      "bifurcation_B": 0.9,
+      "reducibility_R": 0.1
+    },
+    "multimodal_features": {
+      "genomics": {
+        "BRCA1": 1,
+        "TP53": 1,
+        "PIK3CA": 1,
+        "PRS_score": 0.84
+      },
+      "labs": {
+        "CRP": 7.5,
+        "CA15_3": 37.1
+      },
+      "imaging": {
+        "tumor_density": 0.78,
+        "vascularity": 0.62
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "clonal_expansion"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "BR_044",
+      "timepoint": "t4",
+      "entropy_H": 0.74,
+      "coherence_k": 0.18,
+      "emergence_eta": 0.59,
+      "bifurcation_B": 0.92,
+      "reducibility_R": 0.07
+    },
+    "multimodal_features": {
+      "genomics": {
+        "BRCA1": 1,
+        "TP53": 1,
+        "PIK3CA": 1,
+        "PRS_score": 0.93
+      },
+      "labs": {
+        "CRP": 5.8,
+        "CA15_3": 32.2
+      },
+      "imaging": {
+        "tumor_density": 0.84,
+        "vascularity": 0.73
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "clonal_expansion"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "BR_045",
+      "timepoint": "t4",
+      "entropy_H": 0.84,
+      "coherence_k": 0.15,
+      "emergence_eta": 0.74,
+      "bifurcation_B": 0.82,
+      "reducibility_R": 0.11
+    },
+    "multimodal_features": {
+      "genomics": {
+        "BRCA1": 1,
+        "TP53": 1,
+        "PIK3CA": 1,
+        "PRS_score": 0.8
+      },
+      "labs": {
+        "CRP": 7.5,
+        "CA15_3": 25.5
+      },
+      "imaging": {
+        "tumor_density": 0.79,
+        "vascularity": 0.68
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "clonal_expansion"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "BR_046",
+      "timepoint": "t4",
+      "entropy_H": 0.79,
+      "coherence_k": 0.26,
+      "emergence_eta": 0.63,
+      "bifurcation_B": 0.93,
+      "reducibility_R": 0.14
+    },
+    "multimodal_features": {
+      "genomics": {
+        "BRCA1": 1,
+        "TP53": 1,
+        "PIK3CA": 1,
+        "PRS_score": 0.88
+      },
+      "labs": {
+        "CRP": 4.2,
+        "CA15_3": 43.2
+      },
+      "imaging": {
+        "tumor_density": 0.82,
+        "vascularity": 0.5
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "clonal_expansion"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "BR_047",
+      "timepoint": "t4",
+      "entropy_H": 0.76,
+      "coherence_k": 0.17,
+      "emergence_eta": 0.71,
+      "bifurcation_B": 0.72,
+      "reducibility_R": 0.06
+    },
+    "multimodal_features": {
+      "genomics": {
+        "BRCA1": 1,
+        "TP53": 0,
+        "PIK3CA": 1,
+        "PRS_score": 0.97
+      },
+      "labs": {
+        "CRP": 4.3,
+        "CA15_3": 39.3
+      },
+      "imaging": {
+        "tumor_density": 0.66,
+        "vascularity": 0.6
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "clonal_expansion"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "BR_048",
+      "timepoint": "t4",
+      "entropy_H": 0.76,
+      "coherence_k": 0.19,
+      "emergence_eta": 0.52,
+      "bifurcation_B": 0.79,
+      "reducibility_R": 0.08
+    },
+    "multimodal_features": {
+      "genomics": {
+        "BRCA1": 1,
+        "TP53": 0,
+        "PIK3CA": 1,
+        "PRS_score": 0.85
+      },
+      "labs": {
+        "CRP": 4.4,
+        "CA15_3": 38.5
+      },
+      "imaging": {
+        "tumor_density": 0.78,
+        "vascularity": 0.7
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "clonal_expansion"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "BR_049",
+      "timepoint": "t4",
+      "entropy_H": 0.87,
+      "coherence_k": 0.14,
+      "emergence_eta": 0.54,
+      "bifurcation_B": 0.81,
+      "reducibility_R": 0.13
+    },
+    "multimodal_features": {
+      "genomics": {
+        "BRCA1": 1,
+        "TP53": 1,
+        "PIK3CA": 1,
+        "PRS_score": 0.91
+      },
+      "labs": {
+        "CRP": 3.0,
+        "CA15_3": 31.9
+      },
+      "imaging": {
+        "tumor_density": 0.89,
+        "vascularity": 0.55
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "clonal_expansion"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  }
+]

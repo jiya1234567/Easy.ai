@@ -1,0 +1,2152 @@
+[
+  {
+    "state_tensor": {
+      "patient_id": "CO_000",
+      "timepoint": "t4",
+      "entropy_H": 0.86,
+      "coherence_k": 0.42,
+      "emergence_eta": 0.78,
+      "bifurcation_B": 0.84,
+      "reducibility_R": 0.22
+    },
+    "multimodal_features": {
+      "genomics": {
+        "KRAS": 1,
+        "PRS_score": 0.71
+      },
+      "labs": {
+        "TumorMarker": 10.4
+      },
+      "imaging": {
+        "lesion_size": 0.25
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "unstable"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CO_001",
+      "timepoint": "t4",
+      "entropy_H": 0.75,
+      "coherence_k": 0.25,
+      "emergence_eta": 0.84,
+      "bifurcation_B": 0.87,
+      "reducibility_R": 0.48
+    },
+    "multimodal_features": {
+      "genomics": {
+        "KRAS": 1,
+        "PRS_score": 0.53
+      },
+      "labs": {
+        "TumorMarker": 12.3
+      },
+      "imaging": {
+        "lesion_size": 0.38
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "unstable"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CO_002",
+      "timepoint": "t4",
+      "entropy_H": 0.62,
+      "coherence_k": 0.35,
+      "emergence_eta": 0.68,
+      "bifurcation_B": 0.71,
+      "reducibility_R": 0.44
+    },
+    "multimodal_features": {
+      "genomics": {
+        "KRAS": 1,
+        "PRS_score": 0.76
+      },
+      "labs": {
+        "TumorMarker": 5.3
+      },
+      "imaging": {
+        "lesion_size": 0.42
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "unstable"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CO_003",
+      "timepoint": "t4",
+      "entropy_H": 0.68,
+      "coherence_k": 0.25,
+      "emergence_eta": 0.8,
+      "bifurcation_B": 0.83,
+      "reducibility_R": 0.3
+    },
+    "multimodal_features": {
+      "genomics": {
+        "KRAS": 1,
+        "PRS_score": 0.81
+      },
+      "labs": {
+        "TumorMarker": 8.0
+      },
+      "imaging": {
+        "lesion_size": 0.28
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "unstable"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CO_004",
+      "timepoint": "t4",
+      "entropy_H": 0.67,
+      "coherence_k": 0.34,
+      "emergence_eta": 0.81,
+      "bifurcation_B": 0.71,
+      "reducibility_R": 0.5
+    },
+    "multimodal_features": {
+      "genomics": {
+        "KRAS": 1,
+        "PRS_score": 0.85
+      },
+      "labs": {
+        "TumorMarker": 10.6
+      },
+      "imaging": {
+        "lesion_size": 0.55
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "unstable"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CO_005",
+      "timepoint": "t4",
+      "entropy_H": 0.87,
+      "coherence_k": 0.36,
+      "emergence_eta": 0.54,
+      "bifurcation_B": 0.86,
+      "reducibility_R": 0.35
+    },
+    "multimodal_features": {
+      "genomics": {
+        "KRAS": 1,
+        "PRS_score": 0.53
+      },
+      "labs": {
+        "TumorMarker": 9.5
+      },
+      "imaging": {
+        "lesion_size": 0.39
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "unstable"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CO_006",
+      "timepoint": "t4",
+      "entropy_H": 0.66,
+      "coherence_k": 0.36,
+      "emergence_eta": 0.82,
+      "bifurcation_B": 0.84,
+      "reducibility_R": 0.29
+    },
+    "multimodal_features": {
+      "genomics": {
+        "KRAS": 1,
+        "PRS_score": 0.81
+      },
+      "labs": {
+        "TumorMarker": 9.1
+      },
+      "imaging": {
+        "lesion_size": 0.59
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "unstable"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CO_007",
+      "timepoint": "t4",
+      "entropy_H": 0.72,
+      "coherence_k": 0.47,
+      "emergence_eta": 0.56,
+      "bifurcation_B": 0.87,
+      "reducibility_R": 0.36
+    },
+    "multimodal_features": {
+      "genomics": {
+        "KRAS": 1,
+        "PRS_score": 0.75
+      },
+      "labs": {
+        "TumorMarker": 12.3
+      },
+      "imaging": {
+        "lesion_size": 0.52
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "unstable"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CO_008",
+      "timepoint": "t4",
+      "entropy_H": 0.68,
+      "coherence_k": 0.5,
+      "emergence_eta": 0.58,
+      "bifurcation_B": 0.75,
+      "reducibility_R": 0.24
+    },
+    "multimodal_features": {
+      "genomics": {
+        "KRAS": 1,
+        "PRS_score": 0.84
+      },
+      "labs": {
+        "TumorMarker": 8.7
+      },
+      "imaging": {
+        "lesion_size": 0.56
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "unstable"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CO_009",
+      "timepoint": "t4",
+      "entropy_H": 0.65,
+      "coherence_k": 0.33,
+      "emergence_eta": 0.53,
+      "bifurcation_B": 0.92,
+      "reducibility_R": 0.38
+    },
+    "multimodal_features": {
+      "genomics": {
+        "KRAS": 1,
+        "PRS_score": 0.86
+      },
+      "labs": {
+        "TumorMarker": 12.1
+      },
+      "imaging": {
+        "lesion_size": 0.46
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "unstable"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CO_010",
+      "timepoint": "t4",
+      "entropy_H": 0.9,
+      "coherence_k": 0.4,
+      "emergence_eta": 0.57,
+      "bifurcation_B": 0.92,
+      "reducibility_R": 0.39
+    },
+    "multimodal_features": {
+      "genomics": {
+        "KRAS": 1,
+        "PRS_score": 0.89
+      },
+      "labs": {
+        "TumorMarker": 10.0
+      },
+      "imaging": {
+        "lesion_size": 0.37
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "unstable"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CO_011",
+      "timepoint": "t4",
+      "entropy_H": 0.6,
+      "coherence_k": 0.37,
+      "emergence_eta": 0.79,
+      "bifurcation_B": 0.92,
+      "reducibility_R": 0.36
+    },
+    "multimodal_features": {
+      "genomics": {
+        "KRAS": 1,
+        "PRS_score": 0.67
+      },
+      "labs": {
+        "TumorMarker": 12.8
+      },
+      "imaging": {
+        "lesion_size": 0.26
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "unstable"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CO_012",
+      "timepoint": "t4",
+      "entropy_H": 0.85,
+      "coherence_k": 0.36,
+      "emergence_eta": 0.63,
+      "bifurcation_B": 0.82,
+      "reducibility_R": 0.41
+    },
+    "multimodal_features": {
+      "genomics": {
+        "KRAS": 1,
+        "PRS_score": 0.57
+      },
+      "labs": {
+        "TumorMarker": 10.4
+      },
+      "imaging": {
+        "lesion_size": 0.54
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "unstable"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CO_013",
+      "timepoint": "t4",
+      "entropy_H": 0.71,
+      "coherence_k": 0.35,
+      "emergence_eta": 0.63,
+      "bifurcation_B": 0.74,
+      "reducibility_R": 0.45
+    },
+    "multimodal_features": {
+      "genomics": {
+        "KRAS": 1,
+        "PRS_score": 0.83
+      },
+      "labs": {
+        "TumorMarker": 9.3
+      },
+      "imaging": {
+        "lesion_size": 0.38
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "unstable"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CO_014",
+      "timepoint": "t4",
+      "entropy_H": 0.64,
+      "coherence_k": 0.3,
+      "emergence_eta": 0.8,
+      "bifurcation_B": 0.86,
+      "reducibility_R": 0.34
+    },
+    "multimodal_features": {
+      "genomics": {
+        "KRAS": 1,
+        "PRS_score": 0.54
+      },
+      "labs": {
+        "TumorMarker": 11.7
+      },
+      "imaging": {
+        "lesion_size": 0.3
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "unstable"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CO_015",
+      "timepoint": "t4",
+      "entropy_H": 0.85,
+      "coherence_k": 0.34,
+      "emergence_eta": 0.75,
+      "bifurcation_B": 0.73,
+      "reducibility_R": 0.49
+    },
+    "multimodal_features": {
+      "genomics": {
+        "KRAS": 1,
+        "PRS_score": 0.75
+      },
+      "labs": {
+        "TumorMarker": 11.1
+      },
+      "imaging": {
+        "lesion_size": 0.34
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "unstable"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CO_016",
+      "timepoint": "t4",
+      "entropy_H": 0.65,
+      "coherence_k": 0.46,
+      "emergence_eta": 0.83,
+      "bifurcation_B": 0.77,
+      "reducibility_R": 0.27
+    },
+    "multimodal_features": {
+      "genomics": {
+        "KRAS": 1,
+        "PRS_score": 0.77
+      },
+      "labs": {
+        "TumorMarker": 7.6
+      },
+      "imaging": {
+        "lesion_size": 0.23
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "unstable"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CO_017",
+      "timepoint": "t4",
+      "entropy_H": 0.75,
+      "coherence_k": 0.29,
+      "emergence_eta": 0.51,
+      "bifurcation_B": 0.78,
+      "reducibility_R": 0.26
+    },
+    "multimodal_features": {
+      "genomics": {
+        "KRAS": 1,
+        "PRS_score": 0.76
+      },
+      "labs": {
+        "TumorMarker": 12.4
+      },
+      "imaging": {
+        "lesion_size": 0.48
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "unstable"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CO_018",
+      "timepoint": "t4",
+      "entropy_H": 0.84,
+      "coherence_k": 0.4,
+      "emergence_eta": 0.86,
+      "bifurcation_B": 0.87,
+      "reducibility_R": 0.28
+    },
+    "multimodal_features": {
+      "genomics": {
+        "KRAS": 1,
+        "PRS_score": 0.85
+      },
+      "labs": {
+        "TumorMarker": 11.0
+      },
+      "imaging": {
+        "lesion_size": 0.51
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "unstable"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CO_019",
+      "timepoint": "t4",
+      "entropy_H": 0.73,
+      "coherence_k": 0.34,
+      "emergence_eta": 0.72,
+      "bifurcation_B": 0.8,
+      "reducibility_R": 0.46
+    },
+    "multimodal_features": {
+      "genomics": {
+        "KRAS": 1,
+        "PRS_score": 0.72
+      },
+      "labs": {
+        "TumorMarker": 10.4
+      },
+      "imaging": {
+        "lesion_size": 0.24
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "unstable"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CO_020",
+      "timepoint": "t4",
+      "entropy_H": 0.68,
+      "coherence_k": 0.46,
+      "emergence_eta": 0.86,
+      "bifurcation_B": 0.89,
+      "reducibility_R": 0.29
+    },
+    "multimodal_features": {
+      "genomics": {
+        "KRAS": 1,
+        "PRS_score": 0.8
+      },
+      "labs": {
+        "TumorMarker": 8.9
+      },
+      "imaging": {
+        "lesion_size": 0.57
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "unstable"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CO_021",
+      "timepoint": "t4",
+      "entropy_H": 0.89,
+      "coherence_k": 0.42,
+      "emergence_eta": 0.83,
+      "bifurcation_B": 0.77,
+      "reducibility_R": 0.29
+    },
+    "multimodal_features": {
+      "genomics": {
+        "KRAS": 1,
+        "PRS_score": 0.82
+      },
+      "labs": {
+        "TumorMarker": 9.8
+      },
+      "imaging": {
+        "lesion_size": 0.21
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "unstable"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CO_022",
+      "timepoint": "t4",
+      "entropy_H": 0.6,
+      "coherence_k": 0.34,
+      "emergence_eta": 0.74,
+      "bifurcation_B": 0.77,
+      "reducibility_R": 0.29
+    },
+    "multimodal_features": {
+      "genomics": {
+        "KRAS": 1,
+        "PRS_score": 0.54
+      },
+      "labs": {
+        "TumorMarker": 10.7
+      },
+      "imaging": {
+        "lesion_size": 0.3
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "unstable"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CO_023",
+      "timepoint": "t4",
+      "entropy_H": 0.61,
+      "coherence_k": 0.47,
+      "emergence_eta": 0.77,
+      "bifurcation_B": 0.85,
+      "reducibility_R": 0.46
+    },
+    "multimodal_features": {
+      "genomics": {
+        "KRAS": 1,
+        "PRS_score": 0.62
+      },
+      "labs": {
+        "TumorMarker": 13.7
+      },
+      "imaging": {
+        "lesion_size": 0.5
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "unstable"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CO_024",
+      "timepoint": "t4",
+      "entropy_H": 0.77,
+      "coherence_k": 0.5,
+      "emergence_eta": 0.71,
+      "bifurcation_B": 0.72,
+      "reducibility_R": 0.46
+    },
+    "multimodal_features": {
+      "genomics": {
+        "KRAS": 1,
+        "PRS_score": 0.82
+      },
+      "labs": {
+        "TumorMarker": 9.8
+      },
+      "imaging": {
+        "lesion_size": 0.21
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "unstable"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CO_025",
+      "timepoint": "t4",
+      "entropy_H": 0.63,
+      "coherence_k": 0.23,
+      "emergence_eta": 0.77,
+      "bifurcation_B": 0.91,
+      "reducibility_R": 0.47
+    },
+    "multimodal_features": {
+      "genomics": {
+        "KRAS": 1,
+        "PRS_score": 0.83
+      },
+      "labs": {
+        "TumorMarker": 9.7
+      },
+      "imaging": {
+        "lesion_size": 0.44
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "unstable"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CO_026",
+      "timepoint": "t4",
+      "entropy_H": 0.7,
+      "coherence_k": 0.33,
+      "emergence_eta": 0.74,
+      "bifurcation_B": 0.92,
+      "reducibility_R": 0.43
+    },
+    "multimodal_features": {
+      "genomics": {
+        "KRAS": 1,
+        "PRS_score": 0.71
+      },
+      "labs": {
+        "TumorMarker": 10.4
+      },
+      "imaging": {
+        "lesion_size": 0.37
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "unstable"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CO_027",
+      "timepoint": "t4",
+      "entropy_H": 0.79,
+      "coherence_k": 0.38,
+      "emergence_eta": 0.59,
+      "bifurcation_B": 0.83,
+      "reducibility_R": 0.41
+    },
+    "multimodal_features": {
+      "genomics": {
+        "KRAS": 1,
+        "PRS_score": 0.68
+      },
+      "labs": {
+        "TumorMarker": 12.0
+      },
+      "imaging": {
+        "lesion_size": 0.44
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "unstable"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CO_028",
+      "timepoint": "t4",
+      "entropy_H": 0.89,
+      "coherence_k": 0.38,
+      "emergence_eta": 0.7,
+      "bifurcation_B": 0.86,
+      "reducibility_R": 0.42
+    },
+    "multimodal_features": {
+      "genomics": {
+        "KRAS": 1,
+        "PRS_score": 0.7
+      },
+      "labs": {
+        "TumorMarker": 9.5
+      },
+      "imaging": {
+        "lesion_size": 0.46
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "unstable"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CO_029",
+      "timepoint": "t4",
+      "entropy_H": 0.71,
+      "coherence_k": 0.34,
+      "emergence_eta": 0.56,
+      "bifurcation_B": 0.77,
+      "reducibility_R": 0.21
+    },
+    "multimodal_features": {
+      "genomics": {
+        "KRAS": 1,
+        "PRS_score": 0.53
+      },
+      "labs": {
+        "TumorMarker": 8.3
+      },
+      "imaging": {
+        "lesion_size": 0.3
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "unstable"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CO_030",
+      "timepoint": "t4",
+      "entropy_H": 0.66,
+      "coherence_k": 0.35,
+      "emergence_eta": 0.5,
+      "bifurcation_B": 0.75,
+      "reducibility_R": 0.2
+    },
+    "multimodal_features": {
+      "genomics": {
+        "KRAS": 1,
+        "PRS_score": 0.74
+      },
+      "labs": {
+        "TumorMarker": 7.2
+      },
+      "imaging": {
+        "lesion_size": 0.31
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "unstable"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CO_031",
+      "timepoint": "t4",
+      "entropy_H": 0.7,
+      "coherence_k": 0.44,
+      "emergence_eta": 0.71,
+      "bifurcation_B": 0.77,
+      "reducibility_R": 0.37
+    },
+    "multimodal_features": {
+      "genomics": {
+        "KRAS": 1,
+        "PRS_score": 0.51
+      },
+      "labs": {
+        "TumorMarker": 9.8
+      },
+      "imaging": {
+        "lesion_size": 0.24
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "unstable"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CO_032",
+      "timepoint": "t4",
+      "entropy_H": 0.63,
+      "coherence_k": 0.3,
+      "emergence_eta": 0.85,
+      "bifurcation_B": 0.82,
+      "reducibility_R": 0.35
+    },
+    "multimodal_features": {
+      "genomics": {
+        "KRAS": 1,
+        "PRS_score": 0.53
+      },
+      "labs": {
+        "TumorMarker": 9.7
+      },
+      "imaging": {
+        "lesion_size": 0.45
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "unstable"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CO_033",
+      "timepoint": "t4",
+      "entropy_H": 0.64,
+      "coherence_k": 0.28,
+      "emergence_eta": 0.67,
+      "bifurcation_B": 0.8,
+      "reducibility_R": 0.32
+    },
+    "multimodal_features": {
+      "genomics": {
+        "KRAS": 1,
+        "PRS_score": 0.78
+      },
+      "labs": {
+        "TumorMarker": 11.3
+      },
+      "imaging": {
+        "lesion_size": 0.6
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "unstable"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CO_034",
+      "timepoint": "t4",
+      "entropy_H": 0.85,
+      "coherence_k": 0.49,
+      "emergence_eta": 0.5,
+      "bifurcation_B": 0.86,
+      "reducibility_R": 0.45
+    },
+    "multimodal_features": {
+      "genomics": {
+        "KRAS": 1,
+        "PRS_score": 0.74
+      },
+      "labs": {
+        "TumorMarker": 10.5
+      },
+      "imaging": {
+        "lesion_size": 0.32
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "unstable"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CO_035",
+      "timepoint": "t4",
+      "entropy_H": 0.62,
+      "coherence_k": 0.38,
+      "emergence_eta": 0.55,
+      "bifurcation_B": 0.8,
+      "reducibility_R": 0.41
+    },
+    "multimodal_features": {
+      "genomics": {
+        "KRAS": 1,
+        "PRS_score": 0.52
+      },
+      "labs": {
+        "TumorMarker": 11.0
+      },
+      "imaging": {
+        "lesion_size": 0.3
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "unstable"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CO_036",
+      "timepoint": "t4",
+      "entropy_H": 0.83,
+      "coherence_k": 0.22,
+      "emergence_eta": 0.64,
+      "bifurcation_B": 0.94,
+      "reducibility_R": 0.22
+    },
+    "multimodal_features": {
+      "genomics": {
+        "KRAS": 1,
+        "PRS_score": 0.55
+      },
+      "labs": {
+        "TumorMarker": 5.7
+      },
+      "imaging": {
+        "lesion_size": 0.37
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "unstable"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CO_037",
+      "timepoint": "t4",
+      "entropy_H": 0.71,
+      "coherence_k": 0.38,
+      "emergence_eta": 0.75,
+      "bifurcation_B": 0.93,
+      "reducibility_R": 0.2
+    },
+    "multimodal_features": {
+      "genomics": {
+        "KRAS": 1,
+        "PRS_score": 0.77
+      },
+      "labs": {
+        "TumorMarker": 8.6
+      },
+      "imaging": {
+        "lesion_size": 0.47
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "unstable"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CO_038",
+      "timepoint": "t4",
+      "entropy_H": 0.87,
+      "coherence_k": 0.22,
+      "emergence_eta": 0.56,
+      "bifurcation_B": 0.7,
+      "reducibility_R": 0.36
+    },
+    "multimodal_features": {
+      "genomics": {
+        "KRAS": 1,
+        "PRS_score": 0.79
+      },
+      "labs": {
+        "TumorMarker": 11.9
+      },
+      "imaging": {
+        "lesion_size": 0.25
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "unstable"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CO_039",
+      "timepoint": "t4",
+      "entropy_H": 0.75,
+      "coherence_k": 0.37,
+      "emergence_eta": 0.55,
+      "bifurcation_B": 0.84,
+      "reducibility_R": 0.21
+    },
+    "multimodal_features": {
+      "genomics": {
+        "KRAS": 1,
+        "PRS_score": 0.67
+      },
+      "labs": {
+        "TumorMarker": 10.6
+      },
+      "imaging": {
+        "lesion_size": 0.32
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "unstable"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CO_040",
+      "timepoint": "t4",
+      "entropy_H": 0.81,
+      "coherence_k": 0.33,
+      "emergence_eta": 0.61,
+      "bifurcation_B": 0.78,
+      "reducibility_R": 0.4
+    },
+    "multimodal_features": {
+      "genomics": {
+        "KRAS": 1,
+        "PRS_score": 0.76
+      },
+      "labs": {
+        "TumorMarker": 12.5
+      },
+      "imaging": {
+        "lesion_size": 0.54
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "unstable"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CO_041",
+      "timepoint": "t4",
+      "entropy_H": 0.84,
+      "coherence_k": 0.45,
+      "emergence_eta": 0.87,
+      "bifurcation_B": 0.81,
+      "reducibility_R": 0.46
+    },
+    "multimodal_features": {
+      "genomics": {
+        "KRAS": 1,
+        "PRS_score": 0.82
+      },
+      "labs": {
+        "TumorMarker": 8.3
+      },
+      "imaging": {
+        "lesion_size": 0.38
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "unstable"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CO_042",
+      "timepoint": "t4",
+      "entropy_H": 0.81,
+      "coherence_k": 0.41,
+      "emergence_eta": 0.57,
+      "bifurcation_B": 0.81,
+      "reducibility_R": 0.31
+    },
+    "multimodal_features": {
+      "genomics": {
+        "KRAS": 1,
+        "PRS_score": 0.65
+      },
+      "labs": {
+        "TumorMarker": 11.6
+      },
+      "imaging": {
+        "lesion_size": 0.44
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "unstable"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CO_043",
+      "timepoint": "t4",
+      "entropy_H": 0.7,
+      "coherence_k": 0.25,
+      "emergence_eta": 0.76,
+      "bifurcation_B": 0.86,
+      "reducibility_R": 0.21
+    },
+    "multimodal_features": {
+      "genomics": {
+        "KRAS": 1,
+        "PRS_score": 0.56
+      },
+      "labs": {
+        "TumorMarker": 6.5
+      },
+      "imaging": {
+        "lesion_size": 0.56
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "unstable"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CO_044",
+      "timepoint": "t4",
+      "entropy_H": 0.8,
+      "coherence_k": 0.38,
+      "emergence_eta": 0.59,
+      "bifurcation_B": 0.95,
+      "reducibility_R": 0.31
+    },
+    "multimodal_features": {
+      "genomics": {
+        "KRAS": 1,
+        "PRS_score": 0.66
+      },
+      "labs": {
+        "TumorMarker": 8.9
+      },
+      "imaging": {
+        "lesion_size": 0.32
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "unstable"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CO_045",
+      "timepoint": "t4",
+      "entropy_H": 0.64,
+      "coherence_k": 0.35,
+      "emergence_eta": 0.7,
+      "bifurcation_B": 0.94,
+      "reducibility_R": 0.21
+    },
+    "multimodal_features": {
+      "genomics": {
+        "KRAS": 1,
+        "PRS_score": 0.68
+      },
+      "labs": {
+        "TumorMarker": 9.6
+      },
+      "imaging": {
+        "lesion_size": 0.48
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "unstable"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CO_046",
+      "timepoint": "t4",
+      "entropy_H": 0.65,
+      "coherence_k": 0.21,
+      "emergence_eta": 0.68,
+      "bifurcation_B": 0.77,
+      "reducibility_R": 0.43
+    },
+    "multimodal_features": {
+      "genomics": {
+        "KRAS": 1,
+        "PRS_score": 0.51
+      },
+      "labs": {
+        "TumorMarker": 9.1
+      },
+      "imaging": {
+        "lesion_size": 0.36
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "unstable"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CO_047",
+      "timepoint": "t4",
+      "entropy_H": 0.89,
+      "coherence_k": 0.29,
+      "emergence_eta": 0.74,
+      "bifurcation_B": 0.91,
+      "reducibility_R": 0.47
+    },
+    "multimodal_features": {
+      "genomics": {
+        "KRAS": 1,
+        "PRS_score": 0.86
+      },
+      "labs": {
+        "TumorMarker": 9.8
+      },
+      "imaging": {
+        "lesion_size": 0.25
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "unstable"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CO_048",
+      "timepoint": "t4",
+      "entropy_H": 0.76,
+      "coherence_k": 0.25,
+      "emergence_eta": 0.72,
+      "bifurcation_B": 0.89,
+      "reducibility_R": 0.37
+    },
+    "multimodal_features": {
+      "genomics": {
+        "KRAS": 1,
+        "PRS_score": 0.65
+      },
+      "labs": {
+        "TumorMarker": 9.8
+      },
+      "imaging": {
+        "lesion_size": 0.34
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "unstable"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CO_049",
+      "timepoint": "t4",
+      "entropy_H": 0.69,
+      "coherence_k": 0.28,
+      "emergence_eta": 0.52,
+      "bifurcation_B": 0.79,
+      "reducibility_R": 0.26
+    },
+    "multimodal_features": {
+      "genomics": {
+        "KRAS": 1,
+        "PRS_score": 0.83
+      },
+      "labs": {
+        "TumorMarker": 10.9
+      },
+      "imaging": {
+        "lesion_size": 0.38
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "adaptive"
+        },
+        {
+          "t": 3,
+          "state": "unstable"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  }
+]

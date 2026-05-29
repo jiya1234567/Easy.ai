@@ -1,0 +1,2302 @@
+[
+  {
+    "state_tensor": {
+      "patient_id": "CA_000",
+      "timepoint": "t4",
+      "entropy_H": 0.52,
+      "coherence_k": 0.44,
+      "emergence_eta": 0.56,
+      "bifurcation_B": 0.86,
+      "reducibility_R": 0.4
+    },
+    "multimodal_features": {
+      "genomics": {
+        "APOE": 1,
+        "PCSK9": 0,
+        "PRS_score": 0.86
+      },
+      "labs": {
+        "LDL": 169.9,
+        "CRP": 7.7
+      },
+      "imaging": {
+        "arterial_calcification": 0.71,
+        "plaque_vulnerability": 0.73
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "inflammation"
+        },
+        {
+          "t": 3,
+          "state": "plaque_instability"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CA_001",
+      "timepoint": "t4",
+      "entropy_H": 0.58,
+      "coherence_k": 0.46,
+      "emergence_eta": 0.62,
+      "bifurcation_B": 0.85,
+      "reducibility_R": 0.43
+    },
+    "multimodal_features": {
+      "genomics": {
+        "APOE": 1,
+        "PCSK9": 1,
+        "PRS_score": 0.74
+      },
+      "labs": {
+        "LDL": 161.6,
+        "CRP": 7.7
+      },
+      "imaging": {
+        "arterial_calcification": 0.56,
+        "plaque_vulnerability": 0.66
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "inflammation"
+        },
+        {
+          "t": 3,
+          "state": "plaque_instability"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CA_002",
+      "timepoint": "t4",
+      "entropy_H": 0.6,
+      "coherence_k": 0.59,
+      "emergence_eta": 0.84,
+      "bifurcation_B": 0.87,
+      "reducibility_R": 0.44
+    },
+    "multimodal_features": {
+      "genomics": {
+        "APOE": 1,
+        "PCSK9": 1,
+        "PRS_score": 0.75
+      },
+      "labs": {
+        "LDL": 151.4,
+        "CRP": 6.5
+      },
+      "imaging": {
+        "arterial_calcification": 0.53,
+        "plaque_vulnerability": 0.79
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "inflammation"
+        },
+        {
+          "t": 3,
+          "state": "plaque_instability"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CA_003",
+      "timepoint": "t4",
+      "entropy_H": 0.52,
+      "coherence_k": 0.51,
+      "emergence_eta": 0.55,
+      "bifurcation_B": 0.82,
+      "reducibility_R": 0.43
+    },
+    "multimodal_features": {
+      "genomics": {
+        "APOE": 1,
+        "PCSK9": 0,
+        "PRS_score": 0.89
+      },
+      "labs": {
+        "LDL": 154.1,
+        "CRP": 7.9
+      },
+      "imaging": {
+        "arterial_calcification": 0.78,
+        "plaque_vulnerability": 0.69
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "inflammation"
+        },
+        {
+          "t": 3,
+          "state": "plaque_instability"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CA_004",
+      "timepoint": "t4",
+      "entropy_H": 0.51,
+      "coherence_k": 0.55,
+      "emergence_eta": 0.66,
+      "bifurcation_B": 0.93,
+      "reducibility_R": 0.43
+    },
+    "multimodal_features": {
+      "genomics": {
+        "APOE": 1,
+        "PCSK9": 1,
+        "PRS_score": 0.79
+      },
+      "labs": {
+        "LDL": 176.5,
+        "CRP": 5.6
+      },
+      "imaging": {
+        "arterial_calcification": 0.57,
+        "plaque_vulnerability": 0.77
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "inflammation"
+        },
+        {
+          "t": 3,
+          "state": "plaque_instability"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CA_005",
+      "timepoint": "t4",
+      "entropy_H": 0.6,
+      "coherence_k": 0.38,
+      "emergence_eta": 0.64,
+      "bifurcation_B": 0.77,
+      "reducibility_R": 0.55
+    },
+    "multimodal_features": {
+      "genomics": {
+        "APOE": 1,
+        "PCSK9": 1,
+        "PRS_score": 0.74
+      },
+      "labs": {
+        "LDL": 141.9,
+        "CRP": 10.4
+      },
+      "imaging": {
+        "arterial_calcification": 0.52,
+        "plaque_vulnerability": 0.7
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "inflammation"
+        },
+        {
+          "t": 3,
+          "state": "plaque_instability"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CA_006",
+      "timepoint": "t4",
+      "entropy_H": 0.6,
+      "coherence_k": 0.39,
+      "emergence_eta": 0.58,
+      "bifurcation_B": 0.88,
+      "reducibility_R": 0.3
+    },
+    "multimodal_features": {
+      "genomics": {
+        "APOE": 1,
+        "PCSK9": 0,
+        "PRS_score": 0.73
+      },
+      "labs": {
+        "LDL": 137.4,
+        "CRP": 8.3
+      },
+      "imaging": {
+        "arterial_calcification": 0.51,
+        "plaque_vulnerability": 0.73
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "inflammation"
+        },
+        {
+          "t": 3,
+          "state": "plaque_instability"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CA_007",
+      "timepoint": "t4",
+      "entropy_H": 0.66,
+      "coherence_k": 0.4,
+      "emergence_eta": 0.62,
+      "bifurcation_B": 0.78,
+      "reducibility_R": 0.32
+    },
+    "multimodal_features": {
+      "genomics": {
+        "APOE": 1,
+        "PCSK9": 1,
+        "PRS_score": 0.77
+      },
+      "labs": {
+        "LDL": 169.5,
+        "CRP": 10.6
+      },
+      "imaging": {
+        "arterial_calcification": 0.54,
+        "plaque_vulnerability": 0.86
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "inflammation"
+        },
+        {
+          "t": 3,
+          "state": "plaque_instability"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CA_008",
+      "timepoint": "t4",
+      "entropy_H": 0.71,
+      "coherence_k": 0.52,
+      "emergence_eta": 0.6,
+      "bifurcation_B": 0.71,
+      "reducibility_R": 0.37
+    },
+    "multimodal_features": {
+      "genomics": {
+        "APOE": 1,
+        "PCSK9": 0,
+        "PRS_score": 0.81
+      },
+      "labs": {
+        "LDL": 176.3,
+        "CRP": 10.7
+      },
+      "imaging": {
+        "arterial_calcification": 0.63,
+        "plaque_vulnerability": 0.89
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "inflammation"
+        },
+        {
+          "t": 3,
+          "state": "plaque_instability"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CA_009",
+      "timepoint": "t4",
+      "entropy_H": 0.58,
+      "coherence_k": 0.45,
+      "emergence_eta": 0.6,
+      "bifurcation_B": 0.8,
+      "reducibility_R": 0.57
+    },
+    "multimodal_features": {
+      "genomics": {
+        "APOE": 1,
+        "PCSK9": 1,
+        "PRS_score": 0.72
+      },
+      "labs": {
+        "LDL": 147.7,
+        "CRP": 8.7
+      },
+      "imaging": {
+        "arterial_calcification": 0.51,
+        "plaque_vulnerability": 0.79
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "inflammation"
+        },
+        {
+          "t": 3,
+          "state": "plaque_instability"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CA_010",
+      "timepoint": "t4",
+      "entropy_H": 0.66,
+      "coherence_k": 0.39,
+      "emergence_eta": 0.68,
+      "bifurcation_B": 0.75,
+      "reducibility_R": 0.33
+    },
+    "multimodal_features": {
+      "genomics": {
+        "APOE": 1,
+        "PCSK9": 1,
+        "PRS_score": 0.82
+      },
+      "labs": {
+        "LDL": 144.2,
+        "CRP": 9.5
+      },
+      "imaging": {
+        "arterial_calcification": 0.74,
+        "plaque_vulnerability": 0.86
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "inflammation"
+        },
+        {
+          "t": 3,
+          "state": "plaque_instability"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CA_011",
+      "timepoint": "t4",
+      "entropy_H": 0.53,
+      "coherence_k": 0.37,
+      "emergence_eta": 0.83,
+      "bifurcation_B": 0.92,
+      "reducibility_R": 0.43
+    },
+    "multimodal_features": {
+      "genomics": {
+        "APOE": 1,
+        "PCSK9": 1,
+        "PRS_score": 0.86
+      },
+      "labs": {
+        "LDL": 179.3,
+        "CRP": 7.6
+      },
+      "imaging": {
+        "arterial_calcification": 0.81,
+        "plaque_vulnerability": 0.7
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "inflammation"
+        },
+        {
+          "t": 3,
+          "state": "plaque_instability"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CA_012",
+      "timepoint": "t4",
+      "entropy_H": 0.56,
+      "coherence_k": 0.35,
+      "emergence_eta": 0.72,
+      "bifurcation_B": 0.8,
+      "reducibility_R": 0.37
+    },
+    "multimodal_features": {
+      "genomics": {
+        "APOE": 1,
+        "PCSK9": 0,
+        "PRS_score": 0.8
+      },
+      "labs": {
+        "LDL": 160.1,
+        "CRP": 7.5
+      },
+      "imaging": {
+        "arterial_calcification": 0.74,
+        "plaque_vulnerability": 0.68
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "inflammation"
+        },
+        {
+          "t": 3,
+          "state": "plaque_instability"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CA_013",
+      "timepoint": "t4",
+      "entropy_H": 0.57,
+      "coherence_k": 0.31,
+      "emergence_eta": 0.7,
+      "bifurcation_B": 0.71,
+      "reducibility_R": 0.48
+    },
+    "multimodal_features": {
+      "genomics": {
+        "APOE": 1,
+        "PCSK9": 1,
+        "PRS_score": 0.75
+      },
+      "labs": {
+        "LDL": 159.7,
+        "CRP": 7.9
+      },
+      "imaging": {
+        "arterial_calcification": 0.67,
+        "plaque_vulnerability": 0.69
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "inflammation"
+        },
+        {
+          "t": 3,
+          "state": "plaque_instability"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CA_014",
+      "timepoint": "t4",
+      "entropy_H": 0.64,
+      "coherence_k": 0.48,
+      "emergence_eta": 0.65,
+      "bifurcation_B": 0.76,
+      "reducibility_R": 0.32
+    },
+    "multimodal_features": {
+      "genomics": {
+        "APOE": 1,
+        "PCSK9": 0,
+        "PRS_score": 0.84
+      },
+      "labs": {
+        "LDL": 169.6,
+        "CRP": 7.5
+      },
+      "imaging": {
+        "arterial_calcification": 0.69,
+        "plaque_vulnerability": 0.73
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "inflammation"
+        },
+        {
+          "t": 3,
+          "state": "plaque_instability"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CA_015",
+      "timepoint": "t4",
+      "entropy_H": 0.71,
+      "coherence_k": 0.4,
+      "emergence_eta": 0.52,
+      "bifurcation_B": 0.85,
+      "reducibility_R": 0.36
+    },
+    "multimodal_features": {
+      "genomics": {
+        "APOE": 1,
+        "PCSK9": 1,
+        "PRS_score": 0.83
+      },
+      "labs": {
+        "LDL": 157.3,
+        "CRP": 10.8
+      },
+      "imaging": {
+        "arterial_calcification": 0.69,
+        "plaque_vulnerability": 0.63
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "inflammation"
+        },
+        {
+          "t": 3,
+          "state": "plaque_instability"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CA_016",
+      "timepoint": "t4",
+      "entropy_H": 0.63,
+      "coherence_k": 0.55,
+      "emergence_eta": 0.79,
+      "bifurcation_B": 0.75,
+      "reducibility_R": 0.5
+    },
+    "multimodal_features": {
+      "genomics": {
+        "APOE": 1,
+        "PCSK9": 1,
+        "PRS_score": 0.72
+      },
+      "labs": {
+        "LDL": 129.0,
+        "CRP": 8.1
+      },
+      "imaging": {
+        "arterial_calcification": 0.83,
+        "plaque_vulnerability": 0.72
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "inflammation"
+        },
+        {
+          "t": 3,
+          "state": "plaque_instability"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CA_017",
+      "timepoint": "t4",
+      "entropy_H": 0.63,
+      "coherence_k": 0.37,
+      "emergence_eta": 0.86,
+      "bifurcation_B": 0.93,
+      "reducibility_R": 0.33
+    },
+    "multimodal_features": {
+      "genomics": {
+        "APOE": 1,
+        "PCSK9": 0,
+        "PRS_score": 0.83
+      },
+      "labs": {
+        "LDL": 197.4,
+        "CRP": 8.8
+      },
+      "imaging": {
+        "arterial_calcification": 0.79,
+        "plaque_vulnerability": 0.77
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "inflammation"
+        },
+        {
+          "t": 3,
+          "state": "plaque_instability"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CA_018",
+      "timepoint": "t4",
+      "entropy_H": 0.6,
+      "coherence_k": 0.57,
+      "emergence_eta": 0.87,
+      "bifurcation_B": 0.9,
+      "reducibility_R": 0.56
+    },
+    "multimodal_features": {
+      "genomics": {
+        "APOE": 1,
+        "PCSK9": 0,
+        "PRS_score": 0.84
+      },
+      "labs": {
+        "LDL": 131.2,
+        "CRP": 10.4
+      },
+      "imaging": {
+        "arterial_calcification": 0.8,
+        "plaque_vulnerability": 0.86
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "inflammation"
+        },
+        {
+          "t": 3,
+          "state": "plaque_instability"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CA_019",
+      "timepoint": "t4",
+      "entropy_H": 0.54,
+      "coherence_k": 0.46,
+      "emergence_eta": 0.76,
+      "bifurcation_B": 0.76,
+      "reducibility_R": 0.51
+    },
+    "multimodal_features": {
+      "genomics": {
+        "APOE": 1,
+        "PCSK9": 1,
+        "PRS_score": 0.72
+      },
+      "labs": {
+        "LDL": 177.1,
+        "CRP": 11.6
+      },
+      "imaging": {
+        "arterial_calcification": 0.73,
+        "plaque_vulnerability": 0.6
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "inflammation"
+        },
+        {
+          "t": 3,
+          "state": "plaque_instability"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CA_020",
+      "timepoint": "t4",
+      "entropy_H": 0.68,
+      "coherence_k": 0.39,
+      "emergence_eta": 0.7,
+      "bifurcation_B": 0.86,
+      "reducibility_R": 0.46
+    },
+    "multimodal_features": {
+      "genomics": {
+        "APOE": 1,
+        "PCSK9": 0,
+        "PRS_score": 0.74
+      },
+      "labs": {
+        "LDL": 140.5,
+        "CRP": 9.6
+      },
+      "imaging": {
+        "arterial_calcification": 0.63,
+        "plaque_vulnerability": 0.82
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "inflammation"
+        },
+        {
+          "t": 3,
+          "state": "plaque_instability"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CA_021",
+      "timepoint": "t4",
+      "entropy_H": 0.7,
+      "coherence_k": 0.45,
+      "emergence_eta": 0.7,
+      "bifurcation_B": 0.75,
+      "reducibility_R": 0.47
+    },
+    "multimodal_features": {
+      "genomics": {
+        "APOE": 1,
+        "PCSK9": 1,
+        "PRS_score": 0.78
+      },
+      "labs": {
+        "LDL": 170.8,
+        "CRP": 5.0
+      },
+      "imaging": {
+        "arterial_calcification": 0.81,
+        "plaque_vulnerability": 0.79
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "inflammation"
+        },
+        {
+          "t": 3,
+          "state": "plaque_instability"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CA_022",
+      "timepoint": "t4",
+      "entropy_H": 0.62,
+      "coherence_k": 0.38,
+      "emergence_eta": 0.8,
+      "bifurcation_B": 0.94,
+      "reducibility_R": 0.57
+    },
+    "multimodal_features": {
+      "genomics": {
+        "APOE": 1,
+        "PCSK9": 0,
+        "PRS_score": 0.85
+      },
+      "labs": {
+        "LDL": 140.7,
+        "CRP": 10.0
+      },
+      "imaging": {
+        "arterial_calcification": 0.52,
+        "plaque_vulnerability": 0.9
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "inflammation"
+        },
+        {
+          "t": 3,
+          "state": "plaque_instability"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CA_023",
+      "timepoint": "t4",
+      "entropy_H": 0.6,
+      "coherence_k": 0.56,
+      "emergence_eta": 0.57,
+      "bifurcation_B": 0.84,
+      "reducibility_R": 0.4
+    },
+    "multimodal_features": {
+      "genomics": {
+        "APOE": 1,
+        "PCSK9": 0,
+        "PRS_score": 0.89
+      },
+      "labs": {
+        "LDL": 172.1,
+        "CRP": 4.1
+      },
+      "imaging": {
+        "arterial_calcification": 0.8,
+        "plaque_vulnerability": 0.69
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "inflammation"
+        },
+        {
+          "t": 3,
+          "state": "plaque_instability"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CA_024",
+      "timepoint": "t4",
+      "entropy_H": 0.59,
+      "coherence_k": 0.38,
+      "emergence_eta": 0.63,
+      "bifurcation_B": 0.91,
+      "reducibility_R": 0.39
+    },
+    "multimodal_features": {
+      "genomics": {
+        "APOE": 1,
+        "PCSK9": 1,
+        "PRS_score": 0.71
+      },
+      "labs": {
+        "LDL": 163.5,
+        "CRP": 8.8
+      },
+      "imaging": {
+        "arterial_calcification": 0.57,
+        "plaque_vulnerability": 0.8
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "inflammation"
+        },
+        {
+          "t": 3,
+          "state": "plaque_instability"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CA_025",
+      "timepoint": "t4",
+      "entropy_H": 0.72,
+      "coherence_k": 0.57,
+      "emergence_eta": 0.7,
+      "bifurcation_B": 0.9,
+      "reducibility_R": 0.45
+    },
+    "multimodal_features": {
+      "genomics": {
+        "APOE": 1,
+        "PCSK9": 0,
+        "PRS_score": 0.76
+      },
+      "labs": {
+        "LDL": 168.4,
+        "CRP": 6.5
+      },
+      "imaging": {
+        "arterial_calcification": 0.78,
+        "plaque_vulnerability": 0.84
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "inflammation"
+        },
+        {
+          "t": 3,
+          "state": "plaque_instability"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CA_026",
+      "timepoint": "t4",
+      "entropy_H": 0.64,
+      "coherence_k": 0.43,
+      "emergence_eta": 0.63,
+      "bifurcation_B": 0.74,
+      "reducibility_R": 0.5
+    },
+    "multimodal_features": {
+      "genomics": {
+        "APOE": 1,
+        "PCSK9": 1,
+        "PRS_score": 0.71
+      },
+      "labs": {
+        "LDL": 186.6,
+        "CRP": 10.0
+      },
+      "imaging": {
+        "arterial_calcification": 0.81,
+        "plaque_vulnerability": 0.61
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "inflammation"
+        },
+        {
+          "t": 3,
+          "state": "plaque_instability"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CA_027",
+      "timepoint": "t4",
+      "entropy_H": 0.63,
+      "coherence_k": 0.53,
+      "emergence_eta": 0.75,
+      "bifurcation_B": 0.72,
+      "reducibility_R": 0.36
+    },
+    "multimodal_features": {
+      "genomics": {
+        "APOE": 1,
+        "PCSK9": 1,
+        "PRS_score": 0.86
+      },
+      "labs": {
+        "LDL": 151.7,
+        "CRP": 9.2
+      },
+      "imaging": {
+        "arterial_calcification": 0.63,
+        "plaque_vulnerability": 0.64
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "inflammation"
+        },
+        {
+          "t": 3,
+          "state": "plaque_instability"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CA_028",
+      "timepoint": "t4",
+      "entropy_H": 0.74,
+      "coherence_k": 0.51,
+      "emergence_eta": 0.66,
+      "bifurcation_B": 0.81,
+      "reducibility_R": 0.31
+    },
+    "multimodal_features": {
+      "genomics": {
+        "APOE": 1,
+        "PCSK9": 0,
+        "PRS_score": 0.84
+      },
+      "labs": {
+        "LDL": 160.9,
+        "CRP": 6.7
+      },
+      "imaging": {
+        "arterial_calcification": 0.55,
+        "plaque_vulnerability": 0.64
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "inflammation"
+        },
+        {
+          "t": 3,
+          "state": "plaque_instability"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CA_029",
+      "timepoint": "t4",
+      "entropy_H": 0.6,
+      "coherence_k": 0.35,
+      "emergence_eta": 0.6,
+      "bifurcation_B": 0.84,
+      "reducibility_R": 0.35
+    },
+    "multimodal_features": {
+      "genomics": {
+        "APOE": 1,
+        "PCSK9": 1,
+        "PRS_score": 0.89
+      },
+      "labs": {
+        "LDL": 142.8,
+        "CRP": 9.7
+      },
+      "imaging": {
+        "arterial_calcification": 0.79,
+        "plaque_vulnerability": 0.81
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "inflammation"
+        },
+        {
+          "t": 3,
+          "state": "plaque_instability"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CA_030",
+      "timepoint": "t4",
+      "entropy_H": 0.61,
+      "coherence_k": 0.52,
+      "emergence_eta": 0.73,
+      "bifurcation_B": 0.74,
+      "reducibility_R": 0.31
+    },
+    "multimodal_features": {
+      "genomics": {
+        "APOE": 1,
+        "PCSK9": 0,
+        "PRS_score": 0.83
+      },
+      "labs": {
+        "LDL": 178.9,
+        "CRP": 10.5
+      },
+      "imaging": {
+        "arterial_calcification": 0.68,
+        "plaque_vulnerability": 0.8
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "inflammation"
+        },
+        {
+          "t": 3,
+          "state": "plaque_instability"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CA_031",
+      "timepoint": "t4",
+      "entropy_H": 0.68,
+      "coherence_k": 0.44,
+      "emergence_eta": 0.7,
+      "bifurcation_B": 0.82,
+      "reducibility_R": 0.33
+    },
+    "multimodal_features": {
+      "genomics": {
+        "APOE": 1,
+        "PCSK9": 1,
+        "PRS_score": 0.71
+      },
+      "labs": {
+        "LDL": 153.2,
+        "CRP": 6.4
+      },
+      "imaging": {
+        "arterial_calcification": 0.51,
+        "plaque_vulnerability": 0.86
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "inflammation"
+        },
+        {
+          "t": 3,
+          "state": "plaque_instability"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CA_032",
+      "timepoint": "t4",
+      "entropy_H": 0.57,
+      "coherence_k": 0.3,
+      "emergence_eta": 0.7,
+      "bifurcation_B": 0.83,
+      "reducibility_R": 0.58
+    },
+    "multimodal_features": {
+      "genomics": {
+        "APOE": 1,
+        "PCSK9": 0,
+        "PRS_score": 0.71
+      },
+      "labs": {
+        "LDL": 154.9,
+        "CRP": 5.5
+      },
+      "imaging": {
+        "arterial_calcification": 0.83,
+        "plaque_vulnerability": 0.87
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "inflammation"
+        },
+        {
+          "t": 3,
+          "state": "plaque_instability"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CA_033",
+      "timepoint": "t4",
+      "entropy_H": 0.74,
+      "coherence_k": 0.47,
+      "emergence_eta": 0.76,
+      "bifurcation_B": 0.81,
+      "reducibility_R": 0.42
+    },
+    "multimodal_features": {
+      "genomics": {
+        "APOE": 1,
+        "PCSK9": 1,
+        "PRS_score": 0.83
+      },
+      "labs": {
+        "LDL": 179.5,
+        "CRP": 11.1
+      },
+      "imaging": {
+        "arterial_calcification": 0.51,
+        "plaque_vulnerability": 0.78
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "inflammation"
+        },
+        {
+          "t": 3,
+          "state": "plaque_instability"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CA_034",
+      "timepoint": "t4",
+      "entropy_H": 0.57,
+      "coherence_k": 0.36,
+      "emergence_eta": 0.52,
+      "bifurcation_B": 0.85,
+      "reducibility_R": 0.41
+    },
+    "multimodal_features": {
+      "genomics": {
+        "APOE": 1,
+        "PCSK9": 0,
+        "PRS_score": 0.86
+      },
+      "labs": {
+        "LDL": 173.7,
+        "CRP": 8.1
+      },
+      "imaging": {
+        "arterial_calcification": 0.73,
+        "plaque_vulnerability": 0.66
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "inflammation"
+        },
+        {
+          "t": 3,
+          "state": "plaque_instability"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CA_035",
+      "timepoint": "t4",
+      "entropy_H": 0.57,
+      "coherence_k": 0.34,
+      "emergence_eta": 0.75,
+      "bifurcation_B": 0.92,
+      "reducibility_R": 0.51
+    },
+    "multimodal_features": {
+      "genomics": {
+        "APOE": 1,
+        "PCSK9": 0,
+        "PRS_score": 0.87
+      },
+      "labs": {
+        "LDL": 184.6,
+        "CRP": 5.4
+      },
+      "imaging": {
+        "arterial_calcification": 0.51,
+        "plaque_vulnerability": 0.84
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "inflammation"
+        },
+        {
+          "t": 3,
+          "state": "plaque_instability"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CA_036",
+      "timepoint": "t4",
+      "entropy_H": 0.64,
+      "coherence_k": 0.52,
+      "emergence_eta": 0.6,
+      "bifurcation_B": 0.85,
+      "reducibility_R": 0.34
+    },
+    "multimodal_features": {
+      "genomics": {
+        "APOE": 1,
+        "PCSK9": 0,
+        "PRS_score": 0.81
+      },
+      "labs": {
+        "LDL": 176.3,
+        "CRP": 9.3
+      },
+      "imaging": {
+        "arterial_calcification": 0.65,
+        "plaque_vulnerability": 0.77
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "inflammation"
+        },
+        {
+          "t": 3,
+          "state": "plaque_instability"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CA_037",
+      "timepoint": "t4",
+      "entropy_H": 0.53,
+      "coherence_k": 0.57,
+      "emergence_eta": 0.83,
+      "bifurcation_B": 0.78,
+      "reducibility_R": 0.45
+    },
+    "multimodal_features": {
+      "genomics": {
+        "APOE": 1,
+        "PCSK9": 1,
+        "PRS_score": 0.79
+      },
+      "labs": {
+        "LDL": 163.6,
+        "CRP": 10.1
+      },
+      "imaging": {
+        "arterial_calcification": 0.76,
+        "plaque_vulnerability": 0.83
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "inflammation"
+        },
+        {
+          "t": 3,
+          "state": "plaque_instability"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CA_038",
+      "timepoint": "t4",
+      "entropy_H": 0.74,
+      "coherence_k": 0.5,
+      "emergence_eta": 0.7,
+      "bifurcation_B": 0.72,
+      "reducibility_R": 0.44
+    },
+    "multimodal_features": {
+      "genomics": {
+        "APOE": 1,
+        "PCSK9": 1,
+        "PRS_score": 0.89
+      },
+      "labs": {
+        "LDL": 155.2,
+        "CRP": 9.7
+      },
+      "imaging": {
+        "arterial_calcification": 0.8,
+        "plaque_vulnerability": 0.71
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "inflammation"
+        },
+        {
+          "t": 3,
+          "state": "plaque_instability"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CA_039",
+      "timepoint": "t4",
+      "entropy_H": 0.7,
+      "coherence_k": 0.33,
+      "emergence_eta": 0.52,
+      "bifurcation_B": 0.84,
+      "reducibility_R": 0.45
+    },
+    "multimodal_features": {
+      "genomics": {
+        "APOE": 1,
+        "PCSK9": 1,
+        "PRS_score": 0.83
+      },
+      "labs": {
+        "LDL": 164.0,
+        "CRP": 6.4
+      },
+      "imaging": {
+        "arterial_calcification": 0.76,
+        "plaque_vulnerability": 0.84
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "inflammation"
+        },
+        {
+          "t": 3,
+          "state": "plaque_instability"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CA_040",
+      "timepoint": "t4",
+      "entropy_H": 0.71,
+      "coherence_k": 0.56,
+      "emergence_eta": 0.67,
+      "bifurcation_B": 0.76,
+      "reducibility_R": 0.55
+    },
+    "multimodal_features": {
+      "genomics": {
+        "APOE": 1,
+        "PCSK9": 0,
+        "PRS_score": 0.84
+      },
+      "labs": {
+        "LDL": 179.5,
+        "CRP": 7.7
+      },
+      "imaging": {
+        "arterial_calcification": 0.84,
+        "plaque_vulnerability": 0.81
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "inflammation"
+        },
+        {
+          "t": 3,
+          "state": "plaque_instability"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CA_041",
+      "timepoint": "t4",
+      "entropy_H": 0.59,
+      "coherence_k": 0.41,
+      "emergence_eta": 0.88,
+      "bifurcation_B": 0.95,
+      "reducibility_R": 0.54
+    },
+    "multimodal_features": {
+      "genomics": {
+        "APOE": 1,
+        "PCSK9": 1,
+        "PRS_score": 0.72
+      },
+      "labs": {
+        "LDL": 177.7,
+        "CRP": 7.5
+      },
+      "imaging": {
+        "arterial_calcification": 0.53,
+        "plaque_vulnerability": 0.9
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "inflammation"
+        },
+        {
+          "t": 3,
+          "state": "plaque_instability"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CA_042",
+      "timepoint": "t4",
+      "entropy_H": 0.56,
+      "coherence_k": 0.4,
+      "emergence_eta": 0.6,
+      "bifurcation_B": 0.8,
+      "reducibility_R": 0.43
+    },
+    "multimodal_features": {
+      "genomics": {
+        "APOE": 1,
+        "PCSK9": 0,
+        "PRS_score": 0.8
+      },
+      "labs": {
+        "LDL": 146.7,
+        "CRP": 10.7
+      },
+      "imaging": {
+        "arterial_calcification": 0.63,
+        "plaque_vulnerability": 0.81
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "inflammation"
+        },
+        {
+          "t": 3,
+          "state": "plaque_instability"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CA_043",
+      "timepoint": "t4",
+      "entropy_H": 0.65,
+      "coherence_k": 0.59,
+      "emergence_eta": 0.61,
+      "bifurcation_B": 0.92,
+      "reducibility_R": 0.41
+    },
+    "multimodal_features": {
+      "genomics": {
+        "APOE": 1,
+        "PCSK9": 1,
+        "PRS_score": 0.72
+      },
+      "labs": {
+        "LDL": 191.8,
+        "CRP": 8.9
+      },
+      "imaging": {
+        "arterial_calcification": 0.73,
+        "plaque_vulnerability": 0.82
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "inflammation"
+        },
+        {
+          "t": 3,
+          "state": "plaque_instability"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CA_044",
+      "timepoint": "t4",
+      "entropy_H": 0.54,
+      "coherence_k": 0.37,
+      "emergence_eta": 0.9,
+      "bifurcation_B": 0.87,
+      "reducibility_R": 0.39
+    },
+    "multimodal_features": {
+      "genomics": {
+        "APOE": 1,
+        "PCSK9": 0,
+        "PRS_score": 0.75
+      },
+      "labs": {
+        "LDL": 164.5,
+        "CRP": 8.0
+      },
+      "imaging": {
+        "arterial_calcification": 0.74,
+        "plaque_vulnerability": 0.62
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "inflammation"
+        },
+        {
+          "t": 3,
+          "state": "plaque_instability"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CA_045",
+      "timepoint": "t4",
+      "entropy_H": 0.61,
+      "coherence_k": 0.49,
+      "emergence_eta": 0.58,
+      "bifurcation_B": 0.82,
+      "reducibility_R": 0.38
+    },
+    "multimodal_features": {
+      "genomics": {
+        "APOE": 1,
+        "PCSK9": 0,
+        "PRS_score": 0.76
+      },
+      "labs": {
+        "LDL": 188.7,
+        "CRP": 6.6
+      },
+      "imaging": {
+        "arterial_calcification": 0.83,
+        "plaque_vulnerability": 0.87
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "inflammation"
+        },
+        {
+          "t": 3,
+          "state": "plaque_instability"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CA_046",
+      "timepoint": "t4",
+      "entropy_H": 0.51,
+      "coherence_k": 0.38,
+      "emergence_eta": 0.74,
+      "bifurcation_B": 0.77,
+      "reducibility_R": 0.42
+    },
+    "multimodal_features": {
+      "genomics": {
+        "APOE": 1,
+        "PCSK9": 1,
+        "PRS_score": 0.77
+      },
+      "labs": {
+        "LDL": 180.7,
+        "CRP": 4.4
+      },
+      "imaging": {
+        "arterial_calcification": 0.59,
+        "plaque_vulnerability": 0.74
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "inflammation"
+        },
+        {
+          "t": 3,
+          "state": "plaque_instability"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CA_047",
+      "timepoint": "t4",
+      "entropy_H": 0.72,
+      "coherence_k": 0.31,
+      "emergence_eta": 0.65,
+      "bifurcation_B": 0.9,
+      "reducibility_R": 0.31
+    },
+    "multimodal_features": {
+      "genomics": {
+        "APOE": 1,
+        "PCSK9": 0,
+        "PRS_score": 0.82
+      },
+      "labs": {
+        "LDL": 157.5,
+        "CRP": 9.3
+      },
+      "imaging": {
+        "arterial_calcification": 0.65,
+        "plaque_vulnerability": 0.88
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "inflammation"
+        },
+        {
+          "t": 3,
+          "state": "plaque_instability"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CA_048",
+      "timepoint": "t4",
+      "entropy_H": 0.51,
+      "coherence_k": 0.34,
+      "emergence_eta": 0.53,
+      "bifurcation_B": 0.87,
+      "reducibility_R": 0.3
+    },
+    "multimodal_features": {
+      "genomics": {
+        "APOE": 1,
+        "PCSK9": 1,
+        "PRS_score": 0.87
+      },
+      "labs": {
+        "LDL": 125.7,
+        "CRP": 10.7
+      },
+      "imaging": {
+        "arterial_calcification": 0.7,
+        "plaque_vulnerability": 0.62
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "inflammation"
+        },
+        {
+          "t": 3,
+          "state": "plaque_instability"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "CA_049",
+      "timepoint": "t4",
+      "entropy_H": 0.71,
+      "coherence_k": 0.37,
+      "emergence_eta": 0.55,
+      "bifurcation_B": 0.94,
+      "reducibility_R": 0.44
+    },
+    "multimodal_features": {
+      "genomics": {
+        "APOE": 1,
+        "PCSK9": 0,
+        "PRS_score": 0.81
+      },
+      "labs": {
+        "LDL": 192.8,
+        "CRP": 8.5
+      },
+      "imaging": {
+        "arterial_calcification": 0.77,
+        "plaque_vulnerability": 0.88
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "inflammation"
+        },
+        {
+          "t": 3,
+          "state": "plaque_instability"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  }
+]

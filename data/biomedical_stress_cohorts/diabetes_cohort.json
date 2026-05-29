@@ -1,0 +1,2252 @@
+[
+  {
+    "state_tensor": {
+      "patient_id": "DI_000",
+      "timepoint": "t4",
+      "entropy_H": 0.63,
+      "coherence_k": 0.4,
+      "emergence_eta": 0.81,
+      "bifurcation_B": 0.83,
+      "reducibility_R": 0.26
+    },
+    "multimodal_features": {
+      "genomics": {
+        "TCF7L2": 1,
+        "PRS_score": 0.77
+      },
+      "labs": {
+        "HbA1c": 6.4,
+        "FastingGlucose": 138.0
+      },
+      "imaging": {
+        "hepatic_fat": 0.55,
+        "pancreatic_volume": 0.54
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "insulin_resistance"
+        },
+        {
+          "t": 3,
+          "state": "metabolic_tipping"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "DI_001",
+      "timepoint": "t4",
+      "entropy_H": 0.63,
+      "coherence_k": 0.21,
+      "emergence_eta": 0.75,
+      "bifurcation_B": 0.88,
+      "reducibility_R": 0.33
+    },
+    "multimodal_features": {
+      "genomics": {
+        "TCF7L2": 1,
+        "PRS_score": 0.74
+      },
+      "labs": {
+        "HbA1c": 7.6,
+        "FastingGlucose": 147.3
+      },
+      "imaging": {
+        "hepatic_fat": 0.65,
+        "pancreatic_volume": 0.56
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "insulin_resistance"
+        },
+        {
+          "t": 3,
+          "state": "metabolic_tipping"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "DI_002",
+      "timepoint": "t4",
+      "entropy_H": 0.7,
+      "coherence_k": 0.33,
+      "emergence_eta": 0.64,
+      "bifurcation_B": 0.83,
+      "reducibility_R": 0.37
+    },
+    "multimodal_features": {
+      "genomics": {
+        "TCF7L2": 1,
+        "PRS_score": 0.6
+      },
+      "labs": {
+        "HbA1c": 7.2,
+        "FastingGlucose": 124.9
+      },
+      "imaging": {
+        "hepatic_fat": 0.44,
+        "pancreatic_volume": 0.64
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "insulin_resistance"
+        },
+        {
+          "t": 3,
+          "state": "metabolic_tipping"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "DI_003",
+      "timepoint": "t4",
+      "entropy_H": 0.64,
+      "coherence_k": 0.48,
+      "emergence_eta": 0.6,
+      "bifurcation_B": 0.81,
+      "reducibility_R": 0.25
+    },
+    "multimodal_features": {
+      "genomics": {
+        "TCF7L2": 1,
+        "PRS_score": 0.76
+      },
+      "labs": {
+        "HbA1c": 7.1,
+        "FastingGlucose": 150.0
+      },
+      "imaging": {
+        "hepatic_fat": 0.64,
+        "pancreatic_volume": 0.78
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "insulin_resistance"
+        },
+        {
+          "t": 3,
+          "state": "metabolic_tipping"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "DI_004",
+      "timepoint": "t4",
+      "entropy_H": 0.62,
+      "coherence_k": 0.24,
+      "emergence_eta": 0.56,
+      "bifurcation_B": 0.73,
+      "reducibility_R": 0.14
+    },
+    "multimodal_features": {
+      "genomics": {
+        "TCF7L2": 1,
+        "PRS_score": 0.68
+      },
+      "labs": {
+        "HbA1c": 7.5,
+        "FastingGlucose": 136.0
+      },
+      "imaging": {
+        "hepatic_fat": 0.55,
+        "pancreatic_volume": 0.5
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "insulin_resistance"
+        },
+        {
+          "t": 3,
+          "state": "metabolic_tipping"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "DI_005",
+      "timepoint": "t4",
+      "entropy_H": 0.77,
+      "coherence_k": 0.25,
+      "emergence_eta": 0.52,
+      "bifurcation_B": 0.74,
+      "reducibility_R": 0.16
+    },
+    "multimodal_features": {
+      "genomics": {
+        "TCF7L2": 1,
+        "PRS_score": 0.69
+      },
+      "labs": {
+        "HbA1c": 6.6,
+        "FastingGlucose": 137.3
+      },
+      "imaging": {
+        "hepatic_fat": 0.66,
+        "pancreatic_volume": 0.59
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "insulin_resistance"
+        },
+        {
+          "t": 3,
+          "state": "metabolic_tipping"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "DI_006",
+      "timepoint": "t4",
+      "entropy_H": 0.65,
+      "coherence_k": 0.31,
+      "emergence_eta": 0.78,
+      "bifurcation_B": 0.71,
+      "reducibility_R": 0.25
+    },
+    "multimodal_features": {
+      "genomics": {
+        "TCF7L2": 1,
+        "PRS_score": 0.62
+      },
+      "labs": {
+        "HbA1c": 6.8,
+        "FastingGlucose": 121.6
+      },
+      "imaging": {
+        "hepatic_fat": 0.35,
+        "pancreatic_volume": 0.58
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "insulin_resistance"
+        },
+        {
+          "t": 3,
+          "state": "metabolic_tipping"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "DI_007",
+      "timepoint": "t4",
+      "entropy_H": 0.62,
+      "coherence_k": 0.28,
+      "emergence_eta": 0.8,
+      "bifurcation_B": 0.75,
+      "reducibility_R": 0.34
+    },
+    "multimodal_features": {
+      "genomics": {
+        "TCF7L2": 1,
+        "PRS_score": 0.62
+      },
+      "labs": {
+        "HbA1c": 7.9,
+        "FastingGlucose": 148.1
+      },
+      "imaging": {
+        "hepatic_fat": 0.65,
+        "pancreatic_volume": 0.77
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "insulin_resistance"
+        },
+        {
+          "t": 3,
+          "state": "metabolic_tipping"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "DI_008",
+      "timepoint": "t4",
+      "entropy_H": 0.72,
+      "coherence_k": 0.42,
+      "emergence_eta": 0.6,
+      "bifurcation_B": 0.88,
+      "reducibility_R": 0.11
+    },
+    "multimodal_features": {
+      "genomics": {
+        "TCF7L2": 1,
+        "PRS_score": 0.72
+      },
+      "labs": {
+        "HbA1c": 7.1,
+        "FastingGlucose": 111.6
+      },
+      "imaging": {
+        "hepatic_fat": 0.55,
+        "pancreatic_volume": 0.55
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "insulin_resistance"
+        },
+        {
+          "t": 3,
+          "state": "metabolic_tipping"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "DI_009",
+      "timepoint": "t4",
+      "entropy_H": 0.73,
+      "coherence_k": 0.27,
+      "emergence_eta": 0.65,
+      "bifurcation_B": 0.71,
+      "reducibility_R": 0.18
+    },
+    "multimodal_features": {
+      "genomics": {
+        "TCF7L2": 1,
+        "PRS_score": 0.73
+      },
+      "labs": {
+        "HbA1c": 7.5,
+        "FastingGlucose": 144.5
+      },
+      "imaging": {
+        "hepatic_fat": 0.34,
+        "pancreatic_volume": 0.58
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "insulin_resistance"
+        },
+        {
+          "t": 3,
+          "state": "metabolic_tipping"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "DI_010",
+      "timepoint": "t4",
+      "entropy_H": 0.75,
+      "coherence_k": 0.4,
+      "emergence_eta": 0.7,
+      "bifurcation_B": 0.72,
+      "reducibility_R": 0.34
+    },
+    "multimodal_features": {
+      "genomics": {
+        "TCF7L2": 1,
+        "PRS_score": 0.68
+      },
+      "labs": {
+        "HbA1c": 6.7,
+        "FastingGlucose": 120.2
+      },
+      "imaging": {
+        "hepatic_fat": 0.35,
+        "pancreatic_volume": 0.76
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "insulin_resistance"
+        },
+        {
+          "t": 3,
+          "state": "metabolic_tipping"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "DI_011",
+      "timepoint": "t4",
+      "entropy_H": 0.67,
+      "coherence_k": 0.31,
+      "emergence_eta": 0.73,
+      "bifurcation_B": 0.79,
+      "reducibility_R": 0.29
+    },
+    "multimodal_features": {
+      "genomics": {
+        "TCF7L2": 1,
+        "PRS_score": 0.79
+      },
+      "labs": {
+        "HbA1c": 9.4,
+        "FastingGlucose": 145.2
+      },
+      "imaging": {
+        "hepatic_fat": 0.47,
+        "pancreatic_volume": 0.45
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "insulin_resistance"
+        },
+        {
+          "t": 3,
+          "state": "metabolic_tipping"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "DI_012",
+      "timepoint": "t4",
+      "entropy_H": 0.66,
+      "coherence_k": 0.25,
+      "emergence_eta": 0.61,
+      "bifurcation_B": 0.74,
+      "reducibility_R": 0.16
+    },
+    "multimodal_features": {
+      "genomics": {
+        "TCF7L2": 1,
+        "PRS_score": 0.66
+      },
+      "labs": {
+        "HbA1c": 7.5,
+        "FastingGlucose": 131.9
+      },
+      "imaging": {
+        "hepatic_fat": 0.34,
+        "pancreatic_volume": 0.46
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "insulin_resistance"
+        },
+        {
+          "t": 3,
+          "state": "metabolic_tipping"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "DI_013",
+      "timepoint": "t4",
+      "entropy_H": 0.84,
+      "coherence_k": 0.46,
+      "emergence_eta": 0.6,
+      "bifurcation_B": 0.74,
+      "reducibility_R": 0.35
+    },
+    "multimodal_features": {
+      "genomics": {
+        "TCF7L2": 1,
+        "PRS_score": 0.85
+      },
+      "labs": {
+        "HbA1c": 5.5,
+        "FastingGlucose": 140.3
+      },
+      "imaging": {
+        "hepatic_fat": 0.34,
+        "pancreatic_volume": 0.56
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "insulin_resistance"
+        },
+        {
+          "t": 3,
+          "state": "metabolic_tipping"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "DI_014",
+      "timepoint": "t4",
+      "entropy_H": 0.79,
+      "coherence_k": 0.26,
+      "emergence_eta": 0.67,
+      "bifurcation_B": 0.83,
+      "reducibility_R": 0.2
+    },
+    "multimodal_features": {
+      "genomics": {
+        "TCF7L2": 1,
+        "PRS_score": 0.74
+      },
+      "labs": {
+        "HbA1c": 7.9,
+        "FastingGlucose": 133.1
+      },
+      "imaging": {
+        "hepatic_fat": 0.53,
+        "pancreatic_volume": 0.51
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "insulin_resistance"
+        },
+        {
+          "t": 3,
+          "state": "metabolic_tipping"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "DI_015",
+      "timepoint": "t4",
+      "entropy_H": 0.64,
+      "coherence_k": 0.34,
+      "emergence_eta": 0.52,
+      "bifurcation_B": 0.78,
+      "reducibility_R": 0.26
+    },
+    "multimodal_features": {
+      "genomics": {
+        "TCF7L2": 1,
+        "PRS_score": 0.75
+      },
+      "labs": {
+        "HbA1c": 7.1,
+        "FastingGlucose": 125.4
+      },
+      "imaging": {
+        "hepatic_fat": 0.42,
+        "pancreatic_volume": 0.63
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "insulin_resistance"
+        },
+        {
+          "t": 3,
+          "state": "metabolic_tipping"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "DI_016",
+      "timepoint": "t4",
+      "entropy_H": 0.72,
+      "coherence_k": 0.32,
+      "emergence_eta": 0.87,
+      "bifurcation_B": 0.91,
+      "reducibility_R": 0.2
+    },
+    "multimodal_features": {
+      "genomics": {
+        "TCF7L2": 1,
+        "PRS_score": 0.77
+      },
+      "labs": {
+        "HbA1c": 7.0,
+        "FastingGlucose": 141.4
+      },
+      "imaging": {
+        "hepatic_fat": 0.6,
+        "pancreatic_volume": 0.64
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "insulin_resistance"
+        },
+        {
+          "t": 3,
+          "state": "metabolic_tipping"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "DI_017",
+      "timepoint": "t4",
+      "entropy_H": 0.74,
+      "coherence_k": 0.45,
+      "emergence_eta": 0.82,
+      "bifurcation_B": 0.75,
+      "reducibility_R": 0.14
+    },
+    "multimodal_features": {
+      "genomics": {
+        "TCF7L2": 1,
+        "PRS_score": 0.65
+      },
+      "labs": {
+        "HbA1c": 7.6,
+        "FastingGlucose": 131.3
+      },
+      "imaging": {
+        "hepatic_fat": 0.33,
+        "pancreatic_volume": 0.7
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "insulin_resistance"
+        },
+        {
+          "t": 3,
+          "state": "metabolic_tipping"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "DI_018",
+      "timepoint": "t4",
+      "entropy_H": 0.69,
+      "coherence_k": 0.46,
+      "emergence_eta": 0.83,
+      "bifurcation_B": 0.81,
+      "reducibility_R": 0.22
+    },
+    "multimodal_features": {
+      "genomics": {
+        "TCF7L2": 1,
+        "PRS_score": 0.8
+      },
+      "labs": {
+        "HbA1c": 7.2,
+        "FastingGlucose": 125.2
+      },
+      "imaging": {
+        "hepatic_fat": 0.57,
+        "pancreatic_volume": 0.61
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "insulin_resistance"
+        },
+        {
+          "t": 3,
+          "state": "metabolic_tipping"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "DI_019",
+      "timepoint": "t4",
+      "entropy_H": 0.66,
+      "coherence_k": 0.47,
+      "emergence_eta": 0.72,
+      "bifurcation_B": 0.93,
+      "reducibility_R": 0.22
+    },
+    "multimodal_features": {
+      "genomics": {
+        "TCF7L2": 1,
+        "PRS_score": 0.68
+      },
+      "labs": {
+        "HbA1c": 7.0,
+        "FastingGlucose": 96.5
+      },
+      "imaging": {
+        "hepatic_fat": 0.6,
+        "pancreatic_volume": 0.6
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "insulin_resistance"
+        },
+        {
+          "t": 3,
+          "state": "metabolic_tipping"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "DI_020",
+      "timepoint": "t4",
+      "entropy_H": 0.63,
+      "coherence_k": 0.44,
+      "emergence_eta": 0.71,
+      "bifurcation_B": 0.92,
+      "reducibility_R": 0.29
+    },
+    "multimodal_features": {
+      "genomics": {
+        "TCF7L2": 1,
+        "PRS_score": 0.83
+      },
+      "labs": {
+        "HbA1c": 6.8,
+        "FastingGlucose": 134.3
+      },
+      "imaging": {
+        "hepatic_fat": 0.55,
+        "pancreatic_volume": 0.53
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "insulin_resistance"
+        },
+        {
+          "t": 3,
+          "state": "metabolic_tipping"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "DI_021",
+      "timepoint": "t4",
+      "entropy_H": 0.61,
+      "coherence_k": 0.37,
+      "emergence_eta": 0.85,
+      "bifurcation_B": 0.79,
+      "reducibility_R": 0.33
+    },
+    "multimodal_features": {
+      "genomics": {
+        "TCF7L2": 1,
+        "PRS_score": 0.68
+      },
+      "labs": {
+        "HbA1c": 7.1,
+        "FastingGlucose": 136.1
+      },
+      "imaging": {
+        "hepatic_fat": 0.4,
+        "pancreatic_volume": 0.7
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "insulin_resistance"
+        },
+        {
+          "t": 3,
+          "state": "metabolic_tipping"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "DI_022",
+      "timepoint": "t4",
+      "entropy_H": 0.78,
+      "coherence_k": 0.39,
+      "emergence_eta": 0.72,
+      "bifurcation_B": 0.76,
+      "reducibility_R": 0.31
+    },
+    "multimodal_features": {
+      "genomics": {
+        "TCF7L2": 1,
+        "PRS_score": 0.64
+      },
+      "labs": {
+        "HbA1c": 8.5,
+        "FastingGlucose": 123.3
+      },
+      "imaging": {
+        "hepatic_fat": 0.39,
+        "pancreatic_volume": 0.69
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "insulin_resistance"
+        },
+        {
+          "t": 3,
+          "state": "metabolic_tipping"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "DI_023",
+      "timepoint": "t4",
+      "entropy_H": 0.72,
+      "coherence_k": 0.48,
+      "emergence_eta": 0.73,
+      "bifurcation_B": 0.83,
+      "reducibility_R": 0.15
+    },
+    "multimodal_features": {
+      "genomics": {
+        "TCF7L2": 1,
+        "PRS_score": 0.83
+      },
+      "labs": {
+        "HbA1c": 6.7,
+        "FastingGlucose": 122.3
+      },
+      "imaging": {
+        "hepatic_fat": 0.53,
+        "pancreatic_volume": 0.56
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "insulin_resistance"
+        },
+        {
+          "t": 3,
+          "state": "metabolic_tipping"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "DI_024",
+      "timepoint": "t4",
+      "entropy_H": 0.77,
+      "coherence_k": 0.48,
+      "emergence_eta": 0.56,
+      "bifurcation_B": 0.84,
+      "reducibility_R": 0.31
+    },
+    "multimodal_features": {
+      "genomics": {
+        "TCF7L2": 1,
+        "PRS_score": 0.82
+      },
+      "labs": {
+        "HbA1c": 7.3,
+        "FastingGlucose": 130.7
+      },
+      "imaging": {
+        "hepatic_fat": 0.67,
+        "pancreatic_volume": 0.63
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "insulin_resistance"
+        },
+        {
+          "t": 3,
+          "state": "metabolic_tipping"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "DI_025",
+      "timepoint": "t4",
+      "entropy_H": 0.71,
+      "coherence_k": 0.23,
+      "emergence_eta": 0.84,
+      "bifurcation_B": 0.73,
+      "reducibility_R": 0.4
+    },
+    "multimodal_features": {
+      "genomics": {
+        "TCF7L2": 1,
+        "PRS_score": 0.78
+      },
+      "labs": {
+        "HbA1c": 6.4,
+        "FastingGlucose": 158.3
+      },
+      "imaging": {
+        "hepatic_fat": 0.67,
+        "pancreatic_volume": 0.77
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "insulin_resistance"
+        },
+        {
+          "t": 3,
+          "state": "metabolic_tipping"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "DI_026",
+      "timepoint": "t4",
+      "entropy_H": 0.8,
+      "coherence_k": 0.2,
+      "emergence_eta": 0.66,
+      "bifurcation_B": 0.83,
+      "reducibility_R": 0.2
+    },
+    "multimodal_features": {
+      "genomics": {
+        "TCF7L2": 1,
+        "PRS_score": 0.7
+      },
+      "labs": {
+        "HbA1c": 9.5,
+        "FastingGlucose": 137.9
+      },
+      "imaging": {
+        "hepatic_fat": 0.32,
+        "pancreatic_volume": 0.53
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "insulin_resistance"
+        },
+        {
+          "t": 3,
+          "state": "metabolic_tipping"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "DI_027",
+      "timepoint": "t4",
+      "entropy_H": 0.66,
+      "coherence_k": 0.34,
+      "emergence_eta": 0.57,
+      "bifurcation_B": 0.82,
+      "reducibility_R": 0.14
+    },
+    "multimodal_features": {
+      "genomics": {
+        "TCF7L2": 1,
+        "PRS_score": 0.69
+      },
+      "labs": {
+        "HbA1c": 7.3,
+        "FastingGlucose": 139.4
+      },
+      "imaging": {
+        "hepatic_fat": 0.6,
+        "pancreatic_volume": 0.58
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "insulin_resistance"
+        },
+        {
+          "t": 3,
+          "state": "metabolic_tipping"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "DI_028",
+      "timepoint": "t4",
+      "entropy_H": 0.6,
+      "coherence_k": 0.4,
+      "emergence_eta": 0.88,
+      "bifurcation_B": 0.74,
+      "reducibility_R": 0.15
+    },
+    "multimodal_features": {
+      "genomics": {
+        "TCF7L2": 1,
+        "PRS_score": 0.69
+      },
+      "labs": {
+        "HbA1c": 8.1,
+        "FastingGlucose": 127.6
+      },
+      "imaging": {
+        "hepatic_fat": 0.53,
+        "pancreatic_volume": 0.65
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "insulin_resistance"
+        },
+        {
+          "t": 3,
+          "state": "metabolic_tipping"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "DI_029",
+      "timepoint": "t4",
+      "entropy_H": 0.62,
+      "coherence_k": 0.42,
+      "emergence_eta": 0.86,
+      "bifurcation_B": 0.75,
+      "reducibility_R": 0.16
+    },
+    "multimodal_features": {
+      "genomics": {
+        "TCF7L2": 1,
+        "PRS_score": 0.85
+      },
+      "labs": {
+        "HbA1c": 6.9,
+        "FastingGlucose": 127.5
+      },
+      "imaging": {
+        "hepatic_fat": 0.5,
+        "pancreatic_volume": 0.64
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "insulin_resistance"
+        },
+        {
+          "t": 3,
+          "state": "metabolic_tipping"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "DI_030",
+      "timepoint": "t4",
+      "entropy_H": 0.73,
+      "coherence_k": 0.33,
+      "emergence_eta": 0.72,
+      "bifurcation_B": 0.74,
+      "reducibility_R": 0.22
+    },
+    "multimodal_features": {
+      "genomics": {
+        "TCF7L2": 1,
+        "PRS_score": 0.62
+      },
+      "labs": {
+        "HbA1c": 9.6,
+        "FastingGlucose": 113.4
+      },
+      "imaging": {
+        "hepatic_fat": 0.61,
+        "pancreatic_volume": 0.58
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "insulin_resistance"
+        },
+        {
+          "t": 3,
+          "state": "metabolic_tipping"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "DI_031",
+      "timepoint": "t4",
+      "entropy_H": 0.76,
+      "coherence_k": 0.32,
+      "emergence_eta": 0.56,
+      "bifurcation_B": 0.88,
+      "reducibility_R": 0.11
+    },
+    "multimodal_features": {
+      "genomics": {
+        "TCF7L2": 1,
+        "PRS_score": 0.84
+      },
+      "labs": {
+        "HbA1c": 7.7,
+        "FastingGlucose": 126.2
+      },
+      "imaging": {
+        "hepatic_fat": 0.45,
+        "pancreatic_volume": 0.51
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "insulin_resistance"
+        },
+        {
+          "t": 3,
+          "state": "metabolic_tipping"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "DI_032",
+      "timepoint": "t4",
+      "entropy_H": 0.6,
+      "coherence_k": 0.23,
+      "emergence_eta": 0.57,
+      "bifurcation_B": 0.86,
+      "reducibility_R": 0.34
+    },
+    "multimodal_features": {
+      "genomics": {
+        "TCF7L2": 1,
+        "PRS_score": 0.66
+      },
+      "labs": {
+        "HbA1c": 7.4,
+        "FastingGlucose": 130.4
+      },
+      "imaging": {
+        "hepatic_fat": 0.39,
+        "pancreatic_volume": 0.67
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "insulin_resistance"
+        },
+        {
+          "t": 3,
+          "state": "metabolic_tipping"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "DI_033",
+      "timepoint": "t4",
+      "entropy_H": 0.81,
+      "coherence_k": 0.32,
+      "emergence_eta": 0.58,
+      "bifurcation_B": 0.77,
+      "reducibility_R": 0.3
+    },
+    "multimodal_features": {
+      "genomics": {
+        "TCF7L2": 1,
+        "PRS_score": 0.66
+      },
+      "labs": {
+        "HbA1c": 7.2,
+        "FastingGlucose": 126.6
+      },
+      "imaging": {
+        "hepatic_fat": 0.59,
+        "pancreatic_volume": 0.74
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "insulin_resistance"
+        },
+        {
+          "t": 3,
+          "state": "metabolic_tipping"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "DI_034",
+      "timepoint": "t4",
+      "entropy_H": 0.66,
+      "coherence_k": 0.31,
+      "emergence_eta": 0.61,
+      "bifurcation_B": 0.86,
+      "reducibility_R": 0.28
+    },
+    "multimodal_features": {
+      "genomics": {
+        "TCF7L2": 1,
+        "PRS_score": 0.82
+      },
+      "labs": {
+        "HbA1c": 6.2,
+        "FastingGlucose": 156.5
+      },
+      "imaging": {
+        "hepatic_fat": 0.63,
+        "pancreatic_volume": 0.54
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "insulin_resistance"
+        },
+        {
+          "t": 3,
+          "state": "metabolic_tipping"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "DI_035",
+      "timepoint": "t4",
+      "entropy_H": 0.79,
+      "coherence_k": 0.24,
+      "emergence_eta": 0.69,
+      "bifurcation_B": 0.92,
+      "reducibility_R": 0.36
+    },
+    "multimodal_features": {
+      "genomics": {
+        "TCF7L2": 1,
+        "PRS_score": 0.71
+      },
+      "labs": {
+        "HbA1c": 8.5,
+        "FastingGlucose": 97.5
+      },
+      "imaging": {
+        "hepatic_fat": 0.42,
+        "pancreatic_volume": 0.78
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "insulin_resistance"
+        },
+        {
+          "t": 3,
+          "state": "metabolic_tipping"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "DI_036",
+      "timepoint": "t4",
+      "entropy_H": 0.76,
+      "coherence_k": 0.28,
+      "emergence_eta": 0.83,
+      "bifurcation_B": 0.95,
+      "reducibility_R": 0.14
+    },
+    "multimodal_features": {
+      "genomics": {
+        "TCF7L2": 1,
+        "PRS_score": 0.61
+      },
+      "labs": {
+        "HbA1c": 7.2,
+        "FastingGlucose": 150.2
+      },
+      "imaging": {
+        "hepatic_fat": 0.41,
+        "pancreatic_volume": 0.62
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "insulin_resistance"
+        },
+        {
+          "t": 3,
+          "state": "metabolic_tipping"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "DI_037",
+      "timepoint": "t4",
+      "entropy_H": 0.63,
+      "coherence_k": 0.37,
+      "emergence_eta": 0.72,
+      "bifurcation_B": 0.86,
+      "reducibility_R": 0.18
+    },
+    "multimodal_features": {
+      "genomics": {
+        "TCF7L2": 1,
+        "PRS_score": 0.67
+      },
+      "labs": {
+        "HbA1c": 6.5,
+        "FastingGlucose": 131.5
+      },
+      "imaging": {
+        "hepatic_fat": 0.31,
+        "pancreatic_volume": 0.77
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "insulin_resistance"
+        },
+        {
+          "t": 3,
+          "state": "metabolic_tipping"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "DI_038",
+      "timepoint": "t4",
+      "entropy_H": 0.82,
+      "coherence_k": 0.38,
+      "emergence_eta": 0.77,
+      "bifurcation_B": 0.74,
+      "reducibility_R": 0.28
+    },
+    "multimodal_features": {
+      "genomics": {
+        "TCF7L2": 1,
+        "PRS_score": 0.6
+      },
+      "labs": {
+        "HbA1c": 7.1,
+        "FastingGlucose": 137.9
+      },
+      "imaging": {
+        "hepatic_fat": 0.35,
+        "pancreatic_volume": 0.76
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "insulin_resistance"
+        },
+        {
+          "t": 3,
+          "state": "metabolic_tipping"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "DI_039",
+      "timepoint": "t4",
+      "entropy_H": 0.64,
+      "coherence_k": 0.42,
+      "emergence_eta": 0.74,
+      "bifurcation_B": 0.76,
+      "reducibility_R": 0.12
+    },
+    "multimodal_features": {
+      "genomics": {
+        "TCF7L2": 1,
+        "PRS_score": 0.7
+      },
+      "labs": {
+        "HbA1c": 7.4,
+        "FastingGlucose": 142.1
+      },
+      "imaging": {
+        "hepatic_fat": 0.51,
+        "pancreatic_volume": 0.42
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "insulin_resistance"
+        },
+        {
+          "t": 3,
+          "state": "metabolic_tipping"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "DI_040",
+      "timepoint": "t4",
+      "entropy_H": 0.74,
+      "coherence_k": 0.34,
+      "emergence_eta": 0.87,
+      "bifurcation_B": 0.88,
+      "reducibility_R": 0.3
+    },
+    "multimodal_features": {
+      "genomics": {
+        "TCF7L2": 1,
+        "PRS_score": 0.69
+      },
+      "labs": {
+        "HbA1c": 6.3,
+        "FastingGlucose": 118.0
+      },
+      "imaging": {
+        "hepatic_fat": 0.59,
+        "pancreatic_volume": 0.52
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "insulin_resistance"
+        },
+        {
+          "t": 3,
+          "state": "metabolic_tipping"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "DI_041",
+      "timepoint": "t4",
+      "entropy_H": 0.68,
+      "coherence_k": 0.43,
+      "emergence_eta": 0.53,
+      "bifurcation_B": 0.88,
+      "reducibility_R": 0.13
+    },
+    "multimodal_features": {
+      "genomics": {
+        "TCF7L2": 1,
+        "PRS_score": 0.61
+      },
+      "labs": {
+        "HbA1c": 8.0,
+        "FastingGlucose": 107.2
+      },
+      "imaging": {
+        "hepatic_fat": 0.5,
+        "pancreatic_volume": 0.64
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "insulin_resistance"
+        },
+        {
+          "t": 3,
+          "state": "metabolic_tipping"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "DI_042",
+      "timepoint": "t4",
+      "entropy_H": 0.8,
+      "coherence_k": 0.41,
+      "emergence_eta": 0.74,
+      "bifurcation_B": 0.79,
+      "reducibility_R": 0.18
+    },
+    "multimodal_features": {
+      "genomics": {
+        "TCF7L2": 1,
+        "PRS_score": 0.71
+      },
+      "labs": {
+        "HbA1c": 9.1,
+        "FastingGlucose": 129.3
+      },
+      "imaging": {
+        "hepatic_fat": 0.4,
+        "pancreatic_volume": 0.73
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "insulin_resistance"
+        },
+        {
+          "t": 3,
+          "state": "metabolic_tipping"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "DI_043",
+      "timepoint": "t4",
+      "entropy_H": 0.8,
+      "coherence_k": 0.4,
+      "emergence_eta": 0.84,
+      "bifurcation_B": 0.76,
+      "reducibility_R": 0.31
+    },
+    "multimodal_features": {
+      "genomics": {
+        "TCF7L2": 1,
+        "PRS_score": 0.74
+      },
+      "labs": {
+        "HbA1c": 6.4,
+        "FastingGlucose": 126.6
+      },
+      "imaging": {
+        "hepatic_fat": 0.65,
+        "pancreatic_volume": 0.69
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "insulin_resistance"
+        },
+        {
+          "t": 3,
+          "state": "metabolic_tipping"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "DI_044",
+      "timepoint": "t4",
+      "entropy_H": 0.78,
+      "coherence_k": 0.48,
+      "emergence_eta": 0.73,
+      "bifurcation_B": 0.93,
+      "reducibility_R": 0.15
+    },
+    "multimodal_features": {
+      "genomics": {
+        "TCF7L2": 1,
+        "PRS_score": 0.85
+      },
+      "labs": {
+        "HbA1c": 6.3,
+        "FastingGlucose": 129.1
+      },
+      "imaging": {
+        "hepatic_fat": 0.68,
+        "pancreatic_volume": 0.42
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "insulin_resistance"
+        },
+        {
+          "t": 3,
+          "state": "metabolic_tipping"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "DI_045",
+      "timepoint": "t4",
+      "entropy_H": 0.82,
+      "coherence_k": 0.45,
+      "emergence_eta": 0.83,
+      "bifurcation_B": 0.71,
+      "reducibility_R": 0.2
+    },
+    "multimodal_features": {
+      "genomics": {
+        "TCF7L2": 1,
+        "PRS_score": 0.84
+      },
+      "labs": {
+        "HbA1c": 7.9,
+        "FastingGlucose": 126.8
+      },
+      "imaging": {
+        "hepatic_fat": 0.68,
+        "pancreatic_volume": 0.59
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "insulin_resistance"
+        },
+        {
+          "t": 3,
+          "state": "metabolic_tipping"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "DI_046",
+      "timepoint": "t4",
+      "entropy_H": 0.68,
+      "coherence_k": 0.42,
+      "emergence_eta": 0.63,
+      "bifurcation_B": 0.83,
+      "reducibility_R": 0.12
+    },
+    "multimodal_features": {
+      "genomics": {
+        "TCF7L2": 1,
+        "PRS_score": 0.63
+      },
+      "labs": {
+        "HbA1c": 6.4,
+        "FastingGlucose": 137.5
+      },
+      "imaging": {
+        "hepatic_fat": 0.33,
+        "pancreatic_volume": 0.68
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "insulin_resistance"
+        },
+        {
+          "t": 3,
+          "state": "metabolic_tipping"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "DI_047",
+      "timepoint": "t4",
+      "entropy_H": 0.66,
+      "coherence_k": 0.21,
+      "emergence_eta": 0.51,
+      "bifurcation_B": 0.92,
+      "reducibility_R": 0.36
+    },
+    "multimodal_features": {
+      "genomics": {
+        "TCF7L2": 1,
+        "PRS_score": 0.76
+      },
+      "labs": {
+        "HbA1c": 7.0,
+        "FastingGlucose": 145.7
+      },
+      "imaging": {
+        "hepatic_fat": 0.65,
+        "pancreatic_volume": 0.65
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "insulin_resistance"
+        },
+        {
+          "t": 3,
+          "state": "metabolic_tipping"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "DI_048",
+      "timepoint": "t4",
+      "entropy_H": 0.79,
+      "coherence_k": 0.32,
+      "emergence_eta": 0.75,
+      "bifurcation_B": 0.92,
+      "reducibility_R": 0.24
+    },
+    "multimodal_features": {
+      "genomics": {
+        "TCF7L2": 1,
+        "PRS_score": 0.8
+      },
+      "labs": {
+        "HbA1c": 8.1,
+        "FastingGlucose": 130.7
+      },
+      "imaging": {
+        "hepatic_fat": 0.7,
+        "pancreatic_volume": 0.54
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "insulin_resistance"
+        },
+        {
+          "t": 3,
+          "state": "metabolic_tipping"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  },
+  {
+    "state_tensor": {
+      "patient_id": "DI_049",
+      "timepoint": "t4",
+      "entropy_H": 0.69,
+      "coherence_k": 0.29,
+      "emergence_eta": 0.59,
+      "bifurcation_B": 0.71,
+      "reducibility_R": 0.19
+    },
+    "multimodal_features": {
+      "genomics": {
+        "TCF7L2": 1,
+        "PRS_score": 0.78
+      },
+      "labs": {
+        "HbA1c": 6.2,
+        "FastingGlucose": 103.6
+      },
+      "imaging": {
+        "hepatic_fat": 0.4,
+        "pancreatic_volume": 0.44
+      }
+    },
+    "temporal_trajectory": {
+      "timeline": [
+        {
+          "t": 1,
+          "state": "stable"
+        },
+        {
+          "t": 2,
+          "state": "insulin_resistance"
+        },
+        {
+          "t": 3,
+          "state": "metabolic_tipping"
+        },
+        {
+          "t": 4,
+          "state": "critical_transition"
+        }
+      ]
+    }
+  }
+]
