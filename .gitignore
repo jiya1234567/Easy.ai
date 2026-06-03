@@ -17,3 +17,6 @@ tmp_old_repo/
 reports/*
 !reports/metrics/
 scratch/credentials.json
+
+# Local portable Node.js binary (do not commit)
+.node/
