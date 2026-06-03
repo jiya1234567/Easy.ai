@@ -20,3 +20,6 @@ scratch/credentials.json
 
 # Local portable Node.js binary (do not commit)
 .node/
+
+# Recursive backup snapshot (do not commit)
+backup_full_20260530/
