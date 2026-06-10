@@ -58,7 +58,7 @@ class MCPToolRegistry:
                 "tool": tool_name,
                 "status": "success",
                 "latency_ms": latency_ms,
-                "timestamp": datetime.datetime.utcnow().isoformat()
+                "timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat()
             })
             return {"status": "success", "result": result, "latency_ms": latency_ms}
         except Exception as e:
@@ -67,7 +67,7 @@ class MCPToolRegistry:
                 "tool": tool_name,
                 "status": "error",
                 "error": str(e),
-                "timestamp": datetime.datetime.utcnow().isoformat()
+                "timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat()
             })
             return {"status": "error", "message": str(e)}
 
@@ -97,7 +97,7 @@ def tool_health_biomarker_scan(user_id: str, markers: list = None) -> dict:
     markers = markers or ["heartRate", "glucose", "hrv", "spo2"]
     return {
         "user_id": user_id,
-        "timestamp": datetime.datetime.utcnow().isoformat(),
+        "timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat(),
         "biomarkers": {
             "heartRate": f"{random.randint(60, 95)} bpm",
             "glucose": f"{random.randint(80, 120)} mg/dL",
@@ -245,7 +245,7 @@ class OMEGAAutonomousAgent:
             "intent": intent,
             "steps": len(plan),
             "success_rate": sum(1 for s in results if s.status == "success") / len(results),
-            "timestamp": datetime.datetime.utcnow().isoformat()
+            "timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat()
         }
         self.memory.append(session)
 

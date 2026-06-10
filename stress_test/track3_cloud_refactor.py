@@ -61,7 +61,7 @@ def endpoint_status() -> dict:
         "agents_active": random.randint(1, 10),
         "queue_depth": random.randint(0, 50),
         "avg_latency_ms": round(random.uniform(120, 450), 1),
-        "timestamp": datetime.datetime.utcnow().isoformat()
+        "timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat()
     }
 
 def endpoint_agent_execute(payload: dict, tenant_id: str) -> dict:
@@ -156,7 +156,7 @@ class TenantIsolationEngine:
             self._violations.append({
                 "requesting": requesting_tenant,
                 "target": target_tenant,
-                "timestamp": datetime.datetime.utcnow().isoformat(),
+                "timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat(),
                 "blocked": True
             })
             return False

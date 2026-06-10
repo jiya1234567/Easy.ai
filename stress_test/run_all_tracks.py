@@ -145,7 +145,7 @@ def save_report(results: list[dict], grade: str, score: float, duration: float):
     report = {
         "report_type": "ADK_STRESS_TEST",
         "version": "3.0.0",
-        "timestamp": datetime.datetime.utcnow().isoformat(),
+        "timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat(),
         "duration_seconds": round(duration, 2),
         "overall_grade": grade,
         "composite_score": score,

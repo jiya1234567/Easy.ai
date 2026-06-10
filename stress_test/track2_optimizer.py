@@ -120,7 +120,7 @@ class MultiStepReasoningEngine:
         return step
 
     def run_chain(self, chain: ReasoningChain, inject_failures: bool = False) -> ReasoningChain:
-        chain.started_at = datetime.datetime.utcnow().isoformat()
+        chain.started_at = datetime.datetime.now(datetime.timezone.utc).isoformat()
         total_start = time.time()
 
         completed = 0
@@ -141,7 +141,7 @@ class MultiStepReasoningEngine:
             step = self._execute_step(step, inject_failure=inject_failures)
             completed += 1
 
-        chain.completed_at = datetime.datetime.utcnow().isoformat()
+        chain.completed_at = datetime.datetime.now(datetime.timezone.utc).isoformat()
         chain.total_latency_ms = round((time.time() - total_start) * 1000, 2)
         return chain
 
@@ -184,7 +184,7 @@ class SystemPromptRefiner:
             "case": case_name,
             "failure_type": failure_type,
             "step_id": step_id,
-            "timestamp": datetime.datetime.utcnow().isoformat()
+            "timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat()
         })
 
     def analyse(self) -> dict:
