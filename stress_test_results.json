@@ -1,0 +1,47 @@
+[
+    {
+        "test_name": "TSLA Breakout Prediction",
+        "domain": "finance",
+        "passed": true
+    },
+    {
+        "test_name": "Tipping Point Detection",
+        "domain": "climate",
+        "passed": true
+    },
+    {
+        "test_name": "Harmful Mutation Detection",
+        "domain": "genomics",
+        "passed": true
+    },
+    {
+        "test_name": "LiDAR Obstacle Detection",
+        "domain": "robotics",
+        "passed": true
+    },
+    {
+        "test_name": "EEG Seizure Detection",
+        "domain": "neuroscience",
+        "passed": true
+    },
+    {
+        "test_name": "Qubit Coherence Optimization",
+        "domain": "quantum",
+        "passed": true
+    },
+    {
+        "test_name": "Brute Force Attack Detection",
+        "domain": "cybersecurity",
+        "passed": true
+    },
+    {
+        "test_name": "Path Planning with Obstacles",
+        "domain": "autonomous_vehicles",
+        "passed": true
+    },
+    {
+        "test_name": "Climate-Finance Correlation",
+        "domain": "multimodal",
+        "passed": true
+    }
+]
