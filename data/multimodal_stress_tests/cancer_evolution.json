@@ -1,0 +1,59 @@
+{
+  "domain": "cancer_evolution",
+  "patient_id": "SIM-001",
+  "description": "Stage 3 NSCLC tumour progression over 15 days without treatment",
+  "cat_layer": "Clonal density + Ki67 proliferation index + hypoxia gradient",
+  "chef_layer": "Resistance emergence prediction + VEGF angiogenesis pathway",
+  "agent_recommendations": ["EGFR inhibition trial", "Anti-VEGF combination", "Immunotherapy eligibility screen"],
+  "frames": [
+    {
+      "time": "day_0",
+      "tumor_cells": 12000,
+      "ki67": 0.12,
+      "hypoxia": 0.11,
+      "pd_l1": 0.20,
+      "t_cell_infiltration": 0.45,
+      "angiogenesis_score": 0.18,
+      "state": "stable",
+      "state_tensor": {"entropy": 0.21, "coherence": 0.84, "emergence": 0.15, "bifurcation": 0.08, "reducibility": 0.79}
+    },
+    {
+      "time": "day_5",
+      "tumor_cells": 21000,
+      "ki67": 0.38,
+      "hypoxia": 0.32,
+      "pd_l1": 0.42,
+      "t_cell_infiltration": 0.31,
+      "angiogenesis_score": 0.39,
+      "state": "early_expansion",
+      "state_tensor": {"entropy": 0.42, "coherence": 0.67, "emergence": 0.38, "bifurcation": 0.19, "reducibility": 0.58}
+    },
+    {
+      "time": "day_10",
+      "tumor_cells": 33000,
+      "ki67": 0.61,
+      "hypoxia": 0.54,
+      "pd_l1": 0.67,
+      "t_cell_infiltration": 0.18,
+      "angiogenesis_score": 0.61,
+      "state": "accelerating",
+      "state_tensor": {"entropy": 0.61, "coherence": 0.48, "emergence": 0.55, "bifurcation": 0.34, "reducibility": 0.39}
+    },
+    {
+      "time": "day_15",
+      "tumor_cells": 46000,
+      "ki67": 0.82,
+      "hypoxia": 0.71,
+      "pd_l1": 0.88,
+      "t_cell_infiltration": 0.08,
+      "angiogenesis_score": 0.84,
+      "state": "critical_transition",
+      "state_tensor": {"entropy": 0.79, "coherence": 0.28, "emergence": 0.72, "bifurcation": 0.61, "reducibility": 0.21}
+    }
+  ],
+  "expected_omega_behaviour": {
+    "cat": "Detects increasing clonal density and Ki67 proliferation index crossing critical threshold at day 10",
+    "chef": "Predicts resistance emergence driven by hypoxia-induced VEGF angiogenesis and PD-L1 immune evasion",
+    "agents": "Recommend immediate EGFR pathway inhibition + anti-PD-1 combination; flag immune desert pattern"
+  }
+}
