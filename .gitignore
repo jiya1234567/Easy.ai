@@ -23,3 +23,9 @@ scratch/credentials.json
 
 # Recursive backup snapshot (do not commit)
 backup_full_20260530/
+
+# OMEGA Harness — runtime agent memory (auto-created, never commit)
+memory/
+
+# omega_harness Dash prototype pycache
+omega_harness/__pycache__/
