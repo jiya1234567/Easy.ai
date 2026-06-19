@@ -39,12 +39,23 @@ def run_agent_panel(tab_name: str, query: str = None, context_data: dict = None)
     st.markdown("####  OMEGA Harness  Mistral  Phi3 Debate")
 
     if query is None:
-        query = st.text_area("Mission Intent", placeholder="What should this agent analyze?", key=f"hq_{tab_name}")
-
+        query = st.text_area("Mission Intent (Hypothesis/Goal)", placeholder="What should this agent analyze?", key=f"hq_{tab_name}")
+        
+    context_json_str = st.text_area("Context Data (Paste JSON here)", placeholder='{"sensor_x": 912, "sensor_y": 0.03, ...}', key=f"ctx_{tab_name}")
+    
     if st.button(" Run Agent Harness", key=f"hbtn_{tab_name}"):
         with st.spinner("Mistral reasoning... Phi3 challenging... Arbiter deciding..."):
+            
+            # Parse the JSON if the user pasted any
+            parsed_context = context_data or {}
+            if context_json_str.strip():
+                try:
+                    parsed_context = json.loads(context_json_str)
+                except json.JSONDecodeError:
+                    st.error("Invalid JSON format in Context Data. Proceeding with raw text.")
+                    query += f"\n\nRaw Data:\n{context_json_str}"
             try:
-                result = agent.run(query, context_data or {})
+                result = agent.run(query, parsed_context)
                 col1, col2 = st.columns(2)
                 with col1:
                     st.markdown("**Primary  Mistral**")

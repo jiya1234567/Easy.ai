@@ -25,12 +25,21 @@ Usage:
 from __future__ import annotations
 
 import json
+import os
 import time
 import uuid
 import hashlib
 from pathlib import Path
 from typing import Any, Callable, Optional
 from dataclasses import dataclass, field
+
+# ── GPU Safety: prevent CUDA crash on incompatible drivers ────────────────────
+# Set OLLAMA_FORCE_CPU=false in .env only if your GPU + drivers are confirmed
+# working with Ollama. Default is True to avoid the CUDA stack-overrun crash.
+_FORCE_CPU = os.environ.get("OLLAMA_FORCE_CPU", "true").lower() != "false"
+if _FORCE_CPU:
+    # Suppress CUDA device visibility before ollama module loads its client
+    os.environ["CUDA_VISIBLE_DEVICES"] = ""
 
 import ollama
 
@@ -44,24 +53,35 @@ CHALLENGER_MODEL = "phi3"
 
 _ollama_client = ollama.Client()
 
+# Base options applied to every chat call.
+# num_gpu=0 forces CPU-only inference, avoiding CUDA stack-overrun crashes
+# on machines where the GPU driver is incompatible with Ollama's CUDA build.
+# Remove / set OLLAMA_FORCE_CPU=false in .env once drivers are confirmed stable.
+_BASE_OPTIONS: dict = {"num_gpu": 0} if _FORCE_CPU else {}
+
 _OLLAMA_STUB = (
-    "[Ollama offline] Local LLM is not reachable. "
-    "Ensure Ollama is running (`ollama serve`) and the "
-    "'{model}' model is pulled (`ollama pull {model}`)."
+    "[Ollama offline] Local LLM not reachable.\n"
+    "Fix options:\n"
+    "  1. Run: ollama serve   (if not already running)\n"
+    "  2. Pull: ollama pull {model}\n"
+    "  3. GPU crash? This harness already forces CPU mode (OLLAMA_FORCE_CPU=true).\n"
+    "     If the error persists, restart Ollama: taskkill /F /IM ollama.exe && ollama serve\n"
+    "Error detail: {{exc}}"
 )
 
 
 def is_ollama_running() -> bool:
     """Return True if the local Ollama daemon is reachable."""
     try:
-        _ollama_client.list()   # lightweight list-models call
+        _ollama_client.list()
         return True
     except Exception:
         return False
 
 
 def _llm_call(model: str, system: str, user: str, temperature: float = 0.4) -> str:
-    """Single LLM call with graceful fallback if Ollama is offline."""
+    """Single LLM call — CPU-forced, with graceful fallback if Ollama is offline."""
+    opts = {**_BASE_OPTIONS, "temperature": temperature}
     try:
         response = _ollama_client.chat(
             model=model,
@@ -69,25 +89,26 @@ def _llm_call(model: str, system: str, user: str, temperature: float = 0.4) -> s
                 {"role": "system", "content": system},
                 {"role": "user",   "content": user},
             ],
-            options={"temperature": temperature},
+            options=opts,
         )
         return response["message"]["content"]
     except Exception as exc:
-        return _OLLAMA_STUB.format(model=model) + f"  (error: {exc})"
+        return _OLLAMA_STUB.format(model=model).replace("{exc}", str(exc))
 
 
 def _llm_json(model: str, system: str, user: str, temperature: float = 0.3) -> dict[str, Any]:
     """LLM call that enforces JSON output with retry and graceful fallback."""
     import re
+    opts = {**_BASE_OPTIONS, "temperature": temperature}
     messages = [
         {"role": "system", "content": system + "\n\nYou MUST respond with valid JSON only. No prose, no markdown fences."},
         {"role": "user",   "content": user},
     ]
     for attempt in range(3):
         try:
-            response = _ollama_client.chat(model=model, messages=messages, options={"temperature": temperature})
+            response = _ollama_client.chat(model=model, messages=messages, options=opts)
         except Exception as exc:
-            return {"error": _OLLAMA_STUB.format(model=model), "detail": str(exc)}
+            return {"error": _OLLAMA_STUB.format(model=model).replace("{exc}", str(exc))}
         raw = response["message"]["content"].strip()
         raw = re.sub(r"^```(?:json)?\s*|\s*```$", "", raw, flags=re.DOTALL).strip()
         try:

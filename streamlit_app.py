@@ -15,7 +15,7 @@ from vertexai.generative_models import GenerativeModel, GenerationConfig
 from mistralai.client import Mistral
 from intelligence.climate_manifold import ClimateManifold
 from omega_bridge import run_agent_panel, memory_dashboard
-
+from intelligence.edge_intelligence_core import EdgeIntelligenceModule
 # --- CONFIGURATION ---
 st.set_page_config(
     page_title="Buddy's Toolset by A&P Phillips | OMEGA-CORE",
@@ -280,6 +280,10 @@ if 'metabolic_data' not in st.session_state:
     st.session_state.metabolic_data = {"bp": "120/80", "sugar": 98, "pulse": 72}
 if 'eye_scan_fidelity' not in st.session_state:
     st.session_state.eye_scan_fidelity = "N/A"
+if 'edge_module' not in st.session_state:
+    st.session_state.edge_module = EdgeIntelligenceModule(memory_path="memory")
+if 'edge_live_mode' not in st.session_state:
+    st.session_state.edge_live_mode = False
 
 st.divider()
 
@@ -686,7 +690,15 @@ if st.session_state.active_tab == "ðŸ§  ASI CORE":
     with col_core2:
         st.subheader("ðŸ“¡ Live Tuning & Safeties")
         with st.container(border=True):
-            st.toggle("LIVE MODE (Oracle Feeds)", value=True)
+            live_mode_toggled = st.toggle("LIVE MODE (Oracle Feeds) & EDGE PARALLEL COLONY", value=st.session_state.edge_live_mode)
+            if live_mode_toggled != st.session_state.edge_live_mode:
+                st.session_state.edge_live_mode = live_mode_toggled
+                st.session_state.edge_module.toggle_live_mode(live_mode_toggled)
+                if live_mode_toggled:
+                    st.success("âœ… Live Sensor Loop & Parallel Colony STARTED.")
+                else:
+                    st.warning("â›” Live Sensor Loop STOPPED.")
+                    
             st.toggle("Enable Emergent Node Interpretability", value=True)
             st.toggle("Active Poisoning Shield", value=True)
             st.toggle("Multi-Agent Arbitration", value=True)
@@ -2413,7 +2425,7 @@ if st.session_state.active_tab == "🏙️ SMART CITY TWIN":
             st.dataframe(pd.DataFrame(impact_rows), width='stretch', hide_index=True)
 
 # 19. QUANTUM FEEDBACK
-if st.session_state.active_tab == "🧬 QUANTUM FEEDBACK":
+if st.session_state.active_tab == "ðŸ§¬ QUANTUM FEEDBACK":
     st.header("🧬 Quantum Patient Bio-Feedback")
     st.caption("Step-22: Real-time High-Fidelity Biological Simulation")
 
@@ -2632,7 +2644,7 @@ if st.session_state.active_tab == "🌍 GLOBAL MONITORING":
     run_agent_panel('global_monitoring')
 
 # 22. ROBOTICS COMMAND
-if st.session_state.active_tab == "🤖 ROBOTICS COMMAND":
+if st.session_state.active_tab == "ðŸ¦¾ ROBOTICS COMMAND":
     st.header("🤖 Robotics Command & Humanoid Control")
     st.caption("OMEGA-CORE Robotics Division | Cosmo-Humanoid Interface")
 

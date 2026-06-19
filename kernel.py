@@ -36,6 +36,16 @@ class CognitiveMemory:
         bias = "Aggressive" if rate > 0.6 else "Defensive" if rate < 0.4 else "Balanced"
         return bias, rate
 
+def record_outcome(episode_id, outcome):
+    mem = CognitiveMemory()
+    for entry in mem.log:
+        if entry.get("id") == episode_id:
+            entry["out"] = outcome
+            with open(mem.file, "w") as f:
+                json.dump(mem.log, f, indent=2)
+            return True
+    return False
+
 def run_psi_autopilot(intent, raw_paste, brain_mode, api_key, is_multi, chat_msg=None, image_bytes=None, episode_data=None):
     dna = load_dna()
     start_time = time.time()
