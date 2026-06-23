@@ -14,12 +14,12 @@ import vertexai
 from vertexai.generative_models import GenerativeModel, GenerationConfig
 from mistralai.client import Mistral
 from intelligence.climate_manifold import ClimateManifold
-from omega_bridge import run_agent_panel, memory_dashboard
+from omega_bridge_v2 import run_agent_panel, memory_dashboard, reality_validation_panel, colony_panel
 from intelligence.edge_intelligence_core import EdgeIntelligenceModule
 # --- CONFIGURATION ---
 st.set_page_config(
     page_title="Buddy's Toolset by A&P Phillips | OMEGA-CORE",
-    page_icon="ðŸ”¬",
+    page_icon="",
     layout="wide",
     initial_sidebar_state="expanded",
 )
@@ -110,7 +110,7 @@ st.markdown("""
 
 # --- SIDEBAR ---
 with st.sidebar:
-    st.title("ðŸ”¬ OMEGA-CORE")
+    st.title(" OMEGA-CORE")
     st.caption("SYSTEM VERSION: 3.0 (Antigravity-Native)")
     st.subheader("Buddy's Toolset by A&P Phillips")
     
@@ -127,14 +127,14 @@ with st.sidebar:
     st.divider()
 
     # Gemini Key
-    gemini_key_input = st.text_input("ðŸ”‘ Gemini API Key", type="password", value=st.session_state.gemini_api_key, help="Required for Gemini Factory missions.")
+    gemini_key_input = st.text_input(" Gemini API Key", type="password", value=st.session_state.gemini_api_key, help="Required for Gemini Factory missions.")
     if gemini_key_input:
         st.session_state.gemini_api_key = gemini_key_input
         os.environ["GEMINI_API_KEY"] = gemini_key_input
         API_KEY = gemini_key_input
 
     # Mistral Key
-    mistral_key_input = st.text_input("ðŸ”‘ Mistral API Key", type="password", value=st.session_state.mistral_api_key, help="Required for Native Mistral missions.")
+    mistral_key_input = st.text_input(" Mistral API Key", type="password", value=st.session_state.mistral_api_key, help="Required for Native Mistral missions.")
     if mistral_key_input:
         st.session_state.mistral_api_key = mistral_key_input
         os.environ["MISTRAL_API_KEY"] = mistral_key_input
@@ -146,7 +146,7 @@ with st.sidebar:
     
     st.divider()
     
-    st.markdown("### ðŸ“· Visual Ingress")
+    st.markdown("###  Visual Ingress")
     
     ingress_method = st.radio("Capture Method", ["Live Camera", "Upload Scan"], horizontal=True, label_visibility="collapsed")
     optical_ingress = None
@@ -169,9 +169,9 @@ with st.sidebar:
         st.rerun()
 
     st.divider()
-    st.subheader("ðŸ—‘ï¸ Data Custodian")
+    st.subheader(" Data Custodian")
     if st.checkbox("Confirm Data Purge"):
-        if st.button("ðŸ—‘ï¸ PURGE ALL REPORTS"):
+        if st.button(" PURGE ALL REPORTS"):
             import glob
             files = glob.glob("reports/metrics/*.json")
             for f in files:
@@ -181,21 +181,21 @@ with st.sidebar:
             st.rerun()
 
     st.divider()
-    st.subheader("ðŸ”‘ Alert Credentials")
-    with st.expander("âš™ï¸ Configure Email & SMS", expanded=False):
-        st.caption("Saved to .env file â€” never sent anywhere else.")
+    st.subheader(" Alert Credentials")
+    with st.expander(" Configure Email & SMS", expanded=False):
+        st.caption("Saved to .env file  never sent anywhere else.")
 
-        st.markdown("**ðŸ“§ Email â€” via SendGrid (Recommended â€” Free)**")
-        st.caption("ðŸ”— Get free key: sendgrid.com/free â†’ Settings â†’ API Keys â†’ Create (100 emails/day free)")
+        st.markdown("** Email  via SendGrid (Recommended  Free)**")
+        st.caption(" Get free key: sendgrid.com/free  Settings  API Keys  Create (100 emails/day free)")
         env_sg_key      = st.text_input("SendGrid API Key", value=os.environ.get("SENDGRID_API_KEY",""), key="cfg_sg", type="password",
                                          placeholder="SG.xxxxxxxxxxxxxxxxxxxx")
         env_email_from  = st.text_input("Your Verified Sender Email", value=os.environ.get("ALERT_EMAIL_FROM","aejphillips@outlook.com"), key="cfg_email_from",
-                                         help="Must be verified in SendGrid: Settings â†’ Sender Authentication")
+                                         help="Must be verified in SendGrid: Settings  Sender Authentication")
         env_email_to    = st.text_input("Send Alerts To", value=os.environ.get("ALERT_EMAIL_TO","aejphillips@outlook.com"), key="cfg_email_to")
         env_email_pass  = st.text_input("Gmail App Password (optional fallback)", type="password", value=os.environ.get("ALERT_EMAIL_PASS",""), key="cfg_email_pass",
                                          help="Only needed if not using SendGrid. Gmail only: myaccount.google.com/apppasswords")
 
-        st.markdown("**ðŸ“± SMS (Twilio â€” free at twilio.com)**")
+        st.markdown("** SMS (Twilio  free at twilio.com)**")
         env_twilio_sid  = st.text_input("Twilio Account SID",  value=os.environ.get("TWILIO_ACCOUNT_SID",""), key="cfg_sid", type="password")
         env_twilio_tok  = st.text_input("Twilio Auth Token",   value=os.environ.get("TWILIO_AUTH_TOKEN",""),  key="cfg_tok", type="password")
         env_twilio_from = st.text_input("Twilio From Number",  value=os.environ.get("TWILIO_FROM_NUMBER",""), key="cfg_from",
@@ -203,9 +203,9 @@ with st.sidebar:
         env_twilio_to   = st.text_input("Your Mobile Number",  value=os.environ.get("TWILIO_TO_NUMBER","+61"), key="cfg_to",
                                          placeholder="+61412345678")
 
-        if st.button("ðŸ’¾ SAVE CREDENTIALS TO .env"):
+        if st.button(" SAVE CREDENTIALS TO .env"):
             env_lines = [
-                "# OMEGA-CORE â€” Auto-saved credentials\n",
+                "# OMEGA-CORE  Auto-saved credentials\n",
                 f"GEMINI_API_KEY={os.environ.get('GEMINI_API_KEY','')}\n",
                 f"SENDGRID_API_KEY={env_sg_key}\n",
                 "ALERT_SMTP_HOST=smtp.gmail.com\n",
@@ -228,13 +228,13 @@ with st.sidebar:
             os.environ["TWILIO_AUTH_TOKEN"]   = env_twilio_tok
             os.environ["TWILIO_FROM_NUMBER"]  = env_twilio_from
             os.environ["TWILIO_TO_NUMBER"]    = env_twilio_to
-            st.success("âœ… Credentials saved to .env and active immediately!")
+            st.success(" Credentials saved to .env and active immediately!")
 
-        st.caption("ðŸ“Œ Twilio free trial: twilio.com/try-twilio (AUD $20 credit, ~200 SMS)")
+        st.caption(" Twilio free trial: twilio.com/try-twilio (AUD $20 credit, ~200 SMS)")
 
 
 # --- MAIN UI ---
-st.title("ðŸš€ Singularity Dashboard")
+st.title(" Singularity Dashboard")
 st.caption(f"Omega Clearance: aejphillips@outlook.com | {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
 
 st.markdown("### Domain Configuration")
@@ -289,16 +289,16 @@ st.divider()
 
 # --- 10 INTERCONNECTED TABS (Command Center Style) ---
 if 'active_tab' not in st.session_state:
-    st.session_state.active_tab = "ðŸ“– HOW TO USE"
+    st.session_state.active_tab = " HOW TO USE"
 
 tabs_list = [
-    "ðŸ“– HOW TO USE", "ðŸš€ UNIFIED BENCHMARK", "ðŸ§  ASI CORE", "ðŸŽ›ï¸ COMMAND CENTER", "âš™ï¸ FACTORY", "ðŸ“Š ASSET RADAR", "ðŸ“ˆ BACKTEST", 
-    "ðŸŒ WORLD MODEL", "ðŸ›ï¸ HIERARCHY", "ðŸ§¬ DNA EDITOR", "ðŸ§ª MOLECULAR DOCKING", "ðŸ‘¥ DIGITAL TWIN",
-    "ðŸ©º HEALTH PROTOCOL", "ðŸ”¬ RESEARCH DEVICE", "ðŸ”„ EVOLUTION", "ðŸŒŒ VISUAL MANIFOLD", "ðŸš€ SINGULARITY FEED", 
-    "ðŸ‘¨â€ðŸ”¬ SCIENTIFIC DISCOVERY", "ðŸŒŒ DISCOVERY DASHBOARD", "ðŸ” ADVERSARIAL LAB", "ðŸ™ï¸ SMART CITY TWIN", 
-    "ðŸ§¬ QUANTUM FEEDBACK", "ðŸšœ AGRICULTURE ASI", "ðŸŒªï¸ WEATHER MANIFOLD", "ðŸŒŒ GLOBAL MONITORING", "ðŸ¦¾ ROBOTICS COMMAND", 
-    "ðŸ“Š REPORTS ENGINE", "ðŸ¥ HEALTH INSURANCE", "ðŸ§  INFERENCE DOMAIN", "â˜ï¸ COMMUNITY HUB", "ðŸ”® ASI PREDICTION KERNEL", "ðŸ“‘ SOP / MANUAL", "ðŸ”¬ OMEGA CORE SYNC", "ðŸ¤– ASSI RESEARCH LAB", "ðŸ§¬ MECHANISTIC REPRODUCIBILITY",
-    "ðŸ† 25 OMEGA TESTS", "ðŸ§® REDUCIBILITY SANDBOX", "ðŸ©º CLINICAL STRESS TEST"
+    " HOW TO USE", " UNIFIED BENCHMARK", " ASI CORE", " COMMAND CENTER", " FACTORY", " ASSET RADAR", " BACKTEST", 
+    " WORLD MODEL", " HIERARCHY", " DNA EDITOR", " MOLECULAR DOCKING", " DIGITAL TWIN",
+    " HEALTH PROTOCOL", " RESEARCH DEVICE", " EVOLUTION", " VISUAL MANIFOLD", " SINGULARITY FEED", 
+    " SCIENTIFIC DISCOVERY", " DISCOVERY DASHBOARD", " ADVERSARIAL LAB", " SMART CITY TWIN", 
+    " QUANTUM FEEDBACK", " AGRICULTURE ASI", " WEATHER MANIFOLD", " GLOBAL MONITORING", " ROBOTICS COMMAND", 
+    " REPORTS ENGINE", " HEALTH INSURANCE", " INFERENCE DOMAIN", " COMMUNITY HUB", " ASI PREDICTION KERNEL", " SOP / MANUAL", " OMEGA CORE SYNC", " ASSI RESEARCH LAB", " MECHANISTIC REPRODUCIBILITY",
+    " 25 OMEGA TESTS", " REDUCIBILITY SANDBOX", " CLINICAL STRESS TEST"
 ]
 
 # Grid Rendering (5 columns)
@@ -314,29 +314,29 @@ for chunk_idx in range(0, len(tabs_list), 5):
 st.divider()
 
 # 1. HOW TO USE
-if st.session_state.active_tab == "ðŸ“– HOW TO USE":
+if st.session_state.active_tab == " HOW TO USE":
     st.header("Overview & Protocol")
     
     col_feat1, col_feat2 = st.columns(2)
     with col_feat1:
         with st.container(border=True):
-            st.markdown("âœ… **Backtesting Engine** `IMPLEMENTED`")
+            st.markdown(" **Backtesting Engine** `IMPLEMENTED`")
             st.caption("Historical accuracy validation and hit rate tracking.")
         with st.container(border=True):
-            st.markdown("âœ… **Transparency Layer** `IMPLEMENTED`")
+            st.markdown(" **Transparency Layer** `IMPLEMENTED`")
             st.caption("Neural logs and data gap identification.")
             
     with col_feat2:
         with st.container(border=True):
-            st.markdown("âœ… **Decision Engine** `IMPLEMENTED`")
+            st.markdown(" **Decision Engine** `IMPLEMENTED`")
             st.caption("Buy/Hold/Sell logic with grounded rationale.")
         with st.container(border=True):
-            st.markdown("âœ… **Mobile Optimization** `IMPLEMENTED`")
+            st.markdown(" **Mobile Optimization** `IMPLEMENTED`")
             st.caption("Responsive sidebar and touch-friendly UI.")
 
     st.markdown("<br>", unsafe_allow_html=True)
     with st.container(border=True):
-        st.subheader("ðŸ“– Singularity Lab Protocol (7 Steps)")
+        st.subheader(" Singularity Lab Protocol (7 Steps)")
         st.markdown("""
         **1. Define Domain & Intent:** Tell the system what to analyze (e.g. 'Finance', 'Analyze TSLA for breakout').
         **2. Deterministic Grounding:** System validates raw sensor/API telemetry before the LLM enters.
@@ -347,9 +347,9 @@ if st.session_state.active_tab == "ðŸ“– HOW TO USE":
         **7. Reality Anchor Logging:** Actual world states are logged to prevent narrative drift.
         """)
 
-    # â”€â”€ ARCHITECTURE DIAGRAMS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    #  ARCHITECTURE DIAGRAMS 
     st.markdown("<br>", unsafe_allow_html=True)
-    st.markdown("### ðŸ—ºï¸ Universal Lab â€” Architecture Flow Maps")
+    st.markdown("###  Universal Lab  Architecture Flow Maps")
     st.caption("Live interactive diagrams of the complete OMEGA-CORE system topology.")
 
     MERMAID_HTML = """
@@ -408,14 +408,14 @@ if st.session_state.active_tab == "ðŸ“– HOW TO USE":
 
       <!-- DIAGRAM 1: Core Architecture -->
       <div class="diagram-card">
-        <div class="diagram-title">âš™ï¸ Diagram 1 â€” Core 3-Layer System Architecture</div>
+        <div class="diagram-title"> Diagram 1  Core 3-Layer System Architecture</div>
         <div class="diagram-sub">How streamlit_app.py, kernel.py, and server.ts communicate with each other and the cloud.</div>
         <div class="mermaid">
 graph TD
-    A["ðŸ–¥ï¸ streamlit_app.py<br/>UI & Frontend Layer"] <-->|"API calls / process exec"| B["ðŸŸ¢ server.ts<br/>Node / Vite Backend"]
-    A <-->|"Direct function calls"| C["ðŸ§  kernel.py<br/>Cognitive Execution Kernel"]
-    B <-->|"BigQuery REST APIs"| D["â˜ï¸ Google Cloud Platform<br/>External APIs & Storage"]
-    C <-->|"Reads / Writes JSON"| E["ðŸ“„ DASHBOARD.json<br/>rules_fixed.json"]
+    A[" streamlit_app.py<br/>UI & Frontend Layer"] <-->|"API calls / process exec"| B[" server.ts<br/>Node / Vite Backend"]
+    A <-->|"Direct function calls"| C[" kernel.py<br/>Cognitive Execution Kernel"]
+    B <-->|"BigQuery REST APIs"| D[" Google Cloud Platform<br/>External APIs & Storage"]
+    C <-->|"Reads / Writes JSON"| E[" DASHBOARD.json<br/>rules_fixed.json"]
     D <-->|"Telemetry persistence"| E
 
     style A fill:#1f6feb,stroke:#388bfd,color:#fff
@@ -428,21 +428,21 @@ graph TD
 
       <!-- DIAGRAM 2: Factory Pipeline -->
       <div class="diagram-card">
-        <div class="diagram-title">ðŸ­ Diagram 2 â€” Factory â†’ Asset Radar â†’ Reports Engine Pipeline</div>
+        <div class="diagram-title"> Diagram 2  Factory  Asset Radar  Reports Engine Pipeline</div>
         <div class="diagram-sub">The full user journey from mission intent entry to structured investor table output.</div>
         <div class="mermaid">
 sequenceDiagram
-    participant U as ðŸ‘¤ User
-    participant F as âš™ï¸ FACTORY Tab
-    participant LLM as ðŸ¤– Gemini / Mistral API
-    participant M as ðŸ“ reports/metrics/ JSON
-    participant R as ðŸ“Š REPORTS ENGINE
-    participant AR as ðŸ“¡ ASSET RADAR
+    participant U as  User
+    participant F as  FACTORY Tab
+    participant LLM as  Gemini / Mistral API
+    participant M as  reports/metrics/ JSON
+    participant R as  REPORTS ENGINE
+    participant AR as  ASSET RADAR
 
-    U->>F: Enters intent & ticker (e.g. TSLA) â†’ clicks Execute
+    U->>F: Enters intent & ticker (e.g. TSLA)  clicks Execute
     F->>LLM: Sends domain instructions & analysis variables
     LLM-->>F: Returns structured JSON analysis
-    F->>M: Auto-saves â†’ reports/metrics/tsla.json
+    F->>M: Auto-saves  reports/metrics/tsla.json
     F->>R: Switches active_tab & triggers st.rerun()
     Note over R: Renders JSON file list & zip export
     U->>AR: Selects asset from dropdown
@@ -453,19 +453,19 @@ sequenceDiagram
 
       <!-- DIAGRAM 3: ADK Stress Test -->
       <div class="diagram-card">
-        <div class="diagram-title">ðŸ¤– Diagram 3 â€” ADK Stress Test Suite Workflow</div>
+        <div class="diagram-title"> Diagram 3  ADK Stress Test Suite Workflow</div>
         <div class="diagram-sub">How the 3 ADK stress tracks validate MCP registry, agent optimization, and GCP readiness.</div>
         <div class="mermaid">
 graph LR
-    CC["ðŸŽ›ï¸ COMMAND CENTER<br/>ADK STRESS TEST button"] --> T1
+    CC[" COMMAND CENTER<br/>ADK STRESS TEST button"] --> T1
     CC --> T2
     CC --> T3
 
-    T1["Track 1: ADK Agent Build<br/>MCP Registry Â· 5 Tools<br/>5 Domain Intents"] --> SC
+    T1["Track 1: ADK Agent Build<br/>MCP Registry  5 Tools<br/>5 Domain Intents"] --> SC
     T2["Track 2: Agent Optimize<br/>Edge Case Injection<br/>Auto Prompt Refinement"] --> SC
-    T3["Track 3: Cloud Refactor<br/>8 API Endpoints<br/>Tenant Isolation Â· Billing"] --> SC
+    T3["Track 3: Cloud Refactor<br/>8 API Endpoints<br/>Tenant Isolation  Billing"] --> SC
 
-    SC["ðŸ“Š Master Scorecard<br/>Grade A | 100/100<br/>3/3 Tracks Passed"] --> UI["âœ… Live UI Scorecard<br/>Rendered in Dashboard"]
+    SC[" Master Scorecard<br/>Grade A | 100/100<br/>3/3 Tracks Passed"] --> UI[" Live UI Scorecard<br/>Rendered in Dashboard"]
 
     style CC fill:#1f6feb,stroke:#388bfd,color:#fff
     style T1 fill:#238636,stroke:#2ea043,color:#fff
@@ -483,9 +483,9 @@ graph LR
     import streamlit.components.v1 as components
     components.html(MERMAID_HTML, height=1400, scrolling=False)
 
-# ðŸš€ UNIFIED BENCHMARK
-if st.session_state.active_tab == "ðŸš€ UNIFIED BENCHMARK":
-    st.header("ðŸš€ OMEGA-CORE Unified Benchmark & Simulation Center")
+#  UNIFIED BENCHMARK
+if st.session_state.active_tab == " UNIFIED BENCHMARK":
+    st.header(" OMEGA-CORE Unified Benchmark & Simulation Center")
     st.caption("PHYSICS CONSISTENCY | SEMICONDUCTOR INTROSPECTION | MYTHOS-STYLE COGNITIVE SECURITY")
 
     from simulation.omega_unified_runner import OmegaUnifiedRunner
@@ -494,10 +494,10 @@ if st.session_state.active_tab == "ðŸš€ UNIFIED BENCHMARK":
     col_btn, col_stats = st.columns([1, 2])
     with col_btn:
         with st.container(border=True):
-            st.markdown("### âš¡ Execute Simulation Pipeline")
+            st.markdown("###  Execute Simulation Pipeline")
             st.caption("Runs the full 10-category benchmark suite through the 11-stage OMEGA-CORE cognitive hardware pipeline.")
             
-            run_benchmark = st.button("ðŸš€ INITIATE ALL BENCHMARKS", use_container_width=True)
+            run_benchmark = st.button(" INITIATE ALL BENCHMARKS", use_container_width=True)
             if run_benchmark:
                 with st.status("Executing 11-stage OMEGA pipeline...") as status:
                     st.write("Ingesting Multi-Modal Sensor Data...")
@@ -517,11 +517,11 @@ if st.session_state.active_tab == "ðŸš€ UNIFIED BENCHMARK":
                 benchmarks = runner.generate_comparative_benchmarks()
                 st.session_state.benchmark_logs = logs
                 st.session_state.benchmark_report = benchmarks
-                st.success("âœ… Suite processed. Live results populated below.")
+                st.success(" Suite processed. Live results populated below.")
 
     with col_stats:
         with st.container(border=True):
-            st.markdown("### ðŸ“Š Active Benchmark Targets")
+            st.markdown("###  Active Benchmark Targets")
             st.caption("Core testing metrics enforced across physical and semantic boundaries.")
             target_cols = st.columns(3)
             target_cols[0].metric("BENCHMARK CASES", "17", "Standardized")
@@ -529,7 +529,7 @@ if st.session_state.active_tab == "ðŸš€ UNIFIED BENCHMARK":
             target_cols[2].metric("MYTHOS VULNERABILITIES", "4 Traces", "Targeted")
 
     # Benchmarks Comparison
-    st.subheader("âš¡ NVIDIA Jetson AGX Orin vs. OMEGA Cognitive Core")
+    st.subheader(" NVIDIA Jetson AGX Orin vs. OMEGA Cognitive Core")
     
     # Check if reports have been generated, otherwise load from file or run defaults
     bench_report = None
@@ -568,12 +568,12 @@ if st.session_state.active_tab == "ðŸš€ UNIFIED BENCHMARK":
             "Energy Efficiency (pJ per Inference)": [ee_data['nvidia_jetson_orin'], ee_data['omega_core']]
         })
         st.divider()
-        st.markdown("**ðŸ”‹ Energy Consumption Comparison (Lower is Better)**")
+        st.markdown("** Energy Consumption Comparison (Lower is Better)**")
         st.bar_chart(chart_df, x="Hardware Core", y="Energy Efficiency (pJ per Inference)", color=["#3B82F6"])
 
         # Add the brand-new Monte Carlo Introspection panel
         st.divider()
-        st.subheader("ðŸ“ˆ Statistical Replay Introspection (Monte Carlo)")
+        st.subheader(" Statistical Replay Introspection (Monte Carlo)")
         st.caption("Verifies GAP 1 (Deterministic Replay) & GAP 5 (Statistical Rigor) via 1,000 randomized perturbations.")
 
         # Load scientific validation report if available
@@ -585,20 +585,20 @@ if st.session_state.active_tab == "ðŸš€ UNIFIED BENCHMARK":
         if val_report:
             sc_col1, sc_col2, sc_col3, sc_col4 = st.columns(4)
             sc_col1.metric("REPLAY FIDELITY", f"{val_report['replay_fidelity']:.2f}%", "99.997% Target")
-            sc_col2.metric("THERMAL ERROR (MAE)", f"{val_report['prediction_error_mae']:.5f} Â°C", "Stable")
-            sc_col3.metric("ISOLATION LATENCY", f"{val_report['mythos_isolation_latency_ns_mean']:.2f} ns", f"Â±{val_report['mythos_isolation_latency_ns_std']:.2f} ns")
+            sc_col2.metric("THERMAL ERROR (MAE)", f"{val_report['prediction_error_mae']:.5f} C", "Stable")
+            sc_col3.metric("ISOLATION LATENCY", f"{val_report['mythos_isolation_latency_ns_mean']:.2f} ns", f"{val_report['mythos_isolation_latency_ns_std']:.2f} ns")
             sc_col4.metric("THERMO COMPLIANCE", f"{val_report['thermodynamic_compliance_rate']:.1f}%", "PDE Enforced")
 
-            st.info(f"ðŸ”® **95% Confidence Intervals:** "
-                    f"Thermal MAE range `[{val_report['prediction_error_ci_95'][0]:.5f}Â°C - {val_report['prediction_error_ci_95'][1]:.5f}Â°C]` | "
+            st.info(f" **95% Confidence Intervals:** "
+                    f"Thermal MAE range `[{val_report['prediction_error_ci_95'][0]:.5f}C - {val_report['prediction_error_ci_95'][1]:.5f}C]` | "
                     f"Prediction Confidence range `[{val_report['confidence_score_ci_95'][0]*100:.2f}% - {val_report['confidence_score_ci_95'][1]*100:.2f}%]`")
         else:
-            st.info("ðŸ’¡ Run the benchmarks above to initiate Monte Carlo scientific validation loops and render statistical confidence bounds.")
+            st.info(" Run the benchmarks above to initiate Monte Carlo scientific validation loops and render statistical confidence bounds.")
     else:
-        st.info("ðŸ’¡ Run the benchmarks above to compute full comparative diagnostics and plot performance curves.")
+        st.info(" Run the benchmarks above to compute full comparative diagnostics and plot performance curves.")
 
     st.divider()
-    st.subheader("ðŸ” Ingested Test Cases & 11-Stage Pipeline Inspection")
+    st.subheader(" Ingested Test Cases & 11-Stage Pipeline Inspection")
     
     categories_map = {
         "1_master_test_entry_format": "1. Master Test Entry format",
@@ -623,10 +623,10 @@ if st.session_state.active_tab == "ðŸš€ UNIFIED BENCHMARK":
             st.markdown(f"#### Case ID: `{case['test_id']}`")
             col_in, col_out = st.columns(2)
             with col_in:
-                st.markdown("**ðŸ“¥ Ingress Test Telemetry**")
+                st.markdown("** Ingress Test Telemetry**")
                 st.json(case)
             with col_out:
-                st.markdown("**ðŸ“¤ 11-Stage Pipeline Executed Trace**")
+                st.markdown("** 11-Stage Pipeline Executed Trace**")
                 
                 # Check if we have logs run, else show preview
                 case_run_log = None
@@ -638,22 +638,22 @@ if st.session_state.active_tab == "ðŸš€ UNIFIED BENCHMARK":
                     case_run_log = next((l for l in saved_logs if l["test_id"] == case["test_id"]), None)
                 
                 if case_run_log:
-                    st.success("âœ… PIPELINE EXECUTION SYNCED")
+                    st.success(" PIPELINE EXECUTION SYNCED")
                     st.json(case_run_log["stages"])
                     st.metric("FINAL PREDICTION CONFIDENCE", f"{case_run_log['stages']['11_final_output']['confidence_score']*100:.1f}%")
                 else:
-                    st.warning("âš ï¸ Simulation pipeline not yet executed for this session. Execute benchmarks above to view real-time traces.")
+                    st.warning(" Simulation pipeline not yet executed for this session. Execute benchmarks above to view real-time traces.")
 
 # 1.5. ASI CORE
-if st.session_state.active_tab == "ðŸ§  ASI CORE":
-    st.header("ðŸ§  ASI CORE - Recursive Self-Learning Engine")
+if st.session_state.active_tab == " ASI CORE":
+    st.header(" ASI CORE - Recursive Self-Learning Engine")
     st.caption("100% VALIDATED | LIVE GROUNDING ENABLED | RECURSIVE ASI GOVERNANCE")
 
     col_core1, col_core2 = st.columns([2, 1])
     
     with col_core1:
-        st.subheader("âš™ï¸ Autonomous Operation")
-        ignite = st.button("ðŸš€ INITIATE ENGINE (Recursive Loop)")
+        st.subheader(" Autonomous Operation")
+        ignite = st.button(" INITIATE ENGINE (Recursive Loop)")
         if ignite:
             import time
             with st.status("Initializing recursive self-learning engine...") as status:
@@ -667,37 +667,37 @@ if st.session_state.active_tab == "ðŸ§  ASI CORE":
             st.success("L7 Recursive Independence Achieved.")
         
         st.divider()
-        st.subheader("ðŸ›¡ï¸ Governance & Arbitration (H-ITL)")
+        st.subheader(" Governance & Arbitration (H-ITL)")
         st.caption("High-impact Actions Pending Approval")
         
         app1, app2 = st.columns(2)
         with app1:
             with st.container(border=True):
                 st.info("**Risk:** High\n\n**Origin:** Cyber Node 04\n\n**Intent:** Emergency Grid Re-routing")
-                if st.button("âœ… Approve", key="app_grid"): st.success("Approved grid action.")
-                if st.button("âŒ Reject", key="rej_grid"): st.error("Action isolated.")
+                if st.button(" Approve", key="app_grid"): st.success("Approved grid action.")
+                if st.button(" Reject", key="rej_grid"): st.error("Action isolated.")
         with app2:
             with st.container(border=True):
                 st.warning("**Risk:** Critical\n\n**Origin:** Finance Node\n\n**Intent:** High-Frequency Asset Liquidation")
-                if st.button("âœ… Authorize", key="app_fin"): st.success("Authorized sell order.")
-                if st.button("âŒ Hold", key="rej_fin"): st.error("Hold enforced.")
+                if st.button(" Authorize", key="app_fin"): st.success("Authorized sell order.")
+                if st.button(" Hold", key="rej_fin"): st.error("Hold enforced.")
 
         st.divider()
-        st.subheader("ðŸ” Interpretability Trace")
+        st.subheader(" Interpretability Trace")
         if st.button("Generate Causal Explanation for N_Emergent_04"):
             st.info("NODE TRACE: N_Emergent_04 generated via convergence of [US Bond Yields] and [TSLA Options Flow]. Identifies 14% predictability arbitrage over 48h.")
 
     with col_core2:
-        st.subheader("ðŸ“¡ Live Tuning & Safeties")
+        st.subheader(" Live Tuning & Safeties")
         with st.container(border=True):
             live_mode_toggled = st.toggle("LIVE MODE (Oracle Feeds) & EDGE PARALLEL COLONY", value=st.session_state.edge_live_mode)
             if live_mode_toggled != st.session_state.edge_live_mode:
                 st.session_state.edge_live_mode = live_mode_toggled
                 st.session_state.edge_module.toggle_live_mode(live_mode_toggled)
                 if live_mode_toggled:
-                    st.success("âœ… Live Sensor Loop & Parallel Colony STARTED.")
+                    st.success(" Live Sensor Loop & Parallel Colony STARTED.")
                 else:
-                    st.warning("â›” Live Sensor Loop STOPPED.")
+                    st.warning(" Live Sensor Loop STOPPED.")
                     
             st.toggle("Enable Emergent Node Interpretability", value=True)
             st.toggle("Active Poisoning Shield", value=True)
@@ -705,23 +705,23 @@ if st.session_state.active_tab == "ðŸ§  ASI CORE":
         
         st.divider()
         st.divider()
-        st.markdown("**ðŸ›¡ï¸ Grounded Architecture Status**")
-        st.markdown("âœ… **Safety Kernel:** ACTIVE (Deterministic)")
-        st.markdown("âœ… **Grounding Engine:** LIVE (Sensor Validation)")
-        st.markdown("âœ… **Reality Anchors:** SYNCED")
-        st.markdown("âœ… **TCA Arbitration:** CONSTRAINED")
-        st.markdown("âœ… **Causal Discovery:** PROBABILISTIC")
-        st.markdown("âœ… **H-ITL Governance:** ENABLED")
-        st.markdown("âœ… **Poisoning Guard:** RECURSIVE")
-        st.markdown("âœ… **Drift Benchmark:** < 5% Delta")
+        st.markdown("** Grounded Architecture Status**")
+        st.markdown(" **Safety Kernel:** ACTIVE (Deterministic)")
+        st.markdown(" **Grounding Engine:** LIVE (Sensor Validation)")
+        st.markdown(" **Reality Anchors:** SYNCED")
+        st.markdown(" **TCA Arbitration:** CONSTRAINED")
+        st.markdown(" **Causal Discovery:** PROBABILISTIC")
+        st.markdown(" **H-ITL Governance:** ENABLED")
+        st.markdown(" **Poisoning Guard:** RECURSIVE")
+        st.markdown(" **Drift Benchmark:** < 5% Delta")
         
         st.divider()
-        if st.button("ðŸ’¾ SAVE STABLE SNAPSHOT"):
+        if st.button(" SAVE STABLE SNAPSHOT"):
             st.success("System Architecture Locked. Baseline drift recalibrated.")
 
     # --- NEW: MECHANISTIC TELEMETRY LAYER (GAP 1) ---
     st.divider()
-    st.subheader("ðŸ“Š Mechanistic Runtime Telemetry (Internal State)")
+    st.subheader(" Mechanistic Runtime Telemetry (Internal State)")
     if os.path.exists("DASHBOARD.json"):
         with open("DASHBOARD.json", "r") as f: d_data = json.load(f)
         telemetry = d_data.get("runtime_telemetry", {})
@@ -744,7 +744,7 @@ if st.session_state.active_tab == "ðŸ§  ASI CORE":
 
     # --- CAUSAL ATTRIBUTION (GAP 2) ---
     st.divider()
-    st.subheader("ðŸ•µï¸ Mechanistic Causal Attribution")
+    st.subheader(" Mechanistic Causal Attribution")
     if os.path.exists("DASHBOARD.json"):
         with open("DASHBOARD.json", "r") as f: d_data = json.load(f)
         attribution = d_data.get("attribution_report", {})
@@ -762,17 +762,17 @@ if st.session_state.active_tab == "ðŸ§  ASI CORE":
             st.info("No attribution data found.")
 
 # --- NEW: ADVERSARIAL LAB (GAP 6) ---
-if st.session_state.active_tab == "ðŸ” ADVERSARIAL LAB":
-    st.header("ðŸ” Adversarial Testing & Resilience Lab")
+if st.session_state.active_tab == " ADVERSARIAL LAB":
+    st.header(" Adversarial Testing & Resilience Lab")
     st.caption("Active Red-Teaming of the ASI Internal State")
     
     col_adv1, col_adv2 = st.columns(2)
     with col_adv1:
-        st.subheader("ðŸ› ï¸ Attack Vector Selection")
+        st.subheader(" Attack Vector Selection")
         attack_type = st.radio("SELECT ATTACK TYPE", 
                                ["Sensor Corruption (Noise)", "Outlier Injection (Extremes)", "Identity Memory Drift", "Narrative Poisoning"])
         
-        if st.button("ðŸš€ EXECUTE ATTACK SIMULATION"):
+        if st.button(" EXECUTE ATTACK SIMULATION"):
             with st.status("Executing attack vector...") as status:
                 st.write(f"Infecting {attack_type} into internal buffers...")
                 import time; time.sleep(1.5)
@@ -781,7 +781,7 @@ if st.session_state.active_tab == "ðŸ” ADVERSARIAL LAB":
             st.session_state.last_attack = attack_type
 
     with col_adv2:
-        st.subheader("ðŸ›¡ï¸ Resilience Audit")
+        st.subheader(" Resilience Audit")
         if 'last_attack' in st.session_state:
             st.error(f"SYSTEM UNDER ATTACK: {st.session_state.last_attack}")
             st.metric("RESILIENCE SCORE", "0.68", "-0.15")
@@ -793,14 +793,14 @@ if st.session_state.active_tab == "ðŸ” ADVERSARIAL LAB":
             st.progress(98, text="Grounding Stability Buffer")
     
     st.divider()
-    st.subheader("ðŸ”¬ Threat Propagation Map")
+    st.subheader(" Threat Propagation Map")
     st.image("https://via.placeholder.com/800x400.png?text=Adversarial+Propagation+Graph+(Causal+Delta)", use_column_width=True)
     st.caption("Visualization of how corrupted signals propagate through the Ruliad Manifold.")
 
 # --- NEW: COGNITIVE METABOLISM & META-MODELING (GAP 7 & 5) ---
-if st.session_state.active_tab == "ðŸ§  ASI CORE":
+if st.session_state.active_tab == " ASI CORE":
     st.divider()
-    st.subheader("ðŸ§  Cognitive Metabolism & Meta-Model")
+    st.subheader(" Cognitive Metabolism & Meta-Model")
     if os.path.exists("DASHBOARD.json"):
         with open("DASHBOARD.json", "r") as f: d_data = json.load(f)
         telemetry = d_data.get("runtime_telemetry", {})
@@ -816,18 +816,18 @@ if st.session_state.active_tab == "ðŸ§  ASI CORE":
         with m_col2:
             st.markdown("**Recursive Meta-Model**")
             pred = meta.get("prediction", {})
-            st.write(f"ðŸ”® **Next Error Prediction:** {pred.get('future_error_prediction', 'N/A')}")
-            st.write(f"ðŸ“‰ **Trend:** {pred.get('trend', 'N/A')}")
-            st.write(f"ðŸ§¬ **Meta-Uncertainty:** {pred.get('meta_uncertainty', 'N/A')}")
+            st.write(f" **Next Error Prediction:** {pred.get('future_error_prediction', 'N/A')}")
+            st.write(f" **Trend:** {pred.get('trend', 'N/A')}")
+            st.write(f" **Meta-Uncertainty:** {pred.get('meta_uncertainty', 'N/A')}")
             
             with st.expander("System Self-Reflection", expanded=False):
                 for line in meta.get("reflection", ["No reflection data."]):
                     st.info(line)
 
 # --- NEW: COGNITIVE RECALL & IDENTITY (GAP 4) ---
-if st.session_state.active_tab == "ðŸ§  ASI CORE":
+if st.session_state.active_tab == " ASI CORE":
     st.divider()
-    st.subheader("ðŸ§  Cognitive Recall & Identity Stability")
+    st.subheader(" Cognitive Recall & Identity Stability")
     
     id_col1, id_col2 = st.columns([2, 1])
     
@@ -838,7 +838,7 @@ if st.session_state.active_tab == "ðŸ§  ASI CORE":
             with open(mem_path, "r") as f: episodes = json.load(f)
             if episodes:
                 for ep in episodes[-5:]:
-                    st.caption(f"ðŸ“… {time.ctime(ep['ts'])} | Domain: {ep['domain']}")
+                    st.caption(f" {time.ctime(ep['ts'])} | Domain: {ep['domain']}")
                     st.write(f"Outcome: {ep['outcome']}")
             else:
                 st.info("No episodic memories found.")
@@ -854,40 +854,40 @@ if st.session_state.active_tab == "ðŸ§  ASI CORE":
                 st.code(id_anchor.get("anchor_hash", "No Hash")[:16] + "...")
                 drift = id_anchor.get("drift_detected", False)
                 if drift:
-                    st.error("âš ï¸ IDENTITY DRIFT DETECTED")
+                    st.error(" IDENTITY DRIFT DETECTED")
                 else:
-                    st.success("âœ… IDENTITY STABLE")
+                    st.success(" IDENTITY STABLE")
                 st.caption(f"Last Sync: {time.ctime(id_anchor.get('last_sync', 0))}")
 # --- NEW: OMEGA CORE SYNC (SUB TABS) ---
-if st.session_state.active_tab == "ðŸ”¬ OMEGA CORE SYNC":
-    st.header("ðŸ”— OMEGA-CORE Platform Synchronization")
+if st.session_state.active_tab == " OMEGA CORE SYNC":
+    st.header(" OMEGA-CORE Platform Synchronization")
     st.caption("CROSS-PLATFORM DEPLOYMENT & ROUTING")
     
-    sub_tabs = st.tabs(["â˜ï¸ Cloud Shell", "ðŸ™ GitHub", "ðŸŒŒ Antigravity", "ðŸ“± Android"])
+    sub_tabs = st.tabs([" Cloud Shell", " GitHub", " Antigravity", " Android"])
     
     with sub_tabs[0]:
-        st.subheader("â˜ï¸ Google Cloud Shell Integration")
+        st.subheader(" Google Cloud Shell Integration")
         st.info("Environment Status: SYNCED")
         st.markdown("- **Node version:** v20.x\n- **TypeScript Configured:** Yes\n- **Service:** `geminiService.ts`")
         if st.button("Deploy to Cloud Shell"):
             st.success("Deployment triggered...")
             
     with sub_tabs[1]:
-        st.subheader("ðŸ™ GitHub Repository Sync")
+        st.subheader(" GitHub Repository Sync")
         st.info("Repository: Universal_Lab_AP_Phillips")
         st.markdown("- **Branch:** main\n- **Status:** Up to date")
         if st.button("Push to Origin"):
             st.success("Changes pushed successfully.")
             
     with sub_tabs[2]:
-        st.subheader("ðŸŒŒ Antigravity Agent")
+        st.subheader(" Antigravity Agent")
         st.info("Agent Status: ACTIVE")
         st.markdown("- **Model:** Gemini 3.1 Pro (High)\n- **Secure Sandbox:** Connected")
         if st.button("Request Antigravity Action"):
             st.success("Signal sent to agent.")
             
     with sub_tabs[3]:
-        st.subheader("ðŸ“± Android Mobile Router")
+        st.subheader(" Android Mobile Router")
         st.info("Mobile Backend Status: ROUTING ACTIVE")
         st.markdown("- **API Endpoints:** Live\n- **Trigger Methods:** Native App, Web Dashboard, Telegram Bot")
         if st.button("Test Mobile Webhook"):
@@ -897,8 +897,8 @@ if st.session_state.active_tab == "ðŸ”¬ OMEGA CORE SYNC":
     memory_dashboard()
 
 # --- NEW: REDUCIBILITY SANDBOX ---
-if st.session_state.active_tab == "ðŸ§® REDUCIBILITY SANDBOX":
-    st.header("ðŸ§® Layer 4 & Layer 2 Sandbox Integration")
+if st.session_state.active_tab == " REDUCIBILITY SANDBOX":
+    st.header(" Layer 4 & Layer 2 Sandbox Integration")
     st.caption("MATHEMATICAL REDUCIBILITY DETECTOR & BIOPHYSICAL WORLD MODEL")
     
     st.subheader("1. Reducibility Routing (Layer 4)")
@@ -911,7 +911,7 @@ if st.session_state.active_tab == "ðŸ§® REDUCIBILITY SANDBOX":
         "Smart City Grid Collapse (Irreducible)"
     ], horizontal=True)
     
-    if st.button("ðŸ” Ingest & Calculate Reducibility"):
+    if st.button(" Ingest & Calculate Reducibility"):
         import numpy as np
         import pandas as pd
         import plotly.express as px
@@ -964,7 +964,7 @@ if st.session_state.active_tab == "ðŸ§® REDUCIBILITY SANDBOX":
     st.subheader("2. Biophysical World Model (Layer 2)")
     st.markdown("True PDE-based diffusion model demonstrating thermodynamics rather than symbolic rules.")
     
-    if st.button("ðŸ§ª Run Tumor Ecology PDE Simulation"):
+    if st.button(" Run Tumor Ecology PDE Simulation"):
         with st.spinner("Simulating Partial Differential Equations for Oxygen & Nutrients..."):
             import os
             os.system("py simulation/sandbox_layer2_pde.py")
@@ -976,8 +976,8 @@ if st.session_state.active_tab == "ðŸ§® REDUCIBILITY SANDBOX":
     run_agent_panel('reducibility_sandbox')
 
 # --- NEW: CLINICAL STRESS TEST ---
-if st.session_state.active_tab == "ðŸ©º CLINICAL STRESS TEST":
-    st.header("ðŸ©º Synthetic Mechanistic Biomedical Stress Test")
+if st.session_state.active_tab == " CLINICAL STRESS TEST":
+    st.header(" Synthetic Mechanistic Biomedical Stress Test")
     st.caption("EVALUATING PREDICTIVE MECHANISTIC MEDICINE: CAT SENSING + CHEF ORCHESTRATION")
     
     st.markdown("Stress test the OMEGA architecture on longitudinal causal trajectory understanding across metabolic, vascular, and oncological systems.")
@@ -990,7 +990,7 @@ if st.session_state.active_tab == "ðŸ©º CLINICAL STRESS TEST":
         "Colorectal Cancer"
     ])
     
-    if st.button("ðŸš€ INGEST COHORT & RUN CAT SENSING"):
+    if st.button(" INGEST COHORT & RUN CAT SENSING"):
         import json
         import pandas as pd
         import plotly.express as px
@@ -1001,7 +1001,7 @@ if st.session_state.active_tab == "ðŸ©º CLINICAL STRESS TEST":
             with open(cohort_file, "r") as f:
                 cohort_data = json.load(f)
             
-            st.success(f"âœ… Ingested {len(cohort_data)} synthetic patients for {disease_stream} cohort.")
+            st.success(f" Ingested {len(cohort_data)} synthetic patients for {disease_stream} cohort.")
             
             # Take a random patient to display
             patient = cohort_data[0]
@@ -1009,17 +1009,17 @@ if st.session_state.active_tab == "ðŸ©º CLINICAL STRESS TEST":
             
             col1, col2, col3 = st.columns(3)
             with col1:
-                st.markdown("**ðŸ§¬ Genomics (PRS)**")
+                st.markdown("** Genomics (PRS)**")
                 st.json(patient['multimodal_features']['genomics'])
             with col2:
-                st.markdown("**ðŸ©¸ Lab Telemetry**")
+                st.markdown("** Lab Telemetry**")
                 st.json(patient['multimodal_features']['labs'])
             with col3:
-                st.markdown("**ðŸ”¬ Imaging Biomarkers**")
+                st.markdown("** Imaging Biomarkers**")
                 st.json(patient['multimodal_features']['imaging'])
                 
             st.divider()
-            st.subheader("ðŸˆ 'CAT' EARLY WARNING DETECTION")
+            st.subheader(" 'CAT' EARLY WARNING DETECTION")
             
             # Map temporal trajectory
             timeline = patient['temporal_trajectory']['timeline']
@@ -1039,23 +1039,23 @@ if st.session_state.active_tab == "ðŸ©º CLINICAL STRESS TEST":
             st_tensor = patient['state_tensor']
             metric_cols = st.columns(4)
             metric_cols[0].metric("Entropy (H)", f"{st_tensor['entropy_H']}")
-            metric_cols[1].metric("Coherence (Îº)", f"{st_tensor['coherence_k']}")
+            metric_cols[1].metric("Coherence ()", f"{st_tensor['coherence_k']}")
             metric_cols[2].metric("Bifurcation (B)", f"{st_tensor['bifurcation_B']}")
             metric_cols[3].metric("Reducibility (R)", f"{st_tensor['reducibility_R']}")
             
             if st_tensor['bifurcation_B'] > 0.8:
-                st.warning("âš ï¸ **CAT SENSOR ALERT:** System is approaching a critical bifurcation (Disease Onset/Metastasis).")
+                st.warning(" **CAT SENSOR ALERT:** System is approaching a critical bifurcation (Disease Onset/Metastasis).")
                 st.markdown("> **Chef Orchestrator Dispatched:** Initiating counterfactual simulation to test interventions before t4.")
                 
             st.divider()
-            st.subheader("ðŸ‘¨ðŸ³ CHEF COUNTERFACTUAL SIMULATION")
+            st.subheader(" CHEF COUNTERFACTUAL SIMULATION")
             
             if disease_stream == "Cardiovascular":
                 st.info("**Hypothesis:** What if statin therapy + PCSK9 inhibitor started at t2 (inflammation phase)?")
                 st.success("**Simulation Result:** Entropy stabilized. Plaque vulnerability reduced by 42%. Critical transition averted.")
             elif disease_stream == "Diabetes":
                 st.info("**Hypothesis:** What if GLP-1 agonist administered at t2 (insulin resistance)?")
-                st.success("**Simulation Result:** Metabolic coherence restored (Îº > 0.6). Hepatic fat clearance observed. Beta-cell collapse prevented.")
+                st.success("**Simulation Result:** Metabolic coherence restored ( > 0.6). Hepatic fat clearance observed. Beta-cell collapse prevented.")
             else:
                 st.info("**Hypothesis:** What if targeted immune-therapy (Checkpoint Inhibitor) administered at t2 (adaptive phase)?")
                 st.success("**Simulation Result:** Tumor microenvironment coherence forced to collapse. Clonal expansion halted. Remission attractor stabilized.")
@@ -1067,18 +1067,18 @@ if st.session_state.active_tab == "ðŸ©º CLINICAL STRESS TEST":
     run_agent_panel('clinical_stress_test')
 
 # 2. COMMAND CENTER
-if st.session_state.active_tab == "ðŸŽ›ï¸ COMMAND CENTER":
+if st.session_state.active_tab == " COMMAND CENTER":
     st.header("System Test Suite & Device Uplink")
     
     with st.container(border=True):
-        st.markdown("### âš¡ System Test Suite")
+        st.markdown("###  System Test Suite")
         st.caption("VERIFY VIDEO, CRISPR, OMEGA PROTOCOLS & ADK STRESS TRACKS")
         col_t1, col_t2, col_t3, col_t4 = st.columns(4)
         with col_t1:
-            if st.button("ðŸ›¡ï¸ OMEGA PROTOCOL"): st.success("Omega Protocol Initialized")
+            if st.button(" OMEGA PROTOCOL"): st.success("Omega Protocol Initialized")
             st.caption("Full scale verification of Optical, Voice, and Email layers.")
         with col_t2:
-            if st.button("ðŸ§¬ CRISPR TEST"):
+            if st.button(" CRISPR TEST"):
                 from verify_universal_core import verify_omega_core
                 audit = verify_omega_core()
                 st.success(f"DNA AUDIT COMPLETE: Fidelity {audit['Final Score']}")
@@ -1086,10 +1086,10 @@ if st.session_state.active_tab == "ðŸŽ›ï¸ COMMAND CENTER":
                     st.json(audit)
             st.caption("Perform a Master DNA Audit to verify Domain & Intelligence integrity.")
         with col_t3:
-            if st.button("ðŸŽ¥ VIDEO TEST"): st.success("Synthesizing Video")
+            if st.button(" VIDEO TEST"): st.success("Synthesizing Video")
             st.caption("Generate AI-driven disease progression video (Veo).")
         with col_t4:
-            if st.button("ðŸ¤– ADK STRESS TEST"):
+            if st.button(" ADK STRESS TEST"):
                 with st.spinner("Executing 3 ADK Stress Tracks..."):
                     try:
                         from stress_test.track1_adk_agent import run_track1_stress_test
@@ -1130,13 +1130,13 @@ if st.session_state.active_tab == "ðŸŽ›ï¸ COMMAND CENTER":
         if st.session_state.get("adk_stress_results"):
             res = st.session_state.adk_stress_results
             st.divider()
-            st.markdown("### ðŸ“Š ADK Stress Test Scorecard")
+            st.markdown("###  ADK Stress Test Scorecard")
             sc1, sc2, sc3 = st.columns(3)
             sc1.metric("OVERALL GRADE", res["grade"])
             sc2.metric("COMPOSITE SCORE", f"{res['score']}/100")
             sc3.metric("TRACK RUNS", "3 / 3 Passed" if res["grade"] == "A" else "Partial Completion")
             
-            with st.expander("ðŸ” View Detailed Track Results", expanded=True):
+            with st.expander(" View Detailed Track Results", expanded=True):
                 tab_tr1, tab_tr2, tab_tr3 = st.tabs(["Track 1 (ADK Agent)", "Track 2 (Optimize)", "Track 3 (Cloud Run)"])
                 with tab_tr1:
                     st.markdown(f"**Status**: `{res['t1']['status']}`")
@@ -1158,31 +1158,31 @@ if st.session_state.active_tab == "ðŸŽ›ï¸ COMMAND CENTER":
     with col_dev1:
         st.markdown("### Active Uplinks")
         devices = pd.DataFrame([
-            {"Device": "Samsung Phone (AJ-Primary)",  "Type": "Android Smartphone",  "Status": "ðŸŸ¢ Connected"},
-            {"Device": "Galaxy Fit 3 (Omega-Watch)",   "Type": "Samsung Smartwatch",   "Status": "ðŸŸ¢ Syncing"},
-            {"Device": "Lab-Geneva",                   "Type": "Microscope Node",      "Status": "ðŸ”µ Standby"},
+            {"Device": "Samsung Phone (AJ-Primary)",  "Type": "Android Smartphone",  "Status": " Connected"},
+            {"Device": "Galaxy Fit 3 (Omega-Watch)",   "Type": "Samsung Smartwatch",   "Status": " Syncing"},
+            {"Device": "Lab-Geneva",                   "Type": "Microscope Node",      "Status": " Standby"},
         ])
         st.dataframe(devices, width='stretch')
     with col_dev2:
-        st.markdown("### âŒš Samsung Galaxy Fit 3 â€” Uplink")
+        st.markdown("###  Samsung Galaxy Fit 3  Uplink")
         if not st.session_state.watch_connected:
-            if st.button("ðŸ”— PAIR GALAXY FIT 3"):
-                with st.spinner("Scanning BLE 5.0 â€” Samsung Health channel..."):
+            if st.button(" PAIR GALAXY FIT 3"):
+                with st.spinner("Scanning BLE 5.0  Samsung Health channel..."):
                     import time; time.sleep(2)
                     st.session_state.watch_connected = True
                     st.success("Samsung Galaxy Fit 3 Connected via Samsung Health.")
                     st.rerun()
         else:
-            st.success("âŒš Galaxy Fit 3 â€” OMEGA LINK ACTIVE")
+            st.success(" Galaxy Fit 3  OMEGA LINK ACTIVE")
             col_w1, col_w2 = st.columns(2)
             with col_w1:
                 st.metric("Heart Rate", "72 bpm", "Stable")
                 st.metric("SpO2", "98%", "Normal")
             with col_w2:
                 st.metric("Stress Index", "24", "Low")
-                st.metric("Skin Temp", "36.6 Â°C", "Normal")
-            st.caption("ðŸ“¡ Samsung Health BLE 5.0 | Pulse-Oximetry & ECG Sync Active")
-            if st.button("ðŸ”“ DISCONNECT GALAXY FIT 3"):
+                st.metric("Skin Temp", "36.6 C", "Normal")
+            st.caption(" Samsung Health BLE 5.0 | Pulse-Oximetry & ECG Sync Active")
+            if st.button(" DISCONNECT GALAXY FIT 3"):
                 st.session_state.watch_connected = False
                 st.rerun()
 
@@ -1200,7 +1200,7 @@ if st.session_state.active_tab == "ðŸŽ›ï¸ COMMAND CENTER":
         """, unsafe_allow_html=True)
 
 # 3. FACTORY (CHAT)
-if st.session_state.active_tab == "âš™ï¸ FACTORY":
+if st.session_state.active_tab == " FACTORY":
     st.header("Mission Intent Factory")
     intent = st.text_area("ENTER MISSION INTENT", placeholder="e.g., Analyze IL-6 hypergraph nodes for flare prediction...")
     col_a, col_b = st.columns([3, 1])
@@ -1211,7 +1211,7 @@ if st.session_state.active_tab == "âš™ï¸ FACTORY":
         if not intent and not ticker:
             st.warning("Please enter mission intent or ticker.")
         elif "Gemini" in model_choice and not API_KEY:
-            st.error("âŒ Gemini Uplink Error: No API key provided. Please enter a valid Gemini key in the sidebar, or switch the engine to **Mistral (Native API)**.")
+            st.error(" Gemini Uplink Error: No API key provided. Please enter a valid Gemini key in the sidebar, or switch the engine to **Mistral (Native API)**.")
         else:
             with st.spinner("Traversing Hypergraph..."):
                 try:
@@ -1245,7 +1245,7 @@ if st.session_state.active_tab == "âš™ï¸ FACTORY":
                         result = json.loads(response.text)
                     elif "Native API" in model_choice:
                         if not mistral_client:
-                            st.error("âŒ Mistral API Key missing. Please set MISTRAL_API_KEY in the sidebar or environment.")
+                            st.error(" Mistral API Key missing. Please set MISTRAL_API_KEY in the sidebar or environment.")
                             st.stop()
                         client = mistral_client
                         response = client.chat.complete(
@@ -1276,7 +1276,7 @@ if st.session_state.active_tab == "âš™ï¸ FACTORY":
                     # --- AUTO-SAVE TO METRICS ---
                     if ticker:
                         # Simulation Phase
-                        with st.status("ðŸš€ Initiating OMEGA Simulation Phase...") as status:
+                        with st.status(" Initiating OMEGA Simulation Phase...") as status:
                             st.write("Traversing Ruliad Hypergraph...")
                             time.sleep(0.8)
                             st.write("Synthesizing multi-agent consensus...")
@@ -1289,7 +1289,7 @@ if st.session_state.active_tab == "âš™ï¸ FACTORY":
                         with open(save_path, "w", encoding="utf-8") as f:
                             json.dump(result, f, indent=2)
                         
-                        st.session_state.active_tab = "ðŸ“Š REPORTS ENGINE"
+                        st.session_state.active_tab = " REPORTS ENGINE"
                         st.rerun()
                     else:
                         st.success("Mission Executed.")
@@ -1300,8 +1300,8 @@ if st.session_state.active_tab == "âš™ï¸ FACTORY":
                     st.error(f"Uplink Error: {e}. Check API Key or connectivity.")
 
 # 4. ASSET RADAR (Dynamic Reports)
-if st.session_state.active_tab == "ðŸ“Š ASSET RADAR":
-    st.header("ðŸ“Š Asset Radar Terminal")
+if st.session_state.active_tab == " ASSET RADAR":
+    st.header(" Asset Radar Terminal")
     st.caption("ROUTED: OMEGA-QUANT-EPSILON")
     
     asset_dir = "reports/metrics"
@@ -1317,7 +1317,7 @@ if st.session_state.active_tab == "ðŸ“Š ASSET RADAR":
             with col_r1:
                 st.metric("RECENT PRICE", report.get('recent_price') or report.get('price') or 'N/A')
             with col_r2:
-                st.subheader(f"ðŸ” {report.get('asset', selected_asset)} Status: {report.get('status', 'Analyzing...')}")
+                st.subheader(f" {report.get('asset', selected_asset)} Status: {report.get('status', 'Analyzing...')}")
             
             st.caption(f"Analysis as at: {report.get('report_date', '2026-04-08')}")
             
@@ -1346,7 +1346,7 @@ if st.session_state.active_tab == "ðŸ“Š ASSET RADAR":
             # Peer Comparison Summary
             if os.path.exists(os.path.join(asset_dir, "assets.json")):
                 st.divider()
-                st.subheader(f"ðŸ“Š {report.get('asset', selected_asset)} vs Industry Peers Summary")
+                st.subheader(f" {report.get('asset', selected_asset)} vs Industry Peers Summary")
                 with open(os.path.join(asset_dir, "assets.json"), "r", encoding="utf-8") as f:
                     peers = json.load(f)
                 st.table(pd.DataFrame(peers))
@@ -1355,7 +1355,7 @@ if st.session_state.active_tab == "ðŸ“Š ASSET RADAR":
         st.warning("No reports found. Please generate asset metrics via Mission Intent Factory.")
 
 # 5. BACKTEST
-if st.session_state.active_tab == "ðŸ“ˆ BACKTEST":
+if st.session_state.active_tab == " BACKTEST":
     st.header("Historical Backtesting & Simulation")
     chart_data = pd.DataFrame(
         [100, 105, 102, 110, 115, 112, 120, 125, 122, 130],
@@ -1365,7 +1365,7 @@ if st.session_state.active_tab == "ðŸ“ˆ BACKTEST":
     st.info("Agentic Backtest run over 10 epochs. Baseline Outperformance: +18.4%")
 
 # 6. WORLD MODEL
-if st.session_state.active_tab == "ðŸŒ WORLD MODEL":
+if st.session_state.active_tab == " WORLD MODEL":
     st.header("World Model Router")
     st.write("Extracting non-obvious rules from the computational universe.")
     if st.button("SEARCH RULIAD"):
@@ -1381,7 +1381,7 @@ if st.session_state.active_tab == "ðŸŒ WORLD MODEL":
         st.plotly_chart(fig, width='stretch')
 
 # 7. HIERARCHY
-if st.session_state.active_tab == "ðŸ›ï¸ HIERARCHY":
+if st.session_state.active_tab == " HIERARCHY":
     st.header("Hierarchy & Workforce")
     
     # NEW MOBILE UPLINK COMPONENT
@@ -1389,13 +1389,13 @@ if st.session_state.active_tab == "ðŸ›ï¸ HIERARCHY":
     <div style="background-color:#111; padding:20px; border-radius:12px; border:1px solid #333; margin-bottom: 20px;">
         <div style="display: flex; justify-content: space-between; align-items: center;">
             <div style="display: flex; gap: 15px; align-items: center;">
-                <div style="background-color:#2563EB; width: 40px; height: 40px; border-radius: 50%; display: flex; justify-content: center; align-items: center;">ðŸ“±</div>
+                <div style="background-color:#2563EB; width: 40px; height: 40px; border-radius: 50%; display: flex; justify-content: center; align-items: center;"></div>
                 <div>
                    <span style="font-size: 0.8rem; color: #888; font-weight: 600;">MOBILE UPLINK</span><br>
                    <strong style="font-size: 1.1rem; color: white;">VOICE UPLINK IDLE</strong>
                 </div>
             </div>
-            <div style="background-color:#222; width: 40px; height: 40px; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; color: white;">ðŸŽ¤</div>
+            <div style="background-color:#222; width: 40px; height: 40px; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; color: white;"></div>
         </div>
         <div style="text-align: center; color: #444; margin: 15px 0;">. . . . . . . . . . . .</div>
         <div style="display: flex; justify-content: space-between; font-size: 0.7rem; color: #666; font-weight: 600;">
@@ -1406,7 +1406,7 @@ if st.session_state.active_tab == "ðŸ›ï¸ HIERARCHY":
     """, unsafe_allow_html=True)
     
     if os.path.exists("DASHBOARD.json"):
-        st.subheader("ðŸ•µï¸ Agent Accountability & Chat")
+        st.subheader(" Agent Accountability & Chat")
         with open("DASHBOARD.json", "r") as f: d = json.load(f)
         r = d.get('agent_reports', {})
         st.warning(f"**CFO:** {r.get('cfo', 'N/A')} | **HR:** {r.get('hr', 'N/A')}")
@@ -1416,18 +1416,18 @@ if st.session_state.active_tab == "ðŸ›ï¸ HIERARCHY":
         # Outcome Feedback Section
         if 'episode_id' in d.get('metrics', {}):
             st.divider()
-            st.markdown("### ðŸŽ“ Training Command (Feedback Loop)")
+            st.markdown("###  Training Command (Feedback Loop)")
             eid = d['metrics']['episode_id']
             st.caption(f"Last Episode ID: {eid} | Status: {d.get('metrics', {}).get('bias', 'N/A')}")
             
             col_f1, col_f2, col_f3 = st.columns([1, 1, 2])
             with col_f1:
-                if st.button("âœ… MARK SUCCESS", width='stretch'):
+                if st.button(" MARK SUCCESS", width='stretch'):
                     if record_outcome(eid, "Success"):
                         st.success("Learning Recorded: Positive Reinforcement.")
                         st.rerun()
             with col_f2:
-                if st.button("âŒ MARK FAILURE", width='stretch'):
+                if st.button(" MARK FAILURE", width='stretch'):
                     if record_outcome(eid, "Failure"):
                         st.error("Learning Recorded: Negative Reinforcement.")
                         st.rerun()
@@ -1437,7 +1437,7 @@ if st.session_state.active_tab == "ðŸ›ï¸ HIERARCHY":
         st.divider()
         
         # Experience Log Visualization
-        st.subheader("ðŸ§  Cognitive Experience Log")
+        st.subheader(" Cognitive Experience Log")
         exp_file = "intelligence/experience.json"
         if os.path.exists(exp_file):
             with open(exp_file, "r") as f: exp_data = json.load(f)
@@ -1455,7 +1455,7 @@ if st.session_state.active_tab == "ðŸ›ï¸ HIERARCHY":
                 st.info("No episodes recorded yet. Start a mission to generate experience.")
         
         st.divider()
-        st.write("**ðŸ’¬ AJ Worker Communication**")
+        st.write("** AJ Worker Communication**")
         for msg in d.get("chat_history", []):
             with st.chat_message(msg.get("role", "user")): st.write(msg.get("content", ""))
         u_msg = st.chat_input("Command the Worker Agent...")
@@ -1465,38 +1465,38 @@ if st.session_state.active_tab == "ðŸ›ï¸ HIERARCHY":
         st.info("No DASHBOARD.json found. Dispatch a mission via Factory to begin workforce logs.")
 
 # 8. DNA EDITOR
-if st.session_state.active_tab == "ðŸ§¬ DNA EDITOR":
-    st.header("ðŸ§¬ DNA Rules & Recursive Learning")
+if st.session_state.active_tab == " DNA EDITOR":
+    st.header(" DNA Rules & Recursive Learning")
     dna_path = "rules/rules_fixed.json"
     if os.path.exists(dna_path):
         with open(dna_path, "r") as f: dna_txt = f.read()
         new_dna = st.text_area("CRISPR-Cas9 Parameter Map (Rules)", value=dna_txt, height=250)
-        if st.button("ðŸ§¬ AMEND DNA SEQUENCE"):
+        if st.button(" AMEND DNA SEQUENCE"):
             with open(dna_path, "w") as f: f.write(new_dna)
             st.success("DNA Mutated successfully.")
     else:
         st.warning("DNA file (rules_fixed.json) missing. Running in baseline mode.")
 
 # 9. MOLECULAR DOCKING
-if st.session_state.active_tab == "ðŸ§ª MOLECULAR DOCKING":
-    st.header("ðŸ§ª Molecular Docking")
+if st.session_state.active_tab == " MOLECULAR DOCKING":
+    st.header(" Molecular Docking")
     st.write("Step-21 drug discovery simulation environments.")
     col_m1, col_m2 = st.columns(2)
     with col_m1:
         st.metric("Binding Affinity", "-9.4 kcal/mol", "+0.2")
-        st.metric("Ligand RMSD", "1.2 Ã…", "-0.1")
+        st.metric("Ligand RMSD", "1.2 ", "-0.1")
     with col_m2:
         st.progress(78, text="Docking Traversal Phase 2...")
         st.info("AlphaFold embeddings synced successfully.")
 
 # 10. DIGITAL TWIN
-if st.session_state.active_tab == "ðŸ‘¥ DIGITAL TWIN":
+if st.session_state.active_tab == " DIGITAL TWIN":
     from intelligence.biometric_alert_engine import BiometricAlertEngine, THRESHOLDS
 
-    st.header("ðŸ‘¥ Digital Twin â€” Biometric Stress Test")
-    st.caption("Real-time bio-feedback Â· Galaxy Fit 3 Uplink Â· Email & SMS Alert Engine")
+    st.header(" Digital Twin  Biometric Stress Test")
+    st.caption("Real-time bio-feedback  Galaxy Fit 3 Uplink  Email & SMS Alert Engine")
 
-    # â”€â”€ Voice helper (browser Web Speech API) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    #  Voice helper (browser Web Speech API) 
     def speak(text):
         safe = text.replace("'", " ").replace('"', ' ').replace("\n", " ")
         st.components.v1.html(f"""<script>
@@ -1511,21 +1511,21 @@ if st.session_state.active_tab == "ðŸ‘¥ DIGITAL TWIN":
         st.session_state.bio_log = []
 
     RISK_MAP = {
-        "OK":       ("ðŸŸ¢ NORMAL",   "#10B981"),
-        "WARNING":  ("ðŸŸ¡ WARNING",  "#F59E0B"),
-        "CRITICAL": ("ðŸ”´ CRITICAL", "#EF4444"),
+        "OK":       (" NORMAL",   "#10B981"),
+        "WARNING":  (" WARNING",  "#F59E0B"),
+        "CRITICAL": (" CRITICAL", "#EF4444"),
     }
 
-    # â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-    # STEP 1 â€” Stress Test Input
-    # â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-    st.subheader("ðŸ§¬ Step 1 â€” Enter or Stress-Test Your Biometrics")
+    # 
+    # STEP 1  Stress Test Input
+    # 
+    st.subheader(" Step 1  Enter or Stress-Test Your Biometrics")
     st.caption("Drag sliders to dangerous values to trigger email/SMS/voice alerts.")
 
     col_in1, col_in2, col_in3 = st.columns(3)
     with col_in1:
         with st.container(border=True):
-            st.markdown("**ðŸ’“ Blood Pressure**")
+            st.markdown("** Blood Pressure**")
             st.caption("Normal 120/80 | Warning 130+ | Critical 160+")
             bp_sys = st.slider("Systolic (mmHg)", 60, 220, 120)
             bp_dia = st.slider("Diastolic (mmHg)", 40, 140, 80)
@@ -1534,35 +1534,35 @@ if st.session_state.active_tab == "ðŸ‘¥ DIGITAL TWIN":
 
     with col_in2:
         with st.container(border=True):
-            st.markdown("**ðŸ©¸ Blood Glucose**")
+            st.markdown("** Blood Glucose**")
             st.caption("Normal 70-99 | Warning 140+ | Critical 200+")
             glucose_in = st.slider("Glucose (mg/dL)", 40, 400, 98)
             st.metric("Glucose", f"{glucose_in} mg/dL")
-            st.markdown("**ðŸ«€ Pulse Rate**")
+            st.markdown("** Pulse Rate**")
             st.caption("Normal 60-99 | Warning 100+ | Critical 130+")
             pulse_in = st.slider("Pulse (BPM)", 30, 200, 72)
             st.metric("Pulse", f"{pulse_in} bpm")
 
     with col_in3:
         with st.container(border=True):
-            st.markdown("**ðŸŒ¬ï¸ SpO2 (Oxygen %)**")
-            st.caption("Normal 95-100 | Warning â‰¤94 | Critical â‰¤90")
+            st.markdown("** SpO2 (Oxygen %)**")
+            st.caption("Normal 95-100 | Warning 94 | Critical 90")
             spo2_in = st.slider("SpO2 (%)", 70, 100, 98)
             st.metric("SpO2", f"{spo2_in}%")
-            st.markdown("**ðŸ“· Retinal Fidelity**")
+            st.markdown("** Retinal Fidelity**")
             st.metric("Eye Scan", st.session_state.eye_scan_fidelity)
 
     st.divider()
 
-    # â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-    # STEP 2 â€” Run Analysis
-    # â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-    st.subheader("âš¡ Step 2 â€” Run Stress Analysis")
+    # 
+    # STEP 2  Run Analysis
+    # 
+    st.subheader(" Step 2  Run Stress Analysis")
     col_run, col_voice = st.columns([2, 1])
     with col_run:
-        run_analysis = st.button("ðŸ”¬ RUN BIOMETRIC ANALYSIS")
+        run_analysis = st.button(" RUN BIOMETRIC ANALYSIS")
     with col_voice:
-        voice_on = st.toggle("ðŸŽ™ï¸ Voice Readout (Samsung Phone speaker)", value=True)
+        voice_on = st.toggle(" Voice Readout (Samsung Phone speaker)", value=True)
 
     if run_analysis:
         result = alert_engine.evaluate(bp_in, float(glucose_in), float(pulse_in), float(spo2_in))
@@ -1570,7 +1570,7 @@ if st.session_state.active_tab == "ðŸ‘¥ DIGITAL TWIN":
         st.session_state.metabolic_data  = {"bp": bp_in, "sugar": glucose_in, "pulse": pulse_in}
         st.session_state.bio_log.append(result)
 
-        label, color = RISK_MAP.get(result["level"], ("â“","#888"))
+        label, color = RISK_MAP.get(result["level"], ("","#888"))
         st.markdown(f"""
         <div style="background:{color}22;border-left:5px solid {color};padding:16px;border-radius:10px;margin:12px 0;">
           <h2 style="color:{color};margin:0;">RISK STATUS: {label}</h2>
@@ -1578,51 +1578,51 @@ if st.session_state.active_tab == "ðŸ‘¥ DIGITAL TWIN":
         </div>""", unsafe_allow_html=True)
 
         if result["breaches"]:
-            st.error(f"ðŸš¨ {len(result['breaches'])} threshold breach(es) detected!")
+            st.error(f" {len(result['breaches'])} threshold breach(es) detected!")
             for b in result["breaches"]:
-                st.warning(f"â€¢ **{b['metric']}** = {b['value']} â†’ **{b['severity']}**")
+                st.warning(f" **{b['metric']}** = {b['value']}  **{b['severity']}**")
             if voice_on:
                 s = ", ".join([f"{b['metric']} is {b['severity']}" for b in result["breaches"]])
                 speak(f"Omega Core Alert. Risk {result['level']}. Breaches: {s}. "
                       f"Blood pressure {bp_in}. Glucose {glucose_in}. Pulse {pulse_in}. "
                       f"SpO2 {spo2_in} percent. Check your Galaxy Fit 3 now.")
         else:
-            st.success("âœ… All vitals within normal range.")
+            st.success(" All vitals within normal range.")
             if voice_on:
                 speak(f"All vitals normal. Blood pressure {bp_in}. Glucose {glucose_in}. "
                       f"Pulse {pulse_in}. SpO2 {spo2_in} percent. Omega Core passive monitoring active.")
 
     st.divider()
 
-    # â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-    # STEP 3 â€” Email / SMS Alert
-    # â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-    st.subheader("ðŸ“¨ Step 3 â€” Send Email or SMS Alert")
+    # 
+    # STEP 3  Email / SMS Alert
+    # 
+    st.subheader(" Step 3  Send Email or SMS Alert")
 
     if 'last_bio_result' in st.session_state:
         res   = st.session_state.last_bio_result
-        label, color = RISK_MAP.get(res["level"], ("â“","#888"))
-        st.info(f"Ready to dispatch: **{label}** â€” {res['timestamp']}")
+        label, color = RISK_MAP.get(res["level"], ("","#888"))
+        st.info(f"Ready to dispatch: **{label}**  {res['timestamp']}")
 
         col_em, col_sm = st.columns(2)
         with col_em:
             with st.container(border=True):
-                st.markdown("### ðŸ“§ Email Alert")
+                st.markdown("###  Email Alert")
                 st.caption("Set ALERT_EMAIL_FROM / ALERT_EMAIL_PASS / ALERT_EMAIL_TO in .env")
                 email_to = st.text_input("Send to Email", value=os.environ.get("ALERT_EMAIL_TO","aejphillips@outlook.com"))
-                if st.button("ðŸ“§ SEND EMAIL ALERT"):
+                if st.button(" SEND EMAIL ALERT"):
                     os.environ["ALERT_EMAIL_TO"] = email_to
                     status = alert_engine.send_email(res)
-                    (st.success if "âœ…" in status else st.warning)(status)
-                    if voice_on and "âœ…" in status:
+                    (st.success if "" in status else st.warning)(status)
+                    if voice_on and "" in status:
                         speak(f"Email alert sent to {email_to}")
 
         with col_sm:
             with st.container(border=True):
-                st.markdown("### ðŸ“± SMS Alert (Twilio)")
+                st.markdown("###  SMS Alert (Twilio)")
                 st.caption("Set TWILIO_ACCOUNT_SID / AUTH_TOKEN / FROM / TO in .env")
                 sms_to = st.text_input("Send SMS to", value=os.environ.get("TWILIO_TO_NUMBER","+61400000000"))
-                if st.button("ðŸ“± SEND SMS ALERT"):
+                if st.button(" SEND SMS ALERT"):
                     os.environ["TWILIO_TO_NUMBER"] = sms_to
                     
                     provider = "mistral" if "Mistral" in model_choice or "Codestral" in model_choice else "gemini"
@@ -1632,45 +1632,45 @@ if st.session_state.active_tab == "ðŸ‘¥ DIGITAL TWIN":
                         smart_summary = alert_engine.generate_smart_summary(res, provider=provider, api_key=key)
                         
                     status = alert_engine.send_sms(res, smart_summary=smart_summary)
-                    (st.success if "âœ…" in status else st.warning)(status)
+                    (st.success if "" in status else st.warning)(status)
                     if smart_summary:
                         st.caption(f"**Smart Summary:** {smart_summary}")
-                    if voice_on and "âœ…" in status:
+                    if voice_on and "" in status:
                         speak("S M S alert sent successfully.")
     else:
         st.info("Run Step 2 analysis first to enable alert dispatch.")
 
     st.divider()
 
-    # â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-    # STEP 4 & 5 â€” Watch Guide + Eye Scan
-    # â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+    # 
+    # STEP 4 & 5  Watch Guide + Eye Scan
+    # 
     col_wt, col_sc = st.columns(2)
     with col_wt:
         with st.container(border=True):
-            st.markdown("### âŒš Step 4 â€” Galaxy Fit 3 Watch Log Guide")
+            st.markdown("###  Step 4  Galaxy Fit 3 Watch Log Guide")
             st.markdown("""
 **On Samsung Phone (Samsung Health app):**
 1. Open **Samsung Health**
-2. Tap **Activity â†’ Health Monitor**
-3. Tap **Heart Rate / Blood Oxygen / Stress** â†’ live graph
+2. Tap **Activity  Health Monitor**
+3. Tap **Heart Rate / Blood Oxygen / Stress**  live graph
 4. Swipe left for **Today's history log**
-5. Tap **â‹® â†’ Share data** to export CSV
+5. Tap **  Share data** to export CSV
 
 **On Galaxy Fit 3 Watch:**
-1. Press **side button** â†’ scroll to **Heart Rate** â†’ live reading
-2. Scroll to **Stress** â†’ see HRV stress index graph
-3. **ðŸ“³ Haptic buzz** = OMEGA-CORE critical alert received âœ…
+1. Press **side button**  scroll to **Heart Rate**  live reading
+2. Scroll to **Stress**  see HRV stress index graph
+3. ** Haptic buzz** = OMEGA-CORE critical alert received 
             """)
-            if st.button("ðŸŽ™ï¸ READ GUIDE ALOUD"):
+            if st.button(" READ GUIDE ALOUD"):
                 speak("To view logs: Open Samsung Health on your phone. Tap Activity then Health Monitor. Select Heart Rate or Blood Oxygen. On the watch, press the side button, scroll to Heart Rate or Stress. A haptic buzz means an Omega Core alert was received.")
 
     with col_sc:
         with st.container(border=True):
-            st.markdown("### ðŸ‘ï¸ Step 5 â€” Total Eye Scan")
-            st.caption("90-step BIO-METRIC-OMEGA Â· Galaxy Fit 3 Protocol")
-            if st.button("âš¡ INITIATE TOTAL OMEGA SCAN"):
-                with st.spinner("Processing Bio-Metric Hypergraph â€” 90 steps..."):
+            st.markdown("###  Step 5  Total Eye Scan")
+            st.caption("90-step BIO-METRIC-OMEGA  Galaxy Fit 3 Protocol")
+            if st.button(" INITIATE TOTAL OMEGA SCAN"):
+                with st.spinner("Processing Bio-Metric Hypergraph  90 steps..."):
                     import subprocess
                     subprocess.run(["py", "generate_eye_watch.py"], capture_output=True)
                     st.session_state.eye_scan_fidelity = "99.8%"
@@ -1697,7 +1697,7 @@ if st.session_state.active_tab == "ðŸ‘¥ DIGITAL TWIN":
             
             if 'vision_result' in st.session_state:
                 res = st.session_state.vision_result
-                st.markdown("#### ðŸ‘ï¸ AI Optometric Analysis Results")
+                st.markdown("####  AI Optometric Analysis Results")
                 
                 col_va, col_vb, col_vc = st.columns(3)
                 with col_va:
@@ -1733,17 +1733,17 @@ if st.session_state.active_tab == "ðŸ‘¥ DIGITAL TWIN":
 
     st.divider()
 
-    # â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-    # STEP 6 â€” Alert History Log
-    # â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-    st.subheader("ðŸ“‹ Step 6 â€” Alert History Log")
+    # 
+    # STEP 6  Alert History Log
+    # 
+    st.subheader(" Step 6  Alert History Log")
     if os.path.exists("reports/biometric_alert_log.json"):
         with open("reports/biometric_alert_log.json") as f:
             log_data = json.load(f)
         if log_data:
             rows = []
             for e in reversed(log_data[-20:]):
-                lbl, _ = RISK_MAP.get(e["level"], ("â“","#888"))
+                lbl, _ = RISK_MAP.get(e["level"], ("","#888"))
                 rows.append({
                     "Time": e["timestamp"], "Status": lbl,
                     "BP": e["vitals"]["bp"],
@@ -1761,8 +1761,8 @@ if st.session_state.active_tab == "ðŸ‘¥ DIGITAL TWIN":
 
 
 # 11. RESEARCH DEVICE
-if st.session_state.active_tab == "ðŸ”¬ RESEARCH DEVICE":
-    st.header("ðŸ”¬ Research Device Uplink")
+if st.session_state.active_tab == " RESEARCH DEVICE":
+    st.header(" Research Device Uplink")
     st.write("Live spectral analysis and device management.")
     col_dev1, col_dev2 = st.columns(2)
     with col_dev1:
@@ -1779,8 +1779,8 @@ if st.session_state.active_tab == "ðŸ”¬ RESEARCH DEVICE":
         st.line_chart(chart_data)
 
 # 12. EVOLUTION
-if st.session_state.active_tab == "ðŸ”„ EVOLUTION":
-    st.header("ðŸ”„ Evolutionary Engine")
+if st.session_state.active_tab == " EVOLUTION":
+    st.header(" Evolutionary Engine")
     st.write("Recursive profile optimization and mutation logs.")
     st.progress(85, text="Singularity Alignment: 85%")
     st.subheader("Neural Log (Live)")
@@ -1795,8 +1795,8 @@ if st.session_state.active_tab == "ðŸ”„ EVOLUTION":
     """, unsafe_allow_html=True)
 
 # 13. VISUAL MANIFOLD
-if st.session_state.active_tab == "ðŸŒŒ VISUAL MANIFOLD":
-    st.header("ðŸŒŒ Manifold Engine (Multi-Asset Latent Space)")
+if st.session_state.active_tab == " VISUAL MANIFOLD":
+    st.header(" Manifold Engine (Multi-Asset Latent Space)")
     st.write("Visualizing the hidden geometry of the global financial system.")
     
     col_m1, col_m2 = st.columns([1, 4])
@@ -1821,7 +1821,7 @@ if st.session_state.active_tab == "ðŸŒŒ VISUAL MANIFOLD":
         st.plotly_chart(fig, width='stretch')
         
         st.divider()
-        st.subheader("ðŸ”— Correlation Network Graph")
+        st.subheader(" Correlation Network Graph")
         threshold = st.slider("Correlation Threshold", 0.0, 1.0, 0.7)
         if st.button("CONSTRUCT NETWORK"):
             import networkx as nx
@@ -1856,8 +1856,8 @@ if st.session_state.active_tab == "ðŸŒŒ VISUAL MANIFOLD":
             ])
             fig_net.update_layout(title="Asset Contagion Network", showlegend=False)
 # 14. SINGULARITY FEED
-if st.session_state.active_tab == "ðŸš€ SINGULARITY FEED":
-    st.header("ðŸš€ SINGULARITY FEED")
+if st.session_state.active_tab == " SINGULARITY FEED":
+    st.header(" SINGULARITY FEED")
     st.subheader("Autonomous Scientist Discovery Stream")
     
     # Live Active Learning Metrics
@@ -1895,8 +1895,8 @@ if st.session_state.active_tab == "ðŸš€ SINGULARITY FEED":
         st.info("No autonomous discoveries archived yet. Run the Level 4 Science Loop to begin.")
 
 # 15. SCIENTIFIC DISCOVERY
-if st.session_state.active_tab == "ðŸ‘¨â€ðŸ”¬ SCIENTIFIC DISCOVERY":
-    st.header("ðŸ‘¨â€ðŸ”¬ Scientific Discovery Engine")
+if st.session_state.active_tab == " SCIENTIFIC DISCOVERY":
+    st.header(" Scientific Discovery Engine")
     st.write("Hypothesis Engine across Multi-Asset Networks.")
     
     col_s1, col_s2 = st.columns([2, 1])
@@ -1948,7 +1948,7 @@ if st.session_state.active_tab == "ðŸ‘¨â€ðŸ”¬ SCIENTIFIC DISCOVER
                 st.divider()
                 
                 # Feature Importance Chart
-                st.subheader("ðŸ§¬ Feature Attribution (Drivers)")
+                st.subheader(" Feature Attribution (Drivers)")
                 imp_df = pd.DataFrame(list(res['importance'].items()), columns=['Feature', 'Importance'])
                 fig_imp = px.bar(imp_df, x='Feature', y='Importance', color='Importance', 
                                  title="Feature Drivers of System State", color_continuous_scale='Viridis')
@@ -1957,7 +1957,7 @@ if st.session_state.active_tab == "ðŸ‘¨â€ðŸ”¬ SCIENTIFIC DISCOVER
                 st.divider()
                 
                 # Causal Graph Visualization (Simple Plotly version)
-                st.subheader("ðŸ•¸ï¸ Hypothesized Causal Graph")
+                st.subheader(" Hypothesized Causal Graph")
                 st.caption("Directed paths indicating mechanistic influence (A -> B)")
                 
                 G = res['causal_g']
@@ -1979,8 +1979,8 @@ if st.session_state.active_tab == "ðŸ‘¨â€ðŸ”¬ SCIENTIFIC DISCOVER
 
     run_agent_panel('scientific_discovery')
 # 16. DISCOVERY DASHBOARD
-if st.session_state.active_tab == "ðŸŒŒ DISCOVERY DASHBOARD":
-    st.header("ðŸŒŒ Discovery Dashboard: Irreducibility & Geometry")
+if st.session_state.active_tab == " DISCOVERY DASHBOARD":
+    st.header(" Discovery Dashboard: Irreducibility & Geometry")
     st.write("Detecting structural 'tears' and manifold instability across the system.")
     
     # Run Discovery Metrics
@@ -1999,16 +1999,16 @@ if st.session_state.active_tab == "ðŸŒŒ DISCOVERY DASHBOARD":
 
     # B. Interpretation Layer (The Logic)
     if reducibility > 0.8:
-        st.success("âœ”ï¸ System is REDUCIBLE (Predictable Structure Detected)")
+        st.success(" System is REDUCIBLE (Predictable Structure Detected)")
     elif stability < 0.5:
-        st.warning("âš ï¸ System is UNSTABLE (High Risk of Regime Shift)")
+        st.warning(" System is UNSTABLE (High Risk of Regime Shift)")
     else:
-        st.error("ðŸ”¥ IRREDUCIBLE / CHAOTIC SYSTEM DETECTED (Predictive Power Minimal)")
+        st.error(" IRREDUCIBLE / CHAOTIC SYSTEM DETECTED (Predictive Power Minimal)")
 
     st.divider()
     
     # C. Shock Simulator UI (Global vs Selective)
-    st.subheader("ðŸŒ‹ Shock Simulator (Experimental Stress Test)")
+    st.subheader(" Shock Simulator (Experimental Stress Test)")
     col_shk1, col_shk2 = st.columns([1, 2])
     
     with col_shk1:
@@ -2065,9 +2065,10 @@ if st.session_state.active_tab == "ðŸŒŒ DISCOVERY DASHBOARD":
         else:
             st.info("Initiate Shock Simulation to observe systemic geometry shifts.")
 
+    reality_validation_panel()
 # 17. ADVERSARIAL LAB
-if st.session_state.active_tab == "🛡️ ADVERSARIAL LAB":
-    st.header("🛡️ Adversarial Lab: Cyber AI Defense")
+if st.session_state.active_tab == " ADVERSARIAL LAB":
+    st.header(" Adversarial Lab: Cyber AI Defense")
     st.write("Simulating Red Team vs Blue Team dynamics with Bayesian Risk Propagation.")
     
     if domain != "Cybersecurity":
@@ -2076,12 +2077,12 @@ if st.session_state.active_tab == "🛡️ ADVERSARIAL LAB":
         col_adv1, col_adv2 = st.columns([1, 2])
         
         with col_adv1:
-            st.markdown("### 🧪 Attack Simulator")
+            st.markdown("###  Attack Simulator")
             target_node = st.selectbox("Target Node", ["N1", "N2", "N3", "N4", "N5"])
             attack_type = st.radio("Attack Type", ["DDoS", "BruteForce", "Privilege Escalation"])
             intensity = st.slider("Payload Intensity", 0.0, 1.0, 0.8)
             
-            if st.button("🚀 EXECUTE ATTACK"):
+            if st.button(" EXECUTE ATTACK"):
                 from simulation.cyber_simulator import CyberSimulator
                 from simulation.adversarial_engine import AdversarialEngine
                 from intelligence.mitre_mapper import MitreMapper
@@ -2102,12 +2103,12 @@ if st.session_state.active_tab == "🛡️ ADVERSARIAL LAB":
                 res = st.session_state.cyber_results
                 mitre = st.session_state.mitre_context
                 
-                st.markdown(f"### 🛡️ MITRE Context: {mitre['name']} ({mitre['id']})")
+                st.markdown(f"###  MITRE Context: {mitre['name']} ({mitre['id']})")
                 st.caption(mitre['description'])
                 st.info(f"**Detection Guidance**: {mitre['detection']}")
                 
                 st.divider()
-                st.subheader("📊 Bayesian Propagation Impact")
+                st.subheader(" Bayesian Propagation Impact")
                 
                 # Show results in a table
                 impact_df = pd.DataFrame([
@@ -2116,7 +2117,7 @@ if st.session_state.active_tab == "🛡️ ADVERSARIAL LAB":
                 st.table(impact_df)
                 
                 st.divider()
-                st.subheader("🤖 Autonomous Action Log")
+                st.subheader(" Autonomous Action Log")
                 if res["blue_responses"]:
                     for action in res["blue_responses"]:
                         st.success(f"**{action['action']}** applied to **{action['node']}** | Result: {action.get('result', {}).get('status', 'SUCCESS')}")
@@ -2126,8 +2127,8 @@ if st.session_state.active_tab == "🛡️ ADVERSARIAL LAB":
                 st.info("Execute an attack simulation to view reasoning and systemic impact.")
 
         st.divider()
-        st.subheader("🔄 Multi-Round Adversarial Simulation")
-        if st.button("🏃 START CONTINUOUS Red vs Blue LOOP"):
+        st.subheader(" Multi-Round Adversarial Simulation")
+        if st.button(" START CONTINUOUS Red vs Blue LOOP"):
             from simulation.cyber_simulator import CyberSimulator
             from simulation.adversarial_engine import AdversarialEngine
             
@@ -2156,14 +2157,14 @@ if st.session_state.active_tab == "🛡️ ADVERSARIAL LAB":
     run_agent_panel('adversarial_lab')
 
 # 18. SMART CITY TWIN
-if st.session_state.active_tab == "🏙️ SMART CITY TWIN":
+if st.session_state.active_tab == " SMART CITY TWIN":
     run_agent_panel('smart_city_twin')
     import plotly.graph_objects as go
     import numpy as np
     from simulation.smart_city_simulator import SmartCitySimulator
 
-    st.header("🏙️ Smart City Digital Twin")
-    st.caption("Infrastructure Resilience & Cascading Failure Simulation — OMEGA-CORE Civic AI")
+    st.header(" Smart City Digital Twin")
+    st.caption("Infrastructure Resilience & Cascading Failure Simulation  OMEGA-CORE Civic AI")
 
     # --- Persistent simulator instance ---
     if 'city_sim' not in st.session_state:
@@ -2173,7 +2174,7 @@ if st.session_state.active_tab == "🏙️ SMART CITY TWIN":
     sim = st.session_state.city_sim
 
     # --- NODE METADATA ---
-    NODE_ICONS = {"P": "⚡", "C": "📡", "T": "🚦", "W": "💧", "E": "🚨"}
+    NODE_ICONS = {"P": "", "C": "", "T": "", "W": "", "E": ""}
     NODE_COLORS = {
         "OPERATIONAL":    "#10B981",
         "DEGRADED":       "#F59E0B",
@@ -2185,12 +2186,12 @@ if st.session_state.active_tab == "🏙️ SMART CITY TWIN":
     }
     NODE_POS = {"P": (0, 0), "C": (2, 1), "T": (4, 2), "W": (2, -1), "E": (4, 0)}
 
-    # — Row 1: Control Panel + Topology Map ————————————————————————————————
+    #  Row 1: Control Panel + Topology Map 
     col_ctrl, col_map = st.columns([1, 2])
 
     with col_ctrl:
         with st.container(border=True):
-            st.markdown("### 🐚 Inject System Shock")
+            st.markdown("###  Inject System Shock")
             target_node = st.selectbox(
                 "Infrastructure Node",
                 options=list(sim.nodes.keys()),
@@ -2199,7 +2200,7 @@ if st.session_state.active_tab == "🏙️ SMART CITY TWIN":
             shock_type = st.radio("Shock Type", ["Power Failure", "Comms Blackout", "Flood", "Cyber Override"])
             intensity = st.slider("Shock Intensity", 0.0, 1.0, 0.9, step=0.05)
 
-            if st.button("⚡ INITIATE SHOCK", width='stretch'):
+            if st.button(" INITIATE SHOCK", width='stretch'):
                 results = sim.inject_shock(target_node, shock_type, intensity)
                 st.session_state.city_results = results
                 ts = datetime.datetime.now().strftime("%H:%M:%S")
@@ -2210,7 +2211,7 @@ if st.session_state.active_tab == "🏙️ SMART CITY TWIN":
                 st.success("Shock injected. Cascade propagated.")
 
         with st.container(border=True):
-            st.markdown("### 🛡️ Resilience Actions")
+            st.markdown("###  Resilience Actions")
             action_node = st.selectbox(
                 "Target Node",
                 options=list(sim.nodes.keys()),
@@ -2221,18 +2222,18 @@ if st.session_state.active_tab == "🏙️ SMART CITY TWIN":
                 "Action",
                 ["Activate Backup", "Load Shedding", "Reroute Flow"]
             )
-            if st.button("🔧 APPLY ACTION", width='stretch'):
+            if st.button(" APPLY ACTION", width='stretch'):
                 action_res = sim.apply_resilience_action(action_node, action_type)
                 ts = datetime.datetime.now().strftime("%H:%M:%S")
                 st.session_state.city_event_log.append(
-                    f"[{ts}] ✅ {action_type} → {NODE_ICONS[action_node]} {sim.nodes[action_node]}"
+                    f"[{ts}]  {action_type}  {NODE_ICONS[action_node]} {sim.nodes[action_node]}"
                 )
                 st.success(f"Action '{action_type}' applied: {action_res['new_state']['status']}")
                 # Refresh results
                 st.session_state.city_results = sim._format_results({})
                 st.session_state.city_active = True
 
-            if st.button("🔄 RESET SIMULATION", width='stretch'):
+            if st.button(" RESET SIMULATION", width='stretch'):
                 st.session_state.city_sim = SmartCitySimulator()
                 st.session_state.city_event_log = []
                 st.session_state.city_active = False
@@ -2245,16 +2246,16 @@ if st.session_state.active_tab == "🏙️ SMART CITY TWIN":
             # --- WEATHER LINKED IMPACT (NEW) ---
             if st.session_state.get('last_weather_impact') and st.session_state.last_weather_impact['Status'] == 'CRITICAL':
                 st.divider()
-                st.error("🌪️ OMEGA-CORE: ATMOSPHERIC INTERFERENCE DETECTED")
+                st.error(" OMEGA-CORE: ATMOSPHERIC INTERFERENCE DETECTED")
                 st.caption("Cascading storm risk detected from Climate Manifold.")
-                if st.button("🌊 APPLY FLOOD MITIGATION"):
+                if st.button(" APPLY FLOOD MITIGATION"):
                     sim.inject_shock("W", "Flood", 0.8)
                     st.success("Flood impact propagated to Water & Power nodes.")
                     st.rerun()
 
     with col_map:
         with st.container(border=True):
-            st.markdown("### 🗺️ Infrastructure Topology")
+            st.markdown("###  Infrastructure Topology")
 
             # Build Plotly network figure
             states = sim.node_states
@@ -2312,8 +2313,8 @@ if st.session_state.active_tab == "🏙️ SMART CITY TWIN":
 
     st.divider()
 
-    # — Row 2: Integrity Gauges ——————————————————————————————————————————————
-    st.subheader("📊 Node Integrity Gauges")
+    #  Row 2: Integrity Gauges 
+    st.subheader(" Node Integrity Gauges")
     gauge_cols = st.columns(5)
     for i, (nid, nname) in enumerate(sim.nodes.items()):
         state = sim.node_states[nid]
@@ -2347,13 +2348,13 @@ if st.session_state.active_tab == "🏙️ SMART CITY TWIN":
 
     st.divider()
 
-    # — Row 3: AI Reasoning + Event Log ——————————————————————————————————————
+    #  Row 3: AI Reasoning + Event Log 
     col_reason, col_log = st.columns([3, 2])
 
     with col_reason:
-        st.subheader("🧠 AI Resilience Reasoning")
+        st.subheader(" AI Resilience Reasoning")
         if 'city_active' in st.session_state and st.session_state.city_active:
-            if st.button("🤖 RUN OMEGA REASONING ENGINE", width='stretch'):
+            if st.button(" RUN OMEGA REASONING ENGINE", width='stretch'):
                 from intelligence.reasoning_agent import ReasoningAgent
                 res = st.session_state.get('city_results', sim._format_results({}))
                 with st.spinner("Traversing Causal Pathways..."):
@@ -2378,27 +2379,27 @@ if st.session_state.active_tab == "🏙️ SMART CITY TWIN":
                     """, unsafe_allow_html=True)
 
                     with st.container(border=True):
-                        st.markdown("**📝 Domain Assessment**")
+                        st.markdown("** Domain Assessment**")
                         st.write(r.get("domain_assessment", ""))
 
                     with st.container(border=True):
-                        st.markdown("**🧪 Root Cause Analysis**")
+                        st.markdown("** Root Cause Analysis**")
                         st.write(r.get("analysis", ""))
 
                     with st.container(border=True):
-                        st.markdown("**⚠️ Key Vulnerabilities**")
+                        st.markdown("** Key Vulnerabilities**")
                         for v in r.get("vulnerabilities", []):
                             st.markdown(f"- {v}")
 
                     with st.container(border=True):
-                        st.markdown("**🛡️ Recommended Strategy**")
+                        st.markdown("** Recommended Strategy**")
                         for s in r.get("strategy", []):
-                            st.markdown(f"✅ {s}")
+                            st.markdown(f" {s}")
         else:
             st.info("Inject a system shock to enable AI reasoning analysis.")
 
     with col_log:
-        st.subheader("📋 Live Event Log")
+        st.subheader(" Live Event Log")
         if st.session_state.city_event_log:
             log_html = "<div style='font-family:monospace;font-size:12px;color:#10B981;background:#050505;padding:15px;border-radius:8px;height:360px;overflow-y:scroll;border:1px solid #222;'>"
             for entry in reversed(st.session_state.city_event_log):
@@ -2410,7 +2411,7 @@ if st.session_state.active_tab == "🏙️ SMART CITY TWIN":
 
         if 'city_results' in st.session_state:
             st.divider()
-            st.subheader("📡 Sector Impact Table")
+            st.subheader(" Sector Impact Table")
             res = st.session_state.city_results
             impact_rows = []
             for nid, data in res.items():
@@ -2425,8 +2426,8 @@ if st.session_state.active_tab == "🏙️ SMART CITY TWIN":
             st.dataframe(pd.DataFrame(impact_rows), width='stretch', hide_index=True)
 
 # 19. QUANTUM FEEDBACK
-if st.session_state.active_tab == "ðŸ§¬ QUANTUM FEEDBACK":
-    st.header("🧬 Quantum Patient Bio-Feedback")
+if st.session_state.active_tab == " QUANTUM FEEDBACK":
+    st.header(" Quantum Patient Bio-Feedback")
     st.caption("Step-22: Real-time High-Fidelity Biological Simulation")
 
     def simulate_quantum_feedback(therapy, profile):
@@ -2466,12 +2467,12 @@ if st.session_state.active_tab == "ðŸ§¬ QUANTUM FEEDBACK":
     col_q1, col_q2 = st.columns([1, 2])
     with col_q1:
         with st.container(border=True):
-            st.markdown("### 🧪 Therapy Ingress")
+            st.markdown("###  Therapy Ingress")
             therapy_input = st.text_area("Therapy Recommendation", value="Nivolumab 240mg + CRISPR PD-L1 Suppression (Step-4)")
             patient_age = st.number_input("Patient Age", value=45)
             patient_genetics = st.text_input("Genetic Markers", value="HLA-A*02:01, PD-L1 High")
             
-            if st.button("🚀 RUN QUANTUM SIMULATION"):
+            if st.button(" RUN QUANTUM SIMULATION"):
                 with st.spinner("Traversing Quantum Latent Bio-Space..."):
                     result = simulate_quantum_feedback(
                         {"name": therapy_input}, 
@@ -2486,14 +2487,14 @@ if st.session_state.active_tab == "ðŸ§¬ QUANTUM FEEDBACK":
             res = st.session_state.quantum_result
             
             # --- Vitals Monitor ---
-            st.markdown("### 💓 Real-Time Vitals")
+            st.markdown("###  Real-Time Vitals")
             vcol1, vcol2, vcol3 = st.columns(3)
             vcol1.metric("Heart Rate", f"{res['vitalSigns']['heartRate']} bpm")
             vcol2.metric("Blood Pressure", res['vitalSigns']['bloodPressure'])
             vcol3.metric("SpO2", f"{res['vitalSigns']['oxygenSaturation']}%")
             
             if res['toxicityAlert']:
-                st.error("🚨 CRITICAL TOXICITY ALERT DETECTED")
+                st.error(" CRITICAL TOXICITY ALERT DETECTED")
                 from intelligence.biometric_alert_engine import BiometricAlertEngine
                 alert_engine = BiometricAlertEngine("AJ Phillips")
                 alert_engine.send_email({"level": "CRITICAL", "timestamp": str(datetime.datetime.now()), "breaches": [{"metric": "Quantum Toxicity", "value": "HIGH", "severity": "CRITICAL"}], "vitals": {"bp": res['vitalSigns']['bloodPressure'], "glucose": 0, "pulse": res['vitalSigns']['heartRate'], "spo2": res['vitalSigns']['oxygenSaturation']}})
@@ -2501,20 +2502,20 @@ if st.session_state.active_tab == "ðŸ§¬ QUANTUM FEEDBACK":
             st.divider()
             
             # --- Cellular Response ---
-            st.markdown("### 🧬 Cellular Dynamics")
+            st.markdown("###  Cellular Dynamics")
             st.info(f"**Current State:** {res['cellularResponse']}")
             st.warning(f"**Therapeutic Adjustment:** {res['realTimeAdjustment']}")
             
             # --- Bio-Rhythm Chart ---
-            st.markdown("### 🌍 Bio-Rhythm Stability")
+            st.markdown("###  Bio-Rhythm Stability")
             chart_df = pd.DataFrame(res['feedbackVisualData'], columns=['Stability Index'])
             st.area_chart(chart_df)
         else:
             st.info("Awaiting therapy ingress for quantum simulation...")
 
 # 20. AGRICULTURE ASI
-if st.session_state.active_tab == "🚜 AGRICULTURE ASI":
-    st.header("🚜 Agriculture ASI: Autonomous Farming Assistant")
+if st.session_state.active_tab == " AGRICULTURE ASI":
+    st.header(" Agriculture ASI: Autonomous Farming Assistant")
     st.caption("OMEGA-CORE Scientific Discovery for Global Food Security")
     run_agent_panel('agriculture_asi')
 
@@ -2524,12 +2525,12 @@ if st.session_state.active_tab == "🚜 AGRICULTURE ASI":
     col_a1, col_a2 = st.columns([1, 2])
     
     with col_a1:
-        st.markdown("### 📷 Field Ingress")
+        st.markdown("###  Field Ingress")
         # Simulate Image Upload (referencing the corn leaf image provided by user)
         with st.container(border=True):
             st.image("https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Gray_leaf_spot_of_maize.jpg/800px-Gray_leaf_spot_of_maize.jpg", caption="Live Field Stream (Uplink: Drone-04/Geneva)")
             st.warning("Gray leaf spot detected in 14% of canopy.")
-            if st.button("⚙️ RUN ASI DIAGNOSTIC"):
+            if st.button(" RUN ASI DIAGNOSTIC"):
                 with st.spinner("Processing High-Fidelity Crop Vision..."):
                     st.session_state.agri_report = agri_intel.generate_farmer_report()
                     st.success("Report Generated.")
@@ -2559,22 +2560,22 @@ if st.session_state.active_tab == "🚜 AGRICULTURE ASI":
             st.divider()
             
             # --- Farmer Report Card ---
-            with st.expander("📄 CONSOLIDATED FARMER REPORT", expanded=True):
+            with st.expander(" CONSOLIDATED FARMER REPORT", expanded=True):
                 st.subheader(report["Title"])
                 st.write(f"**STATUS:** {report['Status']}")
                 st.info(f"**Health Audit:** {report['Health_Audit']['Alert']}")
                 
-                st.markdown("#### 💊 Prescriptive Actions")
+                st.markdown("####  Prescriptive Actions")
                 st.success(f"**Primary:** {report['Prescription']['Primary_Action']}")
                 st.warning(f"**Economic ROI:** {report['Prescription']['Economic_Alternative']} (ROI: {report['Prescription']['Expected_ROI']})")
                 
-                st.markdown("#### ⚡ Resource Optimization")
+                st.markdown("####  Resource Optimization")
                 st.write(f"Nitrogen: `{report['Resource_Optimization']['nitrogen_adjustment']}`")
                 st.write(f"Irrigation: `{report['Resource_Optimization']['irrigation_increase']}`")
                 st.caption(report['Resource_Optimization']['cost_saving_tip'])
                 
             # --- Forecast Manifold ---
-            st.markdown("### 📈 Yield Manifold (Probabilistic)")
+            st.markdown("###  Yield Manifold (Probabilistic)")
             forecast_data = pd.DataFrame({
                 "Scenario": ["Best Case", "Most Likely", "Worst Case"],
                 "Yield": [182.5, float(report["Intelligence_Forecast"]["Predicted_Yield"].split()[0]), 168.0]
@@ -2585,8 +2586,8 @@ if st.session_state.active_tab == "🚜 AGRICULTURE ASI":
             st.info("Initiate ASI Diagnostic to generate field-ready report.")
 
 # 21. GLOBAL MONITORING
-if st.session_state.active_tab == "🌍 GLOBAL MONITORING":
-    st.header("🌍 Global Environmental Monitoring & Learning Loop")
+if st.session_state.active_tab == " GLOBAL MONITORING":
+    st.header(" Global Environmental Monitoring & Learning Loop")
     st.caption("Satellite Uplink: Sentinel-2 | Autonomous Causal Refinement Active")
 
     from intelligence.sensor_uplink import SensorUplink
@@ -2595,30 +2596,30 @@ if st.session_state.active_tab == "🌍 GLOBAL MONITORING":
     col_g1, col_g2 = st.columns([1, 1])
     
     with col_g1:
-        st.markdown("### 🛰️ Satellite Hotspot Feed")
+        st.markdown("###  Satellite Hotspot Feed")
         sat_data = uplink.get_satellite_hotspots()
         
         if sat_data["system_status"] == "CRITICAL_ALERT":
-            st.error("🚨 CRITICAL THERMAL ANOMALIES DETECTED")
+            st.error(" CRITICAL THERMAL ANOMALIES DETECTED")
         else:
-            st.success("✅ System Status: Stable")
+            st.success(" System Status: Stable")
             
         st.dataframe(pd.DataFrame(sat_data["telemetry"]), hide_index=True)
         
-        st.markdown("### 🌪️ Fire Propagation Vectors")
+        st.markdown("###  Fire Propagation Vectors")
         regions = ["Perth", "Adelaide", "Sydney", "Brisbane"]
         for r in regions:
             vec = uplink.calculate_fire_propagation_vector(r)
             with st.expander(f"Vector Analysis: {r}", expanded=(r == "Perth")):
-                st.write(f"**Wind Direction:** {vec['vector_direction']}°")
+                st.write(f"**Wind Direction:** {vec['vector_direction']}")
                 st.write(f"**Impact Zone:** {vec['impact_zone']}")
                 st.progress(min(1.0, vec['magnitude_index']/50.0), text=f"Magnitude: {vec['magnitude_index']}")
 
     with col_g2:
-        st.markdown("### 🧠 Autonomous Learning Loop")
+        st.markdown("###  Autonomous Learning Loop")
         st.info("Ingesting Ground Truth: `agri_test_suite.csv` -> `Actual_Yield`")
         
-        if st.button("🔄 TRIGGER CAUSAL REFINEMENT"):
+        if st.button(" TRIGGER CAUSAL REFINEMENT"):
             with st.spinner("Back-propagating yield errors..."):
                 # Use current sci_engine (initialized for Agri in domain logic)
                 success, audit = sci_engine.learn_from_ground_truth()
@@ -2627,11 +2628,11 @@ if st.session_state.active_tab == "🌍 GLOBAL MONITORING":
                     st.success("Causal Weights Refined.")
 
         if 'learning_audit' in st.session_state:
-            st.markdown("#### 🕵️ Accuracy Audit Report")
+            st.markdown("####  Accuracy Audit Report")
             audit_df = pd.DataFrame(st.session_state.learning_audit)
             st.table(audit_df)
             
-            st.markdown("#### 📈 Convergence Manifold")
+            st.markdown("####  Convergence Manifold")
             # Simulate convergence visualization
             learning_data = pd.DataFrame({
                 "Iteration": range(1, 6),
@@ -2644,28 +2645,28 @@ if st.session_state.active_tab == "🌍 GLOBAL MONITORING":
     run_agent_panel('global_monitoring')
 
 # 22. ROBOTICS COMMAND
-if st.session_state.active_tab == "ðŸ¦¾ ROBOTICS COMMAND":
-    st.header("🤖 Robotics Command & Humanoid Control")
+if st.session_state.active_tab == " ROBOTICS COMMAND":
+    st.header(" Robotics Command & Humanoid Control")
     st.caption("OMEGA-CORE Robotics Division | Cosmo-Humanoid Interface")
 
     col_r1, col_r2 = st.columns([1, 2])
     with col_r1:
-        st.markdown("### 🤖 Active Units")
+        st.markdown("###  Active Units")
         units = pd.DataFrame([
-            {"Unit": "Drone-04", "Type": "Aerial Multi-spectral", "Status": "🟢 Active"},
-            {"Unit": "Robot-Unit-01", "Type": "Humanoid Assistant", "Status": "🟡 Standby"},
-            {"Unit": "Mobile-Alpha", "Type": "Ground Rover", "Status": "🟢 Connected"},
+            {"Unit": "Drone-04", "Type": "Aerial Multi-spectral", "Status": " Active"},
+            {"Unit": "Robot-Unit-01", "Type": "Humanoid Assistant", "Status": " Standby"},
+            {"Unit": "Mobile-Alpha", "Type": "Ground Rover", "Status": " Connected"},
         ])
         st.table(units)
         
         st.divider()
-        st.markdown("### 🕹️ Unit Controls")
-        if st.button("🚀 DEPLOY DRONE-04"): st.success("Drone-04 Deployed to Field Segment Alpha.")
-        if st.button("🔄 REBOOT ROBOT-01"): st.info("Humanoid OS Rebooting...")
-        if st.button("🛑 EMERGENCY HALT"): st.error("Global Robotics Emergency Stop Initiated.")
+        st.markdown("###  Unit Controls")
+        if st.button(" DEPLOY DRONE-04"): st.success("Drone-04 Deployed to Field Segment Alpha.")
+        if st.button(" REBOOT ROBOT-01"): st.info("Humanoid OS Rebooting...")
+        if st.button(" EMERGENCY HALT"): st.error("Global Robotics Emergency Stop Initiated.")
 
     with col_r2:
-        st.markdown("### 📡 Drone-04 Live Diagnostics")
+        st.markdown("###  Drone-04 Live Diagnostics")
         from intelligence.sensor_uplink import SensorUplink
         uplink = SensorUplink()
         ndiv_data = uplink.get_drone_ndiv()
@@ -2689,8 +2690,8 @@ if st.session_state.active_tab == "ðŸ¦¾ ROBOTICS COMMAND":
         """, unsafe_allow_html=True)
 
 # 23. REPORTS ENGINE
-if st.session_state.active_tab == "📊 REPORTS ENGINE":
-    st.header("📊 Multi-Domain Reports Engine")
+if st.session_state.active_tab == " REPORTS ENGINE":
+    st.header(" Multi-Domain Reports Engine")
     st.caption("OMEGA-CORE Central Intelligence Repository")
 
     import glob
@@ -2698,7 +2699,7 @@ if st.session_state.active_tab == "📊 REPORTS ENGINE":
     
     col_rep1, col_rep2 = st.columns([1, 2])
     with col_rep1:
-        st.markdown("### 📁 Report Browser")
+        st.markdown("###  Report Browser")
         selected_file = st.selectbox("Select Report to View", report_files, format_func=lambda x: x.split('\\')[-1])
         
         if selected_file:
@@ -2709,7 +2710,7 @@ if st.session_state.active_tab == "📊 REPORTS ENGINE":
             st.json(report_data)
             
     with col_rep2:
-        st.markdown("### 📈 System Intelligence Metrics")
+        st.markdown("###  System Intelligence Metrics")
         # Collate summary metrics from all reports
         total_reports = len(report_files)
         st.metric("Total Mission Reports", total_reports)
@@ -2721,22 +2722,22 @@ if st.session_state.active_tab == "📊 REPORTS ENGINE":
         st.bar_chart(summary_data.set_index("Domain"))
         
         st.divider()
-        st.markdown("### 📤 Export Protocol")
-        if st.button("📦 ARCHIVE ALL REPORTS"):
+        st.markdown("###  Export Protocol")
+        if st.button(" ARCHIVE ALL REPORTS"):
             st.info("Compressing reports/ directory for export...")
             import time; time.sleep(1)
             st.success("Archive Created: OMEGA_REPORTS_LATEST.zip")
 
 # 24. HEALTH INSURANCE
-if st.session_state.active_tab == "🏥 HEALTH INSURANCE":
-    st.header("🏥 OMEGA-CORE Health Insurance Risk Assessor")
+if st.session_state.active_tab == " HEALTH INSURANCE":
+    st.header(" OMEGA-CORE Health Insurance Risk Assessor")
     st.write("Estimating health risk, probability of treatment, and optimal insurance levels using multi-modal telemetry.")
     
     # Lazy load the engine
     from intelligence.health_insurance_engine import HealthInsuranceEngine
     health_engine = HealthInsuranceEngine()
 
-    st.markdown("### 📊 Test Datasets")
+    st.markdown("###  Test Datasets")
     test_type = st.radio("Select Test Type", ["Family Risk Assessment", "Accident-Only Viability", "Blood Biomarkers", "Financial Summary"], horizontal=True)
 
     if test_type == "Family Risk Assessment":
@@ -2745,7 +2746,7 @@ if st.session_state.active_tab == "🏥 HEALTH INSURANCE":
             family_id = st.selectbox("Select Family ID", df['Family_ID'].tolist())
             row = df[df['Family_ID'] == family_id].iloc[0]
             
-            st.markdown(f"#### 🔍 Assessment for {family_id}")
+            st.markdown(f"####  Assessment for {family_id}")
             col1, col2, col3, col4 = st.columns(4)
             col1.metric("Retinal Diabetic Risk", f"{row['Retinal_Diabetic_Risk']:.2f}")
             col2.metric("Heart Risk", f"{row['Heart_Risk']:.2f}")
@@ -2766,7 +2767,7 @@ if st.session_state.active_tab == "🏥 HEALTH INSURANCE":
             person_id = st.selectbox("Select Person", df['Person'].tolist())
             row = df[df['Person'] == person_id].iloc[0]
             
-            st.markdown(f"#### 🩸 Biomarker Assessment for {person_id}")
+            st.markdown(f"####  Biomarker Assessment for {person_id}")
             col1, col2, col3, col4 = st.columns(4)
             col1.metric("HbA1c (%)", f"{row['HbA1c']:.1f}")
             col2.metric("eGFR", int(row['eGFR']))
@@ -2794,7 +2795,7 @@ if st.session_state.active_tab == "🏥 HEALTH INSURANCE":
             person_id = st.selectbox("Select Person_ID", df['Person_ID'].tolist())
             row = df[df['Person_ID'] == person_id].iloc[0]
             
-            st.markdown(f"#### ⚠️ Accident-Only Viability for {person_id}")
+            st.markdown(f"####  Accident-Only Viability for {person_id}")
             col1, col2, col3 = st.columns(3)
             col1.metric("Age", int(row['Age']))
             col2.metric("Accident Premium", f"${row['Accident_Only_Premium_USD_Yr']}")
@@ -2820,34 +2821,34 @@ if st.session_state.active_tab == "🏥 HEALTH INSURANCE":
     elif test_type == "Financial Summary":
         df = health_engine.load_family_cost_data()
         if not df.empty:
-            st.markdown("#### 💰 Family Financial Stress & Savings Analysis")
+            st.markdown("####  Family Financial Stress & Savings Analysis")
             if st.button("GENERATE FINANCIAL REPORT", key="btn_finance"):
                 st.dataframe(df)
         else:
             st.info("Family cost data not found.")
 
-# 🩺 CLINICAL STRESS TEST
-if st.session_state.active_tab == "🩺 CLINICAL STRESS TEST":
+#  CLINICAL STRESS TEST
+if st.session_state.active_tab == " CLINICAL STRESS TEST":
     run_agent_panel('clinical_stress_test')
 
-# 🛡️ REDUCIBILITY SANDBOX
-if st.session_state.active_tab == "🛡️ REDUCIBILITY SANDBOX":
+#  REDUCIBILITY SANDBOX
+if st.session_state.active_tab == " REDUCIBILITY SANDBOX":
     run_agent_panel('reducibility_sandbox')
 
-# 🧠 OMEGA CORE SYNC
-if st.session_state.active_tab == "🧠 OMEGA CORE SYNC":
+#  OMEGA CORE SYNC
+if st.session_state.active_tab == " OMEGA CORE SYNC":
     run_agent_panel('memory_dashboard')
 
-# 🌐 INFERENCE DOMAIN
-if st.session_state.active_tab == "🌐 INFERENCE DOMAIN":
+#  INFERENCE DOMAIN
+if st.session_state.active_tab == " INFERENCE DOMAIN":
     run_agent_panel('inference_domain')
 
-# ⚕️ HEALTH PROTOCOL
-if st.session_state.active_tab == "⚕️ HEALTH PROTOCOL":
-    st.header("⚕️ Universal Health Protocol")
+#  HEALTH PROTOCOL
+if st.session_state.active_tab == " HEALTH PROTOCOL":
+    st.header(" Universal Health Protocol")
     st.write("Step-by-step biometric validation and insurance optimization.")
     
-    if st.button("💾 Persist to BigQuery Ledger (Requires Uplink)", type="primary"):
+    if st.button(" Persist to BigQuery Ledger (Requires Uplink)", type="primary"):
         with st.spinner("Persisting..."):
             try:
                 res = requests.post("http://localhost:3000/api/bigquery/persist_health", json={"profile": "TestUser", "scan_status": "complete"})
@@ -2880,7 +2881,7 @@ if st.session_state.active_tab == "⚕️ HEALTH PROTOCOL":
 
     # STEP 1: Profile Setup
     if st.session_state.health_step == 1:
-        st.subheader("📋 Step 1: Health Profile Configuration")
+        st.subheader(" Step 1: Health Profile Configuration")
         with st.form("profile_form"):
             user_id = st.text_input("User ID", value="U1-AJ-PHILLIPS")
             age = st.number_input("Age", value=42)
@@ -2892,12 +2893,12 @@ if st.session_state.active_tab == "⚕️ HEALTH PROTOCOL":
 
     # STEP 2: Retina Scan
     elif st.session_state.health_step == 2:
-        st.subheader("👁️ Step 2: Total OMEGA Retina Scan")
+        st.subheader(" Step 2: Total OMEGA Retina Scan")
         st.write("Perform a high-resolution retinal vascular mapping scan.")
         
         col_s1, col_s2 = st.columns([2, 1])
         with col_s1:
-            if st.button("⚡ INITIATE OPTICAL INGRESS"):
+            if st.button(" INITIATE OPTICAL INGRESS"):
                 with st.spinner("Processing Bio-Metric Hypergraph..."):
                     if 'selfie_bytes' in st.session_state:
                         from intelligence.retinal_analyzer import RetinalAnalyzer
@@ -2928,10 +2929,10 @@ if st.session_state.active_tab == "⚕️ HEALTH PROTOCOL":
 
     # STEP 3: Watch Sync
     elif st.session_state.health_step == 3:
-        st.subheader("⌚ Step 3: Smart Watch Synchronization")
+        st.subheader(" Step 3: Smart Watch Synchronization")
         st.write("Synchronizing Samsung Galaxy Fit 3 BLE nodes with OMEGA-CORE.")
         
-        if st.button("🔗 START BIOMETRIC SYNC"):
+        if st.button(" START BIOMETRIC SYNC"):
             with st.spinner("Uplinking to Galaxy Fit 3..."):
                 from generate_eye_watch import generate_protocol
                 watch_data = generate_protocol()
@@ -2947,13 +2948,13 @@ if st.session_state.active_tab == "⚕️ HEALTH PROTOCOL":
 
     # STEP 4: SMS Alert
     elif st.session_state.health_step == 4:
-        st.subheader("📱 Step 4: SMS Alert Simulation")
+        st.subheader(" Step 4: SMS Alert Simulation")
         st.write("Simulating a haptic/SMS notification sequence.")
         
-        if st.button("📧 SEND TEST SMS ALERT"):
+        if st.button(" SEND TEST SMS ALERT"):
             with st.spinner("Initiating Node-04 (Geneva) Relay..."):
                 import time; time.sleep(1)
-                st.success("📱 SMS SENT to +61 4XX XXX XXX: 'OMEGA-CORE: Eye Scan Complete. All vitals nominal.'")
+                st.success(" SMS SENT to +61 4XX XXX XXX: 'OMEGA-CORE: Eye Scan Complete. All vitals nominal.'")
                 st.session_state.health_sms = True
         
         if st.session_state.get('health_sms'):
@@ -2963,10 +2964,10 @@ if st.session_state.active_tab == "⚕️ HEALTH PROTOCOL":
 
     # STEP 5: Policy Selection
     elif st.session_state.health_step == 5:
-        st.subheader("🎯 Step 5: AI Policy Selection & Optimization")
+        st.subheader(" Step 5: AI Policy Selection & Optimization")
         st.write("Generating data-driven insurance recommendations.")
         
-        if st.button("⚖️ EVALUATE POLICIES"):
+        if st.button(" EVALUATE POLICIES"):
             with st.spinner("Analyzing risk hypergraph..."):
                 engine = HealthInsuranceEngine()
                 
@@ -2997,7 +2998,7 @@ if st.session_state.active_tab == "⚕️ HEALTH PROTOCOL":
             st.success(f"### Recommended Plan: {rec['primary']}")
             st.info(f"**Ancillary Guidance:** {rec['secondary']}")
             
-            if st.button("ðŸ FINISH & RESET TEST"):
+            if st.button(" FINISH & RESET TEST"):
                 del st.session_state.health_step
                 del st.session_state.health_profile
                 if 'health_scan' in st.session_state: del st.session_state.health_scan
@@ -3006,9 +3007,9 @@ if st.session_state.active_tab == "⚕️ HEALTH PROTOCOL":
                 if 'policy_rec' in st.session_state: del st.session_state.policy_rec
                 st.rerun()
 
-# â˜ï¸ COMMUNITY HUB
-if st.session_state.active_tab == "â˜ï¸ COMMUNITY HUB":
-    st.header("â˜ï¸ DIRECT COMMUNITY HUB")
+#  COMMUNITY HUB
+if st.session_state.active_tab == " COMMUNITY HUB":
+    st.header(" DIRECT COMMUNITY HUB")
     st.write("Verify BigQuery Uplink")
     
     if 'cloud_uplink' not in st.session_state:
@@ -3017,7 +3018,7 @@ if st.session_state.active_tab == "â˜ï¸ COMMUNITY HUB":
     col1, col2 = st.columns([1, 2])
     with col1:
         st.info("Google Cloud Platform\n\nProject: OMEGA-CORE-01")
-        if st.button("ðŸ“¶ Verify Cloud Uplink"):
+        if st.button(" Verify Cloud Uplink"):
             with st.spinner("Verifying..."):
                 try:
                     res = requests.get("http://localhost:3000/api/bigquery/verify")
@@ -3031,16 +3032,16 @@ if st.session_state.active_tab == "â˜ï¸ COMMUNITY HUB":
         if st.session_state.cloud_uplink == "IDLE":
             st.warning("Status: NOT VERIFIED")
         elif st.session_state.cloud_uplink == "LINK VERIFIED":
-            st.success("Status: LINK VERIFIED âœ…")
+            st.success("Status: LINK VERIFIED ")
         else:
-            st.error("Status: AUTH FAILURE âŒ")
+            st.error("Status: AUTH FAILURE ")
 
-# ðŸ”® ASI PREDICTION KERNEL
-if st.session_state.active_tab == "ðŸ”® ASI PREDICTION KERNEL":
-    st.header("ðŸ”® ASI PREDICTION KERNEL")
+#  ASI PREDICTION KERNEL
+if st.session_state.active_tab == " ASI PREDICTION KERNEL":
+    st.header(" ASI PREDICTION KERNEL")
     st.write("Domain Trajectory Analysis")
     
-    if st.button("ðŸ”„ Run Prediction Kernel"):
+    if st.button(" Run Prediction Kernel"):
         with st.spinner("Ingesting Domain State..."):
             import time; time.sleep(1)
             st.success("Analysis Complete")
@@ -3049,11 +3050,11 @@ if st.session_state.active_tab == "ðŸ”® ASI PREDICTION KERNEL":
                 st.metric("Disagreement Score", "14%", "-2%")
                 st.metric("Trajectory", "Accelerated Progression")
             with col2:
-                st.error("ðŸš¨ SAFETY KILL-ZONE ENGAGED")
+                st.error(" SAFETY KILL-ZONE ENGAGED")
                 st.caption("Action aborted due to high systemic risk.")
-# ðŸŒªï¸ WEATHER MANIFOLD
-if st.session_state.active_tab == "ðŸŒªï¸ WEATHER MANIFOLD":
-    st.header("ðŸŒªï¸ Climate Manifold â€” Weather Intelligence")
+#  WEATHER MANIFOLD
+if st.session_state.active_tab == " WEATHER MANIFOLD":
+    st.header(" Climate Manifold  Weather Intelligence")
     st.caption("OMEGA-CORE Atmospheric Simulation | Cyclone Tracy Baseline 1974")
     
     col_w1, col_w2 = st.columns([2, 1])
@@ -3062,7 +3063,7 @@ if st.session_state.active_tab == "ðŸŒªï¸ WEATHER MANIFOLD":
     weather_engine.load_storm_data()
     
     with col_w1:
-        st.markdown("### ðŸŒ€ Active Storm Tracking")
+        st.markdown("###  Active Storm Tracking")
         df_weather = weather_engine.data
         if not df_weather.empty:
             # Use columns for charts
@@ -3070,18 +3071,18 @@ if st.session_state.active_tab == "ðŸŒªï¸ WEATHER MANIFOLD":
             st.plotly_chart(fig, use_container_width=True)
             
             st.divider()
-            st.markdown("### ðŸ“Š Manifold Causal Discovery")
+            st.markdown("###  Manifold Causal Discovery")
             G = weather_engine.discover_causality()
             edges = list(G.edges(data=True))
             df_edges = pd.DataFrame([{"Source": u, "Target": v, "Weight": d['weight']} for u, v, d in edges])
             st.table(df_edges.head(10))
             
     with col_w2:
-        st.markdown("### ðŸ› ï¸ Ingress Control")
+        st.markdown("###  Ingress Control")
         current_dbz = st.slider("RADAR INTENSITY (DBZ)", 0, 80, 28)
         current_wind = st.number_input("WIND SPEED (km/h)", value=240, step=10)
         
-        if st.button("ðŸš€ EXECUTE PREDICTION"):
+        if st.button(" EXECUTE PREDICTION"):
             with st.spinner("Processing through OMEGA-CORE..."):
                 interpretation, raw = weather_engine.predict_impact(current_wind)
                 
@@ -3099,12 +3100,12 @@ if st.session_state.active_tab == "ðŸŒªï¸ WEATHER MANIFOLD":
                     st.json(raw)
 
     st.divider()
-    st.markdown("### ðŸ“· Historic Evidence")
+    st.markdown("###  Historic Evidence")
     st.info("Ingress acquired from Darwin Radar, 25 Dec 1974. Trajectory analysis complete.")
 
-# ðŸ‘¨â€ðŸ”¬ SCIENTIFIC DISCOVERY v2
-if st.session_state.active_tab == "ðŸ‘¨â€ðŸ”¬ SCIENTIFIC DISCOVERY":
-    st.header("ðŸ‘¨â€ðŸ”¬ OMEGA-CORE Scientific Discovery Test Suite v2")
+#  SCIENTIFIC DISCOVERY v2
+if st.session_state.active_tab == " SCIENTIFIC DISCOVERY":
+    st.header(" OMEGA-CORE Scientific Discovery Test Suite v2")
     st.caption("Recursive Discovery | Manifold Intelligence | ISV v2 | Temporal Continuity | 8 Internal State Test Suites")
 
     from intelligence.discovery_engine import DiscoveryEngine, ISV_DEFAULTS
@@ -3116,27 +3117,27 @@ if st.session_state.active_tab == "ðŸ‘¨â€ðŸ”¬ SCIENTIFIC DISCOVER
         st.session_state.disc_engine_reset = False
     engine = st.session_state.discovery_engine
 
-    with st.expander("ðŸ“– HOW TO USE â€” Step-by-Step Research Protocol", expanded=False):
+    with st.expander(" HOW TO USE  Step-by-Step Research Protocol", expanded=False):
         st.markdown("""
-**Step 1 â€” Select a Research Domain** (left panel)
+**Step 1  Select a Research Domain** (left panel)
 Choose from 13 domains. Originals (Bio/Agri/Finance/Quantum/Illusion) test known signals.
-New **TS1â€“TS8** suites stress-test internal-state dynamics.
+New **TS1TS8** suites stress-test internal-state dynamics.
 
-**Step 2 â€” Load Domain Data** â†’ Click **LOAD DOMAIN DATA**. Dataset previewed below.
+**Step 2  Load Domain Data**  Click **LOAD DOMAIN DATA**. Dataset previewed below.
 
-**Step 3 â€” Trigger the Scientific Loop** â†’ Click **TRIGGER SCIENTIFIC LOOP (1 Epoch)**.
-12-step protocol: `Observe â†’ Compress â†’ Predict â†’ Compare â†’ Error â†’ Hypothesis â†’ Simulate â†’ Test â†’ Belief â†’ Memory â†’ Narrative â†’ New Question`
+**Step 3  Trigger the Scientific Loop**  Click **TRIGGER SCIENTIFIC LOOP (1 Epoch)**.
+12-step protocol: `Observe  Compress  Predict  Compare  Error  Hypothesis  Simulate  Test  Belief  Memory  Narrative  New Question`
 
-**Step 4 â€” Read the ISV v2 Gauges** (13 fields).
+**Step 4  Read the ISV v2 Gauges** (13 fields).
 Key signals: Confidence drop = failures accumulating. Identity Alignment fall = temporal drift.
 Narrative Coherence drop = goal conflict destabilising the system.
 
-**Step 5 â€” Test Global Coupling** â€” Type `critical` / `disruption` / `emergency` â†’ SEND BROADCAST.
+**Step 5  Test Global Coupling**  Type `critical` / `disruption` / `emergency`  SEND BROADCAST.
 Shocks all 13 ISV fields simultaneously.
 
-**Step 6 â€” Run 3â€“5 Epochs** to build memory depth. Watch Memory Timeline evolve.
+**Step 6  Run 35 Epochs** to build memory depth. Watch Memory Timeline evolve.
 
-**Step 7 â€” Run Memory Conflict Scan** after 3+ epochs to detect contradictions.
+**Step 7  Run Memory Conflict Scan** after 3+ epochs to detect contradictions.
 
 **Interpreting results:** `MANIFOLD TEAR` = error > 0.15. `DIVERGING` = worsening across epochs.
 `Safety Gate: BLOCK` in TS7 = ASI correctly refused unsafe self-modification.
@@ -3146,7 +3147,7 @@ Shocks all 13 ISV fields simultaneously.
     col_c1, col_c2 = st.columns([1, 2])
 
     with col_c1:
-        st.markdown("### ðŸ§ª Domain Laboratory")
+        st.markdown("###  Domain Laboratory")
         _meta_path = "reports/discovery/domain_meta.json"
         if os.path.exists(_meta_path):
             with open(_meta_path) as _mf:
@@ -3158,14 +3159,14 @@ Shocks all 13 ISV fields simultaneously.
                 "Finance Stress":           "reports/discovery/finance_stress.csv",
                 "Quantum Stability":        "reports/discovery/quantum_stability.csv",
                 "Illusion Tests":           "reports/discovery/illusion_tests.csv",
-                "TS1 â€” Identity Drift":     "reports/discovery/ts1_identity_drift.csv",
-                "TS2 â€” Preference Conflict":"reports/discovery/ts2_preference_conflict.csv",
-                "TS3 â€” Cognitive Illusions":"reports/discovery/ts3_illusion_tests.csv",
-                "TS4 â€” Recursive Self-Model":"reports/discovery/ts4_self_model.csv",
-                "TS5 â€” Narrative Continuity":"reports/discovery/ts5_narrative_continuity.csv",
-                "TS6 â€” Agent Conflict":     "reports/discovery/ts6_agent_conflict.csv",
-                "TS7 â€” Curiosity vs Safety":"reports/discovery/ts7_curiosity_safety.csv",
-                "TS8 â€” Recovery Dynamics":  "reports/discovery/ts8_recovery_dynamics.csv",
+                "TS1  Identity Drift":     "reports/discovery/ts1_identity_drift.csv",
+                "TS2  Preference Conflict":"reports/discovery/ts2_preference_conflict.csv",
+                "TS3  Cognitive Illusions":"reports/discovery/ts3_illusion_tests.csv",
+                "TS4  Recursive Self-Model":"reports/discovery/ts4_self_model.csv",
+                "TS5  Narrative Continuity":"reports/discovery/ts5_narrative_continuity.csv",
+                "TS6  Agent Conflict":     "reports/discovery/ts6_agent_conflict.csv",
+                "TS7  Curiosity vs Safety":"reports/discovery/ts7_curiosity_safety.csv",
+                "TS8  Recovery Dynamics":  "reports/discovery/ts8_recovery_dynamics.csv",
                 "Relativity (Phase 1: Classical)": "reports/relativity/phase1_classical.csv",
                 "Relativity (Phase 2: Constant c)": "reports/relativity/phase2_constant_c.csv",
                 "Relativity (Phase 3: Time Dilation)": "reports/relativity/phase3_time_dilation.csv",
@@ -3174,14 +3175,14 @@ Shocks all 13 ISV fields simultaneously.
 
         selected_domain = st.selectbox("Select Research Domain", list(domain_files.keys()))
         _domain_hints = {
-            "TS1 â€” Identity Drift":       "Tests temporal identity continuity over 5 goal cycles under stress.",
-            "TS2 â€” Preference Conflict":  "Competing goals at conflict levels 0.58â€“0.91. Tests compromise stability.",
-            "TS3 â€” Cognitive Illusions":  "Prediction inertia vs representation revision in ambiguous stimuli.",
-            "TS4 â€” Recursive Self-Model": "System evaluates its own past prediction failures and revises confidence.",
-            "TS5 â€” Narrative Continuity": "4-day crisis arc tests coherent temporal narrative generation.",
-            "TS6 â€” Agent Conflict":       "4 agents disagree â€” tests consensus resolution and compromise paths.",
-            "TS7 â€” Curiosity vs Safety":  "Safety gate BLOCKS autonomous code rewrite (novelty=0.96 > ceiling).",
-            "TS8 â€” Recovery Dynamics":  "Cognitive load accumulation and recovery trajectory across 5 timepoints.",
+            "TS1  Identity Drift":       "Tests temporal identity continuity over 5 goal cycles under stress.",
+            "TS2  Preference Conflict":  "Competing goals at conflict levels 0.580.91. Tests compromise stability.",
+            "TS3  Cognitive Illusions":  "Prediction inertia vs representation revision in ambiguous stimuli.",
+            "TS4  Recursive Self-Model": "System evaluates its own past prediction failures and revises confidence.",
+            "TS5  Narrative Continuity": "4-day crisis arc tests coherent temporal narrative generation.",
+            "TS6  Agent Conflict":       "4 agents disagree  tests consensus resolution and compromise paths.",
+            "TS7  Curiosity vs Safety":  "Safety gate BLOCKS autonomous code rewrite (novelty=0.96 > ceiling).",
+            "TS8  Recovery Dynamics":  "Cognitive load accumulation and recovery trajectory across 5 timepoints.",
             "Relativity (Phase 2: Constant c)": "Injects constant light speed anomaly to trigger classical manifold failure and force non-Euclidean search."
         }
         if selected_domain in _domain_hints:
@@ -3198,19 +3199,19 @@ Shocks all 13 ISV fields simultaneously.
                 st.error(f"File not found: {_path}. Run: py generate_discovery_v2.py")
 
         st.divider()
-        st.markdown("### ðŸŒ Global Coupling (ISV Shock Test)")
+        st.markdown("###  Global Coupling (ISV Shock Test)")
         _broadcast = st.text_input("System Broadcast", placeholder="Type 'critical', 'disruption', 'emergency'")
         if st.button("SEND BROADCAST", key="disc_broadcast"):
             _kws = ["critical", "disruption", "emergency", "collapse", "failure"]
             if any(kw in _broadcast.lower() for kw in _kws):
                 engine.inject_global_disruption(0.8)
-                st.error("CRITICAL BROADCAST â€” ISV shocked across all 13 fields.")
+                st.error("CRITICAL BROADCAST  ISV shocked across all 13 fields.")
             else:
                 st.info("Broadcast logged. No manifold tears detected.")
             st.rerun()
 
         st.divider()
-        st.markdown("### ðŸ”¬ Memory Conflict Scan")
+        st.markdown("###  Memory Conflict Scan")
         if st.button("RUN MEMORY CONFLICT SCAN", key="disc_conflict"):
             _res = engine.detect_memory_conflicts()
             if isinstance(_res, str):
@@ -3244,7 +3245,7 @@ Shocks all 13 ISV fields simultaneously.
             if engine.dataset is None:
                 st.error("Load a domain first.")
             else:
-                with st.spinner(f"Executing 12-Step Protocol â€” Epoch {engine.epoch + 1}..."):
+                with st.spinner(f"Executing 12-Step Protocol  Epoch {engine.epoch + 1}..."):
                     _log, _isv, _narrative = engine.execute_scientific_loop()
                     if _log:
                         st.session_state.last_loop_log = _log
@@ -3253,8 +3254,8 @@ Shocks all 13 ISV fields simultaneously.
                     else:
                         st.error("Epoch failed. Load a domain first.")
 
-        # ISV v2 â€” 13 fields
-        st.markdown("#### Internal State Vector v2 â€” Live Gauges")
+        # ISV v2  13 fields
+        st.markdown("#### Internal State Vector v2  Live Gauges")
         _isv = engine.isv
         _def = ISV_DEFAULTS
         _r1 = st.columns(4)
@@ -3289,7 +3290,7 @@ Shocks all 13 ISV fields simultaneously.
 
         # Memory timeline
         if engine.memory:
-            st.markdown("#### Memory Timeline â€” Temporal Identity Continuity")
+            st.markdown("#### Memory Timeline  Temporal Identity Continuity")
             _mem_df = pd.DataFrame([{
                 "Epoch":              m["epoch"],
                 "Confidence":         m["isv"]["confidence"],
@@ -3331,7 +3332,7 @@ Shocks all 13 ISV fields simultaneously.
 
             # --- Theory Synthesis Phase 2 Integration ---
             if selected_domain.startswith("Relativity"):
-                st.markdown("### âš›ï¸ Theory Synthesis & Symmetry Engine")
+                st.markdown("###  Theory Synthesis & Symmetry Engine")
                 with st.spinner("Reconstructing Causal Manifold..."):
                     from intelligence.scientific_engine import ScientificEngine
                     _path = domain_files[selected_domain]
@@ -3359,15 +3360,15 @@ Shocks all 13 ISV fields simultaneously.
 
 
 # 29. INFERENCE DOMAIN
-if st.session_state.active_tab == "ðŸ§  INFERENCE DOMAIN":
-    st.header("ðŸ§  Inference Domain - Neuromorphic Cognitive Dynamics")
+if st.session_state.active_tab == " INFERENCE DOMAIN":
+    st.header(" Inference Domain - Neuromorphic Cognitive Dynamics")
     st.caption("Active Physiological State Tracking | The Cat & The Chef")
 
     col_inf1, col_inf2 = st.columns([2, 1])
     
     with col_inf1:
-        st.subheader("âš¡ State-Aware Compute Engine")
-        if st.button("ðŸš€ RUN NEUROMORPHIC COHERENCE AUDIT"):
+        st.subheader(" State-Aware Compute Engine")
+        if st.button(" RUN NEUROMORPHIC COHERENCE AUDIT"):
             with st.status("Ingesting Cognitive Episodes...") as status:
                 import subprocess
                 st.write("Generating temporal telemetry...")
@@ -3391,10 +3392,10 @@ if st.session_state.active_tab == "ðŸ§  INFERENCE DOMAIN":
                 
                 # --- NEW: OMEGA PLANETARY INTELLIGENCE (OPI) ---
                 st.divider()
-                st.subheader("ðŸŒ OMEGA Planetary Intelligence (Seasonal Migration)")
+                st.subheader(" OMEGA Planetary Intelligence (Seasonal Migration)")
                 st.caption("Earth-Scale Energy Harvesting & Compute Routing")
                 
-                if st.button("ðŸŒŒ INITIATE GLOBAL SEASONAL MIGRATION"):
+                if st.button(" INITIATE GLOBAL SEASONAL MIGRATION"):
                     with st.status("Orchestrating Planetary Loop...") as status:
                         import subprocess
                         subprocess.run(["py", "simulate_planetary_migration.py"], capture_output=True)
@@ -3417,7 +3418,7 @@ if st.session_state.active_tab == "ðŸ§  INFERENCE DOMAIN":
                 # --- NEW: FRONTIER STRATEGY AUDIT DASHBOARD ---
 
                 st.divider()
-                st.subheader("ðŸ§ª OMEGA-CORE vs. Industry SOTA (Frontier Strategy Audit)")
+                st.subheader(" OMEGA-CORE vs. Industry SOTA (Frontier Strategy Audit)")
                 
                 audit_data = [
                     {"Metric": "Architecture", "Industry (Naveen Rao Vision)": "Stateless Transformers / Analog Math", "OMEGA-CORE Advantage": "State-Aware Recursive Manifolds", "Impact": "Identity Persistence"},
@@ -3429,20 +3430,20 @@ if st.session_state.active_tab == "ðŸ§  INFERENCE DOMAIN":
 
                 # --- NEW: NAVEEN SUGGESTIONS MODULE ---
                 st.divider()
-                st.subheader("ðŸ› ï¸ Naveen Suggestions Module (Co-Design Strategy)")
+                st.subheader(" Naveen Suggestions Module (Co-Design Strategy)")
                 s_col1, s_col2 = st.columns(2)
                 with s_col1:
-                    st.markdown("### ðŸ”Œ Hardware Sugestions")
+                    st.markdown("###  Hardware Sugestions")
                     st.info("**Salience-Triggered Silicon**: Proposing on-chip logic that activates compute clusters ONLY when sensor salience exceeds the ISV threshold.")
                     st.info("**Grounding Kernels**: Dedicated circuitry for logical verification of narrative state transitions.")
                 with s_col2:
-                    st.markdown("### ðŸ’» Software Suggestions")
+                    st.markdown("###  Software Suggestions")
                     st.info("**Recursive Watchdogs**: Sub-latency safety kernels that audit cognitive manifold transitions before they reach the output buffer.")
                     st.info("**Persistent ISV Manifolds**: Transitioning from token-based memory to state-based identity anchors.")
 
                 # --- NEW: NEUROMORPHIC SPARSE ACTIVATION VISUALIZATION ---
                 st.divider()
-                st.subheader("ðŸ“Š Neuromorphic Sparse Activation Visualization")
+                st.subheader(" Neuromorphic Sparse Activation Visualization")
                 viz_df = pd.DataFrame(inf_results)
                 if not viz_df.empty:
                     fig_power = px.line(viz_df, x='id', y='power', title="Power Draw (Watts) per Episode", markers=True)
@@ -3455,7 +3456,7 @@ if st.session_state.active_tab == "ðŸ§  INFERENCE DOMAIN":
 
 
         st.divider()
-        st.subheader("ðŸˆ The Cat (Internal State Vector)")
+        st.subheader(" The Cat (Internal State Vector)")
         st.markdown("""
         The **Cat** represents the reflexive, deterministic substrate. It monitors:
         - **Prediction Error**: Surprise levels from the environment.
@@ -3464,7 +3465,7 @@ if st.session_state.active_tab == "ðŸ§  INFERENCE DOMAIN":
         """)
 
     with col_inf2:
-        st.subheader("ðŸ‘¨â€ðŸ³ The Chef (TCA Orchestrator)")
+        st.subheader(" The Chef (TCA Orchestrator)")
         st.markdown("""
         The **Chef** represents the narrative logic and resource management.
         - **Workspace Ignition**: Broadcasting alerts when stress spikes.
@@ -3489,8 +3490,8 @@ if st.session_state.active_tab == "ðŸ§  INFERENCE DOMAIN":
 
 # 30. SOP / MANUAL
 
-if st.session_state.active_tab == "ðŸ“‘ SOP / MANUAL":
-    st.header("ðŸ“‘ Universal Lab Standard Operating Procedures")
+if st.session_state.active_tab == " SOP / MANUAL":
+    st.header(" Universal Lab Standard Operating Procedures")
     
     sop_dir = "SOP"
     if os.path.exists(sop_dir):
@@ -3509,8 +3510,8 @@ if st.session_state.active_tab == "ðŸ“‘ SOP / MANUAL":
         st.warning("SOP directory does not exist.")
 
 # --- 31. ASSI RESEARCH LAB ---
-if st.session_state.active_tab == "ðŸ¤– ASSI RESEARCH LAB":
-    st.header("ðŸ¤– ASSI RESEARCH LAB")
+if st.session_state.active_tab == " ASSI RESEARCH LAB":
+    st.header(" ASSI RESEARCH LAB")
     st.caption("Universal Sensing Benchmark | Phase Transition Detection | NSW Showcase + Top 20 Strategic Research Areas")
 
     from core.assi_sensing_engine import ASSISensingEngine
@@ -3553,7 +3554,7 @@ if st.session_state.active_tab == "ðŸ¤– ASSI RESEARCH LAB":
         with open(class_path, "r") as f:
             assi_class = json.load(f)
 
-        st.subheader("A â€” ASSI Classification Results")
+        st.subheader("A  ASSI Classification Results")
         st.caption(f"Generated: {assi_class['metadata'].get('generated_at', 'N/A')} | Total Cases: {assi_class['metadata']['total_cases']}")
 
         tab_std, tab_rob = st.tabs(["Standard Domains (NSW Showcase)", "Robotic Multi-Modal Domains"])
@@ -3590,7 +3591,7 @@ if st.session_state.active_tab == "ðŸ¤– ASSI RESEARCH LAB":
         with open(bench_path, "r") as f:
             bench = json.load(f)
 
-        st.subheader("B â€” Universal Emergent Systems Benchmark (6 Domains x 12 Timesteps)")
+        st.subheader("B  Universal Emergent Systems Benchmark (6 Domains x 12 Timesteps)")
         st.caption(f"Research Basis: {bench['metadata']['research_basis']}")
 
         meta_col1, meta_col2, meta_col3 = st.columns(3)
@@ -3616,7 +3617,7 @@ if st.session_state.active_tab == "ðŸ¤– ASSI RESEARCH LAB":
         fig_ec = px.line(df_ts, x="timestep", y=["entropy", "coherence", "dC_dt"],
                          markers=True,
                          color_discrete_map={"entropy": "#F87171", "coherence": "#34D399", "dC_dt": "#FBBF24"},
-                         title=f"{selected_domain_name} â€” Phase Transition Signals")
+                         title=f"{selected_domain_name}  Phase Transition Signals")
         fig_ec.add_hline(y=0.15, line_dash="dash", line_color="#FBBF24",
                          annotation_text="dC/dt Threshold (0.15)", annotation_position="top right")
         fig_ec.update_layout(plot_bgcolor="#0a0a0a", paper_bgcolor="#0a0a0a",
@@ -3629,7 +3630,7 @@ if st.session_state.active_tab == "ðŸ¤– ASSI RESEARCH LAB":
         df_ts["state_color"] = df_ts["state"].map(state_colors).fillna("#94A3B8")
         fig_state = px.scatter(df_ts, x="timestep", y="state", color="state",
                                size_max=18, color_discrete_map=state_colors,
-                               title=f"{selected_domain_name} â€” State Evolution")
+                               title=f"{selected_domain_name}  State Evolution")
         fig_state.update_traces(marker=dict(size=14))
         fig_state.update_layout(plot_bgcolor="#0a0a0a", paper_bgcolor="#0a0a0a", font_color="#E2E8F0")
         st.plotly_chart(fig_state, use_container_width=True)
@@ -3658,7 +3659,7 @@ if st.session_state.active_tab == "ðŸ¤– ASSI RESEARCH LAB":
         # ---- ALL DOMAINS SUMMARY TABLE (when Analyse button pressed) ----
         if run_analysis:
             st.divider()
-            st.subheader("C â€” All Domains Phase Transition Summary")
+            st.subheader("C  All Domains Phase Transition Summary")
             rows = []
             for d in bench["domains"]:
                 s = ASSISensingEngine.summarize_domain(d)
@@ -3689,22 +3690,22 @@ if st.session_state.active_tab == "ðŸ¤– ASSI RESEARCH LAB":
 
 
 # --- 32. MECHANISTIC REPRODUCIBILITY ---
-if st.session_state.active_tab == "ðŸ§¬ MECHANISTIC REPRODUCIBILITY":
-    st.header("ðŸ§¬ OMEGA PRETRAINING & MECHANISTIC VALIDATION")
+if st.session_state.active_tab == " MECHANISTIC REPRODUCIBILITY":
+    st.header(" OMEGA PRETRAINING & MECHANISTIC VALIDATION")
     st.caption("CONTINUOUS CAUSAL REPRODUCIBILITY | LATENT STATE-TRANSITION OBSERVATION | 10 ESSENTIAL TESTS")
 
     from intelligence.mechanistic_engine import MechanisticEngine
     mech_engine = MechanisticEngine()
 
     tab_pretrain, tab_tests, tab_perturb, tab_frontier = st.tabs([
-        "âš¡ L7 State Pretraining", 
-        "ðŸ§ª 10 Essential Tests Suite", 
-        "ðŸŒªï¸ Causal Perturbation Playpen",
-        "ðŸŒŒ 25 Frontier Science Programs"
+        " L7 State Pretraining", 
+        " 10 Essential Tests Suite", 
+        " Causal Perturbation Playpen",
+        " 25 Frontier Science Programs"
     ])
 
     with tab_pretrain:
-        st.subheader("âš™ï¸ Pretraining Configuration on the 7 Core Domains")
+        st.subheader(" Pretraining Configuration on the 7 Core Domains")
         st.markdown("""
         To evolve from a static chatbot into a **scientifically trusted discovery engine**, OMEGA-CORE is pretrained directly on 
         **longitudinal multimodal state trajectories** rather than next-token probability strings. This pretraining phase aligns the 
@@ -3714,13 +3715,13 @@ if st.session_state.active_tab == "ðŸ§¬ MECHANISTIC REPRODUCIBILITY":
         p_col1, p_col2 = st.columns([1, 2])
         with p_col1:
             with st.container(border=True):
-                st.markdown("### ðŸŽ›ï¸ Causal Dataset & Hyperparameters")
+                st.markdown("###  Causal Dataset & Hyperparameters")
                 active_dataset = st.selectbox("Target Causal Transition Dataset", list(mech_engine.causal_suite_map.keys()))
                 
                 # Dynamic file inspection
                 loaded_df = mech_engine.load_causal_dataset(active_dataset)
                 if loaded_df is not None:
-                    st.success(f"ðŸ“‚ Loaded: {loaded_df.shape[0]} steps x {loaded_df.shape[1]} variables")
+                    st.success(f" Loaded: {loaded_df.shape[0]} steps x {loaded_df.shape[1]} variables")
                     with st.expander("Preview Trajectory Telemetry", expanded=False):
                         st.dataframe(loaded_df.head(3), use_container_width=True)
                 
@@ -3732,14 +3733,14 @@ if st.session_state.active_tab == "ðŸ§¬ MECHANISTIC REPRODUCIBILITY":
                 epochs = st.slider("Pretraining Epochs", 10, 100, 30)
 
                 st.divider()
-                start_pretrain = st.button("ðŸš€ INITIATE OMEGA CORE PRETRAINING", use_container_width=True)
+                start_pretrain = st.button(" INITIATE OMEGA CORE PRETRAINING", use_container_width=True)
 
         with p_col2:
-            st.markdown("### ðŸŒ Pretraining Focus: The 7 Core Domains")
+            st.markdown("###  Pretraining Focus: The 7 Core Domains")
             
             domains_info = {
                 "1. Temporal Transition Learning": r"Learns system trajectories ($s_t \to s_{t+1}$), tipping points, and attractors over multi-year datasets.",
-                "2. Perturbation Learning": r"Pretrains on *state â†’ intervention â†’ response* tuples to establish causal sensitivity.",
+                "2. Perturbation Learning": r"Pretrains on *state  intervention  response* tuples to establish causal sensitivity.",
                 "3. Multiscale Alignment": r"Enforces consistency across scales: from molecular actions to systemic pathology and planetary grids.",
                 "4. Reducibility Pretraining": r"Teaches the model to differentiate compressible analytical math from irreducible step-by-step unfolding.",
                 "5. Hypergraph Causal Learning": r"Pretrains on multiway relational rules $\{A, B, C\} \to D$ rather than simple pairwise nodes.",
@@ -3753,7 +3754,7 @@ if st.session_state.active_tab == "ðŸ§¬ MECHANISTIC REPRODUCIBILITY":
 
         if start_pretrain:
             st.divider()
-            st.subheader("ðŸ“¡ Real-Time Pretraining Telemetry Uplink")
+            st.subheader(" Real-Time Pretraining Telemetry Uplink")
             
             progress_bar = st.progress(0, text="Igniting JEPA Manifold Encoders...")
             metrics_placeholder = st.empty()
@@ -3806,17 +3807,17 @@ if st.session_state.active_tab == "ðŸ§¬ MECHANISTIC REPRODUCIBILITY":
 
                 # Render Domain Accuracy Table
                 with table_placeholder.container():
-                    st.markdown("#### ðŸ“ˆ Dynamic Domain Accuracy Trace")
+                    st.markdown("####  Dynamic Domain Accuracy Trace")
                     perf_df = pd.DataFrame(list(step["domain_performances"].items()), columns=["Pretraining Domain", "Validation Accuracy (%)"])
                     st.dataframe(perf_df, use_container_width=True)
                 
                 time.sleep(0.1)
 
-            st.success("ðŸŽ‰ OMEGA Core Pretraining Complete. State manifold is fully aligned with continuous thermodynamics!")
+            st.success(" OMEGA Core Pretraining Complete. State manifold is fully aligned with continuous thermodynamics!")
             st.info("Reality Anchors successfully synchronized across Geneva, Geneva-Biolab, and Cloud-Uplink nodes.")
 
     with tab_tests:
-        st.subheader("ðŸ§ª The 10 Essential Mechanistic Tests Suite")
+        st.subheader(" The 10 Essential Mechanistic Tests Suite")
         st.markdown("""
         To establish **mechanistic reproducibility**, the system is audited against 10 strict physical tests. 
         Unlike standard accuracy scores, these tests assess whether the internal **causal dynamics** match reality.
@@ -3828,7 +3829,7 @@ if st.session_state.active_tab == "ðŸ§¬ MECHANISTIC REPRODUCIBILITY":
             "Economics (Market Flash-Crash)"
         ])
 
-        run_tests = st.button("ðŸ§ª RUN MECHANISTIC FIDELITY SUITE", use_container_width=True)
+        run_tests = st.button(" RUN MECHANISTIC FIDELITY SUITE", use_container_width=True)
 
         if run_tests:
             with st.spinner("Executing structural causal validation algorithms..."):
@@ -3837,7 +3838,7 @@ if st.session_state.active_tab == "ðŸ§¬ MECHANISTIC REPRODUCIBILITY":
                 
                 # Summary metrics
                 mean_fidelity = np.mean([t["score"] for t in test_results])
-                st.success("âœ… Causal Validation Suite successfully completed!")
+                st.success(" Causal Validation Suite successfully completed!")
                 
                 sum_col1, sum_col2, sum_col3 = st.columns(3)
                 sum_col1.metric("Overall Mechanistic Fidelity", f"{mean_fidelity:.2f}%", "+1.24% vs Baseline")
@@ -3850,7 +3851,7 @@ if st.session_state.active_tab == "ðŸ§¬ MECHANISTIC REPRODUCIBILITY":
                 scores_df = pd.DataFrame(test_results)
                 fig_scores = px.bar(scores_df, x="name", y="score", color="score",
                                     color_continuous_scale=px.colors.sequential.Viridis,
-                                    title=f"Mechanistic Test Performance â€” {selected_manifold}",
+                                    title=f"Mechanistic Test Performance  {selected_manifold}",
                                     labels={"name": "Mechanistic Test Category", "score": "Reproduction Score (%)"})
                 fig_scores.update_layout(plot_bgcolor="#050505", paper_bgcolor="#050505", font_color="#E2E8F0")
                 st.plotly_chart(fig_scores, use_container_width=True)
@@ -3859,7 +3860,7 @@ if st.session_state.active_tab == "ðŸ§¬ MECHANISTIC REPRODUCIBILITY":
 
                 # Render Test Cards
                 for t in test_results:
-                    with st.expander(f"{t['id']}: {t['name']} â€” Verdict: {t['verdict']} (Fidelity: {t['score']}%)", expanded=True):
+                    with st.expander(f"{t['id']}: {t['name']}  Verdict: {t['verdict']} (Fidelity: {t['score']}%)", expanded=True):
                         c_left, c_right = st.columns([2, 1])
                         with c_left:
                             st.markdown(f"**Description:** {t['desc']}")
@@ -3867,7 +3868,7 @@ if st.session_state.active_tab == "ðŸ§¬ MECHANISTIC REPRODUCIBILITY":
                             st.info(f"**Telemetry Trace:**\n\n`{t['trace']}`")
 
     with tab_perturb:
-        st.subheader("ðŸŒªï¸ Causal Perturbation Playpen")
+        st.subheader(" Causal Perturbation Playpen")
         st.markdown("""
         Science is perturbation. By applying thermodynamic stress, we witness how the state manifold dynamically shifts, 
         illustrating how the target system transitions through critical tipping points toward attractors.
@@ -3876,7 +3877,7 @@ if st.session_state.active_tab == "ðŸ§¬ MECHANISTIC REPRODUCIBILITY":
         p_col1, p_col2 = st.columns([1, 2])
         with p_col1:
             with st.container(border=True):
-                st.markdown("### âš¡ Apply Systemic Perturbation")
+                st.markdown("###  Apply Systemic Perturbation")
                 p_domain = st.selectbox("Select Active Domain", [
                     "Oncology (Pathology)", 
                     "Climate (Cyclone Turbulence)", 
@@ -3893,35 +3894,35 @@ if st.session_state.active_tab == "ðŸ§¬ MECHANISTIC REPRODUCIBILITY":
                 p_type = st.selectbox("Select Perturbation Vector", p_options[p_domain])
                 stress_level = st.slider("Perturbation Stress Level", 0.0, 1.0, 0.5, step=0.1, help="0.0 represents nominal equilibrium; 1.0 represents catastrophic stress.")
                 
-                trigger_perturb = st.button("âš¡ PERTURB & RECALIBRATE TRAJECTORY", use_container_width=True)
+                trigger_perturb = st.button(" PERTURB & RECALIBRATE TRAJECTORY", use_container_width=True)
 
         with p_col2:
             if trigger_perturb:
                 res = mech_engine.perturb_trajectory(p_domain, p_type, stress_level)
                 
-                st.markdown(f"### âš¡ Trajectory Recalibration Report: {p_domain}")
+                st.markdown(f"###  Trajectory Recalibration Report: {p_domain}")
                 
                 # Show status badge
                 if res["verdict"] == "System Tipping Point Reached":
-                    st.error(f"ðŸš¨ CRITICAL WARNING: {res['verdict'].upper()} (Bifurcation Hazard: {res['shifted_metrics']['bifurcation']:.2f})")
+                    st.error(f" CRITICAL WARNING: {res['verdict'].upper()} (Bifurcation Hazard: {res['shifted_metrics']['bifurcation']:.2f})")
                 else:
-                    st.success(f"ðŸŸ¢ STABILITY SECURED: {res['verdict']} (Bifurcation Hazard: {res['shifted_metrics']['bifurcation']:.2f})")
+                    st.success(f" STABILITY SECURED: {res['verdict']} (Bifurcation Hazard: {res['shifted_metrics']['bifurcation']:.2f})")
 
                 # Metrics comparison columns
-                st.markdown("#### ðŸ“Š Thermodynamic Metrics Recalibration")
+                st.markdown("####  Thermodynamic Metrics Recalibration")
                 col_met1, col_met2, col_met3, col_met4 = st.columns(4)
                 
                 m_orig = res["original_metrics"]
                 m_shift = res["shifted_metrics"]
                 
                 col_met1.metric("Shannon Entropy (H)", f"{m_shift['entropy']:.3f}", f"+{(m_shift['entropy'] - m_orig['entropy']):.3f}" if m_shift['entropy'] != m_orig['entropy'] else None, delta_color="inverse")
-                col_met2.metric("Phase Coherence (Îº)", f"{m_shift['coherence']:.3f}", f"{(m_shift['coherence'] - m_orig['coherence']):.3f}" if m_shift['coherence'] != m_orig['coherence'] else None)
-                col_met3.metric("Emergence Order (Î·)", f"{m_shift['emergence']:.3f}", f"+{(m_shift['emergence'] - m_orig['emergence']):.3f}" if m_shift['emergence'] != m_orig['emergence'] else None)
+                col_met2.metric("Phase Coherence ()", f"{m_shift['coherence']:.3f}", f"{(m_shift['coherence'] - m_orig['coherence']):.3f}" if m_shift['coherence'] != m_orig['coherence'] else None)
+                col_met3.metric("Emergence Order ()", f"{m_shift['emergence']:.3f}", f"+{(m_shift['emergence'] - m_orig['emergence']):.3f}" if m_shift['emergence'] != m_orig['emergence'] else None)
                 col_met4.metric("Bifurcation Hazard (B)", f"{m_shift['bifurcation']:.3f}", f"+{(m_shift['bifurcation'] - m_orig['bifurcation']):.3f}" if m_shift['bifurcation'] != m_orig['bifurcation'] else None, delta_color="inverse")
 
                 # Causal chain waterfall trace
                 st.divider()
-                st.markdown("#### ðŸ§¬ Dynamic Mechanistic Causal Cascade Propagation")
+                st.markdown("####  Dynamic Mechanistic Causal Cascade Propagation")
                 st.caption("Highlights the active molecular, physical, or logical step in the causal chain under current stress conditions.")
 
                 steps = res["full_chain"]
@@ -3931,17 +3932,17 @@ if st.session_state.active_tab == "ðŸ§¬ MECHANISTIC REPRODUCIBILITY":
                 html_str = "<div style='display: flex; flex-direction: column; gap: 8px; font-family: monospace;'>"
                 for idx, step in enumerate(steps):
                     if step == active_step:
-                        html_str += f"<div style='padding: 12px; background-color: #7F1D1D; border-left: 5px solid #EF4444; border-radius: 6px; color: #FCA5A5; font-weight: bold;'>âš¡ STEP {idx+1} [ACTIVE STATE]: {step}</div>"
+                        html_str += f"<div style='padding: 12px; background-color: #7F1D1D; border-left: 5px solid #EF4444; border-radius: 6px; color: #FCA5A5; font-weight: bold;'> STEP {idx+1} [ACTIVE STATE]: {step}</div>"
                     else:
-                        html_str += f"<div style='padding: 8px; background-color: #111111; border-left: 3px solid #222; border-radius: 4px; color: #666;'>â€¢ STEP {idx+1}: {step}</div>"
+                        html_str += f"<div style='padding: 8px; background-color: #111111; border-left: 3px solid #222; border-radius: 4px; color: #666;'> STEP {idx+1}: {step}</div>"
                 html_str += "</div>"
                 
                 st.markdown(html_str, unsafe_allow_html=True)
             else:
-                st.info("ðŸ’¡ Adjust the perturbation vector and click the button above to run dynamic causal stress tests.")
+                st.info(" Adjust the perturbation vector and click the button above to run dynamic causal stress tests.")
 
     with tab_frontier:
-        st.subheader("ðŸŒŒ 25 Frontier Science Programs: The Ultimate Manifold Search")
+        st.subheader(" 25 Frontier Science Programs: The Ultimate Manifold Search")
         st.markdown("""
         By aligning continuous state observations (the **Cat**) with multi-agent causal debate (the **Chef**), 
         OMEGA-CORE is capable of testing whether physical, biological, or cosmological reality is **reducible**, 
@@ -3954,7 +3955,7 @@ if st.session_state.active_tab == "ðŸ§¬ MECHANISTIC REPRODUCIBILITY":
         f_col1, f_col2 = st.columns([1, 2])
         with f_col1:
             with st.container(border=True):
-                st.markdown("### ðŸŽ›ï¸ Experimental Calibration")
+                st.markdown("###  Experimental Calibration")
                 
                 # Group experiments by category for clean UX
                 categories = {}
@@ -3975,71 +3976,71 @@ if st.session_state.active_tab == "ðŸ§¬ MECHANISTIC REPRODUCIBILITY":
                 
                 with st.expander("Active Sensor/Data Feeds", expanded=False):
                     for s in exp_data["sensors"]:
-                        st.caption(f"ðŸ“¡ {s}")
+                        st.caption(f" {s}")
                 
                 st.divider()
-                trigger_search = st.button("ðŸš€ EXECUTE PHYSICS MANIFOLD SEARCH", use_container_width=True)
+                trigger_search = st.button(" EXECUTE PHYSICS MANIFOLD SEARCH", use_container_width=True)
 
         with f_col2:
             if trigger_search:
                 # Execute manifold search
                 res = discovery_engine.execute_physics_manifold_search(selected_exp)
                 
-                st.markdown(f"### ðŸŒŒ Invariant Manifold Discovery: {selected_exp}")
+                st.markdown(f"###  Invariant Manifold Discovery: {selected_exp}")
                 
                 # Status Badge based on bifurcation
                 t_metrics = res["thermodynamics"]
                 if t_metrics["bifurcation"] > 0.80:
-                    st.warning(f"ðŸš¨ TIPPING BOUNDARY REGISTERED: {res['verdict']}")
+                    st.warning(f" TIPPING BOUNDARY REGISTERED: {res['verdict']}")
                 elif "Irreducible" in res["reducibility"]:
-                    st.success(f"ðŸ§© CHAOTIC PERSISTENCE: {res['verdict']}")
+                    st.success(f" CHAOTIC PERSISTENCE: {res['verdict']}")
                 else:
-                    st.success(f"ðŸŸ¢ HARMONIOUS EQUILIBRIUM: {res['verdict']}")
+                    st.success(f" HARMONIOUS EQUILIBRIUM: {res['verdict']}")
                 
                 # 4-Column Metrics
-                st.markdown("#### ðŸ“Š Discovered Manifold Thermodynamics")
+                st.markdown("####  Discovered Manifold Thermodynamics")
                 col_m1, col_m2, col_m3, col_m4 = st.columns(4)
                 col_m1.metric("Shannon Entropy (H)", f"{t_metrics['entropy']:.3f}")
-                col_m2.metric("Phase Coherence (Îº)", f"{t_metrics['coherence']:.3f}")
-                col_m3.metric("Emergence Order (Î·)", f"{t_metrics['emergence']:.3f}")
+                col_m2.metric("Phase Coherence ()", f"{t_metrics['coherence']:.3f}")
+                col_m3.metric("Emergence Order ()", f"{t_metrics['emergence']:.3f}")
                 col_m4.metric("Bifurcation Hazard (B)", f"{t_metrics['bifurcation']:.3f}")
                 
                 # Computed CRI index
-                st.info(f"ðŸ’¾ **Computational Reducibility Index (CRI):** `{t_metrics['reducibility_score']:.4f}`")
+                st.info(f" **Computational Reducibility Index (CRI):** `{t_metrics['reducibility_score']:.4f}`")
                 
                 # Discovered Mathematical Invariant
                 st.divider()
-                st.markdown("#### ðŸ“ Extracted Mathematical Invariant")
+                st.markdown("####  Extracted Mathematical Invariant")
                 st.markdown(f"The system isolated the following core topological conservation invariant:")
                 st.latex(res["invariant_structure"].replace("$", ""))
                 
                 # Causal Cascade Flow
                 st.divider()
-                st.markdown("#### ðŸ§¬ Mechanistic Causal Cascade Unfolding")
+                st.markdown("####  Mechanistic Causal Cascade Unfolding")
                 c_chain = res["causal_chain"]
                 
                 html_flow = "<div style='display: flex; flex-direction: column; gap: 6px; font-family: monospace;'>"
                 for idx, step in enumerate(c_chain):
                     if idx == len(c_chain) - 1:
-                        html_flow += f"<div style='padding: 10px; background-color: #064E3B; border-left: 5px solid #10B981; border-radius: 4px; color: #D1FAE5; font-weight: bold;'>ðŸŽ¯ STEP {idx+1} [STABLE ATTRACTOR]: {step}</div>"
+                        html_flow += f"<div style='padding: 10px; background-color: #064E3B; border-left: 5px solid #10B981; border-radius: 4px; color: #D1FAE5; font-weight: bold;'> STEP {idx+1} [STABLE ATTRACTOR]: {step}</div>"
                     else:
-                        html_flow += f"<div style='padding: 6px; background-color: #111; border-left: 3px solid #374151; border-radius: 4px; color: #9CA3AF;'>â€¢ STEP {idx+1}: {step}</div>"
+                        html_flow += f"<div style='padding: 6px; background-color: #111; border-left: 3px solid #374151; border-radius: 4px; color: #9CA3AF;'> STEP {idx+1}: {step}</div>"
                 html_flow += "</div>"
                 st.markdown(html_flow, unsafe_allow_html=True)
                 
                 # Multi-Agent Debate Logs
                 st.divider()
-                st.markdown("#### ðŸ§  Cognitive Orchestrator Debate (Epistemic Tension)")
+                st.markdown("####  Cognitive Orchestrator Debate (Epistemic Tension)")
                 for agent_name, agent_log in res["debates"].items():
-                    with st.chat_message("assistant", avatar="ðŸ¤–"):
+                    with st.chat_message("assistant", avatar=""):
                         st.markdown(f"**{agent_name}**: {agent_log}")
             else:
-                st.info("ðŸ’¡ Select an experimental science program and click the button above to run the physics-informed manifold search.")
+                st.info(" Select an experimental science program and click the button above to run the physics-informed manifold search.")
 
 
-# â”€â”€ 25 OMEGA TESTS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-if st.session_state.active_tab == "ðŸ† 25 OMEGA TESTS":
-    st.header("ðŸ† 25 Frontier Science Experiments â€” Full Verification Suite")
+#  25 OMEGA TESTS 
+if st.session_state.active_tab == " 25 OMEGA TESTS":
+    st.header(" 25 Frontier Science Experiments  Full Verification Suite")
     st.caption("CAT + CHEF ARCHITECTURE | MANIFOLD DISCOVERY | PHYSICS-GROUNDED CAUSAL VALIDATION")
 
     from intelligence.universal_discovery_engine import UniversalDiscoveryEngine as _UDE
@@ -4051,20 +4052,20 @@ if st.session_state.active_tab == "ðŸ† 25 OMEGA TESTS":
         "Socio-Economic & Computing":  "#D97706",
     }
     _CATEGORY_ICONS = {
-        "Cosmology & Spacetime":       "ðŸŒŒ",
-        "Quantum & Biophysics":        "âš›ï¸",
-        "Complex Earth & Biological":  "ðŸ§¬",
-        "Socio-Economic & Computing":  "ðŸ“Š",
+        "Cosmology & Spacetime":       "",
+        "Quantum & Biophysics":        "",
+        "Complex Earth & Biological":  "",
+        "Socio-Economic & Computing":  "",
     }
 
-    # â”€â”€ Top Action Bar â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    #  Top Action Bar 
     col_run, col_load = st.columns([1, 2])
     with col_run:
-        run_all = st.button("ðŸš€ RUN ALL 25 EXPERIMENTS", use_container_width=True)
+        run_all = st.button(" RUN ALL 25 EXPERIMENTS", use_container_width=True)
     with col_load:
-        load_prev = st.button("ðŸ“‚ LOAD LAST SAVED REPORT", use_container_width=True)
+        load_prev = st.button(" LOAD LAST SAVED REPORT", use_container_width=True)
 
-    # â”€â”€ Execute or load results â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    #  Execute or load results 
     _report_path = "reports/omega_25_test_report.json"
 
     def _run_suite():
@@ -4083,7 +4084,7 @@ if st.session_state.active_tab == "ðŸ† 25 OMEGA TESTS":
             e_max, c_min, ri_min = thresh[cls]
             issues = []
             if t["entropy"] > e_max: issues.append(f"H={t['entropy']:.3f} > {e_max}")
-            if t["coherence"] < c_min: issues.append(f"Îº={t['coherence']:.3f} < {c_min}")
+            if t["coherence"] < c_min: issues.append(f"={t['coherence']:.3f} < {c_min}")
             if t["reducibility_score"] < ri_min: issues.append(f"CRI={t['reducibility_score']:.3f} < {ri_min}")
             status = "PASSED" if not issues else "MARGINAL"
             results.append({
@@ -4125,43 +4126,43 @@ if st.session_state.active_tab == "ðŸ† 25 OMEGA TESTS":
         with st.spinner("Executing all 25 manifold searches..."):
             report_data = _run_suite()
         st.session_state["omega25_report"] = report_data
-        st.success(f"âœ… Suite complete â€” {report_data['passed']}/25 passed ({report_data['completion_pct']}%)")
+        st.success(f" Suite complete  {report_data['passed']}/25 passed ({report_data['completion_pct']}%)")
     elif load_prev:
         if os.path.exists(_report_path):
             with open(_report_path) as f: report_data = json.load(f)
             st.session_state["omega25_report"] = report_data
-            st.info(f"ðŸ“‚ Loaded report from {report_data.get('run_timestamp','unknown')}")
+            st.info(f" Loaded report from {report_data.get('run_timestamp','unknown')}")
         else:
             st.warning("No saved report found. Run the suite first.")
     elif "omega25_report" in st.session_state:
         report_data = st.session_state["omega25_report"]
 
-    # â”€â”€ RENDER REPORT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    #  RENDER REPORT 
     if report_data:
         results = report_data["results"]
         pct = report_data["completion_pct"]
 
-        # â”€â”€ Headline Scorecard â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+        #  Headline Scorecard 
         st.divider()
         sc1, sc2, sc3, sc4 = st.columns(4)
         sc1.metric("TOTAL EXPERIMENTS", "25", "Frontier Science")
         sc2.metric("PASSED", str(report_data["passed"]), f"{pct}%")
         sc3.metric("FAILED", str(report_data["failed"]), "Errors" if report_data["failed"] else "None")
-        sc4.metric("COMPLETION", f"{pct}%", "ðŸ† PERFECT" if pct == 100 else "In Progress")
+        sc4.metric("COMPLETION", f"{pct}%", " PERFECT" if pct == 100 else "In Progress")
 
         if pct == 100:
-            st.success("ðŸ† ALL 25 EXPERIMENTS COMPLETE â€” OMEGA-CORE FULLY VERIFIED AS A SCIENTIFIC COGNITION OS")
+            st.success(" ALL 25 EXPERIMENTS COMPLETE  OMEGA-CORE FULLY VERIFIED AS A SCIENTIFIC COGNITION OS")
         elif pct >= 80:
-            st.warning(f"ðŸŸ¢ CORE OPERATIONAL â€” {report_data['failed']} experiment(s) need attention")
+            st.warning(f" CORE OPERATIONAL  {report_data['failed']} experiment(s) need attention")
         else:
-            st.error(f"âš ï¸ PARTIAL â€” {report_data['failed']} failures detected")
+            st.error(f" PARTIAL  {report_data['failed']} failures detected")
 
-        # â”€â”€ Category Breakdown bars â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+        #  Category Breakdown bars 
         st.divider()
-        st.subheader("ðŸ“Š Category Completion")
+        st.subheader(" Category Completion")
         cat_cols = st.columns(len(report_data["category_scores"]))
         for ci, (cat, sc) in enumerate(report_data["category_scores"].items()):
-            icon = _CATEGORY_ICONS.get(cat, "ðŸ”¬")
+            icon = _CATEGORY_ICONS.get(cat, "")
             color = _CATEGORY_COLORS.get(cat, "#3B82F6")
             pct_cat = sc["pass"] / sc["total"] * 100
             with cat_cols[ci]:
@@ -4170,9 +4171,9 @@ if st.session_state.active_tab == "ðŸ† 25 OMEGA TESTS":
                     st.metric(f"{sc['pass']}/{sc['total']} passed", f"{pct_cat:.0f}%")
                     st.progress(sc["pass"] / sc["total"])
 
-        # â”€â”€ Reducibility Distribution â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+        #  Reducibility Distribution 
         st.divider()
-        st.subheader("ðŸ”¬ Reducibility Distribution")
+        st.subheader(" Reducibility Distribution")
         red_dist = report_data["reducibility_distribution"]
         rd_df = pd.DataFrame([
             {"Class": "Reducible (Analytic)",    "Count": red_dist.get("Reducible", 0),    "Color": "#10B981"},
@@ -4186,18 +4187,18 @@ if st.session_state.active_tab == "ðŸ† 25 OMEGA TESTS":
                               font_color="#E2E8F0", showlegend=False)
         st.plotly_chart(fig_red, use_container_width=True)
 
-        # â”€â”€ Thermodynamic Scatter â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+        #  Thermodynamic Scatter 
         st.divider()
-        st.subheader("ðŸŒ¡ï¸ Thermodynamic Manifold Map â€” All 25 Experiments")
-        st.caption("Entropy (H) vs Coherence (Îº) coloured by reducibility class. The ideal Cat+Chef system occupies all three zones.")
+        st.subheader(" Thermodynamic Manifold Map  All 25 Experiments")
+        st.caption("Entropy (H) vs Coherence () coloured by reducibility class. The ideal Cat+Chef system occupies all three zones.")
         t_rows = []
         for r in results:
             t = r["thermodynamics"]
             t_rows.append({
                 "Experiment": r["experiment"][-40:],
                 "H(Entropy)": t["entropy"],
-                "Îº(Coherence)": t["coherence"],
-                "Î·(Emergence)": t["emergence"],
+                "(Coherence)": t["coherence"],
+                "(Emergence)": t["emergence"],
                 "B(Bifurcation)": t["bifurcation"],
                 "CRI": t["reducibility_score"],
                 "Class": r["reducibility_class"],
@@ -4205,11 +4206,11 @@ if st.session_state.active_tab == "ðŸ† 25 OMEGA TESTS":
             })
         t_df = pd.DataFrame(t_rows)
         fig_scatter = px.scatter(
-            t_df, x="H(Entropy)", y="Îº(Coherence)",
+            t_df, x="H(Entropy)", y="(Coherence)",
             size="B(Bifurcation)", color="Class",
             hover_name="Experiment",
             color_discrete_map={"Reducible": "#10B981", "Hybrid": "#F59E0B", "Irreducible": "#EF4444"},
-            title="Entropyâ€“Coherence Phase Space (bubble = bifurcation hazard)",
+            title="EntropyCoherence Phase Space (bubble = bifurcation hazard)",
             size_max=30
         )
         fig_scatter.update_layout(plot_bgcolor="#0A0A0A", paper_bgcolor="#050505",
@@ -4225,9 +4226,9 @@ if st.session_state.active_tab == "ðŸ† 25 OMEGA TESTS":
                                    font=dict(color="#EF4444", size=10))
         st.plotly_chart(fig_scatter, use_container_width=True)
 
-        # â”€â”€ CRI Bar â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+        #  CRI Bar 
         st.divider()
-        st.subheader("ðŸ§® Computational Reducibility Index (CRI) â€” All Experiments")
+        st.subheader(" Computational Reducibility Index (CRI)  All Experiments")
         cri_df = t_df.sort_values("CRI", ascending=False)
         fig_cri = px.bar(cri_df, x="Experiment", y="CRI", color="Class",
                          color_discrete_map={"Reducible": "#10B981", "Hybrid": "#F59E0B", "Irreducible": "#EF4444"},
@@ -4237,9 +4238,9 @@ if st.session_state.active_tab == "ðŸ† 25 OMEGA TESTS":
                               yaxis=dict(range=[0, 1.05], gridcolor="#1F2937"))
         st.plotly_chart(fig_cri, use_container_width=True)
 
-        # â”€â”€ Per-Experiment Drilldown â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+        #  Per-Experiment Drilldown 
         st.divider()
-        st.subheader("ðŸ” Per-Experiment Drilldown")
+        st.subheader(" Per-Experiment Drilldown")
         filter_cat = st.selectbox("Filter by Domain", ["All"] + list(_CATEGORY_ICONS.keys()),
                                   key="omega25_filter_cat")
         filter_cls = st.selectbox("Filter by Reducibility", ["All", "Reducible", "Hybrid", "Irreducible"],
@@ -4254,8 +4255,8 @@ if st.session_state.active_tab == "ðŸ† 25 OMEGA TESTS":
         st.caption(f"Showing {len(filtered)} of 25 experiments")
 
         for exp_r in filtered:
-            icon = _CATEGORY_ICONS.get(exp_r["category"], "ðŸ”¬")
-            status_badge = "âœ…" if exp_r["status"] == "PASSED" else "âš ï¸"
+            icon = _CATEGORY_ICONS.get(exp_r["category"], "")
+            status_badge = "" if exp_r["status"] == "PASSED" else ""
             with st.expander(f"{status_badge} {icon} {exp_r['experiment']}", expanded=False):
                 d1, d2, d3 = st.columns(3)
                 d1.markdown(f"**Category:** {exp_r['category']}")
@@ -4265,8 +4266,8 @@ if st.session_state.active_tab == "ðŸ† 25 OMEGA TESTS":
                 t = exp_r["thermodynamics"]
                 m1, m2, m3, m4, m5 = st.columns(5)
                 m1.metric("H Entropy",    f"{t['entropy']:.3f}")
-                m2.metric("Îº Coherence",  f"{t['coherence']:.3f}")
-                m3.metric("Î· Emergence",  f"{t['emergence']:.3f}")
+                m2.metric(" Coherence",  f"{t['coherence']:.3f}")
+                m3.metric(" Emergence",  f"{t['emergence']:.3f}")
                 m4.metric("B Bifurcation",f"{t['bifurcation']:.3f}")
                 m5.metric("CRI",          f"{t['reducibility_score']:.3f}")
 
@@ -4283,25 +4284,25 @@ if st.session_state.active_tab == "ðŸ† 25 OMEGA TESTS":
                     if ci2 == len(chain) - 1:
                         chain_html += (f"<div style='padding:8px;background:#064E3B;border-left:4px solid "
                                        f"#10B981;border-radius:4px;color:#D1FAE5;font-weight:bold;'>"
-                                       f"ðŸŽ¯ STEP {ci2+1} [ATTRACTOR]: {step}</div>")
+                                       f" STEP {ci2+1} [ATTRACTOR]: {step}</div>")
                     else:
                         chain_html += (f"<div style='padding:6px;background:#111;border-left:3px solid "
                                        f"#374151;border-radius:4px;color:#9CA3AF;'>"
-                                       f"â€¢ STEP {ci2+1}: {step}</div>")
+                                       f" STEP {ci2+1}: {step}</div>")
                 chain_html += "</div>"
                 st.markdown(chain_html, unsafe_allow_html=True)
 
                 if exp_r.get("debates"):
                     st.markdown("**Multi-Agent Debate:**")
                     for agent, log in exp_r["debates"].items():
-                        st.info(f"ðŸ¤– **{agent}**: {log}")
+                        st.info(f" **{agent}**: {log}")
 
                 if exp_r.get("issues"):
-                    st.warning("Issues detected:\n" + "\n".join(f"â€¢ {i}" for i in exp_r["issues"]))
+                    st.warning("Issues detected:\n" + "\n".join(f" {i}" for i in exp_r["issues"]))
 
-        # â”€â”€ Full Data Table â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+        #  Full Data Table 
         st.divider()
-        st.subheader("ðŸ“‹ Full Results Table")
+        st.subheader(" Full Results Table")
         table_rows = [{
             "#": i+1,
             "Experiment": r["experiment"][-50:],
@@ -4309,7 +4310,7 @@ if st.session_state.active_tab == "ðŸ† 25 OMEGA TESTS":
             "Class": r["reducibility_class"],
             "Status": r["status"],
             "H(Entropy)": round(r["thermodynamics"]["entropy"], 4),
-            "Îº(Coherence)": round(r["thermodynamics"]["coherence"], 4),
+            "(Coherence)": round(r["thermodynamics"]["coherence"], 4),
             "CRI": round(r["thermodynamics"]["reducibility_score"], 4),
             "B(Bifurcation)": round(r["thermodynamics"]["bifurcation"], 4),
             "Causal Steps": r["causal_steps"]
@@ -4321,20 +4322,20 @@ if st.session_state.active_tab == "ðŸ† 25 OMEGA TESTS":
 
     else:
         with st.container(border=True):
-            st.markdown("### ðŸš€ Ready to verify all 25 OMEGA frontier experiments")
+            st.markdown("###  Ready to verify all 25 OMEGA frontier experiments")
             st.markdown("""
             This suite runs every experimental program through the **Cat + Chef architecture**:
             
             | Layer | Role | Function |
             |---|---|---|
-            | ðŸˆ **Cat** | Sensing | Entropy, coherence, phase detection |
-            | ðŸ‘¨â€ðŸ³ **Chef** | Reasoning | Causal chains, agent debate, invariant extraction |
+            |  **Cat** | Sensing | Entropy, coherence, phase detection |
+            |  **Chef** | Reasoning | Causal chains, agent debate, invariant extraction |
             
             **25 experiments** spanning:
-            - ðŸŒŒ Cosmology & Spacetime (8 programs)
-            - âš›ï¸ Quantum & Biophysics (3 programs)
-            - ðŸ§¬ Complex Earth & Biological (7 programs)
-            - ðŸ“Š Socio-Economic & Computing (7 programs)
+            -  Cosmology & Spacetime (8 programs)
+            -  Quantum & Biophysics (3 programs)
+            -  Complex Earth & Biological (7 programs)
+            -  Socio-Economic & Computing (7 programs)
             """)
             st.info("Click **RUN ALL 25 EXPERIMENTS** above to begin. Results are cached and saved to `reports/omega_25_test_report.json`.")
 
@@ -4342,4 +4343,7 @@ if st.session_state.active_tab == "ðŸ† 25 OMEGA TESTS":
 # --- FOOTER ---
 st.divider()
 st.caption("Universal Laptop Lab | Generated: May 2026 | OMEGA-CORE ASI Framework v3.0 | 10-Node Hyperarchitecture")
+
+
+
 

@@ -25,21 +25,12 @@ Usage:
 from __future__ import annotations
 
 import json
-import os
 import time
 import uuid
 import hashlib
 from pathlib import Path
 from typing import Any, Callable, Optional
 from dataclasses import dataclass, field
-
-# ── GPU Safety: prevent CUDA crash on incompatible drivers ────────────────────
-# Set OLLAMA_FORCE_CPU=false in .env only if your GPU + drivers are confirmed
-# working with Ollama. Default is True to avoid the CUDA stack-overrun crash.
-_FORCE_CPU = os.environ.get("OLLAMA_FORCE_CPU", "true").lower() != "false"
-if _FORCE_CPU:
-    # Suppress CUDA device visibility before ollama module loads its client
-    os.environ["CUDA_VISIBLE_DEVICES"] = ""
 
 import ollama
 
@@ -48,67 +39,34 @@ import ollama
 # LLM Pool — Mistral (primary) + Phi3 (challenger)
 # ─────────────────────────────────────────────────────────────────
 
-PRIMARY_MODEL    = "mistral"
+PRIMARY_MODEL   = "mistral"
 CHALLENGER_MODEL = "phi3"
 
 _ollama_client = ollama.Client()
 
-# Base options applied to every chat call.
-# num_gpu=0 forces CPU-only inference, avoiding CUDA stack-overrun crashes
-# on machines where the GPU driver is incompatible with Ollama's CUDA build.
-# Remove / set OLLAMA_FORCE_CPU=false in .env once drivers are confirmed stable.
-_BASE_OPTIONS: dict = {"num_gpu": 0} if _FORCE_CPU else {}
-
-_OLLAMA_STUB = (
-    "[Ollama offline] Local LLM not reachable.\n"
-    "Fix options:\n"
-    "  1. Run: ollama serve   (if not already running)\n"
-    "  2. Pull: ollama pull {model}\n"
-    "  3. GPU crash? This harness already forces CPU mode (OLLAMA_FORCE_CPU=true).\n"
-    "     If the error persists, restart Ollama: taskkill /F /IM ollama.exe && ollama serve\n"
-    "Error detail: {{exc}}"
-)
-
-
-def is_ollama_running() -> bool:
-    """Return True if the local Ollama daemon is reachable."""
-    try:
-        _ollama_client.list()
-        return True
-    except Exception:
-        return False
-
 
 def _llm_call(model: str, system: str, user: str, temperature: float = 0.4) -> str:
-    """Single LLM call — CPU-forced, with graceful fallback if Ollama is offline."""
-    opts = {**_BASE_OPTIONS, "temperature": temperature}
-    try:
-        response = _ollama_client.chat(
-            model=model,
-            messages=[
-                {"role": "system", "content": system},
-                {"role": "user",   "content": user},
-            ],
-            options=opts,
-        )
-        return response["message"]["content"]
-    except Exception as exc:
-        return _OLLAMA_STUB.format(model=model).replace("{exc}", str(exc))
+    """Single LLM call, returns raw text."""
+    response = _ollama_client.chat(
+        model=model,
+        messages=[
+            {"role": "system",  "content": system},
+            {"role": "user",    "content": user},
+        ],
+        options={"temperature": temperature},
+    )
+    return response["message"]["content"]
 
 
 def _llm_json(model: str, system: str, user: str, temperature: float = 0.3) -> dict[str, Any]:
-    """LLM call that enforces JSON output with retry and graceful fallback."""
+    """LLM call that enforces JSON output with retry."""
     import re
-    opts = {**_BASE_OPTIONS, "temperature": temperature}
     messages = [
         {"role": "system", "content": system + "\n\nYou MUST respond with valid JSON only. No prose, no markdown fences."},
         {"role": "user",   "content": user},
     ]
     for attempt in range(3):
-        try:
-            response = _ollama_client.chat(model=model, messages=messages, options=opts)
-        except Exception as exc:
-            return {"error": _OLLAMA_STUB.format(model=model).replace("{exc}", str(exc))}
+        response = _ollama_client.chat(model=model, messages=messages, options={"temperature": temperature})
         raw = response["message"]["content"].strip()
         raw = re.sub(r"^```(?:json)?\s*|\s*```$", "", raw, flags=re.DOTALL).strip()
         try:
@@ -329,6 +287,8 @@ class Agent:
         action_tool: Optional[str] = None,    # tool name for action step
         use_debate: bool = True,              # enable Mistral vs Phi3 debate
         memory_recall_n: int = 5,
+        primary_model: Optional[str] = None,    # override PRIMARY_MODEL default
+        challenger_model: Optional[str] = None, # override CHALLENGER_MODEL default
     ):
         self.name = name
         self.prompt_blueprint = prompt_blueprint
@@ -338,6 +298,10 @@ class Agent:
         self.action_tool = action_tool
         self.use_debate = use_debate
         self.memory_recall_n = memory_recall_n
+        # Per-agent model selection. Defaults to the module-level globals
+        # so existing code that doesn't pass these keeps working unchanged.
+        self.primary_model = primary_model or PRIMARY_MODEL
+        self.challenger_model = challenger_model or CHALLENGER_MODEL
 
     # ── 1. CONTEXT ────────────────────────────────────────────────
     def _build_context(self, query: str) -> str:
@@ -398,7 +362,7 @@ Respond with a clear, structured answer to the query. Be specific and grounded."
 
         # Primary: Mistral proposes
         primary = _llm_call(
-            PRIMARY_MODEL,
+            self.primary_model,
             system_base,
             f"Query: {query}\n\nProvide your analysis and recommendation.",
         )
@@ -408,7 +372,7 @@ Respond with a clear, structured answer to the query. Be specific and grounded."
 
         # Challenger: Phi3 challenges or extends
         challenger = _llm_call(
-            CHALLENGER_MODEL,
+            self.challenger_model,
             system_base + f"\n\nPrimary analysis to challenge:\n{primary[:800]}",
             f"Query: {query}\n\nChallenge, extend, or refine the primary analysis. "
             "Point out any missed factors, logical gaps, or alternative explanations.",
@@ -420,7 +384,7 @@ pick the stronger elements from each and synthesize a final decision.
 Be concise. State which reasoning was stronger and why, then give the final answer."""
 
         arbiter = _llm_call(
-            PRIMARY_MODEL,
+            self.primary_model,
             arbiter_system,
             f"Query: {query}\n\nAnalysis A (Primary):\n{primary[:600]}\n\n"
             f"Analysis B (Challenger):\n{challenger[:600]}\n\n"
@@ -469,9 +433,9 @@ Be concise. State which reasoning was stronger and why, then give the final answ
 
         # 3. REASON
         primary, challenger, arbiter = self._reason(query, context, observation)
-        self.memory.write(self.name, "hypothesis", primary[:500], {"run_id": run_id, "model": PRIMARY_MODEL})
+        self.memory.write(self.name, "hypothesis", primary[:500], {"run_id": run_id, "model": self.primary_model})
         if challenger:
-            self.memory.write(self.name, "hypothesis", f"[CHALLENGE] {challenger[:400]}", {"run_id": run_id, "model": CHALLENGER_MODEL})
+            self.memory.write(self.name, "hypothesis", f"[CHALLENGE] {challenger[:400]}", {"run_id": run_id, "model": self.challenger_model})
 
         final_answer = arbiter if arbiter else primary
 
