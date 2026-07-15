@@ -2,7 +2,7 @@
 omega_bridge_v2.py
 ====================
 Unified bridge wiring all 6 gap fixes into the existing Streamlit
-harness panel. Drop-in upgrade for omega_bridge.py — same function
+harness panel. Drop-in upgrade for omega_bridge.py â€” same function
 names (run_agent_panel, memory_dashboard) so existing tab injections
 keep working without further edits to streamlit_app.py.
 
@@ -20,6 +20,7 @@ import json
 import time
 
 from harness import Agent, ToolRegistry
+from causal_scan_v2 import causal_scan_v2
 from blueprints import get_blueprint
 
 from vector_memory import VectorMemoryLayer
@@ -39,6 +40,7 @@ ALL_AGENT_NAMES = [
     "scientific_discovery", "finance", "weather_manifold", "health_protocol",
     "adversarial_lab", "world_model", "asi_core", "digital_twin",
     "smart_city_twin", "agriculture_asi", "global_monitoring", "clinical_stress_test",
+    "reducibility_sandbox", "inference_domain"
 ]
 
 
@@ -55,12 +57,14 @@ def get_harness_v2():
         base_blueprint = get_blueprint(name)
         # Apply any approved self-improvement calibrations on top of base prompt
         calibrated_blueprint = calibration.apply_approved(name, base_blueprint)
+        tools.register("causal_scan", "Causal discovery with lag, hyperedge, regime detection", causal_scan_v2)
         agents[name] = Agent(
             name=name,
             prompt_blueprint=calibrated_blueprint,
             memory=mem,
             tools=tools,
             use_debate=True,
+            observe_tool="causal_scan",
         )
 
     colony = AgentColony(agents)
@@ -95,7 +99,7 @@ def _sensor_loop_for(tab_name: str, data_source_fn, query: str) -> SensorLoop:
 def run_agent_panel(tab_name: str, query: str = None, context_data: dict = None):
     """
     Main harness panel. Drop-in replacement for the original
-    run_agent_panel — adds Live/Manual toggle, uncertainty display,
+    run_agent_panel â€” adds Live/Manual toggle, uncertainty display,
     and reality-anchor prediction tracking.
     """
     h = get_harness_v2()
@@ -105,15 +109,15 @@ def run_agent_panel(tab_name: str, query: str = None, context_data: dict = None)
         return
 
     st.markdown("---")
-    st.markdown("#### 🧠 OMEGA Harness v2 — Mistral × Phi3 Debate + Reality Loop")
+    st.markdown("#### ðŸ§  OMEGA Harness v2 â€” Mistral Ã— Phi3 Debate + Reality Loop")
 
-    # ── Inference stack selector ────────────────────────────────────
+    # â”€â”€ Inference stack selector â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     # Pulled from your installed Ollama models (mistral, phi3, llava per
     # earlier `ollama list`). Add more here as you pull additional models.
     AVAILABLE_PRIMARY = ["mistral", "mistral-large", "llava"]
     AVAILABLE_CHALLENGER = ["phi3", "phi3:mini", "mistral", "llava"]
 
-    with st.expander("⚙️ Inference Stack", expanded=False):
+    with st.expander("âš™ï¸ Inference Stack", expanded=False):
         col_m1, col_m2 = st.columns(2)
         with col_m1:
             chosen_primary = st.selectbox(
@@ -129,7 +133,7 @@ def run_agent_panel(tab_name: str, query: str = None, context_data: dict = None)
             )
         st.caption(
             "Changes apply to this agent's next run. Smaller models (e.g. "
-            "phi3:mini) trade reasoning depth for speed — useful for testing "
+            "phi3:mini) trade reasoning depth for speed â€” useful for testing "
             "the loop quickly before committing to longer auto-chain runs."
         )
         # Apply selection to the cached agent instance (safe: these are
@@ -138,7 +142,7 @@ def run_agent_panel(tab_name: str, query: str = None, context_data: dict = None)
         agent.primary_model = chosen_primary
         agent.challenger_model = chosen_challenger
 
-    # ── Live / Manual toggle ──────────────────────────────────────
+    # â”€â”€ Live / Manual toggle â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     mode = st.radio(
         "Mode", ["Manual", "Live (auto-poll)"],
         horizontal=True, key=f"mode_{tab_name}",
@@ -148,7 +152,7 @@ def run_agent_panel(tab_name: str, query: str = None, context_data: dict = None)
     if query is None:
         # Discovery Planner suggestion (scoped to Scientific Discovery tab for v1)
         if tab_name == "scientific_discovery":
-            with st.expander("💡 Discovery Planner suggests a next experiment", expanded=False):
+            with st.expander("ðŸ’¡ Discovery Planner suggests a next experiment", expanded=False):
                 if st.button("Generate suggestion", key=f"plan_gen_{tab_name}"):
                     with st.spinner("Reviewing history and accuracy record..."):
                         try:
@@ -165,21 +169,21 @@ def run_agent_panel(tab_name: str, query: str = None, context_data: dict = None)
                 if cached:
                     st.markdown(f"**Proposed:** {cached.proposed_query}")
                     st.caption(f"Reasoning: {cached.reasoning}")
-                    st.caption(f"Type: {cached.question_type} · Variables: {', '.join(cached.target_variables) or 'none specified'}")
+                    st.caption(f"Type: {cached.question_type} Â· Variables: {', '.join(cached.target_variables) or 'none specified'}")
                     col_a, col_b = st.columns(2)
                     with col_a:
-                        if st.button("✅ Use this suggestion", key=f"plan_use_{tab_name}"):
+                        if st.button("âœ… Use this suggestion", key=f"plan_use_{tab_name}"):
                             st.session_state[f"hq_{tab_name}"] = cached.proposed_query
                             st.rerun()
                     with col_b:
-                        if st.button("✖ Dismiss", key=f"plan_dismiss_{tab_name}"):
+                        if st.button("âœ– Dismiss", key=f"plan_dismiss_{tab_name}"):
                             del st.session_state[f"plan_suggestion_{tab_name}"]
                             st.rerun()
 
-            with st.expander("🔄 Auto-Chain Discovery Loop (autonomous, capped, stoppable)", expanded=False):
+            with st.expander("ðŸ”„ Auto-Chain Discovery Loop (autonomous, capped, stoppable)", expanded=False):
                 st.caption(
-                    "Runs Suggest → Run cycles automatically up to a hard cap. "
-                    "Does NOT auto-validate predictions against reality — that "
+                    "Runs Suggest â†’ Run cycles automatically up to a hard cap. "
+                    "Does NOT auto-validate predictions against reality â€” that "
                     "always requires your review in the Reality Anchor panel."
                 )
                 max_cycles = st.slider(
@@ -209,13 +213,13 @@ def run_agent_panel(tab_name: str, query: str = None, context_data: dict = None)
 
                 col_x, col_y = st.columns(2)
                 with col_x:
-                    start_chain = st.button("▶ Start Auto-Chain", key=f"chain_start_{tab_name}")
+                    start_chain = st.button("â–¶ Start Auto-Chain", key=f"chain_start_{tab_name}")
                 with col_y:
-                    stop_chain = st.button("⏹ Stop", key=f"chain_stop_{tab_name}")
+                    stop_chain = st.button("â¹ Stop", key=f"chain_stop_{tab_name}")
 
                 if stop_chain:
                     chain.stop()
-                    st.warning("Stop requested — will halt after the current step.")
+                    st.warning("Stop requested â€” will halt after the current step.")
 
                 if start_chain:
                     chain.start(max_cycles=max_cycles)
@@ -243,7 +247,7 @@ def run_agent_panel(tab_name: str, query: str = None, context_data: dict = None)
                 status = chain.status()
                 if status["cycle_count"] > 0:
                     st.caption(
-                        f"Last run: {status['cycle_count']}/{status['max_cycles']} cycles · "
+                        f"Last run: {status['cycle_count']}/{status['max_cycles']} cycles Â· "
                         f"{'still running' if status['running'] else 'stopped'}"
                     )
 
@@ -259,7 +263,7 @@ def run_agent_panel(tab_name: str, query: str = None, context_data: dict = None)
         try:
             parsed_data = json.loads(data_str)
         except Exception:
-            st.caption("⚠️ Could not parse JSON — running without context data.")
+            st.caption("âš ï¸ Could not parse JSON â€” running without context data.")
 
     if mode == "Live (auto-poll)":
         interval = st.slider("Poll interval (seconds)", 10, 300, 60, key=f"interval_{tab_name}")
@@ -271,25 +275,25 @@ def run_agent_panel(tab_name: str, query: str = None, context_data: dict = None)
         col1, col2 = st.columns(2)
         with col1:
             if not loop.state.running:
-                if st.button("▶ Start Live Polling", key=f"live_start_{tab_name}"):
+                if st.button("â–¶ Start Live Polling", key=f"live_start_{tab_name}"):
                     loop.start_live()
                     st.rerun()
             else:
-                if st.button("⏸ Stop Live Polling", key=f"live_stop_{tab_name}"):
+                if st.button("â¸ Stop Live Polling", key=f"live_stop_{tab_name}"):
                     loop.stop_live()
                     st.rerun()
         with col2:
             status = loop.status()
             st.caption(
-                f"Status: {'🟢 Running' if status['running'] else '⚪ Stopped'} · "
-                f"Polls: {status['poll_count']} · Errors: {status['error_count']}"
+                f"Status: {'ðŸŸ¢ Running' if status['running'] else 'âšª Stopped'} Â· "
+                f"Polls: {status['poll_count']} Â· Errors: {status['error_count']}"
             )
         if loop.state.last_result_summary:
             st.info(f"Last result: {loop.state.last_result_summary}")
         return  # live mode doesn't use the manual run button below
 
-    # ── Manual mode ───────────────────────────────────────────────
-    if st.button("▶ Run Agent Harness", key=f"hbtn_{tab_name}"):
+    # â”€â”€ Manual mode â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    if st.button("â–¶ Run Agent Harness", key=f"hbtn_{tab_name}"):
         with st.spinner("Mistral reasoning... Phi3 challenging... Arbiter deciding..."):
             try:
                 result = agent.run(query, parsed_data)
@@ -299,11 +303,11 @@ def run_agent_panel(tab_name: str, query: str = None, context_data: dict = None)
 
                 col1, col2 = st.columns(2)
                 with col1:
-                    st.markdown(f"**Primary — {agent.primary_model}**")
+                    st.markdown(f"**Primary â€” {agent.primary_model}**")
                     st.text_area("Primary Reasoning", result.primary_reasoning, height=200,
                                 key=f"pr_{tab_name}_{result.run_id}")
                 with col2:
-                    st.markdown(f"**Challenger — {agent.challenger_model} + Arbiter**")
+                    st.markdown(f"**Challenger â€” {agent.challenger_model} + Arbiter**")
                     chall = (result.challenger_reasoning + "\n\nARBITER:\n" + result.arbiter_decision)
                     st.text_area("Challenger + Arbiter", chall, height=200,
                                 key=f"ch_{tab_name}_{result.run_id}")
@@ -311,24 +315,24 @@ def run_agent_panel(tab_name: str, query: str = None, context_data: dict = None)
                 st.success(result.final_answer)
 
                 # Uncertainty badge
-                label_color = {"high": "🟢", "moderate": "🟡", "low": "🔴", "unknown": "⚪"}
+                label_color = {"high": "ðŸŸ¢", "moderate": "ðŸŸ¡", "low": "ðŸ”´", "unknown": "âšª"}
                 st.markdown(
-                    f"{label_color.get(unc.confidence_label,'⚪')} **Calibrated confidence: "
+                    f"{label_color.get(unc.confidence_label,'âšª')} **Calibrated confidence: "
                     f"{unc.confidence_label}** (agreement: {unc.agreement_score:.0%}, "
                     f"epistemic uncertainty: {unc.epistemic_uncertainty:.0%})"
                 )
                 if unc.disagreement_points:
                     with st.expander("Specific points of disagreement"):
                         for p in unc.disagreement_points:
-                            st.caption(f"• {p}")
+                            st.caption(f"â€¢ {p}")
 
                 st.caption(
-                    f"Run {result.run_id} · {result.duration_seconds}s · "
+                    f"Run {result.run_id} Â· {result.duration_seconds}s Â· "
                     f"Memory: {h['memory'].summary(tab_name)['total_entries']} entries"
                 )
 
-                # Reality Anchor — offer to record this as a trackable prediction
-                with st.expander("📌 Track this as a prediction (Reality Anchor)"):
+                # Reality Anchor â€” offer to record this as a trackable prediction
+                with st.expander("ðŸ“Œ Track this as a prediction (Reality Anchor)"):
                     st.caption(
                         "If this answer makes a specific, checkable prediction about a "
                         "variable's future value, record it here. When real data arrives "
@@ -359,7 +363,7 @@ def reality_validation_panel():
     reality = h["reality"]
     calibration = h["calibration"]
 
-    st.markdown("#### 📌 Reality Anchor — Prediction Validation")
+    st.markdown("#### ðŸ“Œ Reality Anchor â€” Prediction Validation")
 
     summary = reality.summary()
     col1, col2, col3 = st.columns(3)
@@ -380,7 +384,7 @@ def reality_validation_panel():
     if not unvalidated:
         st.caption("No pending predictions to validate.")
     else:
-        options = {f"{p.id} — {p.prediction_text[:60]}": p.id for p in unvalidated}
+        options = {f"{p.id} â€” {p.prediction_text[:60]}": p.id for p in unvalidated}
         choice = st.selectbox("Select prediction", list(options.keys()))
         if choice:
             pred_id = options[choice]
@@ -391,16 +395,16 @@ def reality_validation_panel():
                 actual_inputs[var] = st.number_input(f"Actual value for '{var}'", key=f"actual_{var}_{pred_id}")
             if st.button("Validate", key=f"validate_{pred_id}"):
                 acc = reality.validate(pred_id, actual_inputs)
-                st.success(f"Validated — accuracy: {acc:.0%}")
+                st.success(f"Validated â€” accuracy: {acc:.0%}")
 
                 # Trigger self-improvement check (Gap 6)
                 notes = calibration.propose_calibrations(reality, pred.agent)
                 if notes:
-                    st.info(f"📈 {len(notes)} new calibration note(s) proposed for '{pred.agent}' agent — review in Memory Inspector.")
+                    st.info(f"ðŸ“ˆ {len(notes)} new calibration note(s) proposed for '{pred.agent}' agent â€” review in Memory Inspector.")
 
     # Self-improvement pending review
     st.markdown("---")
-    st.markdown("**🧬 Pending Calibration Notes (Self-Improvement)**")
+    st.markdown("**ðŸ§¬ Pending Calibration Notes (Self-Improvement)**")
     pending_notes = calibration.pending_review()
     if not pending_notes:
         st.caption("No pending calibration notes.")
@@ -409,11 +413,11 @@ def reality_validation_panel():
             st.write(note.proposed_addition)
             col1, col2 = st.columns(2)
             with col1:
-                if st.button("✅ Approve", key=f"approve_{note.id}"):
+                if st.button("âœ… Approve", key=f"approve_{note.id}"):
                     calibration.approve(note.id)
                     st.rerun()
             with col2:
-                if st.button("❌ Reject", key=f"reject_{note.id}"):
+                if st.button("âŒ Reject", key=f"reject_{note.id}"):
                     calibration.reject(note.id)
                     st.rerun()
 
@@ -426,7 +430,7 @@ def colony_panel():
     h = get_harness_v2()
     colony = h["colony"]
 
-    st.markdown("#### 🐝 Agent Colony — Parallel Execution")
+    st.markdown("#### ðŸ Agent Colony â€” Parallel Execution")
 
     selected = st.multiselect("Select agents to run in parallel", ALL_AGENT_NAMES,
                               default=["scientific_discovery", "finance"])
@@ -435,7 +439,7 @@ def colony_panel():
     for name in selected:
         queries[name] = st.text_input(f"Query for {name}", key=f"colony_q_{name}")
 
-    if st.button("▶ Run Colony (parallel)"):
+    if st.button("â–¶ Run Colony (parallel)"):
         jobs = {name: (q, {}) for name, q in queries.items() if q.strip()}
         if jobs:
             with st.spinner(f"Running {len(jobs)} agents in parallel..."):
@@ -449,25 +453,27 @@ def colony_panel():
                     st.write(result.final_answer)
 
     st.markdown("---")
-    st.markdown("**📨 Inter-Agent Message Bus**")
+    st.markdown("**ðŸ“¨ Inter-Agent Message Bus**")
     messages = colony.bus.all_messages(n=20)
     if not messages:
         st.caption("No messages yet.")
     for m in messages:
-        st.caption(f"[{m.from_agent} → {m.to_agent}] {m.content[:150]}")
+        st.caption(f"[{m.from_agent} â†’ {m.to_agent}] {m.content[:150]}")
 
 
 def memory_dashboard():
-    """Cross-agent memory view — now semantic-search-aware (Gap 2)."""
+    """Cross-agent memory view â€” now semantic-search-aware (Gap 2)."""
     h = get_harness_v2()
     mem = h["memory"]
 
-    st.markdown("#### 💾 Cross-Agent Memory")
-    st.caption(f"Semantic search: {'🟢 enabled (ChromaDB)' if mem.semantic_enabled else '⚪ keyword fallback (install chromadb for semantic search)'}")
+    st.markdown("#### ðŸ’¾ Cross-Agent Memory")
+    st.caption(f"Semantic search: {'ðŸŸ¢ enabled (ChromaDB)' if mem.semantic_enabled else 'âšª keyword fallback (install chromadb for semantic search)'}")
 
     for a in mem.all_agents():
         s = mem.summary(a)
-        st.markdown(f"**{a}** — {s['total_entries']} entries — {s['by_role']}")
+        st.markdown(f"**{a}** â€” {s['total_entries']} entries â€” {s['by_role']}")
         recent = mem.recent(a, n=3)
         for e in recent:
             st.caption(f"[{e['role']}] {e['content'][:120]}")
+
+

@@ -1,0 +1,304 @@
+{
+    "description": "OMEGA-CORE Spatial AI World Model & Robotics Pipeline Real-World Validation Scenarios",
+    "version": "3.0.0",
+    "generated_at": "2026-07-07T12:00:00Z",
+    "scenarios": [
+        {
+            "scenario_id": "VAL-SCENARIO-001",
+            "name": "Controlled Pipetting Workstation Scan",
+            "description": "Standard scan of the OT-2 workspace with laboratory tools and barriers.",
+            "lidar": {
+                "distances": [
+                    0.45,
+                    2.50,
+                    0.85,
+                    3.20,
+                    1.25,
+                    0.40,
+                    2.80,
+                    4.10,
+                    0.65,
+                    3.50,
+                    1.90,
+                    0.35,
+                    1.10,
+                    2.20,
+                    0.95,
+                    3.10
+                ],
+                "angles_deg": [
+                    0,
+                    22.5,
+                    45,
+                    67.5,
+                    90,
+                    112.5,
+                    135,
+                    157.5,
+                    180,
+                    202.5,
+                    225,
+                    247.5,
+                    270,
+                    292.5,
+                    315,
+                    337.5
+                ],
+                "semantic_labels": [
+                    "pipette_rack",
+                    "free_corridor",
+                    "safety_glass",
+                    "free_corridor",
+                    "toxic_waste",
+                    "robot_column",
+                    "free_corridor",
+                    "free_corridor",
+                    "ot2_chassis",
+                    "free_corridor",
+                    "centrifuge_cover",
+                    "close_barrier",
+                    "free_corridor",
+                    "equipment",
+                    "sample_tray",
+                    "free_corridor"
+                ],
+                "threshold": 1.2
+            },
+            "scene_nodes": [
+                {
+                    "label": "robot",
+                    "x": 0.0,
+                    "y": 0.0,
+                    "properties": {
+                        "robot_id": "UR5-LAB-01",
+                        "role": "manipulator"
+                    }
+                },
+                {
+                    "label": "workstation",
+                    "x": 2.0,
+                    "y": 1.5,
+                    "properties": {
+                        "id": "OT-2-DECK",
+                        "status": "active"
+                    }
+                },
+                {
+                    "label": "hazard",
+                    "x": -1.2,
+                    "y": 0.8,
+                    "properties": {
+                        "type": "chemical_spill",
+                        "reagent": "methanol"
+                    }
+                }
+            ],
+            "path_benchmark": {
+                "start": {
+                    "x": -4.0,
+                    "y": -4.0,
+                    "z": 0.0
+                },
+                "goal": {
+                    "x": 4.0,
+                    "y": 4.0,
+                    "z": 0.0
+                },
+                "min_expected_safety_score": 0.80,
+                "max_collision_events_allowed": 1
+            }
+        },
+        {
+            "scenario_id": "VAL-SCENARIO-002",
+            "name": "Dynamic Obstacle - Human Operator Intrusion",
+            "description": "LiDAR scan capturing a human operator stepping into the robot's secondary safety envelope.",
+            "lidar": {
+                "distances": [
+                    3.50,
+                    3.20,
+                    2.90,
+                    0.68,
+                    0.52,
+                    0.48,
+                    1.80,
+                    2.70,
+                    3.10,
+                    3.50,
+                    4.00,
+                    3.80,
+                    3.60,
+                    3.40,
+                    2.90,
+                    3.20
+                ],
+                "angles_deg": [
+                    0,
+                    22.5,
+                    45,
+                    67.5,
+                    90,
+                    112.5,
+                    135,
+                    157.5,
+                    180,
+                    202.5,
+                    225,
+                    247.5,
+                    270,
+                    292.5,
+                    315,
+                    337.5
+                ],
+                "semantic_labels": [
+                    "free_corridor",
+                    "free_corridor",
+                    "free_corridor",
+                    "human_operator",
+                    "human_operator",
+                    "human_operator",
+                    "free_corridor",
+                    "free_corridor",
+                    "free_corridor",
+                    "free_corridor",
+                    "free_corridor",
+                    "free_corridor",
+                    "free_corridor",
+                    "free_corridor",
+                    "free_corridor",
+                    "free_corridor"
+                ],
+                "threshold": 1.5
+            },
+            "scene_nodes": [
+                {
+                    "label": "robot",
+                    "x": 0.0,
+                    "y": 0.0,
+                    "properties": {
+                        "robot_id": "UR5-LAB-01",
+                        "role": "manipulator"
+                    }
+                },
+                {
+                    "label": "human",
+                    "x": 0.2,
+                    "y": 0.5,
+                    "properties": {
+                        "status": "intruder",
+                        "safe": false
+                    }
+                }
+            ],
+            "path_benchmark": {
+                "start": {
+                    "x": -2.0,
+                    "y": -2.0,
+                    "z": 0.0
+                },
+                "goal": {
+                    "x": 2.0,
+                    "y": 2.0,
+                    "z": 0.0
+                },
+                "min_expected_safety_score": 0.60,
+                "max_collision_events_allowed": 3
+            }
+        },
+        {
+            "scenario_id": "VAL-SCENARIO-003",
+            "name": "Dynamic Reagent Spill Emergency Halt",
+            "description": "Hazard detection triggering direct spatial routing modification and emergency pause.",
+            "lidar": {
+                "distances": [
+                    0.30,
+                    0.28,
+                    0.32,
+                    2.50,
+                    3.00,
+                    2.80,
+                    2.60,
+                    2.90,
+                    3.20,
+                    2.80,
+                    2.50,
+                    2.10,
+                    1.80,
+                    1.20,
+                    0.80,
+                    0.40
+                ],
+                "angles_deg": [
+                    0,
+                    22.5,
+                    45,
+                    67.5,
+                    90,
+                    112.5,
+                    135,
+                    157.5,
+                    180,
+                    202.5,
+                    225,
+                    247.5,
+                    270,
+                    292.5,
+                    315,
+                    337.5
+                ],
+                "semantic_labels": [
+                    "spill_zone",
+                    "spill_zone",
+                    "spill_zone",
+                    "free_corridor",
+                    "free_corridor",
+                    "free_corridor",
+                    "free_corridor",
+                    "free_corridor",
+                    "free_corridor",
+                    "free_corridor",
+                    "free_corridor",
+                    "free_corridor",
+                    "free_corridor",
+                    "free_corridor",
+                    "free_corridor",
+                    "spill_zone"
+                ],
+                "threshold": 1.8
+            },
+            "scene_nodes": [
+                {
+                    "label": "robot",
+                    "x": 0.0,
+                    "y": 0.0,
+                    "properties": {
+                        "robot_id": "UR5-LAB-01",
+                        "role": "manipulator"
+                    }
+                },
+                {
+                    "label": "hazard",
+                    "x": 0.1,
+                    "y": 0.2,
+                    "properties": {
+                        "type": "biohazard_spill",
+                        "severity": "CRITICAL"
+                    }
+                }
+            ],
+            "path_benchmark": {
+                "start": {
+                    "x": -3.0,
+                    "y": -3.0,
+                    "z": 0.0
+                },
+                "goal": {
+                    "x": 3.0,
+                    "y": 3.0,
+                    "z": 0.0
+                },
+                "min_expected_safety_score": 0.50,
+                "max_collision_events_allowed": 5
+            }
+        }
+    ]
+}

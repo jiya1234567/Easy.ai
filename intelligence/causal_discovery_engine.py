@@ -19,6 +19,7 @@ import random
 import datetime
 from dataclasses import dataclass, asdict
 from typing import Any
+import numpy as np
 
 try:
     import networkx as nx
@@ -174,6 +175,49 @@ class CausalDiscoveryEngine:
                     pass
         return paths[:5]
 
+    def _compute_lag_correlation(self, series_a: list[float], series_b: list[float], max_lag: int = 3) -> tuple[float, int]:
+        """
+        Compute the maximum correlation and the lag at which it occurs.
+        Positive lag means series_a leads series_b (A causes B).
+        Negative lag means series_b leads series_a (B causes A).
+        """
+        try:
+            if len(series_a) != len(series_b) or len(series_a) <= max_lag * 2:
+                return 0.0, 0
+                
+            a = np.array(series_a, dtype=float)
+            b = np.array(series_b, dtype=float)
+            
+            best_corr = 0.0
+            best_lag = 0
+            
+            for lag in range(-max_lag, max_lag + 1):
+                if lag > 0:
+                    a_slice = a[:-lag]
+                    b_slice = b[lag:]
+                elif lag < 0:
+                    a_slice = a[-lag:]
+                    b_slice = b[:lag]
+                else:
+                    a_slice = a
+                    b_slice = b
+                    
+                if len(a_slice) < 2:
+                    continue
+                    
+                if np.std(a_slice) == 0 or np.std(b_slice) == 0:
+                    corr = 0.0
+                else:
+                    corr = np.corrcoef(a_slice, b_slice)[0, 1]
+                    
+                if abs(corr) > abs(best_corr):
+                    best_corr = corr
+                    best_lag = lag
+                    
+            return float(best_corr), best_lag
+        except Exception:
+            return 0.0, 0
+
     def discover(self, domain: str, observation: dict = None,
                  confidence_threshold: float = 0.70) -> CausalGraph:
         """
@@ -198,6 +242,29 @@ class CausalDiscoveryEngine:
             conf_noisy = round(conf + random.uniform(-0.03, 0.03), 3)
             if conf_noisy >= confidence_threshold:
                 filtered.append((src, tgt, conf_noisy, mech))
+
+        # Data-Driven Causal Discovery via Lag-Aware Cross-Correlation
+        if observation:
+            # Find all variables with enough time-series data
+            vars_ts = [k for k, v in observation.items() if isinstance(v, list) and len(v) >= 10]
+            if len(vars_ts) >= 2:
+                for i in range(len(vars_ts)):
+                    for j in range(i + 1, len(vars_ts)):
+                        var_a = vars_ts[i]
+                        var_b = vars_ts[j]
+                        corr, lag = self._compute_lag_correlation(observation[var_a], observation[var_b], max_lag=5)
+                        
+                        if abs(corr) >= confidence_threshold:
+                            conf_val = round(abs(corr), 3)
+                            if lag > 0:
+                                mech = f"Data-driven: {var_a} leads {var_b} by {lag} steps (corr={corr:.2f})"
+                                filtered.append((var_a, var_b, conf_val, mech))
+                            elif lag < 0:
+                                mech = f"Data-driven: {var_b} leads {var_a} by {abs(lag)} steps (corr={corr:.2f})"
+                                filtered.append((var_b, var_a, conf_val, mech))
+                            else:
+                                # Simultaneous correlation, direction ambiguous
+                                pass
 
         edges = [
             CausalEdge(

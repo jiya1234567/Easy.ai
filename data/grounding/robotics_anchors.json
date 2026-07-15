@@ -2,5 +2,57 @@
   {
     "ts": "Sat May 30 08:19:17 2026",
     "state": "validation=PASSED score=0.92 kpis={\"trajectory_cost\": true, \"collision_risk\": true, \"validation_score\": true, \"energy_total\": true, \"trajectory_simulation\": true}"
+  },
+  {
+    "ts": "Tue Jul  7 18:06:34 2026",
+    "state": "validation=PASSED score=0.92 kpis={\"trajectory_cost\": true, \"collision_risk\": true, \"validation_score\": true, \"energy_total\": true, \"trajectory_simulation\": true}"
+  },
+  {
+    "ts": "Tue Jul  7 18:06:35 2026",
+    "state": "validation=PARTIAL score=0.54 kpis={\"trajectory_cost\": true, \"collision_risk\": false, \"validation_score\": true, \"energy_total\": true, \"trajectory_simulation\": true}"
+  },
+  {
+    "ts": "Tue Jul  7 18:06:36 2026",
+    "state": "validation=PASSED score=0.94 kpis={\"trajectory_cost\": true, \"collision_risk\": true, \"validation_score\": true, \"energy_total\": true, \"trajectory_simulation\": true}"
+  },
+  {
+    "ts": "Tue Jul  7 18:08:44 2026",
+    "state": "validation=PASSED score=0.92 kpis={\"trajectory_cost\": true, \"collision_risk\": true, \"validation_score\": true, \"energy_total\": true, \"trajectory_simulation\": true}"
+  },
+  {
+    "ts": "Tue Jul  7 18:08:44 2026",
+    "state": "validation=PARTIAL score=0.53 kpis={\"trajectory_cost\": true, \"collision_risk\": false, \"validation_score\": true, \"energy_total\": true, \"trajectory_simulation\": true}"
+  },
+  {
+    "ts": "Tue Jul  7 18:08:44 2026",
+    "state": "validation=PASSED score=0.94 kpis={\"trajectory_cost\": true, \"collision_risk\": true, \"validation_score\": true, \"energy_total\": true, \"trajectory_simulation\": true}"
+  },
+  {
+    "ts": "Mon Jul 13 15:08:01 2026",
+    "state": "validation=PASSED score=0.92 kpis={\"trajectory_cost\": true, \"collision_risk\": true, \"validation_score\": true, \"energy_total\": true, \"trajectory_simulation\": true}"
+  },
+  {
+    "ts": "Mon Jul 13 15:09:11 2026",
+    "state": "validation=PASSED score=0.89 kpis={\"trajectory_cost\": true, \"collision_risk\": true, \"validation_score\": true, \"energy_total\": true, \"trajectory_simulation\": true}"
+  },
+  {
+    "ts": "Mon Jul 13 15:09:11 2026",
+    "state": "validation=PARTIAL score=0.56 kpis={\"trajectory_cost\": true, \"collision_risk\": false, \"validation_score\": true, \"energy_total\": true, \"trajectory_simulation\": true}"
+  },
+  {
+    "ts": "Mon Jul 13 15:09:11 2026",
+    "state": "validation=PASSED score=0.94 kpis={\"trajectory_cost\": true, \"collision_risk\": true, \"validation_score\": true, \"energy_total\": true, \"trajectory_simulation\": true}"
+  },
+  {
+    "ts": "Mon Jul 13 15:10:41 2026",
+    "state": "validation=PASSED score=0.92 kpis={\"trajectory_cost\": true, \"collision_risk\": true, \"validation_score\": true, \"energy_total\": true, \"trajectory_simulation\": true}"
+  },
+  {
+    "ts": "Mon Jul 13 15:10:41 2026",
+    "state": "validation=PARTIAL score=0.53 kpis={\"trajectory_cost\": true, \"collision_risk\": false, \"validation_score\": true, \"energy_total\": true, \"trajectory_simulation\": true}"
+  },
+  {
+    "ts": "Mon Jul 13 15:10:41 2026",
+    "state": "validation=PASSED score=0.94 kpis={\"trajectory_cost\": true, \"collision_risk\": true, \"validation_score\": true, \"energy_total\": true, \"trajectory_simulation\": true}"
   }
 ]

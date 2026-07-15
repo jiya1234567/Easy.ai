@@ -27,6 +27,7 @@ from dataclasses import dataclass, field
 from typing import Any, Optional, Callable
 
 from discovery_planner import DiscoveryPlanner
+from numeric_extractor import extract_predictions
 
 
 MAX_ALLOWED_CYCLES = 20
@@ -164,7 +165,7 @@ class AutoChain:
                     self.reality_anchor.record_prediction(
                         agent=agent_name,
                         prediction_text=agent_result.final_answer[:300],
-                        predicted_variables={v: 0.0 for v in suggestion.target_variables},
+                        predicted_variables=extract_predictions(agent_result.final_answer, suggestion.target_variables),
                         # NOTE: predicted_variables values default to 0.0 placeholders
                         # since the agent's free-text answer isn't auto-parsed into
                         # numeric predictions in v1. This still creates a tracked
