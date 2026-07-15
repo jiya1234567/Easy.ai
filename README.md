@@ -18,4 +18,27 @@ To access the dashboard on mobile, use the **Public Shared Link** generated from
 - **Research:** Streamlit (Python version included for community GitHub).
 
 ---
+
+## 🎯 Capability Boundaries: What this System IS and is NOT
+
+### What it IS:
+- **A scientific reasoning harness** that structures LLM inference.
+- **A causal discovery tool** that detects lag relationships and regime changes.
+- **An autonomous research loop** that learns from its own experiments.
+- **A reproducibility engine** that certifies findings.
+- **A cross-domain platform** where the underlying models are interchangeable.
+
+### What it is NOT:
+- **A replacement for domain expert review** — human oversight is permanently required.
+- **A statistical inference engine** (not MCMC, not Bayesian inference).
+- **A trained scientific model** (the LLMs are general-purpose).
+- **A production-grade instrument** without domain-specific validation.
+- **A guaranteed correct answer system** — it acts as a heuristic guide.
+
+### 📊 Calibrated Confidence Interpretation:
+* 🟢 **HIGH:** Use as a hypothesis to test experimentally.
+* 🟡 **MODERATE:** Use as a lead to investigate further.
+* 🔴 **LOW:** Flag as genuinely uncertain — do not publish or act without additional data.
+
+---
 *Omega Clearance Required. Secure Uplink Established.*
